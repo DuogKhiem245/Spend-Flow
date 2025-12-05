@@ -57,7 +57,8 @@ class MyApp extends StatelessWidget {
             Locale('en'), 
             Locale('vi'), 
           ],
-          initialRoute: onboardDone ? AppRoutes.login : AppRoutes.onboarding,
+          initialRoute: AppRoutes.dashboard,
+          // initialRoute: onboardDone ? AppRoutes.login : AppRoutes.onboarding,
           routes: AppRoutes.getRoutes(),
         );
       },

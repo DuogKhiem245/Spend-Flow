@@ -54,6 +54,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get continueAction => 'Tiếp tục';
 
   @override
+  String get view_all => 'Xem tất cả';
+
+  @override
   String get onboard_step1_title => 'Đơn giản hóa tài chính';
 
   @override
@@ -208,6 +211,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get good_evening => 'Chào buổi tối';
 
   @override
+  String get hello => 'Xin chào';
+
+  @override
   String get income => 'Thu nhập';
 
   @override
@@ -218,6 +224,12 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get total_balance => 'Tổng số dư';
+
+  @override
+  String get spending_this_month => 'Chi tiêu trong tháng này';
+
+  @override
+  String get total_spent => 'Tổng chi tiêu';
 
   @override
   String get add_transaction => 'Thêm giao dịch';

@@ -188,6 +188,12 @@ abstract class AppLocalizations {
   /// **'Tiếp tục'**
   String get continueAction;
 
+  /// No description provided for @view_all.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xem tất cả'**
+  String get view_all;
+
   /// No description provided for @onboard_step1_title.
   ///
   /// In vi, this message translates to:
@@ -482,6 +488,12 @@ abstract class AppLocalizations {
   /// **'Chào buổi tối'**
   String get good_evening;
 
+  /// No description provided for @hello.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xin chào'**
+  String get hello;
+
   /// No description provided for @income.
   ///
   /// In vi, this message translates to:
@@ -505,6 +517,18 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Tổng số dư'**
   String get total_balance;
+
+  /// No description provided for @spending_this_month.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chi tiêu trong tháng này'**
+  String get spending_this_month;
+
+  /// No description provided for @total_spent.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tổng chi tiêu'**
+  String get total_spent;
 
   /// No description provided for @add_transaction.
   ///

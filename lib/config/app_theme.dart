@@ -5,7 +5,7 @@ class AppCupertinoTheme {
   static const light = CupertinoThemeData(
     brightness: Brightness.light,
 
-    primaryColor: AppColors.lightButton,
+    primaryColor: AppColors.primaryColor,
     scaffoldBackgroundColor: AppColors.lightBackground,
     barBackgroundColor: AppColors.lightCard,
 
@@ -18,7 +18,7 @@ class AppCupertinoTheme {
   static const dark = CupertinoThemeData(
     brightness: Brightness.dark,
 
-    primaryColor: AppColors.darkButton,
+    primaryColor: AppColors.primaryColor,
     scaffoldBackgroundColor: AppColors.darkBackground,
     barBackgroundColor: AppColors.darkCard,
 

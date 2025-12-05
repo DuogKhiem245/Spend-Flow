@@ -23,7 +23,7 @@ class AppRoutes {
       onboarding: (context) => const OnboardingPage(),
       
       main: (context) =>
-          const CustomBottomNavbar(),
+          const BottomNavbar(),
 
       login: (context) => const LoginPage(),
       // register: (context) => const RegisterPage(),

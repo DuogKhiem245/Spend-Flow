@@ -15,6 +15,7 @@
     "back" : "Quay lại",
     "start" : "Bắt đầu",
     "continueAction" : "Tiếp tục",
+    "view_all" : "Xem tất cả",
 
     "onboard_step1_title" : "Đơn giản hóa tài chính",
     "onboard_step1_message" : "Tất cả tài khoản của bạn trong một nơi. Xem tiền của bạn đi đâu và đạt mục tiêu tài chính dễ dàng.",
@@ -68,10 +69,13 @@
     "good_morning" : "Chào buổi sáng",
     "good_afternoon" : "Chào buổi chiều",
     "good_evening" : "Chào buổi tối",
+    "hello" : "Xin chào",
     "income" : "Thu nhập",
     "expenses" : "Chi tiêu",
     "balance" : "Còn lại",
     "total_balance" : "Tổng số dư",
+    "spending_this_month" : "Chi tiêu trong tháng này",
+    "total_spent" : "Tổng chi tiêu",
     "add_transaction" : "Thêm giao dịch",
 
     "settings" : "Cài đặt",

@@ -1,17 +1,18 @@
 import 'package:flutter/cupertino.dart';
 
 class AppColors {
-  static const lightBackground = Color(0xFFffffff);
-  static const lightCard = Color(0xFFf9f9fb);
-  static const lightButton = Color(0xFF0A84FF);
+  static const lightBackground = Color.fromRGBO(246, 248, 248, 1);
+  static const lightCard = Color.fromRGBO(255, 255, 255, 1);
   static const lightText = Color(0xFF000000);
 
   static const darkBackground = Color.fromRGBO(17, 17, 17, 1);
   static const darkCard = Color.fromRGBO(30, 30, 30, 1);
-  static const darkButton = Color(0xFF0A84FF);
   static const darkText = Color(0xFFFFFFFF);
   // static const darkButton = Color(0xFF8e85ef);
 
+  static const primaryColor = Color(0xFF0A84FF);
+  static const secondaryColor = Color.fromRGBO(120, 197, 181, 1);
+  static const thirdColor = Color.fromRGBO(140, 133, 231, 1);
   static const borderColor = Color.fromARGB(255, 165, 165, 165);
 
   static const successColor = Color(0xFF34C759);

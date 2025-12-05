@@ -15,6 +15,7 @@
   "back": "Back",
   "start": "Start",
   "continueAction": "Continue",
+  "view_all": "View All",
 
   "onboard_step1_title": "Simplify Your Finances",
   "onboard_step1_message": "All your accounts in one place. See where your money goes and achieve your financial goals effortlessly.",
@@ -67,10 +68,13 @@
   "good_morning": "Good Morning",
   "good_afternoon": "Good Afternoon",
   "good_evening": "Good Evening",
+  "hello": "Hello",
   "income": "Income",
   "expenses": "Expenses",
   "balance": "Balance",
   "total_balance": "Total Balance",
+  "spending_this_month": "Spending This Month",
+  "total_spent": "Total Spent",
   "add_transaction": "Add Transaction",
   
   "settings": "Settings",

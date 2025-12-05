@@ -18,8 +18,10 @@ dependencies:
   flutter_screenutil: ^5.9.3
   intl: ^0.20.2
   shared_preferences: ^2.5.3
-  provider: ^6.1.5+1
-
+  provider: ^6.1.5+1  
+  cupertino_native: ^0.1.1
+  fl_chart: ^1.1.1
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
