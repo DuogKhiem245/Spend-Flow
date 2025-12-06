@@ -13,7 +13,7 @@ class AppRoutes {
   static const profile = '/profile';
 
   // Screen of main app
-  static const dashboard = '/dashboard';
+  static const home = '/home';
   static const reports = '/reports';
   static const budgets = '/budgets';
   static const settings = '/settings';
@@ -21,10 +21,7 @@ class AppRoutes {
   static Map<String, WidgetBuilder> getRoutes() {
     return {
       onboarding: (context) => const OnboardingPage(),
-      
-      main: (context) =>
-          const BottomNavbar(),
-
+      main: (context) => const BottomNavbar(),
       login: (context) => const LoginPage(),
       // register: (context) => const RegisterPage(),
       // forgotPassword: (context) => const ForgotPasswordPage(),

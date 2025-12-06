@@ -5,21 +5,55 @@ import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/features/home/home_viewmodel.dart';
 
-class SpendingChart extends StatelessWidget {
-  SpendingChart({super.key});
+class SpendingChart extends StatefulWidget {
+  const SpendingChart({super.key});
 
+  @override
+  State<SpendingChart> createState() => _SpendingChartState();
+}
+
+// 1. Thêm Mixin để sử dụng AnimationController
+class _SpendingChartState extends State<SpendingChart>
+    with SingleTickerProviderStateMixin {
   final HomeViewModel _viewModel = HomeViewModel();
+  int touchedIndex = -1;
+
+  // 2. Khai báo AnimationController
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    );
+
+    _animation = CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.elasticOut, 
+    );
+
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    final sections = _viewModel.getChartSections();
+    final sections = _viewModel.getChartSections(touchedIndex, context);
     final totalSpent = _viewModel.getTotalSpent();
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(20.w),
+      padding: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0.w),
       decoration: BoxDecoration(
         color: CupertinoTheme.of(context).barBackgroundColor,
         borderRadius: BorderRadius.circular(12.r),
@@ -32,37 +66,67 @@ class SpendingChart extends StatelessWidget {
             children: [
               Text(
                 l10n.spending_this_month,
-                style: CupertinoTheme.of(context).textTheme.textStyle
-                    .copyWith(fontSize: 18.sp, fontWeight: FontWeight.w700),
+                style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  // Ví dụ: Replay animation khi bấm view all
+                  _animationController.reset();
+                  _animationController.forward();
+                },
                 child: Text(
                   l10n.view_all,
                   style: CupertinoTheme.of(context).textTheme.textStyle
                       .copyWith(
                         fontSize: 14.sp,
                         color: AppColors.thirdColor,
-                        fontWeight: FontWeight.w500
+                        fontWeight: FontWeight.w500,
                       ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 20.h),
+          SizedBox(height: 30.h),
           SizedBox(
-            height: 200.h, 
+            height: 200.h,
             child: Stack(
               alignment: Alignment.center,
               children: [
-                PieChart(
-                  PieChartData(
-                    sections: sections,
-                    centerSpaceRadius: 80.w, 
-                    sectionsSpace: 0, 
-                    startDegreeOffset: -90, 
-                    borderData: FlBorderData(show: false),
-                  ),
+                AnimatedBuilder(
+                  animation: _animation,
+                  builder: (context, child) {
+                    final double startAngle =
+                        -90 + (180 * (1 - _animation.value));
+
+                    return PieChart(
+                      PieChartData(
+                        pieTouchData: PieTouchData(
+                          touchCallback:
+                              (FlTouchEvent event, pieTouchResponse) {
+                                setState(() {
+                                  if (!event.isInterestedForInteractions ||
+                                      pieTouchResponse == null ||
+                                      pieTouchResponse.touchedSection == null) {
+                                    touchedIndex = -1;
+                                    return;
+                                  }
+                                  touchedIndex = pieTouchResponse
+                                      .touchedSection!
+                                      .touchedSectionIndex;
+                                });
+                              },
+                        ),
+                        sections: sections,
+                        centerSpaceRadius: 80.w,
+                        sectionsSpace: 0,
+                        startDegreeOffset: startAngle,                        
+                      ),
+                      swapAnimationDuration: Duration.zero,
+                    );
+                  },
                 ),
 
                 Column(
@@ -76,18 +140,63 @@ class SpendingChart extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 4.h),
-                    Text(
-                      "\$${totalSpent.toStringAsFixed(0)}", 
-                      style: TextStyle(
-                        color: CupertinoColors.white,
-                        fontSize: 28.sp,
-                        fontWeight: FontWeight.bold,
+                    ScaleTransition(
+                      scale: _animation,
+                      child: Text(
+                        "\$${totalSpent.toStringAsFixed(0)}",
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              fontSize: 28.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ),
                   ],
                 ),
               ],
             ),
+          ),
+          ListView.builder(
+            padding: EdgeInsets.symmetric(vertical: 20.h),
+            itemBuilder: (context, index) {
+              final item = _viewModel.getSpendingData()[index];
+              return Padding(
+                padding: EdgeInsets.only(top: 10.h),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 16.w,
+                      height: 16.w,
+                      decoration: BoxDecoration(
+                        color: item.color,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    SizedBox(width: 8.w),
+                    Text(
+                      item.category,
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                    ),
+                    Spacer(),
+                    Text(
+                      "\$${item.amount.toStringAsFixed(0)}",
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w700,
+                          ),
+                    ),
+                  ],
+                ),
+              );
+            },
+            itemCount: _viewModel.getSpendingData().length,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
           ),
         ],
       ),

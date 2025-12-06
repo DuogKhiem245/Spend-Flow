@@ -194,6 +194,12 @@ abstract class AppLocalizations {
   /// **'Xem tất cả'**
   String get view_all;
 
+  /// No description provided for @see_all.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xem tất cả'**
+  String get see_all;
+
   /// No description provided for @onboard_step1_title.
   ///
   /// In vi, this message translates to:
@@ -529,6 +535,12 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Tổng chi tiêu'**
   String get total_spent;
+
+  /// No description provided for @recent_transactions.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giao dịch gần đây'**
+  String get recent_transactions;
 
   /// No description provided for @add_transaction.
   ///

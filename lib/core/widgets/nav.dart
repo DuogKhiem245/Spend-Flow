@@ -1,8 +1,9 @@
+import 'package:cupertino_native/components/button.dart';
 import 'package:cupertino_native/components/tab_bar.dart';
 import 'package:cupertino_native/style/sf_symbol.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:spend_flow/config/app_colors.dart';
+import 'package:spend_flow/features/add_stransaction/add_stransaction.dart';
 import 'package:spend_flow/features/budget/budget_view.dart';
 import 'package:spend_flow/features/home/home_view.dart';
 import 'package:spend_flow/features/report/report_view.dart';
@@ -36,7 +37,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
             right: 0.w,
             bottom: 0.h,
             child: CNTabBar(
-              items: const [
+              items: [
                 CNTabBarItem(
                   label: 'Dashboard',
                   icon: CNSymbol('square.grid.2x2'),
@@ -50,6 +51,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
               ],
               currentIndex: _currentIndex,
               onTap: (i) => setState(() => _currentIndex = i),
+              // backgroundColor: CupertinoColors.transparent,
               backgroundColor: CupertinoTheme.of(context).barBackgroundColor,
             ),
           ),

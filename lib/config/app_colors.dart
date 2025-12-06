@@ -11,7 +11,7 @@ class AppColors {
   // static const darkButton = Color(0xFF8e85ef);
 
   static const primaryColor = Color(0xFF0A84FF);
-  static const secondaryColor = Color.fromRGBO(120, 197, 181, 1);
+  static const secondaryColor = CupertinoColors.systemGreen;
   static const thirdColor = Color.fromRGBO(140, 133, 231, 1);
   static const borderColor = Color.fromARGB(255, 165, 165, 165);
 

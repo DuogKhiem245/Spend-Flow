@@ -16,6 +16,8 @@
     "start" : "Bắt đầu",
     "continueAction" : "Tiếp tục",
     "view_all" : "Xem tất cả",
+    "see_all" : "Xem tất cả",
+
 
     "onboard_step1_title" : "Đơn giản hóa tài chính",
     "onboard_step1_message" : "Tất cả tài khoản của bạn trong một nơi. Xem tiền của bạn đi đâu và đạt mục tiêu tài chính dễ dàng.",
@@ -76,6 +78,7 @@
     "total_balance" : "Tổng số dư",
     "spending_this_month" : "Chi tiêu trong tháng này",
     "total_spent" : "Tổng chi tiêu",
+    "recent_transactions" : "Giao dịch gần đây",
     "add_transaction" : "Thêm giao dịch",
 
     "settings" : "Cài đặt",

@@ -57,6 +57,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get view_all => 'View All';
 
   @override
+  String get see_all => 'See All';
+
+  @override
   String get onboard_step1_title => 'Simplify Your Finances';
 
   @override
@@ -231,6 +234,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get total_spent => 'Total Spent';
+
+  @override
+  String get recent_transactions => 'Recent Transactions';
 
   @override
   String get add_transaction => 'Add Transaction';

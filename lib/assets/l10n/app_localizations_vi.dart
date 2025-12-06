@@ -57,6 +57,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get view_all => 'Xem tất cả';
 
   @override
+  String get see_all => 'Xem tất cả';
+
+  @override
   String get onboard_step1_title => 'Đơn giản hóa tài chính';
 
   @override
@@ -230,6 +233,9 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get total_spent => 'Tổng chi tiêu';
+
+  @override
+  String get recent_transactions => 'Giao dịch gần đây';
 
   @override
   String get add_transaction => 'Thêm giao dịch';

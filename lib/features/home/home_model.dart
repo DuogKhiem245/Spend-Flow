@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
+
 class SpendingModel {
   final String category;
   final double amount;
@@ -20,4 +22,20 @@ class SpendingModel {
   }
 }
 
+class RecentTransactionModel {
+  final Icon icon;
+  final String title;
+  final String category;
+  final double amount;
+  final DateTime date;
+  final bool isExpense;
 
+  RecentTransactionModel({
+    required this.icon,
+    required this.title,
+    required this.category,
+    required this.amount,
+    required this.date,
+    required this.isExpense,
+  });
+}

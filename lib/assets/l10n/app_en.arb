@@ -16,6 +16,7 @@
   "start": "Start",
   "continueAction": "Continue",
   "view_all": "View All",
+    "see_all": "See All",
 
   "onboard_step1_title": "Simplify Your Finances",
   "onboard_step1_message": "All your accounts in one place. See where your money goes and achieve your financial goals effortlessly.",
@@ -75,6 +76,7 @@
   "total_balance": "Total Balance",
   "spending_this_month": "Spending This Month",
   "total_spent": "Total Spent",
+  "recent_transactions": "Recent Transactions",
   "add_transaction": "Add Transaction",
   
   "settings": "Settings",
