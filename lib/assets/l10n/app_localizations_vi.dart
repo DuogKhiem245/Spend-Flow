@@ -60,6 +60,18 @@ class AppLocalizationsVi extends AppLocalizations {
   String get see_all => 'Xem tất cả';
 
   @override
+  String get amount => 'Số tiền';
+
+  @override
+  String get name => 'Tên giao dịch';
+
+  @override
+  String get date => 'Ngày';
+
+  @override
+  String get today => 'Hôm nay';
+
+  @override
   String get onboard_step1_title => 'Đơn giản hóa tài chính';
 
   @override
@@ -239,6 +251,135 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get add_transaction => 'Thêm giao dịch';
+
+  @override
+  String get enter_transaction_name => 'Nhập tên giao dịch';
+
+  @override
+  String get suggested_category => 'Danh mục gợi ý';
+
+  @override
+  String get category => 'Danh mục';
+
+  @override
+  String get select_category => 'Chọn danh mục';
+
+  @override
+  String get category_food => 'Ăn uống';
+
+  @override
+  String get category_transport => 'Di chuyển';
+
+  @override
+  String get category_salary => 'Lương';
+
+  @override
+  String get category_shopping => 'Mua sắm';
+
+  @override
+  String get category_game => 'Trò chơi';
+
+  @override
+  String get category_house => 'Nhà cửa';
+
+  @override
+  String get category_gift => 'Quà tặng';
+
+  @override
+  String get category_health => 'Sức khỏe';
+
+  @override
+  String get category_entertainment => 'Giải trí';
+
+  @override
+  String get category_bill => 'Hóa đơn';
+
+  @override
+  String get category_insurance => 'Bảo hiểm';
+
+  @override
+  String get category_education => 'Giáo dục';
+
+  @override
+  String get category_pet => 'Thú cưng';
+
+  @override
+  String get category_travel => 'Du lịch';
+
+  @override
+  String get category_savings => 'Tiết kiệm';
+
+  @override
+  String get category_phone => 'Điện thoại';
+
+  @override
+  String get category_internet => 'Internet';
+
+  @override
+  String get category_water => 'Nước';
+
+  @override
+  String get category_electricity => 'Điện';
+
+  @override
+  String get category_gas => 'Gas';
+
+  @override
+  String get category_cleaning => 'Dọn dẹp';
+
+  @override
+  String get category_beauty => 'Làm đẹp';
+
+  @override
+  String get category_baby => 'Em bé';
+
+  @override
+  String get category_sport => 'Thể thao';
+
+  @override
+  String get category_music => 'Âm nhạc';
+
+  @override
+  String get category_repair => 'Sửa chữa';
+
+  @override
+  String get category_tax => 'Thuế';
+
+  @override
+  String get note => 'Ghi chú (tùy chọn)';
+
+  @override
+  String get enter_note => 'Nhập ghi chú';
+
+  @override
+  String get add_income => 'Thêm thu nhập';
+
+  @override
+  String get add_expense => 'Thêm chi tiêu';
+
+  @override
+  String get search_category => 'Tìm kiếm danh mục';
+
+  @override
+  String get no_category_found => 'Không tìm thấy danh mục';
+
+  @override
+  String get most_used => 'Sử dụng nhiều nhất';
+
+  @override
+  String get all_categories => 'Tất cả danh mục';
+
+  @override
+  String get new_category => 'Danh mục mới';
+
+  @override
+  String get category_name => 'Tên danh mục';
+
+  @override
+  String get category_color => 'Màu danh mục';
+
+  @override
+  String get category_icon => 'Biểu tượng danh mục';
 
   @override
   String get settings => 'Cài đặt';

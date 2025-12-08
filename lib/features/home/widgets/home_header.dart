@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/features/home/home_viewmodel.dart';
 
 class HomeHeader extends StatelessWidget {
@@ -53,13 +54,13 @@ class HomeHeader extends StatelessWidget {
             width: 46.w,
             height: 46.h,
             decoration: BoxDecoration(
-              color: CupertinoColors.systemGrey4,
+              color: AppColors.primaryColor.withValues(alpha: 0.15),
               shape: BoxShape.circle,
             ),
             child: Icon(
-              CupertinoIcons.bell,
-              size: 23.w,
-              color: CupertinoColors.systemGrey,
+              CupertinoIcons.bell_fill, 
+              size: 22.w,
+              color: AppColors.primaryColor, 
             ),
           ),
         ),

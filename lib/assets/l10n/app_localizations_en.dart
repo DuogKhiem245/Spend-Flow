@@ -60,6 +60,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get see_all => 'See All';
 
   @override
+  String get amount => 'Amount';
+
+  @override
+  String get name => 'Name';
+
+  @override
+  String get date => 'Date';
+
+  @override
+  String get today => 'Today';
+
+  @override
   String get onboard_step1_title => 'Simplify Your Finances';
 
   @override
@@ -240,6 +252,135 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get add_transaction => 'Add Transaction';
+
+  @override
+  String get enter_transaction_name => 'Enter transaction name';
+
+  @override
+  String get suggested_category => 'Suggested Category';
+
+  @override
+  String get category => 'Category';
+
+  @override
+  String get select_category => 'Select Category';
+
+  @override
+  String get category_food => 'Food';
+
+  @override
+  String get category_transport => 'Transport';
+
+  @override
+  String get category_salary => 'Salary';
+
+  @override
+  String get category_shopping => 'Shopping';
+
+  @override
+  String get category_game => 'Game';
+
+  @override
+  String get category_house => 'House';
+
+  @override
+  String get category_gift => 'Gift';
+
+  @override
+  String get category_health => 'Health';
+
+  @override
+  String get category_entertainment => 'Entertainment';
+
+  @override
+  String get category_bill => 'Bills';
+
+  @override
+  String get category_insurance => 'Insurance';
+
+  @override
+  String get category_education => 'Education';
+
+  @override
+  String get category_pet => 'Pet';
+
+  @override
+  String get category_travel => 'Travel';
+
+  @override
+  String get category_savings => 'Savings';
+
+  @override
+  String get category_phone => 'Phone';
+
+  @override
+  String get category_internet => 'Internet';
+
+  @override
+  String get category_water => 'Water';
+
+  @override
+  String get category_electricity => 'Electricity';
+
+  @override
+  String get category_gas => 'Gas';
+
+  @override
+  String get category_cleaning => 'Cleaning';
+
+  @override
+  String get category_beauty => 'Beauty';
+
+  @override
+  String get category_baby => 'Baby';
+
+  @override
+  String get category_sport => 'Sport';
+
+  @override
+  String get category_music => 'Music';
+
+  @override
+  String get category_repair => 'Repair';
+
+  @override
+  String get category_tax => 'Tax';
+
+  @override
+  String get note => 'Note (optional)';
+
+  @override
+  String get enter_note => 'Enter note';
+
+  @override
+  String get add_income => 'Add Income';
+
+  @override
+  String get add_expense => 'Add Expense';
+
+  @override
+  String get search_category => 'Search Category';
+
+  @override
+  String get no_category_found => 'No category found';
+
+  @override
+  String get most_used => 'Most Used';
+
+  @override
+  String get all_categories => 'All Categories';
+
+  @override
+  String get new_category => 'New Category';
+
+  @override
+  String get category_name => 'Category Name';
+
+  @override
+  String get category_color => 'Category Color';
+
+  @override
+  String get category_icon => 'Category Icon';
 
   @override
   String get settings => 'Settings';

@@ -1,9 +1,7 @@
-import 'package:cupertino_native/components/button.dart';
 import 'package:cupertino_native/components/tab_bar.dart';
 import 'package:cupertino_native/style/sf_symbol.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:spend_flow/features/add_stransaction/add_stransaction.dart';
 import 'package:spend_flow/features/budget/budget_view.dart';
 import 'package:spend_flow/features/home/home_view.dart';
 import 'package:spend_flow/features/report/report_view.dart';
@@ -51,8 +49,8 @@ class _BottomNavbarState extends State<BottomNavbar> {
               ],
               currentIndex: _currentIndex,
               onTap: (i) => setState(() => _currentIndex = i),
-              // backgroundColor: CupertinoColors.transparent,
-              backgroundColor: CupertinoTheme.of(context).barBackgroundColor,
+              backgroundColor: CupertinoColors.transparent,
+              // backgroundColor: CupertinoTheme.of(context).barBackgroundColor,
             ),
           ),
         ],

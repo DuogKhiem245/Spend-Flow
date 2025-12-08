@@ -12,13 +12,11 @@ class SpendingChart extends StatefulWidget {
   State<SpendingChart> createState() => _SpendingChartState();
 }
 
-// 1. Thêm Mixin để sử dụng AnimationController
 class _SpendingChartState extends State<SpendingChart>
     with SingleTickerProviderStateMixin {
   final HomeViewModel _viewModel = HomeViewModel();
   int touchedIndex = -1;
 
-  // 2. Khai báo AnimationController
   late AnimationController _animationController;
   late Animation<double> _animation;
 
@@ -67,13 +65,12 @@ class _SpendingChartState extends State<SpendingChart>
               Text(
                 l10n.spending_this_month,
                 style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                  fontSize: 18.sp,
+                  fontSize: 20.sp,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               GestureDetector(
                 onTap: () {
-                  // Ví dụ: Replay animation khi bấm view all
                   _animationController.reset();
                   _animationController.forward();
                 },
@@ -82,14 +79,14 @@ class _SpendingChartState extends State<SpendingChart>
                   style: CupertinoTheme.of(context).textTheme.textStyle
                       .copyWith(
                         fontSize: 14.sp,
-                        color: AppColors.thirdColor,
+                        color: AppColors.primaryColor,
                         fontWeight: FontWeight.w500,
                       ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 30.h),
+          SizedBox(height: 35.h),
           SizedBox(
             height: 200.h,
             child: Stack(

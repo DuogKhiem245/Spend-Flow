@@ -21,6 +21,7 @@ class _LoginPageState extends State<LoginPage> {
     return CupertinoPageScaffold(
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
+        behavior: HitTestBehavior.translucent,
         child: Align(
           alignment: Alignment.topCenter,
           child: SingleChildScrollView(

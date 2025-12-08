@@ -22,6 +22,7 @@ class _RegisterStep1PageState extends State<RegisterStep1Page> {
     return CupertinoPageScaffold(
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
+        behavior: HitTestBehavior.translucent,
         child: Align(
           alignment: Alignment.topCenter,
           child: SingleChildScrollView(

@@ -1,7 +1,7 @@
 import 'package:cupertino_native/style/sf_symbol.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:spend_flow/features/add_stransaction/add_stransaction.dart';
+import 'package:spend_flow/features/add_stransaction/add_stransaction_view.dart';
 import 'package:spend_flow/features/home/widgets/balance_card.dart';
 import 'package:spend_flow/features/home/widgets/home_header.dart';
 import 'package:spend_flow/features/home/widgets/recent_transaction.dart';
@@ -56,10 +56,14 @@ class _HomePageState extends State<HomePage> {
           ),
 
           Positioned(
-            right: 20.w, 
-            bottom: 90.h, 
+            right: 20.w,
+            bottom: 95.h,
             child: CNButton.icon(
-              icon: CNSymbol('plus.circle.fill', size: 20.sp),
+              icon: CNSymbol(
+                'plus.circle.fill',
+                size: 24.sp,
+                color: CupertinoTheme.of(context).primaryColor,
+              ),
               size: 60.w,
               onPressed: () {
                 Navigator.push(
@@ -69,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               },
-            )
+            ),
           ),
         ],
       ),

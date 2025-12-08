@@ -200,6 +200,30 @@ abstract class AppLocalizations {
   /// **'Xem tất cả'**
   String get see_all;
 
+  /// No description provided for @amount.
+  ///
+  /// In vi, this message translates to:
+  /// **'Số tiền'**
+  String get amount;
+
+  /// No description provided for @name.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tên giao dịch'**
+  String get name;
+
+  /// No description provided for @date.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ngày'**
+  String get date;
+
+  /// No description provided for @today.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hôm nay'**
+  String get today;
+
   /// No description provided for @onboard_step1_title.
   ///
   /// In vi, this message translates to:
@@ -547,6 +571,264 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Thêm giao dịch'**
   String get add_transaction;
+
+  /// No description provided for @enter_transaction_name.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập tên giao dịch'**
+  String get enter_transaction_name;
+
+  /// No description provided for @suggested_category.
+  ///
+  /// In vi, this message translates to:
+  /// **'Danh mục gợi ý'**
+  String get suggested_category;
+
+  /// No description provided for @category.
+  ///
+  /// In vi, this message translates to:
+  /// **'Danh mục'**
+  String get category;
+
+  /// No description provided for @select_category.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn danh mục'**
+  String get select_category;
+
+  /// No description provided for @category_food.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ăn uống'**
+  String get category_food;
+
+  /// No description provided for @category_transport.
+  ///
+  /// In vi, this message translates to:
+  /// **'Di chuyển'**
+  String get category_transport;
+
+  /// No description provided for @category_salary.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lương'**
+  String get category_salary;
+
+  /// No description provided for @category_shopping.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mua sắm'**
+  String get category_shopping;
+
+  /// No description provided for @category_game.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trò chơi'**
+  String get category_game;
+
+  /// No description provided for @category_house.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhà cửa'**
+  String get category_house;
+
+  /// No description provided for @category_gift.
+  ///
+  /// In vi, this message translates to:
+  /// **'Quà tặng'**
+  String get category_gift;
+
+  /// No description provided for @category_health.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sức khỏe'**
+  String get category_health;
+
+  /// No description provided for @category_entertainment.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giải trí'**
+  String get category_entertainment;
+
+  /// No description provided for @category_bill.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hóa đơn'**
+  String get category_bill;
+
+  /// No description provided for @category_insurance.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bảo hiểm'**
+  String get category_insurance;
+
+  /// No description provided for @category_education.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giáo dục'**
+  String get category_education;
+
+  /// No description provided for @category_pet.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thú cưng'**
+  String get category_pet;
+
+  /// No description provided for @category_travel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Du lịch'**
+  String get category_travel;
+
+  /// No description provided for @category_savings.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tiết kiệm'**
+  String get category_savings;
+
+  /// No description provided for @category_phone.
+  ///
+  /// In vi, this message translates to:
+  /// **'Điện thoại'**
+  String get category_phone;
+
+  /// No description provided for @category_internet.
+  ///
+  /// In vi, this message translates to:
+  /// **'Internet'**
+  String get category_internet;
+
+  /// No description provided for @category_water.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nước'**
+  String get category_water;
+
+  /// No description provided for @category_electricity.
+  ///
+  /// In vi, this message translates to:
+  /// **'Điện'**
+  String get category_electricity;
+
+  /// No description provided for @category_gas.
+  ///
+  /// In vi, this message translates to:
+  /// **'Gas'**
+  String get category_gas;
+
+  /// No description provided for @category_cleaning.
+  ///
+  /// In vi, this message translates to:
+  /// **'Dọn dẹp'**
+  String get category_cleaning;
+
+  /// No description provided for @category_beauty.
+  ///
+  /// In vi, this message translates to:
+  /// **'Làm đẹp'**
+  String get category_beauty;
+
+  /// No description provided for @category_baby.
+  ///
+  /// In vi, this message translates to:
+  /// **'Em bé'**
+  String get category_baby;
+
+  /// No description provided for @category_sport.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thể thao'**
+  String get category_sport;
+
+  /// No description provided for @category_music.
+  ///
+  /// In vi, this message translates to:
+  /// **'Âm nhạc'**
+  String get category_music;
+
+  /// No description provided for @category_repair.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sửa chữa'**
+  String get category_repair;
+
+  /// No description provided for @category_tax.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thuế'**
+  String get category_tax;
+
+  /// No description provided for @note.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ghi chú (tùy chọn)'**
+  String get note;
+
+  /// No description provided for @enter_note.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập ghi chú'**
+  String get enter_note;
+
+  /// No description provided for @add_income.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm thu nhập'**
+  String get add_income;
+
+  /// No description provided for @add_expense.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm chi tiêu'**
+  String get add_expense;
+
+  /// No description provided for @search_category.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tìm kiếm danh mục'**
+  String get search_category;
+
+  /// No description provided for @no_category_found.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không tìm thấy danh mục'**
+  String get no_category_found;
+
+  /// No description provided for @most_used.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sử dụng nhiều nhất'**
+  String get most_used;
+
+  /// No description provided for @all_categories.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tất cả danh mục'**
+  String get all_categories;
+
+  /// No description provided for @new_category.
+  ///
+  /// In vi, this message translates to:
+  /// **'Danh mục mới'**
+  String get new_category;
+
+  /// No description provided for @category_name.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tên danh mục'**
+  String get category_name;
+
+  /// No description provided for @category_color.
+  ///
+  /// In vi, this message translates to:
+  /// **'Màu danh mục'**
+  String get category_color;
+
+  /// No description provided for @category_icon.
+  ///
+  /// In vi, this message translates to:
+  /// **'Biểu tượng danh mục'**
+  String get category_icon;
 
   /// No description provided for @settings.
   ///

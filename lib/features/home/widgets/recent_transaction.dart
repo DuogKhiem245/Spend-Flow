@@ -36,7 +36,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
               Text(
                 l10n.recent_transactions,
                 style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                  fontSize: 18.sp,
+                  fontSize: 20.sp,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -48,7 +48,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
                         Icon(
                           CupertinoIcons.lock_fill,
                           size: 16.w,
-                          color: AppColors.thirdColor,
+                          color: AppColors.primaryColor,
                         ),
                         SizedBox(width: 4.w),
                         Text(
@@ -56,7 +56,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
                           style: CupertinoTheme.of(context).textTheme.textStyle
                               .copyWith(
                                 fontSize: 14.sp,
-                                color: AppColors.thirdColor,
+                                color: AppColors.primaryColor,
                                 fontWeight: FontWeight.w500
                               ),
                         ),
@@ -67,7 +67,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
                       style: CupertinoTheme.of(context).textTheme.textStyle
                           .copyWith(
                             fontSize: 14.sp,
-                            color: AppColors.thirdColor,
+                            color: AppColors.primaryColor,
                             fontWeight: FontWeight.w500
                           ),
                     ),

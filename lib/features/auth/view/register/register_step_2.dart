@@ -24,6 +24,7 @@ class _RegisterStep2PageState extends State<RegisterStep2Page> {
       child: Center(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
+          behavior: HitTestBehavior.translucent,
           child: Align(
             alignment: AlignmentGeometry.topCenter,
             child: SingleChildScrollView(

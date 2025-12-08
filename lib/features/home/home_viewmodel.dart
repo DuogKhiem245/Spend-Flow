@@ -7,7 +7,7 @@ import 'package:spend_flow/features/home/home_model.dart';
 
 class HomeViewModel {
   int income = 5000;
-  int expenses = 3000;
+  int expenses = 6000;
 
   int getBalance() {
     return income - expenses;

@@ -33,7 +33,7 @@ class BalanceCard extends StatelessWidget {
                 child: Text(
                   l10n.income,
                   style: CupertinoTheme.of(context).textTheme.textStyle
-                      .copyWith(fontSize: 16.sp, fontWeight: FontWeight.w500),
+                      .copyWith(fontSize: 18.sp, fontWeight: FontWeight.w500),
                 ),
               ),
               Text(
@@ -54,7 +54,7 @@ class BalanceCard extends StatelessWidget {
                 child: Text(
                   l10n.expenses,
                   style: CupertinoTheme.of(context).textTheme.textStyle
-                      .copyWith(fontSize: 16.sp, fontWeight: FontWeight.w500),
+                      .copyWith(fontSize: 18.sp, fontWeight: FontWeight.w500),
                 ),
               ),
               Text(
@@ -77,7 +77,7 @@ class BalanceCard extends StatelessWidget {
                 child: Text(
                   l10n.balance,
                   style: CupertinoTheme.of(context).textTheme.textStyle
-                      .copyWith(fontSize: 16.sp, fontWeight: FontWeight.w500),
+                      .copyWith(fontSize: 18.sp, fontWeight: FontWeight.w500),
                 ),
               ),
               Text(
@@ -85,7 +85,9 @@ class BalanceCard extends StatelessWidget {
                 style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                   fontSize: 20.sp,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.secondaryColor
+                  color: (balance >= 0)
+                      ? AppColors.secondaryColor
+                      : AppColors.errorColor,
                 ),
               ),
             ],
