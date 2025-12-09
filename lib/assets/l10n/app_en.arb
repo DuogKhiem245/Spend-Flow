@@ -21,6 +21,7 @@
   "name": "Name",
   "date": "Date",
   "today": "Today",
+  "other": "Other",
 
   "onboard_step1_title": "Simplify Your Finances",
   "onboard_step1_message": "All your accounts in one place. See where your money goes and achieve your financial goals effortlessly.",
@@ -82,6 +83,7 @@
   "total_spent": "Total Spent",
   "recent_transactions": "Recent Transactions",
   "add_transaction": "Add Transaction",
+  "no_transactions": "No data available",
 
   "enter_transaction_name": "Enter transaction name",
   "suggested_category": "Suggested Category",
@@ -122,6 +124,7 @@
   "search_category": "Search Category",
   "no_category_found": "No category found",
   "most_used": "Most Used",
+  "category_suggestions": "Category Suggestions",
   "all_categories": "All Categories",
   "new_category": "New Category",
   "category_name": "Category Name",

@@ -3,10 +3,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
+import 'package:spend_flow/features/home/home_model.dart';
 import 'package:spend_flow/features/home/home_viewmodel.dart';
 
 class SpendingChart extends StatefulWidget {
-  const SpendingChart({super.key});
+  final List<SpendingModel> chartData;
+
+  const SpendingChart({
+    super.key,
+    required this.chartData,
+  });
 
   @override
   State<SpendingChart> createState() => _SpendingChartState();
@@ -14,9 +20,10 @@ class SpendingChart extends StatefulWidget {
 
 class _SpendingChartState extends State<SpendingChart>
     with SingleTickerProviderStateMixin {
-  final HomeViewModel _viewModel = HomeViewModel();
-  int touchedIndex = -1;
 
+  final HomeViewModel _viewModel = HomeViewModel();
+
+  int touchedIndex = -1;
   late AnimationController _animationController;
   late Animation<double> _animation;
 
@@ -30,7 +37,7 @@ class _SpendingChartState extends State<SpendingChart>
 
     _animation = CurvedAnimation(
       parent: _animationController,
-      curve: Curves.elasticOut, 
+      curve: Curves.elasticOut,
     );
 
     _animationController.forward();
@@ -46,8 +53,42 @@ class _SpendingChartState extends State<SpendingChart>
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    final sections = _viewModel.getChartSections(touchedIndex, context);
-    final totalSpent = _viewModel.getTotalSpent();
+    if (widget.chartData.isEmpty) {
+      return Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(20.w),
+        decoration: BoxDecoration(
+          color: CupertinoTheme.of(context).barBackgroundColor,
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+        child: Column(
+          children: [
+            Text(
+              l10n.spending_this_month,
+              style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20.h),
+            Icon(
+              CupertinoIcons.chart_pie,
+              size: 100.w,
+              color: CupertinoColors.systemGrey3,
+            ),
+            SizedBox(height: 10.h),
+            Text(
+              l10n.no_transactions,
+              style: TextStyle(color: CupertinoColors.systemGrey),
+            ),
+          ],
+        ),
+      );
+    }
+
+    final sections = _viewModel.generateChartSections(
+      widget.chartData,
+      touchedIndex,
+      context,
+    );
+    final totalSpent = _viewModel.calculateTotalSpent(widget.chartData);
 
     return Container(
       width: double.infinity,
@@ -71,8 +112,7 @@ class _SpendingChartState extends State<SpendingChart>
               ),
               GestureDetector(
                 onTap: () {
-                  _animationController.reset();
-                  _animationController.forward();
+                  // Todo: Navigate to detailed spending page
                 },
                 child: Text(
                   l10n.view_all,
@@ -119,7 +159,7 @@ class _SpendingChartState extends State<SpendingChart>
                         sections: sections,
                         centerSpaceRadius: 80.w,
                         sectionsSpace: 0,
-                        startDegreeOffset: startAngle,                        
+                        startDegreeOffset: startAngle,
                       ),
                       swapAnimationDuration: Duration.zero,
                     );
@@ -140,7 +180,7 @@ class _SpendingChartState extends State<SpendingChart>
                     ScaleTransition(
                       scale: _animation,
                       child: Text(
-                        "\$${totalSpent.toStringAsFixed(0)}",
+                        "\$${_viewModel.formatCurrency(totalSpent)}",
                         style: CupertinoTheme.of(context).textTheme.textStyle
                             .copyWith(
                               fontSize: 28.sp,
@@ -155,8 +195,11 @@ class _SpendingChartState extends State<SpendingChart>
           ),
           ListView.builder(
             padding: EdgeInsets.symmetric(vertical: 20.h),
+            itemCount: widget.chartData.length,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
-              final item = _viewModel.getSpendingData()[index];
+              final item = widget.chartData[index];
               return Padding(
                 padding: EdgeInsets.only(top: 10.h),
                 child: Row(
@@ -171,7 +214,7 @@ class _SpendingChartState extends State<SpendingChart>
                     ),
                     SizedBox(width: 8.w),
                     Text(
-                      item.category,
+                      item.category == "Other" ? l10n.other : item.category,
                       style: CupertinoTheme.of(context).textTheme.textStyle
                           .copyWith(
                             fontSize: 16.sp,
@@ -180,7 +223,7 @@ class _SpendingChartState extends State<SpendingChart>
                     ),
                     Spacer(),
                     Text(
-                      "\$${item.amount.toStringAsFixed(0)}",
+                      "\$${_viewModel.formatCurrency(item.amount)}",
                       style: CupertinoTheme.of(context).textTheme.textStyle
                           .copyWith(
                             fontSize: 16.sp,
@@ -191,9 +234,6 @@ class _SpendingChartState extends State<SpendingChart>
                 ),
               );
             },
-            itemCount: _viewModel.getSpendingData().length,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
           ),
         ],
       ),

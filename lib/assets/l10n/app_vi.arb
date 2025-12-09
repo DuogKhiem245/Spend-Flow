@@ -21,6 +21,7 @@
     "name" : "Tên giao dịch",
     "date" : "Ngày",
     "today" : "Hôm nay",
+    "other" : "Khác",
 
     "onboard_step1_title" : "Đơn giản hóa tài chính",
     "onboard_step1_message" : "Tất cả tài khoản của bạn trong một nơi. Xem tiền của bạn đi đâu và đạt mục tiêu tài chính dễ dàng.",
@@ -83,6 +84,7 @@
     "total_spent" : "Tổng chi tiêu",
     "recent_transactions" : "Giao dịch gần đây",
     "add_transaction" : "Thêm giao dịch",
+    "no_transactions" : "Không có dữ liệu",
 
     "enter_transaction_name" : "Nhập tên giao dịch",
     "suggested_category" : "Danh mục gợi ý",
@@ -123,6 +125,7 @@
     "search_category": "Tìm kiếm danh mục",
     "no_category_found": "Không tìm thấy danh mục",
     "most_used": "Sử dụng nhiều nhất",
+    "category_suggestions": "Danh mục gợi ý",
     "all_categories": "Tất cả danh mục",
     "new_category": "Danh mục mới",
     "category_name": "Tên danh mục",

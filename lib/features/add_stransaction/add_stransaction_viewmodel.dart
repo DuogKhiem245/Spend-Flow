@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/features/add_stransaction/model/transaction_model.dart';
 import 'model/category_model.dart';
 
 class AddStransactionViewmodel {
+  final LocalStorageService _storageService = LocalStorageService();
+  
   String? getTranslatedCategoryName(
     BuildContext context,
     CategoryModel category,
@@ -44,23 +48,60 @@ class AddStransactionViewmodel {
     return localizedMap[category.l10nKey] ?? category.name;
   }
 
-  void addIncomeTransaction(
+  Future<void> addExpenseTransaction(
     String amount,
     String name,
     CategoryModel? selectedCategory,
     DateTime? transactionDate,
     String note,
-  ) {
+  ) async {
+    if (selectedCategory == null) return;
 
+    final double value = _parseAmount(amount);
+    if (value == 0) return;
+
+    final transaction = TransactionModel(
+      amount: value.abs(),
+      title: name.isEmpty ? selectedCategory.name : name,
+      category: selectedCategory,
+      date: transactionDate ?? DateTime.now(),
+      note: note,
+      isIncome: false,
+    );
+
+    await _storageService.addTransaction(transaction);
   }
 
-  void addExpenseTransaction(
+  Future<void> addIncomeTransaction(
     String amount,
     String name,
     CategoryModel? selectedCategory,
     DateTime? transactionDate,
     String note,
-  ) {
-    
+  ) async {
+    if (selectedCategory == null) return;
+
+    final double value = _parseAmount(amount);
+    if (value == 0) return;
+
+    final transaction = TransactionModel(
+      amount: value.abs(),
+      title: name.isEmpty ? selectedCategory.name : name,
+      category: selectedCategory,
+      date: transactionDate ?? DateTime.now(),
+      note: note,
+      isIncome: true,
+    );
+
+    await _storageService.addTransaction(transaction);
+  }
+
+  double _parseAmount(String amountStr) {
+    String cleanStr = amountStr.trim();
+
+    cleanStr = cleanStr.replaceAll('.', '');
+    cleanStr = cleanStr.replaceAll(',', '.');
+
+    return double.tryParse(cleanStr) ?? 0.0;
   }
 }

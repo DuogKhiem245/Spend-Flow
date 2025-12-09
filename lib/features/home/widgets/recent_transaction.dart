@@ -3,22 +3,24 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
-import 'package:spend_flow/features/home/home_viewmodel.dart';
+import 'package:spend_flow/config/app_icons.dart'; 
+import 'package:spend_flow/features/add_stransaction/model/transaction_model.dart';
+import 'package:spend_flow/features/home/home_viewmodel.dart'; 
 
-class RecentTransaction extends StatefulWidget {
-  const RecentTransaction({super.key});
+class RecentTransaction extends StatelessWidget {
+  // 1. Nhận danh sách từ cha
+  final List<TransactionModel> transactions;
+  final HomeViewModel _viewModel = HomeViewModel(); 
 
-  @override
-  State<RecentTransaction> createState() => _RecentTransactionState();
-}
-
-class _RecentTransactionState extends State<RecentTransaction> {
-  final HomeViewModel _viewModel = HomeViewModel();
-  final isLock = true;
+  RecentTransaction({super.key, required this.transactions});
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+
+    if (transactions.isEmpty) {
+      return const SizedBox(); 
+    }
 
     return Container(
       width: double.infinity,
@@ -41,47 +43,36 @@ class _RecentTransactionState extends State<RecentTransaction> {
                 ),
               ),
               GestureDetector(
-                onTap: () {},
-                child: isLock
-                  ? Row(
-                      children: [
-                        Icon(
-                          CupertinoIcons.lock_fill,
-                          size: 16.w,
-                          color: AppColors.primaryColor,
-                        ),
-                        SizedBox(width: 4.w),
-                        Text(
-                          l10n.view_all,
-                          style: CupertinoTheme.of(context).textTheme.textStyle
-                              .copyWith(
-                                fontSize: 14.sp,
-                                color: AppColors.primaryColor,
-                                fontWeight: FontWeight.w500
-                              ),
-                        ),
-                      ],
-                    )
-                  : Text(
-                      l10n.view_all,
-                      style: CupertinoTheme.of(context).textTheme.textStyle
-                          .copyWith(
-                            fontSize: 14.sp,
-                            color: AppColors.primaryColor,
-                            fontWeight: FontWeight.w500
-                          ),
-                    ),
+                onTap: () {
+                  // Navigate to All Transactions Page
+                },
+                child: Text(
+                  l10n.view_all,
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(
+                        fontSize: 14.sp,
+                        color: AppColors.primaryColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                ),
               ),
             ],
           ),
           SizedBox(height: 20.h),
+
           ListView.builder(
             padding: EdgeInsets.zero,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: 4,
+            itemCount: transactions.length,
             itemBuilder: (context, index) {
-              final item = _viewModel.getRecentTransactions()[index];
+              final item = transactions[index];
+
+              final isExpense = item.isIncome == false;
+              final color = isExpense
+                  ? AppColors.errorColor
+                  : AppColors.secondaryColor;
+
               return Padding(
                 padding: EdgeInsets.only(bottom: 12.h),
                 child: Row(
@@ -93,17 +84,13 @@ class _RecentTransactionState extends State<RecentTransaction> {
                           width: 50.w,
                           height: 50.w,
                           decoration: BoxDecoration(
-                            color: item.isExpense
-                                ? AppColors.primaryColor.withValues(alpha: .15)
-                                : AppColors.secondaryColor.withValues(alpha: .15),
+                            color: item.category.color.withValues(alpha: .15),
                             borderRadius: BorderRadius.circular(8.r),
                           ),
                           child: Icon(
-                            item.icon.icon,
+                            AppIcons.getIcon(item.category.iconKey),
                             size: 24.w,
-                            color: item.isExpense
-                                ? AppColors.primaryColor
-                                : AppColors.secondaryColor,
+                            color: item.category.color,
                           ),
                         ),
                         SizedBox(width: 12.w),
@@ -111,7 +98,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              item.title,
+                              item.title, 
                               style: CupertinoTheme.of(context)
                                   .textTheme
                                   .textStyle
@@ -122,13 +109,13 @@ class _RecentTransactionState extends State<RecentTransaction> {
                             ),
                             SizedBox(height: 4.h),
                             Text(
-                              item.category,
+                              item.category.name, 
                               style: CupertinoTheme.of(context)
                                   .textTheme
                                   .textStyle
                                   .copyWith(
                                     fontSize: 14.sp,
-                                    color: AppColors.borderColor,
+                                    color: CupertinoColors.systemGrey,
                                   ),
                             ),
                           ],
@@ -139,16 +126,14 @@ class _RecentTransactionState extends State<RecentTransaction> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          item.isExpense
-                              ? "- \$${item.amount.toStringAsFixed(2)}"
-                              : "+ \$${item.amount.toStringAsFixed(2)}",
+                          isExpense
+                              ? "-\$${_viewModel.formatCurrency(item.amount.abs())}"
+                              : "+\$${_viewModel.formatCurrency(item.amount)}",
                           style: CupertinoTheme.of(context).textTheme.textStyle
                               .copyWith(
-                                fontSize: 18.sp,
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.w700,
-                                color: !item.isExpense
-                                    ? CupertinoColors.systemGreen
-                                    : null,
+                                color: color,
                               ),
                         ),
                         SizedBox(height: 4.h),
@@ -157,7 +142,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
                           style: CupertinoTheme.of(context).textTheme.textStyle
                               .copyWith(
                                 fontSize: 12.sp,
-                                color: AppColors.borderColor,
+                                color: CupertinoColors.systemGrey,
                               ),
                         ),
                       ],
@@ -168,7 +153,6 @@ class _RecentTransactionState extends State<RecentTransaction> {
             },
           ),
         ],
-      
       ),
     );
   }

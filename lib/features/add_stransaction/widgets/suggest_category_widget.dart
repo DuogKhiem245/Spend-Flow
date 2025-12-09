@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
+import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/utils/date_helper.dart';
 import 'package:spend_flow/features/add_stransaction/add_stransaction_viewmodel.dart';
 import 'package:spend_flow/features/add_stransaction/category/select_category.dart';
@@ -32,6 +34,24 @@ class SuggestCategoryWidget extends StatefulWidget {
 }
 
 class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
+  List<CategoryModel> _displayCategories = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSmartSuggestions();
+  }
+
+  Future<void> _loadSmartSuggestions() async {
+    final suggestions = await LocalStorageService().getSmartSuggestions();
+
+    if (mounted) {
+      setState(() {
+        _displayCategories = suggestions;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -50,11 +70,15 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
           ),
         ),
         SizedBox(height: 10.h),
+        _displayCategories.isEmpty ? LoadingAnimationWidget.staggeredDotsWave(
+          color: CupertinoTheme.of(context).primaryColor,
+          size: 30.w,
+        ) :
         Wrap(
           spacing: 10.w,
           runSpacing: 10.h,
           children: [
-            ...CategoryModel.suggestedCategories.map((category) {
+            ..._displayCategories.map((category) {
               final isSelected = widget.selectedCategory == category;
               return GestureDetector(
                 onTap: () {
@@ -75,16 +99,16 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                   ),
                   child: Text(
                     widget.viewModel.getTranslatedCategoryName(
-                      context,
-                      category,
-                    ),
+                          context,
+                          category,
+                        ) ??
+                        '',
                     style: TextStyle(
                       color: isSelected
                           ? CupertinoColors.white
-                          : CupertinoTheme.of(context)
-                              .textTheme
-                              .textStyle
-                              .color,
+                          : CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.color,
                       fontSize: 15.sp,
                       fontWeight: FontWeight.w500,
                     ),
@@ -142,8 +166,7 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                         final result = await Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) =>
-                                SelectCategory(), 
+                            builder: (context) => SelectCategory(),
                           ),
                         );
                         if (result != null && result is CategoryModel) {
@@ -155,9 +178,10 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                           if (widget.selectedCategory != null)
                             Text(
                               widget.viewModel.getTranslatedCategoryName(
-                                context,
-                                widget.selectedCategory!,
-                              ),
+                                    context,
+                                    widget.selectedCategory!,
+                                  ) ??
+                                  '',
                               style: TextStyle(
                                 fontSize: 16.sp,
                                 color: widget.baseColor,

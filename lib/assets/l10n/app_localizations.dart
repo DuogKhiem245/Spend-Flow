@@ -224,6 +224,12 @@ abstract class AppLocalizations {
   /// **'Hôm nay'**
   String get today;
 
+  /// No description provided for @other.
+  ///
+  /// In vi, this message translates to:
+  /// **'Khác'**
+  String get other;
+
   /// No description provided for @onboard_step1_title.
   ///
   /// In vi, this message translates to:
@@ -572,6 +578,12 @@ abstract class AppLocalizations {
   /// **'Thêm giao dịch'**
   String get add_transaction;
 
+  /// No description provided for @no_transactions.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không có dữ liệu'**
+  String get no_transactions;
+
   /// No description provided for @enter_transaction_name.
   ///
   /// In vi, this message translates to:
@@ -799,6 +811,12 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Sử dụng nhiều nhất'**
   String get most_used;
+
+  /// No description provided for @category_suggestions.
+  ///
+  /// In vi, this message translates to:
+  /// **'Danh mục gợi ý'**
+  String get category_suggestions;
 
   /// No description provided for @all_categories.
   ///

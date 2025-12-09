@@ -6,15 +6,22 @@ import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/features/home/home_viewmodel.dart';
 
 class BalanceCard extends StatelessWidget {
-  BalanceCard({super.key});
+  final double income;
+  final double expenses;
+  final double balance;
+  final HomeViewModel _viewModel = HomeViewModel(); 
 
-  final HomeViewModel _viewModel = HomeViewModel();
+  BalanceCard({
+    super.key,
+    required this.income,
+    required this.expenses,
+    required this.balance,
+  });  
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final balance = _viewModel.getBalance();
-
+    
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(20.w),
@@ -37,7 +44,7 @@ class BalanceCard extends StatelessWidget {
                 ),
               ),
               Text(
-                "\$${_viewModel.income}",
+                "\$${_viewModel.formatCurrency(income)}",
                 style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                   fontSize: 20.sp,
                   fontWeight: FontWeight.bold,
@@ -58,7 +65,7 @@ class BalanceCard extends StatelessWidget {
                 ),
               ),
               Text(
-                "\$${_viewModel.expenses}",
+                "\$${_viewModel.formatCurrency(expenses)}",
                 style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                   fontSize: 20.sp,
                   fontWeight: FontWeight.bold,
@@ -81,7 +88,7 @@ class BalanceCard extends StatelessWidget {
                 ),
               ),
               Text(
-                "\$$balance",
+                "\$${_viewModel.formatCurrency(balance)}",
                 style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                   fontSize: 20.sp,
                   fontWeight: FontWeight.bold,

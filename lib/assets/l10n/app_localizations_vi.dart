@@ -72,6 +72,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get today => 'Hôm nay';
 
   @override
+  String get other => 'Khác';
+
+  @override
   String get onboard_step1_title => 'Đơn giản hóa tài chính';
 
   @override
@@ -253,6 +256,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get add_transaction => 'Thêm giao dịch';
 
   @override
+  String get no_transactions => 'Không có dữ liệu';
+
+  @override
   String get enter_transaction_name => 'Nhập tên giao dịch';
 
   @override
@@ -365,6 +371,9 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get most_used => 'Sử dụng nhiều nhất';
+
+  @override
+  String get category_suggestions => 'Danh mục gợi ý';
 
   @override
   String get all_categories => 'Tất cả danh mục';

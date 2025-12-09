@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_theme.dart';
 import 'package:spend_flow/core/services/language_service.dart';
+import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/services/theme_service.dart';
 import 'config/app_routes.dart';
 
@@ -14,8 +15,28 @@ final themeService = ThemeService();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  final storage = LocalStorageService();
+  await storage.initializeData();
+
   final prefs = await SharedPreferences.getInstance();
   final bool onboardDone = prefs.getBool('onboard_done') ?? false;
+
+  final transactions = await storage.getAllTransactions();
+  
+  debugPrint('========== LOG TRANSACTIONS (${transactions.length}) ========== transactions loaded.');
+  if (transactions.isEmpty) {
+    debugPrint('📭 Chưa có giao dịch nào.');
+  } else {
+    for (var i = 0; i < transactions.length; i++) {
+      final tx = transactions[i];
+      // In chi tiết từng giao dịch
+      debugPrint(
+        '[$i] ${tx.date.toString().substring(0, 10)} | '
+        '${tx.category.name} | '
+        '${tx.title}: ${tx.amount} | ${tx.note} | isIncome: ${tx.isIncome}',
+      );
+    }
+  }
 
   runApp(MyApp(onboardDone: onboardDone));
 }

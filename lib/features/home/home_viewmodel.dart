@@ -2,16 +2,14 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/features/add_stransaction/model/transaction_model.dart';
 import 'package:spend_flow/features/home/home_model.dart';
 
 class HomeViewModel {
-  int income = 5000;
-  int expenses = 6000;
-
-  int getBalance() {
-    return income - expenses;
-  }
+  final LocalStorageService _storage = LocalStorageService();
 
   String getGreetingMessage(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -28,93 +26,125 @@ class HomeViewModel {
     }
   }
   
-  List<SpendingModel> getSpendingData() {
-    return [
-      SpendingModel(
-        category: "Shopping",
-        amount: 550,
-        color: const Color(0xFFF29985), 
-      ),
-      SpendingModel(
-        category: "Food",
-        amount: 840,
-        color: const Color(0xFFBCA1F2),
-      ),
-      SpendingModel(
-        category: "Transport",
-        amount: 450,
-        color: const Color(0xFF76CFA9), 
-      ).copyWith(color: const Color(0xFF6FCF97)), 
+  Future<Map<String, double>> getCurrentMonthStats() async {
+    final now = DateTime.now();
+
+    final transactions = await _storage.getTransactionsByMonth(now);
+
+    double income = 0;
+    double expenses = 0;
+
+    for (var tx in transactions) {
+      if (tx.isIncome) {
+        income += tx.amount;
+      } else {
+        expenses += tx.amount;
+      }
+    }
+
+    double balance = income - expenses;
+
+    return {'income': income, 'expenses': expenses, 'balance': balance};
+  }
+
+  String formatCurrency(double amount) {
+    final formatter = NumberFormat("#,##0.0", "en_US");
+    return formatter.format(amount);
+  }
+  
+  Future<List<SpendingModel>> getChartData() async {
+    final now = DateTime.now();
+
+    // Lấy giao dịch tháng này
+    final transactions = await _storage.getTransactionsByMonth(now);
+
+    final Map<String, double> categorySpending = {};
+    final Map<String, Color> categoryColors = {};
+
+    for (var tx in transactions) {
+      if (tx.isIncome == false) {
+        final amount = tx.amount.abs(); 
+        final catName = tx.category.name;
+
+        categorySpending[catName] = (categorySpending[catName] ?? 0) + amount;
+
+        if (!categoryColors.containsKey(catName)) {
+          categoryColors[catName] = tx.category.color;
+        }
+      }
+    }
+
+    List<SpendingModel> allSpending = categorySpending.entries.map((e) {
+      return SpendingModel(
+        category: e.key,
+        amount: e.value,
+        color: categoryColors[e.key] ?? CupertinoColors.systemGrey,
+      );
+    }).toList();
+
+    allSpending.sort((a, b) => b.amount.compareTo(a.amount));
+
+    if (allSpending.length <= 4) {
+      return allSpending;
+    }
+
+    final top4 = allSpending.sublist(0, 4);
+    final others = allSpending.sublist(4);
+
+    double otherTotal = 0;
+    for (var item in others) {
+      otherTotal += item.amount;
+    }
+
+    top4.add(
       SpendingModel(
         category: "Other",
-        amount: 300,
-        color: CupertinoColors.systemGrey2, 
+        amount: otherTotal,
+        color: CupertinoColors.systemGrey,
       ),
-    ];
+    );
+
+    return top4;
   }
 
-  List<RecentTransactionModel> getRecentTransactions() {
-    return [
-      RecentTransactionModel(
-        icon: Icon(CupertinoIcons.cart_fill),
-        title: "Grocery Shopping",
-        category: "Food",
-        amount: 120.50,
-        date: DateTime(2025, 11, 15),
-        isExpense: true,
-      ),
-      RecentTransactionModel(
-        icon: Icon(CupertinoIcons.bolt_horizontal_circle_fill),
-        title: "Dinner at Restaurant",
-        category: "Food",
-        amount: 75.20,
-        date: DateTime(2025, 11, 10),
-        isExpense: true,
-      ),
-      RecentTransactionModel(
-        icon: Icon(CupertinoIcons.money_dollar_circle_fill),
-        title: "Monthly Salary",
-        category: "Income",
-        amount: 3000.00,
-        date: DateTime(2025, 11, 30),
-        isExpense: false,
-      ),
-      RecentTransactionModel(
-        icon: Icon(CupertinoIcons.car_fill),
-        title: "Grab",
-        category: "Transport",
-        amount: 103.75,
-        date: DateTime(2025, 11, 5),
-        isExpense: true,
-      ),
-    ];
-  }
-
-  double getTotalSpent() {
-    final data = getSpendingData();
+  double calculateTotalSpent(List<SpendingModel> data) {
     return data.fold(0, (sum, item) => sum + item.amount);
   }
 
-  List<PieChartSectionData> getChartSections(int touchedIndex, BuildContext context) {
-    final data = getSpendingData();
+  List<PieChartSectionData> generateChartSections(
+    List<SpendingModel> data,
+    int touchedIndex,
+    BuildContext context,
+  ) {
     return data.asMap().entries.map((entry) {
       final i = entry.key;
       final item = entry.value;
       final isTouched = i == touchedIndex;
-      final fontSize = 14.0.sp;
+      final fontSize = 15.0.sp;
       final radius = isTouched ? 45.0.w : 35.0.w;
-      const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
+
       return PieChartSectionData(
         color: item.color,
         value: item.amount,
-        title: isTouched ? '${item.category} : \$${item.amount}' : '', 
-        radius: radius, 
+        // Nếu muốn hiển thị phần trăm thay vì số tiền:
+        // title: isTouched ? '${(item.amount / total * 100).toStringAsFixed(1)}%' : '',
+        title: isTouched ? '\$${formatCurrency(item.amount)}' : '',
+        radius: radius,
         titleStyle: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
           fontSize: fontSize,
           fontWeight: FontWeight.w400,
-          shadows: shadows,
         ),
       );
     }).toList();
+  }
+
+  Future<List<TransactionModel>> getRecentTransactionsList() async {
+    final all = await _storage.getAllTransactions();
+
+    if (all.length > 5) {
+      return all.sublist(0, 5);
+    }
+
+    return all;
   }
 }
