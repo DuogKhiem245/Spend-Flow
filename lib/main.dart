@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,8 +23,10 @@ void main() async {
   final bool onboardDone = prefs.getBool('onboard_done') ?? false;
 
   final transactions = await storage.getAllTransactions();
-  
-  debugPrint('========== LOG TRANSACTIONS (${transactions.length}) ========== transactions loaded.');
+
+  debugPrint(
+    '========== LOG TRANSACTIONS (${transactions.length}) ========== transactions loaded.',
+  );
   if (transactions.isEmpty) {
     debugPrint('📭 Chưa có giao dịch nào.');
   } else {
@@ -57,33 +60,50 @@ class MyApp extends StatelessWidget {
           listenable: Listenable.merge([themeService, languageService]),
           builder: (context, child) {
             return CupertinoApp(
-            title: 'Spend Flow',
-            debugShowCheckedModeBanner: false,
-            theme: AppCupertinoTheme.light,
-            builder: (context, child) {
-            final brightness = MediaQuery.of(context).platformBrightness;
-            return CupertinoTheme(
-              data: AppCupertinoTheme.getTheme(brightness),
-              child: child!,
+              title: 'Spend Flow',
+              debugShowCheckedModeBanner: false,
+              theme: AppCupertinoTheme.light,
+              builder: (context, child) {
+                bool isDark;
+                switch (themeService.themeMode) {
+                  case ThemeMode.dark:
+                    isDark = true;
+                    break;
+                  case ThemeMode.light:
+                    isDark = false;
+                    break;
+                  case ThemeMode.system:
+                    isDark =
+                        MediaQuery.of(context).platformBrightness ==
+                        Brightness.dark; 
+                    break;
+                }
+
+                return TweenAnimationBuilder<double>(
+                  tween: Tween<double>(end: isDark ? 1.0 : 0.0),
+                  duration: const Duration(milliseconds: 300),
+                  builder: (context, t, _) {
+                    final theme = t < 0.5
+                        ? AppCupertinoTheme.light
+                        : AppCupertinoTheme.dark;
+                    return CupertinoTheme(data: theme, child: child!);
+                  },
+                );
+              },
+              locale: LanguageService().locale,
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              supportedLocales: [Locale('en'), Locale('vi')],
+              initialRoute: AppRoutes.main,
+              routes: AppRoutes.getRoutes(),
             );
           },
-          locale: LanguageService().locale, 
-          localizationsDelegates: const [
-            AppLocalizations.delegate, 
-            GlobalMaterialLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-          ],
-          supportedLocales: [
-            Locale('en'), 
-            Locale('vi'), 
-          ],
-          initialRoute: AppRoutes.main,
-          // initialRoute: onboardDone ? AppRoutes.login : AppRoutes.onboarding,
-          routes: AppRoutes.getRoutes(),
         );
       },
     );
-  });
-}
+  }
 }

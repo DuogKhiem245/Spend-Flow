@@ -67,12 +67,12 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
         middle: Text(
           l10n.add_transaction,
           style: CupertinoTheme.of(context).textTheme.navTitleTextStyle
-              .copyWith(fontWeight: FontWeight.w600, fontSize: 20.sp),
+              .copyWith(fontWeight: FontWeight.w600, fontSize: 20.sp,),
         ),
         backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
       ),
       child: Padding(
-        padding: EdgeInsets.all(16.w),
+        padding: EdgeInsets.all(10.w),
         child: Column(
           children: [
             CNSegmentedControl(

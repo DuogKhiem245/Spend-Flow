@@ -394,6 +394,28 @@ class AppLocalizationsVi extends AppLocalizations {
   String get settings => 'Cài đặt';
 
   @override
+  String get settings_description =>
+      'Giữ dữ liệu tài chính luôn đồng bộ trên tất cả thiết bị của bạn';
+
+  @override
+  String get sign_in_now => 'Đăng nhập ngay.';
+
+  @override
+  String get get_started => 'Bắt đầu ngay';
+
+  @override
+  String get welcome => 'Chào mừng !';
+
+  @override
+  String get general => 'Cài đặt chung';
+
+  @override
+  String get security => 'Bảo mật';
+
+  @override
+  String get support => 'Hỗ trợ';
+
+  @override
   String get profile => 'Hồ sơ';
 
   @override
@@ -406,6 +428,12 @@ class AppLocalizationsVi extends AppLocalizations {
   String get notifications => 'Thông báo';
 
   @override
+  String get appearance => 'Giao diện';
+
+  @override
+  String get currency => 'Tiền tệ';
+
+  @override
   String get about => 'Giới thiệu';
 
   @override
@@ -413,4 +441,37 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get privacy_policy => 'Chính sách quyền riêng tư';
+
+  @override
+  String get version => 'Phiên bản';
+
+  @override
+  String get edit_profile => 'Chỉnh sửa hồ sơ';
+
+  @override
+  String get full_name => 'Họ và tên';
+
+  @override
+  String get enter_full_name => 'Nhập họ và tên';
+
+  @override
+  String get email_address => 'Địa chỉ email';
+
+  @override
+  String get enter_email_address => 'Nhập địa chỉ email';
+
+  @override
+  String get phone_number => 'Số điện thoại';
+
+  @override
+  String get enter_phone_number => 'Nhập số điện thoại';
+
+  @override
+  String get day_of_birth => 'Ngày sinh';
+
+  @override
+  String get select_day_of_birth => 'Chọn ngày sinh';
+
+  @override
+  String get save_changes => 'Lưu thay đổi';
 }

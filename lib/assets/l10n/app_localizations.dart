@@ -854,6 +854,48 @@ abstract class AppLocalizations {
   /// **'Cài đặt'**
   String get settings;
 
+  /// No description provided for @settings_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giữ dữ liệu tài chính luôn đồng bộ trên tất cả thiết bị của bạn'**
+  String get settings_description;
+
+  /// No description provided for @sign_in_now.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đăng nhập ngay.'**
+  String get sign_in_now;
+
+  /// No description provided for @get_started.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bắt đầu ngay'**
+  String get get_started;
+
+  /// No description provided for @welcome.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chào mừng !'**
+  String get welcome;
+
+  /// No description provided for @general.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cài đặt chung'**
+  String get general;
+
+  /// No description provided for @security.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bảo mật'**
+  String get security;
+
+  /// No description provided for @support.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hỗ trợ'**
+  String get support;
+
   /// No description provided for @profile.
   ///
   /// In vi, this message translates to:
@@ -878,6 +920,18 @@ abstract class AppLocalizations {
   /// **'Thông báo'**
   String get notifications;
 
+  /// No description provided for @appearance.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giao diện'**
+  String get appearance;
+
+  /// No description provided for @currency.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tiền tệ'**
+  String get currency;
+
   /// No description provided for @about.
   ///
   /// In vi, this message translates to:
@@ -895,6 +949,72 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Chính sách quyền riêng tư'**
   String get privacy_policy;
+
+  /// No description provided for @version.
+  ///
+  /// In vi, this message translates to:
+  /// **'Phiên bản'**
+  String get version;
+
+  /// No description provided for @edit_profile.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chỉnh sửa hồ sơ'**
+  String get edit_profile;
+
+  /// No description provided for @full_name.
+  ///
+  /// In vi, this message translates to:
+  /// **'Họ và tên'**
+  String get full_name;
+
+  /// No description provided for @enter_full_name.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập họ và tên'**
+  String get enter_full_name;
+
+  /// No description provided for @email_address.
+  ///
+  /// In vi, this message translates to:
+  /// **'Địa chỉ email'**
+  String get email_address;
+
+  /// No description provided for @enter_email_address.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập địa chỉ email'**
+  String get enter_email_address;
+
+  /// No description provided for @phone_number.
+  ///
+  /// In vi, this message translates to:
+  /// **'Số điện thoại'**
+  String get phone_number;
+
+  /// No description provided for @enter_phone_number.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập số điện thoại'**
+  String get enter_phone_number;
+
+  /// No description provided for @day_of_birth.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ngày sinh'**
+  String get day_of_birth;
+
+  /// No description provided for @select_day_of_birth.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn ngày sinh'**
+  String get select_day_of_birth;
+
+  /// No description provided for @save_changes.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lưu thay đổi'**
+  String get save_changes;
 }
 
 class _AppLocalizationsDelegate

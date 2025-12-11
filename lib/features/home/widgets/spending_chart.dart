@@ -9,10 +9,7 @@ import 'package:spend_flow/features/home/home_viewmodel.dart';
 class SpendingChart extends StatefulWidget {
   final List<SpendingModel> chartData;
 
-  const SpendingChart({
-    super.key,
-    required this.chartData,
-  });
+  const SpendingChart({super.key, required this.chartData});
 
   @override
   State<SpendingChart> createState() => _SpendingChartState();
@@ -20,7 +17,6 @@ class SpendingChart extends StatefulWidget {
 
 class _SpendingChartState extends State<SpendingChart>
     with SingleTickerProviderStateMixin {
-
   final HomeViewModel _viewModel = HomeViewModel();
 
   int touchedIndex = -1;
@@ -60,6 +56,13 @@ class _SpendingChartState extends State<SpendingChart>
         decoration: BoxDecoration(
           color: CupertinoTheme.of(context).barBackgroundColor,
           borderRadius: BorderRadius.circular(12.r),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.boxShadow,
+              blurRadius: 10.r,
+              offset: Offset(0, 4.h),
+            ),
+          ],
         ),
         child: Column(
           children: [
@@ -96,6 +99,13 @@ class _SpendingChartState extends State<SpendingChart>
       decoration: BoxDecoration(
         color: CupertinoTheme.of(context).barBackgroundColor,
         borderRadius: BorderRadius.circular(12.r),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.boxShadow,
+            blurRadius: 10.r,
+            offset: Offset(0, 4.h),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -29,7 +29,7 @@
   "onboard_step2_message": "Set spending limits, track categories, and stay on top of your financial goals with personal budgeting.",
   "onboard_step3_title": "Watch Your Savings Grow",
   "onboard_step3_message": "Set automated saving goals, round up transactions, and discover smart ways to save money with ease.",
-  
+
   "login": "Login",
   "register": "Register",
   "logout": "Logout",
@@ -70,10 +70,11 @@
   "good_pass_num": "Almost there! Add a number to make it stronger.",
   "good_pass_special": "Almost there! Add any character to make it stronger.",
   "strong_pass": "Great! Your password is secure.",
-  
+
   "good_morning": "Good Morning",
   "good_afternoon": "Good Afternoon",
   "good_evening": "Good Evening",
+  "good_night": "Good Night",
   "hello": "Hello",
   "income": "Income",
   "expenses": "Expenses",
@@ -84,7 +85,6 @@
   "recent_transactions": "Recent Transactions",
   "add_transaction": "Add Transaction",
   "no_transactions": "No data available",
-
   "enter_transaction_name": "Enter transaction name",
   "suggested_category": "Suggested Category",
   "category": "Category",
@@ -120,7 +120,6 @@
   "enter_note": "Enter note",
   "add_income": "Add Income",
   "add_expense": "Add Expense",
-
   "search_category": "Search Category",
   "no_category_found": "No category found",
   "most_used": "Most Used",
@@ -130,13 +129,34 @@
   "category_name": "Category Name",
   "category_color": "Category Color",
   "category_icon": "Category Icon",
-  
+
   "settings": "Settings",
+  "settings_description": "Keep your finance data synced across all your devices",
+  "sign_in_now": "Sign in now.",
+  "get_started": "Get Started",
+  "welcome": "Welcome !",
+  "general": "General",
+  "security": "Security",
+  "support": "Support",
   "profile": "Profile",
   "language": "Language",
   "dark_mode": "Dark Mode",
   "notifications": "Notifications",
+  "appearance": "Appearance",
+  "currency": "Currency",
   "about": "About",
   "terms": "Terms & Conditions",
-  "privacy_policy": "Privacy Policy"
+  "privacy_policy": "Privacy Policy",
+  "version": "Version",
+
+  "edit_profile": "Edit Profile",
+  "full_name": "Full Name",
+  "enter_full_name": "Enter full name",
+  "email_address": "Email Address",
+  "enter_email_address": "Enter email address",
+  "phone_number": "Phone Number",
+  "enter_phone_number": "Enter phone number",
+  "day_of_birth": "Date of Birth",
+  "select_day_of_birth": "Select date of birth",
+  "save_changes": "Save Changes"
 }

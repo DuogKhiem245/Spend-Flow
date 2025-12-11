@@ -395,6 +395,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings => 'Settings';
 
   @override
+  String get settings_description =>
+      'Keep your finance data synced across all your devices';
+
+  @override
+  String get sign_in_now => 'Sign in now.';
+
+  @override
+  String get get_started => 'Get Started';
+
+  @override
+  String get welcome => 'Welcome !';
+
+  @override
+  String get general => 'General';
+
+  @override
+  String get security => 'Security';
+
+  @override
+  String get support => 'Support';
+
+  @override
   String get profile => 'Profile';
 
   @override
@@ -407,6 +429,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notifications => 'Notifications';
 
   @override
+  String get appearance => 'Appearance';
+
+  @override
+  String get currency => 'Currency';
+
+  @override
   String get about => 'About';
 
   @override
@@ -414,4 +442,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get privacy_policy => 'Privacy Policy';
+
+  @override
+  String get version => 'Version';
+
+  @override
+  String get edit_profile => 'Edit Profile';
+
+  @override
+  String get full_name => 'Full Name';
+
+  @override
+  String get enter_full_name => 'Enter full name';
+
+  @override
+  String get email_address => 'Email Address';
+
+  @override
+  String get enter_email_address => 'Enter email address';
+
+  @override
+  String get phone_number => 'Phone Number';
+
+  @override
+  String get enter_phone_number => 'Enter phone number';
+
+  @override
+  String get day_of_birth => 'Date of Birth';
+
+  @override
+  String get select_day_of_birth => 'Select date of birth';
+
+  @override
+  String get save_changes => 'Save Changes';
 }

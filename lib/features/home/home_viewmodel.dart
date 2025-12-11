@@ -1,6 +1,5 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
@@ -19,7 +18,7 @@ class HomeViewModel {
       return l10n.good_morning;
     } else if (hour >= 12 && hour < 18) {
       return l10n.good_afternoon;
-    } else if (hour >= 18 && hour < 22) {
+    } else if (hour >= 18 || hour < 5) {
       return l10n.good_evening;
     } else {
       return l10n.hello;

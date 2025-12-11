@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/config/app_colors.dart';
 
 class NameTransactionWidget extends StatefulWidget {
   final TextEditingController nameController;
@@ -19,7 +20,8 @@ class _NameTransactionWidgetState extends State<NameTransactionWidget> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Align(
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 6.w),
           alignment: Alignment.centerLeft,
           child: Text(
             l10n.name,
@@ -37,9 +39,17 @@ class _NameTransactionWidgetState extends State<NameTransactionWidget> {
         SizedBox(height: 10.h),
         Container(
           width: double.infinity,
+          margin: EdgeInsets.symmetric(horizontal: 6.w),
           decoration: BoxDecoration(
             color: CupertinoTheme.of(context).barBackgroundColor,
             borderRadius: BorderRadius.circular(30.r),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.boxShadow,
+                blurRadius: 10.r,
+                offset: Offset(0, 4.h),
+              ),
+            ],
           ),
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 18.h),
           child: CupertinoTextField(

@@ -29,7 +29,7 @@ class _RegisterStep1PageState extends State<RegisterStep1Page> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                SizedBox(height: 100.h),
+                SizedBox(height: 10.h),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10.r),
                   child: AnimatedSwitcher(

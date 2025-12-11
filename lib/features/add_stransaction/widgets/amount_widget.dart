@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/core/utils/leading_zero_formatter_helper.dart';
 
 class AmountWidget extends StatefulWidget {
@@ -28,8 +29,9 @@ class _AmountWidgetState extends State<AmountWidget> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Align(
+        Container(
           alignment: Alignment.centerLeft,
+          margin: EdgeInsets.symmetric(horizontal: 6.w),
           child: Text(
             l10n.amount,
             style: TextStyle(
@@ -45,9 +47,17 @@ class _AmountWidgetState extends State<AmountWidget> {
         Container(
           width: double.infinity,
           height: 100.h,
+          margin: EdgeInsets.symmetric(horizontal: 6.w),
           decoration: BoxDecoration(
             color: CupertinoTheme.of(context).barBackgroundColor,
             borderRadius: BorderRadius.circular(30.r),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.boxShadow,
+                blurRadius: 10.r,
+                offset: Offset(0, 4.h),
+              ),
+            ],
           ),
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Row(

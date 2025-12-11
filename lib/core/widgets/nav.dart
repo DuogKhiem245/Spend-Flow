@@ -40,8 +40,8 @@ class _BottomNavbarState extends State<BottomNavbar> {
                   label: 'Dashboard',
                   icon: CNSymbol('square.grid.2x2'),
                 ),
-                CNTabBarItem(label: 'Budgets', icon: CNSymbol('creditcard')),
                 CNTabBarItem(label: 'Reports', icon: CNSymbol('chart.bar')),
+                CNTabBarItem(label: 'Budgets', icon: CNSymbol('creditcard')),
                 CNTabBarItem(
                   label: 'Settings',
                   icon: CNSymbol('gearshape.fill'),
