@@ -1,98 +1,125 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/features/setting/security/security_view.dart';
 
-class SettingSecurityWidget extends StatefulWidget {
+class SettingSecurityWidget extends StatelessWidget {
   const SettingSecurityWidget({super.key});
 
   @override
-  State<SettingSecurityWidget> createState() => _SettingSecurityWidgetState();
-}
-
-class _SettingSecurityWidgetState extends State<SettingSecurityWidget> {
-  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          l10n.security,
-          style: TextStyle(
-            fontSize: 20.sp,
-            fontWeight: FontWeight.w500,
-            color: CupertinoTheme.of(
-              context,
-            ).textTheme.textStyle.color?.withValues(alpha: .7),
-          ),
-        ),
-        SizedBox(height: 12.h),
-        Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: CupertinoTheme.of(context).barBackgroundColor,
-            borderRadius: BorderRadius.circular(12.r),
-            boxShadow: [
-              BoxShadow(
-                color: Color.fromRGBO(0, 0, 0, 0.1),
-                blurRadius: 10.r,
-                offset: Offset(0, 4.h),
-              ),
-            ],
-          ),
-          child: GestureDetector(
-            onTap: () => {
-              Navigator.push(
+        Padding(
+          padding: EdgeInsets.only(left: 4.w, bottom: 8.h),
+          child: Text(
+            l10n.security,
+            style: TextStyle(
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w600,
+              color: CupertinoTheme.of(
                 context,
-                CupertinoPageRoute(builder: (context) => const SecurityView()),
-              ),
-            },
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(10.r),
-                        decoration: BoxDecoration(
-                          color: Color.fromRGBO(113, 113, 122, 1),
-                          borderRadius: BorderRadius.circular(8.r),
-                        ),
-                        child: Icon(
-                          CupertinoIcons.lock,
-                          size: 22.r,
-                          color: Color(0xFFFFFFFF),
-                        ),
-                      ),
-                      SizedBox(width: 10.w),
-                      Text(
-                        "Passcode & Face ID",
-                        style: CupertinoTheme.of(context).textTheme.textStyle
-                            .copyWith(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                      ),
-                    ],
-                  ),
-                  Icon(
-                    CupertinoIcons.chevron_right,
-                    size: 22.r,
-                    color: CupertinoTheme.of(context).textTheme.textStyle.color,
-                  ),
-                ],
-              ),
+              ).textTheme.textStyle.color?.withValues(alpha: .6),
             ),
           ),
-          
+        ),
+
+        _SecurityItem(
+          title: "Passcode & Face ID", 
+          icon: CupertinoIcons.lock_fill,
+          iconBgColor: const Color(0xFF71717A), 
+          onTap: () {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(builder: (context) => const SecurityView()),
+            );
+          },
         ),
       ],
+    );
+  }
+}
+
+class _SecurityItem extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  final Color iconBgColor;
+  final VoidCallback onTap;
+
+  const _SecurityItem({
+    required this.title,
+    required this.icon,
+    required this.iconBgColor,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 60.h,
+      decoration: BoxDecoration(
+        color: CupertinoTheme.of(context).barBackgroundColor,
+        borderRadius: BorderRadius.circular(30.r), 
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.boxShadow.withValues(alpha: 0.05),
+            blurRadius: 10.r,
+            offset: Offset(0, 4.h),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(16.r),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 36.w,
+                      height: 36.w,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: iconBgColor,
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      child: Icon(icon, size: 20.sp, color: Colors.white),
+                    ),
+                    SizedBox(width: 14.w),
+
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 17.sp,
+                        fontWeight: FontWeight.w500,
+                        color: CupertinoTheme.of(
+                          context,
+                        ).textTheme.textStyle.color,
+                      ),
+                    ),
+                  ],
+                ),
+
+                Icon(
+                  CupertinoIcons.chevron_right,
+                  size: 18.sp,
+                  color: CupertinoColors.systemGrey3,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

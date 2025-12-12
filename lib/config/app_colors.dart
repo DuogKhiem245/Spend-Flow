@@ -14,7 +14,7 @@ class AppColors {
   static const secondaryColor = CupertinoColors.systemGreen;
   static const thirdColor = Color.fromRGBO(140, 133, 231, 1);
   static const borderColor = Color.fromARGB(255, 165, 165, 165);
-  static const boxShadow = Color.fromRGBO(0, 0, 0, 0.1);
+  static const boxShadow = Color.fromRGBO(0, 0, 0, 0.05);
 
   static const successColor = Color(0xFF34C759);
   static const warningColor = Color(0xFFFFCC00);

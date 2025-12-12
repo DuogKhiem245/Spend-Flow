@@ -1015,6 +1015,246 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Lưu thay đổi'**
   String get save_changes;
+
+  /// No description provided for @upgrade_premium.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nâng cấp lên Premium!'**
+  String get upgrade_premium;
+
+  /// No description provided for @upgrade_premium_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mở khóa các tính năng cao cấp và nâng cao trải nghiệm của bạn.'**
+  String get upgrade_premium_description;
+
+  /// No description provided for @upgrade_now.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nâng cấp ngay'**
+  String get upgrade_now;
+
+  /// No description provided for @you_are_premium.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn đã sẵn sàng, người dùng Premium!'**
+  String get you_are_premium;
+
+  /// No description provided for @you_are_premium_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tận hưởng trải nghiệm nâng cao của bạn.'**
+  String get you_are_premium_description;
+
+  /// No description provided for @biometric_authentication.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xác thực sinh trắc học'**
+  String get biometric_authentication;
+
+  /// No description provided for @password_security.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bảo mật mật mã'**
+  String get password_security;
+
+  /// No description provided for @face_id_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mở khóa ứng dụng chỉ bằng một ánh nhìn. Face ID mang lại sự tiện lợi và bảo mật bằng cách nhận diện khuôn mặt của bạn.'**
+  String get face_id_description;
+
+  /// No description provided for @touch_id_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mở khóa ứng dụng chỉ bằng một cú chạm. Touch ID giúp truy cập nhanh chóng và an toàn bằng vân tay của bạn.'**
+  String get touch_id_description;
+
+  /// No description provided for @pass_code_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm một lớp bảo vệ. Mã khóa đảm bảo chỉ bạn mới có thể truy cập dữ liệu tài chính, ngay cả khi thiết bị bị xâm phạm.'**
+  String get pass_code_description;
+
+  /// No description provided for @change_passcode.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đổi mã khóa'**
+  String get change_passcode;
+
+  /// No description provided for @old_passcode.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mã khóa cũ'**
+  String get old_passcode;
+
+  /// No description provided for @enter_old_passcode.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập mã khóa cũ'**
+  String get enter_old_passcode;
+
+  /// No description provided for @new_passcode.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mã khóa mới'**
+  String get new_passcode;
+
+  /// No description provided for @enter_new_passcode.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập mã khóa mới'**
+  String get enter_new_passcode;
+
+  /// No description provided for @confirm_new_passcode.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xác nhận mã khóa mới'**
+  String get confirm_new_passcode;
+
+  /// No description provided for @enter_confirm_new_passcode.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập lại mã khóa mới'**
+  String get enter_confirm_new_passcode;
+
+  /// No description provided for @unlock_untilimited_access.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mở khóa truy cập không giới hạn'**
+  String get unlock_untilimited_access;
+
+  /// No description provided for @unlock_untilimited_access_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nâng cấp lên Premium để loại bỏ mọi giới hạn và truy cập các tính năng nâng cao.'**
+  String get unlock_untilimited_access_description;
+
+  /// No description provided for @daily_input_cap_reached.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã đạt giới hạn nhập hàng ngày'**
+  String get daily_input_cap_reached;
+
+  /// No description provided for @daily_input_cap_reached_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn đã đạt giới hạn nhập hàng ngày cho việc quét hóa đơn và nhập giọng nói. Nâng cấp ngay để tiếp tục.'**
+  String get daily_input_cap_reached_description;
+
+  /// No description provided for @feature_comparison.
+  ///
+  /// In vi, this message translates to:
+  /// **'So sánh tính năng'**
+  String get feature_comparison;
+
+  /// No description provided for @feature.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tính năng'**
+  String get feature;
+
+  /// No description provided for @free.
+  ///
+  /// In vi, this message translates to:
+  /// **'Miễn phí'**
+  String get free;
+
+  /// No description provided for @premium.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cao cấp'**
+  String get premium;
+
+  /// No description provided for @no_ads.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không quảng cáo'**
+  String get no_ads;
+
+  /// No description provided for @transaction_locking.
+  ///
+  /// In vi, this message translates to:
+  /// **'Khóa sổ giao dịch'**
+  String get transaction_locking;
+
+  /// No description provided for @unlimited_scans.
+  ///
+  /// In vi, this message translates to:
+  /// **'Quét hóa đơn không giới hạn'**
+  String get unlimited_scans;
+
+  /// No description provided for @unlimited_voice_entries.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập giọng nói không giới hạn'**
+  String get unlimited_voice_entries;
+
+  /// No description provided for @day.
+  ///
+  /// In vi, this message translates to:
+  /// **'ngày'**
+  String get day;
+
+  /// No description provided for @accept_terms_conditions.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đăng ký tự động gia hạn. Bằng cách tiếp tục, bạn đồng ý với Điều khoản Dịch vụ và Chính sách Quyền riêng tư của chúng tôi.'**
+  String get accept_terms_conditions;
+
+  /// No description provided for @restore.
+  ///
+  /// In vi, this message translates to:
+  /// **'Khôi phục'**
+  String get restore;
+
+  /// No description provided for @select_language.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn ngôn ngữ'**
+  String get select_language;
+
+  /// No description provided for @suggested.
+  ///
+  /// In vi, this message translates to:
+  /// **'Gợi ý'**
+  String get suggested;
+
+  /// No description provided for @all_languages.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tất cả ngôn ngữ'**
+  String get all_languages;
+
+  /// No description provided for @apply_changes.
+  ///
+  /// In vi, this message translates to:
+  /// **'Áp dụng thay đổi'**
+  String get apply_changes;
+
+  /// No description provided for @select_currency.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn tiền tệ'**
+  String get select_currency;
+
+  /// No description provided for @search_currency.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tìm kiếm tiền tệ hoặc quốc gia...'**
+  String get search_currency;
+
+  /// No description provided for @popular.
+  ///
+  /// In vi, this message translates to:
+  /// **'Phổ biến'**
+  String get popular;
+
+  /// No description provided for @all_currencies.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tất cả tiền tệ'**
+  String get all_currencies;
 }
 
 class _AppLocalizationsDelegate

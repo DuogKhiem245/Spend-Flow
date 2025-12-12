@@ -55,6 +55,8 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
+    final displayDate = widget.transactionDate ?? DateTime.now();
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 6.w),
       child: Column(
@@ -207,7 +209,9 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                                 l10n.select_category,
                                 style: TextStyle(
                                   fontSize: 16.sp,
-                                  color: widget.baseColor?.withValues(alpha: .7),
+                                  color: widget.baseColor?.withValues(
+                                    alpha: .7,
+                                  ),
                                 ),
                               ),
                             SizedBox(width: 8.w),
@@ -225,15 +229,72 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                   ],
                 ),
                 SizedBox(height: 5.h),
-      
+
                 Divider(color: AppColors.borderColor, thickness: 0.5.h),
                 SizedBox(height: 5.h),
-                DateHelper(
-                  l10n: l10n,
-                  baseColor: widget.baseColor,
-                  onDateChanged: (DateTime newDate) {
-                    widget.onDateChanged(newDate);
-                  },
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          width: 50.w,
+                          height: 50.w,
+                          margin: EdgeInsets.only(left: 16.w, right: 12.w),
+                          decoration: BoxDecoration(
+                            color: CupertinoTheme.of(
+                              context,
+                            ).primaryColor.withValues(alpha: .15),
+                            borderRadius: BorderRadius.circular(25.r),
+                          ),
+                          child: Icon(
+                            CupertinoIcons.calendar,
+                            size: 25.w,
+                            color: CupertinoTheme.of(context).primaryColor,
+                          ),
+                        ),
+                        Text(
+                          l10n.date,
+                          style: TextStyle(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w500,
+                            color: widget.baseColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: 16.w),
+                      child: GestureDetector(
+                        onTap: () {
+                          DateHelper.showDatePicker(
+                            context,
+                            initialDate: displayDate,
+                            onDateChanged: (newDate) {
+                              widget.onDateChanged(newDate);
+                            },
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            Text(
+                              DateHelper.getDateText(displayDate, l10n),
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                color: widget.baseColor,
+                              ),
+                            ),
+                            SizedBox(width: 8.w),
+                            Icon(
+                              CupertinoIcons.chevron_right,
+                              size: 20.w,
+                              color: widget.baseColor,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

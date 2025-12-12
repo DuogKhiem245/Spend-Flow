@@ -21,282 +21,173 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-
-    final bool isDark =
-        CupertinoTheme.of(context).brightness == Brightness.dark;
+    final isDark = CupertinoTheme.of(context).brightness == Brightness.dark;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          l10n.general,
-          style: TextStyle(
-            fontSize: 20.sp,
-            fontWeight: FontWeight.w500,
-            color: CupertinoTheme.of(
-              context,
-            ).textTheme.textStyle.color?.withValues(alpha: .7),
+        Padding(
+          padding: EdgeInsets.only(left: 4.w, bottom: 8.h),
+          child: Text(
+            l10n.general,
+            style: TextStyle(
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w600,
+              color: CupertinoTheme.of(
+                context,
+              ).textTheme.textStyle.color?.withValues(alpha: .6),
+            ),
           ),
         ),
-        SizedBox(height: 12.h),
-        Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: CupertinoTheme.of(context).barBackgroundColor,
-            borderRadius: BorderRadius.circular(12.r),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.boxShadow,
-                blurRadius: 10.r,
-                offset: Offset(0, 4.h),
-              ),
-            ],
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(10.r),
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(233, 123, 53, 1),
-                      borderRadius: BorderRadius.circular(8.r),
-                    ),
-                    child: Icon(
-                      CupertinoIcons.bell_fill,
-                      size: 22.r,
-                      color: Color(0xFFFFFFFF),
-                    ),
-                  ),
-                  SizedBox(width: 10.w),
-                  Text(
-                    l10n.notifications,
-                    style: CupertinoTheme.of(context).textTheme.textStyle
-                        .copyWith(fontSize: 18.sp, fontWeight: FontWeight.w500),
-                  ),
-                ],
-              ),
-              CNSwitch(
-                value: isNotificationsEnabled,
-                onChanged: (v) => setState(() => isNotificationsEnabled = v),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: 10.h),
 
-        Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: CupertinoTheme.of(context).barBackgroundColor,
-            borderRadius: BorderRadius.circular(12.r),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.boxShadow,
-                blurRadius: 10.r,
-                offset: Offset(0, 4.h),
-              ),
-            ],
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(10.r),
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(59, 130, 246, 1),
-                      borderRadius: BorderRadius.circular(8.r),
-                    ),
-                    child: Icon(
-                      CupertinoIcons.circle_lefthalf_fill,
-                      size: 22.r,
-                      color: Color(0xFFFFFFFF),
-                    ),
-                  ),
-                  SizedBox(width: 10.w),
-                  Text(
-                    l10n.dark_mode,
-                    style: CupertinoTheme.of(context).textTheme.textStyle
-                        .copyWith(fontSize: 18.sp, fontWeight: FontWeight.w500),
-                  ),
-                ],
-              ),
-              CNSwitch(
-                value: isDark,
-                onChanged: (v) {
-                  themeService.setTheme(v);
-                },
-              ),
-            ],
+        _SettingItem(
+          title: l10n.notifications,
+          icon: CupertinoIcons.bell_fill,
+          iconBgColor: const Color(0xFFE97B35),
+          trailing: CNSwitch(
+            value: isNotificationsEnabled,
+            onChanged: (v) => setState(() => isNotificationsEnabled = v),
           ),
         ),
-        SizedBox(height: 10.h),
 
-        GestureDetector(
-          onTap: () => {
+        _SettingItem(
+          title: l10n.dark_mode,
+          icon: CupertinoIcons
+              .moon_fill, 
+          iconBgColor: const Color(0xFF3B82F6),
+          trailing: CNSwitch(
+            value: isDark,
+            onChanged: (v) => themeService.setTheme(v),
+          ),
+        ),
+
+        _SettingItem(
+          title: l10n.language,
+          icon: CupertinoIcons.globe,
+          iconBgColor: const Color(0xFF6366F1),
+          onTap: () {
             Navigator.push(
               context,
               CupertinoPageRoute(builder: (context) => const LanguageView()),
-            ),
+            );
           },
-          child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: CupertinoTheme.of(context).barBackgroundColor,
-              borderRadius: BorderRadius.circular(12.r),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.boxShadow,
-                  blurRadius: 10.r,
-                  offset: Offset(0, 4.h),
-                ),
-              ],
-            ),
-            padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(10.r),
-                      decoration: BoxDecoration(
-                        color: Color.fromRGBO(99, 102, 241, 1),
-                        borderRadius: BorderRadius.circular(8.r),
-                      ),
-                      child: Icon(
-                        CupertinoIcons.globe,
-                        size: 22.r,
-                        color: Color(0xFFFFFFFF),
-                      ),
-                    ),
-                    SizedBox(width: 10.w),
-                    Text(
-                      l10n.language,
-                      style: CupertinoTheme.of(context).textTheme.textStyle
-                          .copyWith(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'English',
-                      style: CupertinoTheme.of(context).textTheme.textStyle
-                          .copyWith(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w400,
-                            color: CupertinoColors.systemGrey,
-                          ),
-                    ),
-                    SizedBox(width: 8.w),
-                    Icon(
-                      CupertinoIcons.chevron_right,
-                      size: 22.r,
-                      color: CupertinoTheme.of(
-                        context,
-                      ).textTheme.textStyle.color,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+          trailing: _buildTextTrailing(context, 'English'),
         ),
 
-        SizedBox(height: 10.h),
-
-        GestureDetector(
-          onTap: () => {
+        _SettingItem(
+          title: l10n.currency,
+          icon: CupertinoIcons.money_dollar_circle_fill,
+          iconBgColor: const Color(0xFF21C55E),
+          onTap: () {
             Navigator.push(
               context,
               CupertinoPageRoute(builder: (context) => const CurrencyView()),
-            ),
+            );
           },
-          child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: CupertinoTheme.of(context).barBackgroundColor,
-              borderRadius: BorderRadius.circular(12.r),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.boxShadow,
-                  blurRadius: 10.r,
-                  offset: Offset(0, 4.h),
-                ),
-              ],
-            ),
-            padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
+          trailing: _buildTextTrailing(context, 'USD'),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTextTrailing(BuildContext context, String text) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          text,
+          style: TextStyle(
+            fontSize: 15.sp,
+            fontWeight: FontWeight.w400,
+            color: CupertinoColors.systemGrey,
+          ),
+        ),
+        SizedBox(width: 6.w),
+        Icon(
+          CupertinoIcons.chevron_right,
+          size: 18.sp, 
+          color: CupertinoColors.systemGrey3,
+        ),
+      ],
+    );
+  }
+}
+
+class _SettingItem extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  final Color iconBgColor;
+  final Widget trailing;
+  final VoidCallback? onTap;
+
+  const _SettingItem({
+    required this.title,
+    required this.icon,
+    required this.iconBgColor,
+    required this.trailing,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 12.h), 
+      height: 60.h,
+      decoration: BoxDecoration(
+        color: CupertinoTheme.of(context).barBackgroundColor,
+        borderRadius: BorderRadius.circular(30.r), 
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.boxShadow.withValues(
+              alpha: 0.05,
+            ), 
+            blurRadius: 10.r,
+            offset: Offset(0, 4.h),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(30.r),
+          splashColor: onTap == null ? Colors.transparent : null,
+          highlightColor: onTap == null ? Colors.transparent : null,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(10.r),
-                      decoration: BoxDecoration(
-                        color: Color.fromRGBO(33, 197, 94, 1),
-                        borderRadius: BorderRadius.circular(8.r),
-                      ),
-                      child: Icon(
-                        CupertinoIcons.money_dollar_circle,
-                        size: 22.r,
-                        color: Color(0xFFFFFFFF),
-                      ),
-                    ),
-                    SizedBox(width: 10.w),
-                    Text(
-                      l10n.currency,
-                      style: CupertinoTheme.of(context).textTheme.textStyle
-                          .copyWith(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
-                    ),
-                  ],
+                Container(
+                  width: 36.w, 
+                  height: 36.w,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: iconBgColor,
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
+                  child: Icon(icon, size: 20.sp, color: Colors.white),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      'USD',
-                      style: CupertinoTheme.of(context).textTheme.textStyle
-                          .copyWith(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w400,
-                            color: CupertinoColors.systemGrey,
-                          ),
-                    ),
-                    SizedBox(width: 8.w),
-                    Icon(
-                      CupertinoIcons.chevron_right,
-                      size: 22.r,
+                SizedBox(width: 14.w),
+
+                Expanded(
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 17.sp,
+                      fontWeight: FontWeight.w500,
                       color: CupertinoTheme.of(
                         context,
                       ).textTheme.textStyle.color,
                     ),
-                  ],
+                  ),
                 ),
+
+                trailing,
               ],
             ),
           ),
         ),
-      ],
+      ),
     );
   }
 }

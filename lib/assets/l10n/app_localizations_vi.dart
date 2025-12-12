@@ -474,4 +474,132 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get save_changes => 'Lưu thay đổi';
+
+  @override
+  String get upgrade_premium => 'Nâng cấp lên Premium!';
+
+  @override
+  String get upgrade_premium_description =>
+      'Mở khóa các tính năng cao cấp và nâng cao trải nghiệm của bạn.';
+
+  @override
+  String get upgrade_now => 'Nâng cấp ngay';
+
+  @override
+  String get you_are_premium => 'Bạn đã sẵn sàng, người dùng Premium!';
+
+  @override
+  String get you_are_premium_description =>
+      'Tận hưởng trải nghiệm nâng cao của bạn.';
+
+  @override
+  String get biometric_authentication => 'Xác thực sinh trắc học';
+
+  @override
+  String get password_security => 'Bảo mật mật mã';
+
+  @override
+  String get face_id_description =>
+      'Mở khóa ứng dụng chỉ bằng một ánh nhìn. Face ID mang lại sự tiện lợi và bảo mật bằng cách nhận diện khuôn mặt của bạn.';
+
+  @override
+  String get touch_id_description =>
+      'Mở khóa ứng dụng chỉ bằng một cú chạm. Touch ID giúp truy cập nhanh chóng và an toàn bằng vân tay của bạn.';
+
+  @override
+  String get pass_code_description =>
+      'Thêm một lớp bảo vệ. Mã khóa đảm bảo chỉ bạn mới có thể truy cập dữ liệu tài chính, ngay cả khi thiết bị bị xâm phạm.';
+
+  @override
+  String get change_passcode => 'Đổi mã khóa';
+
+  @override
+  String get old_passcode => 'Mã khóa cũ';
+
+  @override
+  String get enter_old_passcode => 'Nhập mã khóa cũ';
+
+  @override
+  String get new_passcode => 'Mã khóa mới';
+
+  @override
+  String get enter_new_passcode => 'Nhập mã khóa mới';
+
+  @override
+  String get confirm_new_passcode => 'Xác nhận mã khóa mới';
+
+  @override
+  String get enter_confirm_new_passcode => 'Nhập lại mã khóa mới';
+
+  @override
+  String get unlock_untilimited_access => 'Mở khóa truy cập không giới hạn';
+
+  @override
+  String get unlock_untilimited_access_description =>
+      'Nâng cấp lên Premium để loại bỏ mọi giới hạn và truy cập các tính năng nâng cao.';
+
+  @override
+  String get daily_input_cap_reached => 'Đã đạt giới hạn nhập hàng ngày';
+
+  @override
+  String get daily_input_cap_reached_description =>
+      'Bạn đã đạt giới hạn nhập hàng ngày cho việc quét hóa đơn và nhập giọng nói. Nâng cấp ngay để tiếp tục.';
+
+  @override
+  String get feature_comparison => 'So sánh tính năng';
+
+  @override
+  String get feature => 'Tính năng';
+
+  @override
+  String get free => 'Miễn phí';
+
+  @override
+  String get premium => 'Cao cấp';
+
+  @override
+  String get no_ads => 'Không quảng cáo';
+
+  @override
+  String get transaction_locking => 'Khóa sổ giao dịch';
+
+  @override
+  String get unlimited_scans => 'Quét hóa đơn không giới hạn';
+
+  @override
+  String get unlimited_voice_entries => 'Nhập giọng nói không giới hạn';
+
+  @override
+  String get day => 'ngày';
+
+  @override
+  String get accept_terms_conditions =>
+      'Đăng ký tự động gia hạn. Bằng cách tiếp tục, bạn đồng ý với Điều khoản Dịch vụ và Chính sách Quyền riêng tư của chúng tôi.';
+
+  @override
+  String get restore => 'Khôi phục';
+
+  @override
+  String get select_language => 'Chọn ngôn ngữ';
+
+  @override
+  String get suggested => 'Gợi ý';
+
+  @override
+  String get all_languages => 'Tất cả ngôn ngữ';
+
+  @override
+  String get apply_changes => 'Áp dụng thay đổi';
+
+  @override
+  String get select_currency => 'Chọn tiền tệ';
+
+  @override
+  String get search_currency => 'Tìm kiếm tiền tệ hoặc quốc gia...';
+
+  @override
+  String get popular => 'Phổ biến';
+
+  @override
+  String get all_currencies => 'Tất cả tiền tệ';
 }

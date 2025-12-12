@@ -1,0 +1,383 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/config/app_colors.dart';
+
+class PremiumView extends StatelessWidget {
+  const PremiumView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.9,
+      decoration: BoxDecoration(
+        color: CupertinoTheme.of(context).scaffoldBackgroundColor,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30.r)),
+      ),
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.fromLTRB(20.w, 70.h, 20.w, 0),
+                  child: Column(
+                    children: [
+                      Stack(
+                        alignment: Alignment.topRight,
+                        children: [
+                          Container(
+                            width: 100.w,
+                            height: 100.w,
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryColor.withValues(
+                                alpha: .2,
+                              ),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              CupertinoIcons.lock_fill,
+                              size: 50.sp,
+                              color: AppColors.primaryColor,
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(6.w),
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryColor,
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.white, width: 3),
+                            ),
+                            child: Icon(
+                              Icons.star,
+                              color: Colors.white,
+                              size: 16.sp,
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(height: 24.h),
+
+                      Text(
+                        l10n.unlock_untilimited_access,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 28.sp,
+                          fontWeight: FontWeight.w800,
+                          height: 1.2,
+                        ),
+                      ),
+                      SizedBox(height: 12.h),
+                      Text(
+                        l10n.unlock_untilimited_access_description,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                          color: Colors.grey.shade600,
+                          height: 1.4,
+                        ),
+                      ),
+
+                      SizedBox(height: 24.h),
+
+                      Container(
+                        padding: EdgeInsets.all(16.w),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFFF7ED),
+                          borderRadius: BorderRadius.circular(30.r),
+                          border: Border.all(color: const Color(0xFFFFEDD5)),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(6.w),
+                              decoration: const BoxDecoration(
+                                color: Color(0xFFFDBA74),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                CupertinoIcons.exclamationmark,
+                                color: Colors.white,
+                                size: 16.sp,
+                              ),
+                            ),
+                            SizedBox(width: 12.w),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    l10n.daily_input_cap_reached,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14.sp,
+                                      color: Colors.black87,
+                                    ),
+                                  ),
+                                  SizedBox(height: 4.h),
+                                  Text(
+                                    l10n.daily_input_cap_reached_description,
+                                    style: TextStyle(
+                                      fontSize: 13.sp,
+                                      color: Colors.black54,
+                                      height: 1.4,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      SizedBox(height: 30.h),
+
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          l10n.feature_comparison,
+                          style: TextStyle(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 16.h),
+
+                      _buildComparisonRow(
+                        l10n.feature,
+                        l10n.free,
+                        l10n.premium,
+                        isHeader: true,
+                        context: context,
+                      ),
+                      Divider(height: 24.h),
+
+                      _buildComparisonRow(
+                        l10n.no_ads,
+                        "ads",
+                        "check",
+                        context: context,
+                      ),
+
+                      Divider(height: 24.h),
+
+                      _buildComparisonRow(
+                        l10n.unlimited_scans,
+                        "10/${l10n.day}",
+                        "check",
+                        context: context,
+                      ),
+
+                      Divider(height: 24.h),
+
+                      _buildComparisonRow(
+                        l10n.unlimited_voice_entries,
+                        "10/${l10n.day}",
+                        "check",
+                        context: context,
+                      ),
+
+                      Divider(height: 24.h),
+
+                      _buildComparisonRow(
+                        l10n.transaction_locking,
+                        "ads",
+                        "check",
+                        context: context,
+                      ),
+
+                      SizedBox(height: 30.h),
+                    ],
+                  ),
+                ),
+              ),
+
+              Container(
+                padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 40.h),
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: .05),
+                      blurRadius: 10,
+                      offset: const Offset(0, -5),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF3B82F6),
+                        foregroundColor: Colors.white,
+                        minimumSize: Size(double.infinity, 50.h),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.r),
+                        ),
+                        elevation: 0,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            l10n.upgrade_premium,
+                            style: TextStyle(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          SizedBox(width: 8.w),
+                          Icon(CupertinoIcons.arrow_right, size: 18.sp),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 12.h),
+                    Text(
+                      l10n.accept_terms_conditions,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 11.sp,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+
+          Positioned(
+            top: 20.h,
+            left: 16.w,
+            child: GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: Container(
+                padding: EdgeInsets.all(8.w),
+                decoration: BoxDecoration(
+                  color: CupertinoTheme.of(
+                    context,
+                  ).textTheme.textStyle.color?.withValues(alpha: .1),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  CupertinoIcons.xmark,
+                  size: 20.sp,
+                  color: CupertinoTheme.of(
+                    context,
+                  ).textTheme.textStyle.color?.withValues(alpha: 0.6),
+                ),
+              ),
+            ),
+          ),
+
+          Positioned(
+            top: 30.h,
+            right: 20.w,
+            child: GestureDetector(
+              onTap: () {
+                // Handle restore purchase action
+              },
+              child: Text(
+                l10n.restore,
+                style: TextStyle(
+                  fontSize: 15.sp,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildComparisonRow(
+    String feature,
+    String free,
+    String premium, {
+    bool isHeader = false,
+    required BuildContext context,
+  }) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 4,
+          child: isHeader
+              ? Text(
+                  feature,
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w500,
+                    color: CupertinoTheme.of(context).textTheme.textStyle.color,
+                  ),
+                )
+              : Row(
+                  children: [
+                    if (!isHeader)
+                      Icon(
+                        CupertinoIcons.viewfinder,
+                        size: 16.sp,
+                        color: const Color(0xFF3B82F6),
+                      ),
+                    if (!isHeader) SizedBox(width: 8.w),
+                    Expanded(
+                      child: Text(
+                        feature,
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500,
+                          color: CupertinoTheme.of(
+                            context,
+                          ).textTheme.textStyle.color,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+        ),
+        Expanded(
+          flex: 2,
+          child: free == "ads"
+              ? Icon(
+                  CupertinoIcons.nosign,
+                  color: AppColors.errorColor,
+                  size: 20.sp,
+                )
+              : Text(
+                  free,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w500,
+                    color: CupertinoTheme.of(context).textTheme.textStyle.color,
+                  ),
+                ),
+        ),
+        Expanded(
+          flex: 2,
+          child: premium == "check"
+              ? Icon(
+                  CupertinoIcons.checkmark_alt,
+                  color: AppColors.primaryColor,
+                  size: 20.sp,
+                )
+              : Text(
+                  premium,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w500,
+                    color: CupertinoTheme.of(context).textTheme.textStyle.color,
+                  ),
+                ),
+        ),
+      ],
+    );
+  }
+}

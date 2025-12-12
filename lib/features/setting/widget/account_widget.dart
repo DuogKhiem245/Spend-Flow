@@ -11,7 +11,7 @@ class AccountWidget extends StatelessWidget {
 
   const AccountWidget({
     super.key,
-    this.isLoggedIn = true,
+    required this.isLoggedIn,
     this.isHaveProfile = true,
   });
 
@@ -24,7 +24,7 @@ class AccountWidget extends StatelessWidget {
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: CupertinoTheme.of(context).barBackgroundColor,
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(30.r),
         boxShadow: [
           BoxShadow(
             color: AppColors.boxShadow,

@@ -90,7 +90,7 @@ class MyApp extends StatelessWidget {
                   },
                 );
               },
-              locale: LanguageService().locale,
+              locale: languageService.locale,
               localizationsDelegates: const [
                 AppLocalizations.delegate,
                 GlobalMaterialLocalizations.delegate,

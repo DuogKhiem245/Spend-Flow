@@ -475,4 +475,131 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get save_changes => 'Save Changes';
+
+  @override
+  String get upgrade_premium => 'Upgrade to Premium!';
+
+  @override
+  String get upgrade_premium_description =>
+      'Unlock exclusive features and enhance your experience.';
+
+  @override
+  String get upgrade_now => 'Upgrade Now';
+
+  @override
+  String get you_are_premium => 'You\'re All Set, Premium User!';
+
+  @override
+  String get you_are_premium_description => 'Enjoy your enhanced experience.';
+
+  @override
+  String get biometric_authentication => 'Biometric Authentication';
+
+  @override
+  String get password_security => 'Password Security';
+
+  @override
+  String get face_id_description =>
+      'Unlock your app with a glance. Face ID offers convenient and secure access using your unique facial features.';
+
+  @override
+  String get touch_id_description =>
+      'Unlock your app with a touch. Touch ID provides quick and secure access using your fingerprint.';
+
+  @override
+  String get pass_code_description =>
+      'Add an extra layer of protection. A passcode ensures only you can access your financial data, even if your device is compromised.';
+
+  @override
+  String get change_passcode => 'Change Passcode';
+
+  @override
+  String get old_passcode => 'Old Passcode';
+
+  @override
+  String get enter_old_passcode => 'Enter old passcode';
+
+  @override
+  String get new_passcode => 'New Passcode';
+
+  @override
+  String get enter_new_passcode => 'Enter new passcode';
+
+  @override
+  String get confirm_new_passcode => 'Confirm New Passcode';
+
+  @override
+  String get enter_confirm_new_passcode => 'Enter confirm new passcode';
+
+  @override
+  String get unlock_untilimited_access => 'Unlock Unlimited Access';
+
+  @override
+  String get unlock_untilimited_access_description =>
+      'Upgrade to Premium to remove all limits and access advanced features.';
+
+  @override
+  String get daily_input_cap_reached => 'Daily Input Cap Reached';
+
+  @override
+  String get daily_input_cap_reached_description =>
+      'You\'ve hit your daily limit for invoice scans and voice entries. Upgrade now to continue.';
+
+  @override
+  String get feature_comparison => 'Feature Comparison';
+
+  @override
+  String get feature => 'Feature';
+
+  @override
+  String get free => 'Free';
+
+  @override
+  String get premium => 'Premium';
+
+  @override
+  String get no_ads => 'No Ads';
+
+  @override
+  String get transaction_locking => 'Transaction Locking';
+
+  @override
+  String get unlimited_scans => 'Unlimited Invoice Scans';
+
+  @override
+  String get unlimited_voice_entries => 'Unlimited Voice Entries';
+
+  @override
+  String get day => 'day';
+
+  @override
+  String get accept_terms_conditions =>
+      'Subscription auto-renews. By continuing, you agree to our Terms of Service and Privacy Policy.';
+
+  @override
+  String get restore => 'Restore';
+
+  @override
+  String get select_language => 'Select Language';
+
+  @override
+  String get suggested => 'Suggested';
+
+  @override
+  String get all_languages => 'All Languages';
+
+  @override
+  String get apply_changes => 'Apply Changes';
+
+  @override
+  String get select_currency => 'Select Currency';
+
+  @override
+  String get search_currency => 'Search currency or country...';
+
+  @override
+  String get popular => 'Popular';
+
+  @override
+  String get all_currencies => 'All Currencies';
 }
