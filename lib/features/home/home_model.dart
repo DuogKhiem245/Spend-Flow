@@ -37,3 +37,21 @@ class RecentTransactionModel {
     required this.isExpense,
   });
 }
+
+class TransactionItem {
+  final String title;
+  final String category;
+  final String time;
+  final double amount;
+  final IconData icon;
+  final Color color;
+
+  TransactionItem(
+    this.title,
+    this.category,
+    this.time,
+    this.amount,
+    this.icon,
+    this.color,
+  );
+}

@@ -5,6 +5,7 @@ import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/features/home/home_model.dart';
 import 'package:spend_flow/features/home/home_viewmodel.dart';
+import 'package:spend_flow/features/home/widgets/spending_this_month_view.dart';
 
 class SpendingChart extends StatefulWidget {
   final List<SpendingModel> chartData;
@@ -98,7 +99,7 @@ class _SpendingChartState extends State<SpendingChart>
       padding: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0.w),
       decoration: BoxDecoration(
         color: CupertinoTheme.of(context).barBackgroundColor,
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(30.r),
         boxShadow: [
           BoxShadow(
             color: AppColors.boxShadow,
@@ -122,7 +123,11 @@ class _SpendingChartState extends State<SpendingChart>
               ),
               GestureDetector(
                 onTap: () {
-                  // Todo: Navigate to detailed spending page
+                  Navigator.push(context, 
+                    CupertinoPageRoute(
+                      builder: (context) => SpendingDetailView()
+                    ),
+                  );
                 },
                 child: Text(
                   l10n.view_all,

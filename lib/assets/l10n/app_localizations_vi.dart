@@ -75,6 +75,18 @@ class AppLocalizationsVi extends AppLocalizations {
   String get other => 'Khác';
 
   @override
+  String get home => 'Trang chủ';
+
+  @override
+  String get reports => 'Báo cáo';
+
+  @override
+  String get budgets => 'Ngân sách';
+
+  @override
+  String get all => 'Tất cả';
+
+  @override
   String get onboard_step1_title => 'Đơn giản hóa tài chính';
 
   @override
@@ -266,6 +278,9 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get category => 'Danh mục';
+
+  @override
+  String get categories => 'Danh mục';
 
   @override
   String get select_category => 'Chọn danh mục';

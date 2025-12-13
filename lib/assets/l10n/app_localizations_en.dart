@@ -75,6 +75,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get other => 'Other';
 
   @override
+  String get home => 'Home';
+
+  @override
+  String get reports => 'Reports';
+
+  @override
+  String get budgets => 'Budgets';
+
+  @override
+  String get all => 'All';
+
+  @override
   String get onboard_step1_title => 'Simplify Your Finances';
 
   @override
@@ -267,6 +279,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get category => 'Category';
+
+  @override
+  String get categories => 'Categories';
 
   @override
   String get select_category => 'Select Category';

@@ -2,6 +2,7 @@ import 'package:cupertino_native/components/tab_bar.dart';
 import 'package:cupertino_native/style/sf_symbol.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/features/budget/budget_view.dart';
 import 'package:spend_flow/features/home/home_view.dart';
 import 'package:spend_flow/features/report/report_view.dart';
@@ -26,6 +27,8 @@ class _BottomNavbarState extends State<BottomNavbar> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return CupertinoPageScaffold(
       child: Stack(
         children: [
@@ -37,13 +40,13 @@ class _BottomNavbarState extends State<BottomNavbar> {
             child: CNTabBar(
               items: [
                 CNTabBarItem(
-                  label: 'Dashboard',
+                  label: l10n.home,
                   icon: CNSymbol('square.grid.2x2'),
                 ),
-                CNTabBarItem(label: 'Reports', icon: CNSymbol('chart.bar')),
-                CNTabBarItem(label: 'Budgets', icon: CNSymbol('creditcard')),
+                CNTabBarItem(label: l10n.reports, icon: CNSymbol('chart.bar')),
+                CNTabBarItem(label: l10n.budgets, icon: CNSymbol('creditcard')),
                 CNTabBarItem(
-                  label: 'Settings',
+                  label: l10n.settings,
                   icon: CNSymbol('gearshape.fill'),
                 ),
               ],

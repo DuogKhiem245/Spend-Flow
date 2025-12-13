@@ -24,7 +24,45 @@ class HomeViewModel {
       return l10n.hello;
     }
   }
-  
+
+  String formatCurrency(double amount) {
+    final formatter = NumberFormat("#,##0.0", "en_US");
+    return formatter.format(amount);
+  }
+
+  double calculateTotalSpent(List<SpendingModel> data) {
+    return data.fold(0, (sum, item) => sum + item.amount);
+  }
+
+  Map<String, List<TransactionModel>> groupTransactionsByDate(
+    List<TransactionModel> list,
+  ) {
+    final Map<String, List<TransactionModel>> groups = {};
+    for (var tx in list) {
+      final dateKey = formatDate(tx.date);
+      if (!groups.containsKey(dateKey)) {
+        groups[dateKey] = [];
+      }
+      groups[dateKey]!.add(tx);
+    }
+    return groups;
+  }
+
+  String formatDate(DateTime date) {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final yesterday = today.subtract(const Duration(days: 1));
+    final checkDate = DateTime(date.year, date.month, date.day);
+
+    if (checkDate == today) return "Today";
+    if (checkDate == yesterday) return "Yesterday";
+    return DateFormat('dd/MM/yyyy').format(date);
+  }
+
+  String formatHours(DateTime date) {
+    return DateFormat('hh:mm a').format(date);
+  }
+
   Future<Map<String, double>> getCurrentMonthStats() async {
     final now = DateTime.now();
 
@@ -46,15 +84,9 @@ class HomeViewModel {
     return {'income': income, 'expenses': expenses, 'balance': balance};
   }
 
-  String formatCurrency(double amount) {
-    final formatter = NumberFormat("#,##0.0", "en_US");
-    return formatter.format(amount);
-  }
-  
   Future<List<SpendingModel>> getChartData() async {
     final now = DateTime.now();
 
-    // Lấy giao dịch tháng này
     final transactions = await _storage.getTransactionsByMonth(now);
 
     final Map<String, double> categorySpending = {};
@@ -62,7 +94,7 @@ class HomeViewModel {
 
     for (var tx in transactions) {
       if (tx.isIncome == false) {
-        final amount = tx.amount.abs(); 
+        final amount = tx.amount.abs();
         final catName = tx.category.name;
 
         categorySpending[catName] = (categorySpending[catName] ?? 0) + amount;
@@ -106,8 +138,38 @@ class HomeViewModel {
     return top4;
   }
 
-  double calculateTotalSpent(List<SpendingModel> data) {
-    return data.fold(0, (sum, item) => sum + item.amount);
+  Future<List<SpendingModel>> getAllChartData() async {
+    final now = DateTime.now();
+
+    final transactions = await _storage.getTransactionsByMonth(now);
+
+    final Map<String, double> categorySpending = {};
+    final Map<String, Color> categoryColors = {};
+
+    for (var tx in transactions) {
+      if (tx.isIncome == false) {
+        final amount = tx.amount.abs();
+        final catName = tx.category.name;
+
+        categorySpending[catName] = (categorySpending[catName] ?? 0) + amount;
+
+        if (!categoryColors.containsKey(catName)) {
+          categoryColors[catName] = tx.category.color;
+        }
+      }
+    }
+
+    List<SpendingModel> allSpending = categorySpending.entries.map((e) {
+      return SpendingModel(
+        category: e.key,
+        amount: e.value,
+        color: categoryColors[e.key] ?? CupertinoColors.systemGrey,
+      );
+    }).toList();
+
+    allSpending.sort((a, b) => b.amount.compareTo(a.amount));
+
+    return allSpending;
   }
 
   List<PieChartSectionData> generateChartSections(
@@ -125,8 +187,6 @@ class HomeViewModel {
       return PieChartSectionData(
         color: item.color,
         value: item.amount,
-        // Nếu muốn hiển thị phần trăm thay vì số tiền:
-        // title: isTouched ? '${(item.amount / total * 100).toStringAsFixed(1)}%' : '',
         title: isTouched ? '\$${formatCurrency(item.amount)}' : '',
         radius: radius,
         titleStyle: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
@@ -145,5 +205,14 @@ class HomeViewModel {
     }
 
     return all;
+  }
+
+  Future<List<TransactionModel>> getTransactionsForCurrentMonth() async {
+    final now = DateTime.now();
+    final transactions = await _storage.getTransactionsByMonth(now);
+
+    transactions.sort((a, b) => b.date.compareTo(a.date));
+
+    return transactions;
   }
 }

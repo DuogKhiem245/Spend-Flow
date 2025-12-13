@@ -22,6 +22,10 @@
   "date": "Ngày",
   "today": "Hôm nay",
   "other": "Khác",
+  "home": "Trang chủ",
+  "reports": "Báo cáo",
+  "budgets": "Ngân sách",
+  "all": "Tất cả",
 
   "onboard_step1_title": "Đơn giản hóa tài chính",
   "onboard_step1_message": "Tất cả tài khoản của bạn trong một nơi. Xem tiền của bạn đi đâu và đạt mục tiêu tài chính dễ dàng.",
@@ -70,6 +74,7 @@
   "good_pass_num": "Sắp hoàn hảo! Hãy thêm số để tăng bảo mật.",
   "good_pass_special": "Sắp hoàn hảo! Hãy thêm ký tự bất kì để tăng bảo mật.",
   "strong_pass": "Tuyệt vời! Mật khẩu của bạn đã an toàn.",
+  
   "good_morning": "Chào buổi sáng",
   "good_afternoon": "Chào buổi chiều",
   "good_evening": "Chào buổi tối",
@@ -86,6 +91,7 @@
   "enter_transaction_name": "Nhập tên giao dịch",
   "suggested_category": "Danh mục gợi ý",
   "category": "Danh mục",
+  "categories": "Danh mục",
   "select_category": "Chọn danh mục",
   "category_food": "Ăn uống",
   "category_transport": "Di chuyển",

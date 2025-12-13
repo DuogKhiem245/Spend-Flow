@@ -22,12 +22,18 @@
   "date": "Date",
   "today": "Today",
   "other": "Other",
+  "home": "Home",
+  "reports": "Reports",
+  "budgets": "Budgets",
+  "all": "All",
+  
   "onboard_step1_title": "Simplify Your Finances",
   "onboard_step1_message": "All your accounts in one place. See where your money goes and achieve your financial goals effortlessly.",
   "onboard_step2_title": "Take Control of Your Spending",
   "onboard_step2_message": "Set spending limits, track categories, and stay on top of your financial goals with personal budgeting.",
   "onboard_step3_title": "Watch Your Savings Grow",
   "onboard_step3_message": "Set automated saving goals, round up transactions, and discover smart ways to save money with ease.",
+
   "login": "Login",
   "register": "Register",
   "logout": "Logout",
@@ -54,6 +60,7 @@
   "create_account": "Create an Account",
   "create_password": "Create New Password",
   "create_new_password": "Almost there! Create your new password.",
+
   "welcome_back": "Welcome Back",
   "back_login": "Back to Login",
   "description_create_account": "Take control of your finances today",
@@ -68,6 +75,7 @@
   "good_pass_num": "Almost there! Add a number to make it stronger.",
   "good_pass_special": "Almost there! Add any character to make it stronger.",
   "strong_pass": "Great! Your password is secure.",
+  
   "good_morning": "Good Morning",
   "good_afternoon": "Good Afternoon",
   "good_evening": "Good Evening",
@@ -85,6 +93,7 @@
   "enter_transaction_name": "Enter transaction name",
   "suggested_category": "Suggested Category",
   "category": "Category",
+  "categories": "Categories",
   "select_category": "Select Category",
   "category_food": "Food",
   "category_transport": "Transport",
@@ -126,6 +135,7 @@
   "category_name": "Category Name",
   "category_color": "Category Color",
   "category_icon": "Category Icon",
+
   "settings": "Settings",
   "settings_description": "Keep your finance data synced across all your devices",
   "sign_in_now": "Sign in now.",

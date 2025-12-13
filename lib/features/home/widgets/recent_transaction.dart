@@ -27,7 +27,7 @@ class RecentTransaction extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0.w),
       decoration: BoxDecoration(
         color: CupertinoTheme.of(context).barBackgroundColor,
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(30.r),
         boxShadow: [
           BoxShadow(
             color: AppColors.boxShadow,
@@ -39,31 +39,12 @@ class RecentTransaction extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                l10n.recent_transactions,
-                style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  // Navigate to All Transactions Page
-                },
-                child: Text(
-                  l10n.view_all,
-                  style: CupertinoTheme.of(context).textTheme.textStyle
-                      .copyWith(
-                        fontSize: 14.sp,
-                        color: AppColors.primaryColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                ),
-              ),
-            ],
+          Text(
+            l10n.recent_transactions,
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+              fontSize: 20.sp,
+              fontWeight: FontWeight.w700,
+            ),
           ),
           SizedBox(height: 20.h),
 
@@ -92,7 +73,7 @@ class RecentTransaction extends StatelessWidget {
                           height: 50.w,
                           decoration: BoxDecoration(
                             color: item.category.color.withValues(alpha: .15),
-                            borderRadius: BorderRadius.circular(8.r),
+                            borderRadius: BorderRadius.circular(30.r),
                           ),
                           child: Icon(
                             AppIcons.getIcon(item.category.iconKey),

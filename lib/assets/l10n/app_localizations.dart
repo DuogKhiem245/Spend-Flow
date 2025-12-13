@@ -230,6 +230,30 @@ abstract class AppLocalizations {
   /// **'Khác'**
   String get other;
 
+  /// No description provided for @home.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trang chủ'**
+  String get home;
+
+  /// No description provided for @reports.
+  ///
+  /// In vi, this message translates to:
+  /// **'Báo cáo'**
+  String get reports;
+
+  /// No description provided for @budgets.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ngân sách'**
+  String get budgets;
+
+  /// No description provided for @all.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tất cả'**
+  String get all;
+
   /// No description provided for @onboard_step1_title.
   ///
   /// In vi, this message translates to:
@@ -601,6 +625,12 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Danh mục'**
   String get category;
+
+  /// No description provided for @categories.
+  ///
+  /// In vi, this message translates to:
+  /// **'Danh mục'**
+  String get categories;
 
   /// No description provided for @select_category.
   ///
