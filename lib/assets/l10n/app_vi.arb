@@ -134,6 +134,12 @@
   "category_color": "Màu danh mục",
   "category_icon": "Biểu tượng danh mục",
 
+  "scan_receipt": "Quét hóa đơn",
+  "add_via_voice": "Thêm bằng giọng nói",
+  "add_manually": "Thêm thủ công",
+
+  "align_receipt": "Căn chỉnh hóa đơn của bạn vào khung",
+
   "settings": "Cài đặt",
   "settings_description": "Giữ dữ liệu tài chính luôn đồng bộ trên tất cả thiết bị của bạn",
   "sign_in_now": "Đăng nhập ngay.",

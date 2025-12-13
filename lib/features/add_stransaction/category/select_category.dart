@@ -73,6 +73,7 @@ class _SelectCategoryState extends State<SelectCategory> {
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
+        backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
         padding: EdgeInsetsDirectional.only(end: 10.w),
         leading: CupertinoNavigationBarBackButton(
           color: CupertinoTheme.of(context).primaryColor,

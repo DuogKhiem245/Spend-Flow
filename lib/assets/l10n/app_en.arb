@@ -136,6 +136,12 @@
   "category_color": "Category Color",
   "category_icon": "Category Icon",
 
+  "scan_receipt": "Scan Receipt",
+  "add_via_voice": "Add via Voice",
+  "add_manually": "Add Manually",
+
+  "align_receipt": "Align your receipt",
+
   "settings": "Settings",
   "settings_description": "Keep your finance data synced across all your devices",
   "sign_in_now": "Sign in now.",

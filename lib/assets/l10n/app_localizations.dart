@@ -878,6 +878,30 @@ abstract class AppLocalizations {
   /// **'Biểu tượng danh mục'**
   String get category_icon;
 
+  /// No description provided for @scan_receipt.
+  ///
+  /// In vi, this message translates to:
+  /// **'Quét hóa đơn'**
+  String get scan_receipt;
+
+  /// No description provided for @add_via_voice.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm bằng giọng nói'**
+  String get add_via_voice;
+
+  /// No description provided for @add_manually.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm thủ công'**
+  String get add_manually;
+
+  /// No description provided for @align_receipt.
+  ///
+  /// In vi, this message translates to:
+  /// **'Căn chỉnh hóa đơn của bạn vào khung'**
+  String get align_receipt;
+
   /// No description provided for @settings.
   ///
   /// In vi, this message translates to:

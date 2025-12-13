@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
@@ -63,6 +64,7 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         border: null,
+        backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
         leading: CupertinoNavigationBarBackButton(
           color: CupertinoTheme.of(context).primaryColor,
           onPressed: () => Navigator.pop(context),
@@ -154,8 +156,11 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
                       if (_isLoading)
                         SizedBox(
                           height: 250.h,
-                          child: const Center(
-                            child: CupertinoActivityIndicator(),
+                          child: Center(
+                            child: LoadingAnimationWidget.staggeredDotsWave(
+                              color: CupertinoTheme.of(context).primaryColor,
+                              size: 30.w,
+                            )
                           ),
                         )
                       else if (_chartData.isEmpty)

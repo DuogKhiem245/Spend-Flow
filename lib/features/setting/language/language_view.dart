@@ -39,6 +39,7 @@ class _LanguageViewState extends State<LanguageView> {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         border: null,
+        backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
         leading: CupertinoNavigationBarBackButton(
           color: CupertinoTheme.of(context).primaryColor,
           onPressed: () => Navigator.pop(context),

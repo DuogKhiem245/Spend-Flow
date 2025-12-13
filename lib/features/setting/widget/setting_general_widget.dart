@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
+import 'package:spend_flow/core/data/language_data.dart';
+import 'package:spend_flow/core/services/language_service.dart';
 import 'package:spend_flow/features/setting/currency/currency_view.dart';
 import 'package:spend_flow/features/setting/language/language_view.dart';
 import 'package:spend_flow/main.dart' show themeService;
@@ -17,6 +19,21 @@ class SettingGeneralWidget extends StatefulWidget {
 
 class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
   bool isNotificationsEnabled = true;
+
+  static final List<Map<String, String>> _allLanguages = LanguageData.allLanguages;
+
+  static String getNameByCode(String code) {
+    try {
+      final language = _allLanguages.firstWhere(
+        (element) => element['code'] == code,
+        orElse: () => _allLanguages
+            .first, 
+      );
+      return language['name'] ?? 'English';
+    } catch (e) {
+      return 'English';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +88,7 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
               CupertinoPageRoute(builder: (context) => const LanguageView()),
             );
           },
-          trailing: _buildTextTrailing(context, 'English'),
+          trailing: _buildTextTrailing(context, getNameByCode(LanguageService().currentLanguageName)),
         ),
 
         _SettingItem(

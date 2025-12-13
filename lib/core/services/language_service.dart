@@ -20,6 +20,10 @@ class LanguageService extends ChangeNotifier {
 
   Locale get locale => _locale;
 
+  String get currentLanguageName {
+    return _locale.languageCode;
+  }
+
   Future<void> _loadLanguage() async {
     final savedLang = await _storageService.getString(_langKey);
      if (savedLang != null) {

@@ -406,6 +406,18 @@ class AppLocalizationsVi extends AppLocalizations {
   String get category_icon => 'Biểu tượng danh mục';
 
   @override
+  String get scan_receipt => 'Quét hóa đơn';
+
+  @override
+  String get add_via_voice => 'Thêm bằng giọng nói';
+
+  @override
+  String get add_manually => 'Thêm thủ công';
+
+  @override
+  String get align_receipt => 'Căn chỉnh hóa đơn của bạn vào khung';
+
+  @override
   String get settings => 'Cài đặt';
 
   @override

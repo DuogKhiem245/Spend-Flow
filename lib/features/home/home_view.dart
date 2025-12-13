@@ -4,6 +4,7 @@ import 'package:cupertino_native/style/sf_symbol.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/features/add_stransaction/add_stransaction_view.dart';
 import 'package:spend_flow/features/add_stransaction/model/transaction_model.dart';
 import 'package:spend_flow/features/home/home_model.dart';
@@ -12,6 +13,7 @@ import 'package:spend_flow/features/home/widgets/balance_card.dart';
 import 'package:spend_flow/features/home/widgets/home_header.dart';
 import 'package:spend_flow/features/home/widgets/recent_transaction.dart';
 import 'package:spend_flow/features/home/widgets/spending_chart.dart';
+import 'package:spend_flow/features/scan_receipt/scran_receipt_view.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -31,29 +33,6 @@ class _HomePageState extends State<HomePage> {
   List<SpendingModel> _chartData = [];
 
   List<TransactionModel> _recentTransactions = [];
-
-  final items = [
-    CNPopupMenuItem(
-      label: 'Nhập giọng nói',
-      icon: CNSymbol('mic.fill', size: 18.sp), 
-    ),
-
-    CNPopupMenuItem(
-      label: 'Quét hóa đơn',
-      icon: CNSymbol(
-        'text.viewfinder',
-        size: 18.sp,
-      ), 
-    ),
-
-    CNPopupMenuItem(
-      label: 'Thêm thủ công',
-      icon: CNSymbol(
-        'square.and.pencil',
-        size: 18.sp,
-      ), 
-    ),
-  ];
 
   @override
   void initState() {
@@ -83,6 +62,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return CupertinoPageScaffold(
       child: _isLoading
           ? LoadingAnimationWidget.staggeredDotsWave(
@@ -135,15 +116,35 @@ class _HomePageState extends State<HomePage> {
                   right: 20.w,
                   bottom: 95.h,
                   child: CNPopupMenuButton.icon(
-                    buttonIcon: CNSymbol(
-                      'plus.circle.fill',
-                      size: 24.sp,
-                    ),
+                    buttonIcon: CNSymbol('plus.circle.fill', size: 24.sp),
                     buttonStyle: CNButtonStyle.glass,
                     size: 60.w,
-                    items: items,
+                    items: [
+                      CNPopupMenuItem(
+                        label: l10n!.add_via_voice,
+                        icon: CNSymbol('mic.fill', size: 18.sp),
+                      ),
+
+                      CNPopupMenuItem(
+                        label: l10n.scan_receipt,
+                        icon: CNSymbol('text.viewfinder', size: 18.sp),
+                      ),
+
+                      CNPopupMenuItem(
+                        label: l10n.add_manually,
+                        icon: CNSymbol('square.and.pencil', size: 18.sp),
+                      ),
+                    ],
                     onSelected: (index) {
-                      if(index == 2) {
+                      if (index == 0) {
+                      } else if (index == 1) {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => const ScanReceiptView(),
+                          ),
+                        );
+                      } else if (index == 2) {
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
@@ -151,7 +152,6 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       }
-
                     },
                   ),
                   // child: CNButton.icon(

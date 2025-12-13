@@ -407,6 +407,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get category_icon => 'Category Icon';
 
   @override
+  String get scan_receipt => 'Scan Receipt';
+
+  @override
+  String get add_via_voice => 'Add via Voice';
+
+  @override
+  String get add_manually => 'Add Manually';
+
+  @override
+  String get align_receipt => 'Align your receipt';
+
+  @override
   String get settings => 'Settings';
 
   @override

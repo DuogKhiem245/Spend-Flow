@@ -36,62 +36,58 @@ class _CurrencyViewState extends State<CurrencyView> {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         border: null,
+        backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
         leading: CupertinoNavigationBarBackButton(
           color: AppColors.primaryColor,
           onPressed: () => Navigator.pop(context),
         ),
         middle: Text(
           l10n.select_currency,
-          style: TextStyle(
-            fontSize: 20.sp,
-            fontWeight: FontWeight.w600,
-          ),
+          style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),
         ),
       ),
-      child: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-              child: CupertinoSearchTextField(
-                padding: EdgeInsetsGeometry.symmetric(
-                  horizontal: 12.w,
-                  vertical: 10.h,
-                ),
-                controller: _searchController,
-                placeholderStyle: TextStyle(
-                  color: CupertinoColors.systemGrey,
-                  fontSize: 16.sp,
-                ),
-                style: TextStyle(color: CupertinoColors.black, fontSize: 16.sp),
-                itemColor: CupertinoColors.systemGrey,
-                placeholder: l10n.search_currency,
-                onChanged: (value) {
-                  setState(() {
-                    _searchText = value;
-                  });
-                },
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+            child: CupertinoSearchTextField(
+              padding: EdgeInsetsGeometry.symmetric(
+                horizontal: 12.w,
+                vertical: 10.h,
               ),
+              controller: _searchController,
+              placeholderStyle: TextStyle(
+                color: CupertinoColors.systemGrey,
+                fontSize: 16.sp,
+              ),
+              style: TextStyle(color: CupertinoColors.black, fontSize: 16.sp),
+              itemColor: CupertinoColors.systemGrey,
+              placeholder: l10n.search_currency,
+              onChanged: (value) {
+                setState(() {
+                  _searchText = value;
+                });
+              },
             ),
+          ),
 
-            Expanded(
-              child: ListView(
-                children: [
-                  if (isSearching)
-                    _buildGroup(searchList)
-                  else ...[
-                    _buildSectionHeader(l10n.popular.toUpperCase()),
-                    _buildGroup(_popularList),
-                    SizedBox(height: 20.h),
-                    _buildSectionHeader(l10n.all_currencies.toUpperCase()),
-                    _buildGroup(_allList),
-                  ],
-                  SizedBox(height: 40.h),
+          Expanded(
+            child: ListView(
+              children: [
+                if (isSearching)
+                  _buildGroup(searchList)
+                else ...[
+                  _buildSectionHeader(l10n.popular.toUpperCase()),
+                  _buildGroup(_popularList),
+                  SizedBox(height: 20.h),
+                  _buildSectionHeader(l10n.all_currencies.toUpperCase()),
+                  _buildGroup(_allList),
                 ],
-              ),
+                SizedBox(height: 40.h),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -141,7 +137,7 @@ class _CurrencyViewState extends State<CurrencyView> {
         // Todo: Lưu vào LocalStorage hoặc gọi Service update tiền tệ
       },
       child: Container(
-        color: Colors.transparent, 
+        color: Colors.transparent,
         child: Column(
           children: [
             Padding(
@@ -158,7 +154,9 @@ class _CurrencyViewState extends State<CurrencyView> {
                         Text(
                           item['code']!,
                           style: TextStyle(
-                            color: CupertinoTheme.of(context).textTheme.textStyle.color,
+                            color: CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.color,
                             fontSize: 16.sp,
                             fontWeight: FontWeight.w600,
                           ),
@@ -178,7 +176,7 @@ class _CurrencyViewState extends State<CurrencyView> {
                   if (isSelected)
                     Icon(
                       CupertinoIcons.checkmark,
-                      color: const Color(0xFF3B82F6), 
+                      color: const Color(0xFF3B82F6),
                       size: 20.sp,
                     ),
                 ],
