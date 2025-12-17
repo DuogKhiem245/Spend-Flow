@@ -47,7 +47,9 @@ class BalanceCard extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w500,
-                  color: CupertinoColors.systemGrey,
+                  color: CupertinoTheme.of(
+                    context,
+                  ).textTheme.textStyle.color?.withValues(alpha: .6),
                 ),
               ),
               SizedBox(height: 8.h),
@@ -116,7 +118,7 @@ class BalanceCard extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 15.sp,
                             fontWeight: FontWeight.w500,
-                            color: CupertinoColors.systemGrey,
+                            color: CupertinoTheme.of(context).textTheme.textStyle.color?.withValues(alpha: .6),
                           ),
                         ),
                       ],
@@ -167,7 +169,9 @@ class BalanceCard extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 15.sp,
                             fontWeight: FontWeight.w500,
-                            color: CupertinoColors.systemGrey,
+                            color: CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.color?.withValues(alpha: .6),
                           ),
                         ),
                       ],

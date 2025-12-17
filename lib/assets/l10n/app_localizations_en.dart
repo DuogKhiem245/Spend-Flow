@@ -419,6 +419,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get align_receipt => 'Align your receipt';
 
   @override
+  String get listening => 'Listening...';
+
+  @override
+  String get voice_example => 'e.g., I spent 50 dollars on groceries';
+
+  @override
+  String get tap_to_stop => 'Tap to Stop';
+
+  @override
+  String get tap_to_listen => 'Tap to Listen';
+
+  @override
   String get settings => 'Settings';
 
   @override

@@ -140,6 +140,11 @@
 
   "align_receipt": "Căn chỉnh hóa đơn của bạn vào khung",
 
+  "listening": "Đang nghe...",
+  "voice_example": "Ví dụ: Tôi đã chi 50 đô la cho thực phẩm",
+  "tap_to_stop": "Chạm để dừng",
+  "tap_to_listen": "Chạm để nghe",
+
   "settings": "Cài đặt",
   "settings_description": "Giữ dữ liệu tài chính luôn đồng bộ trên tất cả thiết bị của bạn",
   "sign_in_now": "Đăng nhập ngay.",

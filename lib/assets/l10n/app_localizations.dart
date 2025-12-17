@@ -902,6 +902,30 @@ abstract class AppLocalizations {
   /// **'Căn chỉnh hóa đơn của bạn vào khung'**
   String get align_receipt;
 
+  /// No description provided for @listening.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đang nghe...'**
+  String get listening;
+
+  /// No description provided for @voice_example.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ví dụ: Tôi đã chi 50 đô la cho thực phẩm'**
+  String get voice_example;
+
+  /// No description provided for @tap_to_stop.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chạm để dừng'**
+  String get tap_to_stop;
+
+  /// No description provided for @tap_to_listen.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chạm để nghe'**
+  String get tap_to_listen;
+
   /// No description provided for @settings.
   ///
   /// In vi, this message translates to:

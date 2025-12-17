@@ -418,6 +418,18 @@ class AppLocalizationsVi extends AppLocalizations {
   String get align_receipt => 'Căn chỉnh hóa đơn của bạn vào khung';
 
   @override
+  String get listening => 'Đang nghe...';
+
+  @override
+  String get voice_example => 'Ví dụ: Tôi đã chi 50 đô la cho thực phẩm';
+
+  @override
+  String get tap_to_stop => 'Chạm để dừng';
+
+  @override
+  String get tap_to_listen => 'Chạm để nghe';
+
+  @override
   String get settings => 'Cài đặt';
 
   @override

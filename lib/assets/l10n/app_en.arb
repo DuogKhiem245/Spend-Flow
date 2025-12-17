@@ -142,6 +142,11 @@
 
   "align_receipt": "Align your receipt",
 
+  "listening": "Listening...",
+  "voice_example": "e.g., I spent 50 dollars on groceries",
+  "tap_to_stop": "Tap to Stop",
+  "tap_to_listen": "Tap to Listen",
+
   "settings": "Settings",
   "settings_description": "Keep your finance data synced across all your devices",
   "sign_in_now": "Sign in now.",

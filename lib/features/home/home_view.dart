@@ -14,6 +14,7 @@ import 'package:spend_flow/features/home/widgets/home_header.dart';
 import 'package:spend_flow/features/home/widgets/recent_transaction.dart';
 import 'package:spend_flow/features/home/widgets/spending_chart.dart';
 import 'package:spend_flow/features/scan_receipt/scran_receipt_view.dart';
+import 'package:spend_flow/features/voice_input/voice_input_view.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -114,7 +115,7 @@ class _HomePageState extends State<HomePage> {
 
                 Positioned(
                   right: 20.w,
-                  bottom: 95.h,
+                  bottom: 100.h,
                   child: CNPopupMenuButton.icon(
                     buttonIcon: CNSymbol('plus.circle.fill', size: 24.sp),
                     buttonStyle: CNButtonStyle.glass,
@@ -137,6 +138,12 @@ class _HomePageState extends State<HomePage> {
                     ],
                     onSelected: (index) {
                       if (index == 0) {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => const VoiceInputView()
+                          ),
+                        );
                       } else if (index == 1) {
                         Navigator.push(
                           context,

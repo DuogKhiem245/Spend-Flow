@@ -34,5 +34,4 @@ class CategoryModel {
       count: map['count'] ?? 0,
     );
   }
-  
 }

@@ -69,18 +69,30 @@ class _SpendingChartState extends State<SpendingChart>
           children: [
             Text(
               l10n.spending_this_month,
-              style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 20.sp,
+                fontWeight: FontWeight.bold,
+                color: CupertinoTheme.of(
+                  context,
+                ).textTheme.textStyle.color,
+              ),
             ),
             SizedBox(height: 20.h),
             Icon(
               CupertinoIcons.chart_pie,
-              size: 100.w,
-              color: CupertinoColors.systemGrey3,
+              size: 120.w,
+              color: CupertinoTheme.of(
+                context,
+              ).textTheme.textStyle.color?.withValues(alpha: .5),
             ),
             SizedBox(height: 10.h),
             Text(
               l10n.no_transactions,
-              style: TextStyle(color: CupertinoColors.systemGrey),
+              style: TextStyle(
+                color: CupertinoTheme.of(
+                  context,
+                ).textTheme.textStyle.color?.withValues(alpha: .6),
+              ),
             ),
           ],
         ),
@@ -123,9 +135,10 @@ class _SpendingChartState extends State<SpendingChart>
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(context, 
+                  Navigator.push(
+                    context,
                     CupertinoPageRoute(
-                      builder: (context) => SpendingDetailView()
+                      builder: (context) => SpendingDetailView(),
                     ),
                   );
                 },
@@ -176,7 +189,7 @@ class _SpendingChartState extends State<SpendingChart>
                         sectionsSpace: 0,
                         startDegreeOffset: startAngle,
                       ),
-                      swapAnimationDuration: Duration.zero,
+                      duration: Duration.zero,
                     );
                   },
                 ),
