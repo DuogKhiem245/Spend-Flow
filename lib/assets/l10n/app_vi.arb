@@ -20,6 +20,7 @@
   "amount": "Số tiền",
   "name": "Tên giao dịch",
   "date": "Ngày",
+  "month": "Tháng",
   "today": "Hôm nay",
   "other": "Khác",
   "home": "Trang chủ",
@@ -133,6 +134,7 @@
   "category_name": "Tên danh mục",
   "category_color": "Màu danh mục",
   "category_icon": "Biểu tượng danh mục",
+  "vs_last_month": "so với Tháng trước",
 
   "scan_receipt": "Quét hóa đơn",
   "add_via_voice": "Thêm bằng giọng nói",
@@ -144,6 +146,16 @@
   "voice_example": "Ví dụ: Tôi đã chi 50 đô la cho thực phẩm",
   "tap_to_stop": "Chạm để dừng",
   "tap_to_listen": "Chạm để nghe",
+
+  "yesterday": "Hôm qua",
+
+  "your_monthly_budget": "Ngân sách hàng tháng của bạn",
+  "spent": "Đã chi ",
+  "out_of": " trong tổng ",
+  "left_to_spend": "còn lại để chi tiêu",
+  "add_budget": "Thêm ngân sách",
+  "no_budgets_yet": "Chưa có ngân sách nào",
+  "create_budget_description": "Nhấn + để tạo giới hạn chi tiêu",
 
   "settings": "Cài đặt",
   "settings_description": "Giữ dữ liệu tài chính luôn đồng bộ trên tất cả thiết bị của bạn",

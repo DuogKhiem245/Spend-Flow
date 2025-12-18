@@ -218,6 +218,12 @@ abstract class AppLocalizations {
   /// **'Ngày'**
   String get date;
 
+  /// No description provided for @month.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tháng'**
+  String get month;
+
   /// No description provided for @today.
   ///
   /// In vi, this message translates to:
@@ -878,6 +884,12 @@ abstract class AppLocalizations {
   /// **'Biểu tượng danh mục'**
   String get category_icon;
 
+  /// No description provided for @vs_last_month.
+  ///
+  /// In vi, this message translates to:
+  /// **'so với Tháng trước'**
+  String get vs_last_month;
+
   /// No description provided for @scan_receipt.
   ///
   /// In vi, this message translates to:
@@ -925,6 +937,54 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Chạm để nghe'**
   String get tap_to_listen;
+
+  /// No description provided for @yesterday.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hôm qua'**
+  String get yesterday;
+
+  /// No description provided for @your_monthly_budget.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ngân sách hàng tháng của bạn'**
+  String get your_monthly_budget;
+
+  /// No description provided for @spent.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã chi '**
+  String get spent;
+
+  /// No description provided for @out_of.
+  ///
+  /// In vi, this message translates to:
+  /// **' trong tổng '**
+  String get out_of;
+
+  /// No description provided for @left_to_spend.
+  ///
+  /// In vi, this message translates to:
+  /// **'còn lại để chi tiêu'**
+  String get left_to_spend;
+
+  /// No description provided for @add_budget.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm ngân sách'**
+  String get add_budget;
+
+  /// No description provided for @no_budgets_yet.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa có ngân sách nào'**
+  String get no_budgets_yet;
+
+  /// No description provided for @create_budget_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhấn + để tạo giới hạn chi tiêu'**
+  String get create_budget_description;
 
   /// No description provided for @settings.
   ///

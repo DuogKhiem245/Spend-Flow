@@ -6,10 +6,10 @@ import 'package:sembast/sembast_io.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/core/data/category_data.dart';
 import 'package:spend_flow/features/add_stransaction/model/transaction_model.dart';
-import 'package:spend_flow/features/add_stransaction/model/category_model.dart'; // Đảm bảo import Model Category
+import 'package:spend_flow/features/add_stransaction/model/category_model.dart';
+import 'package:spend_flow/features/budget/budget_model.dart'; 
 
 class LocalStorageService {
-  // --- Singleton Pattern ---
   static final LocalStorageService _instance = LocalStorageService._internal();
 
   factory LocalStorageService() {
@@ -19,7 +19,7 @@ class LocalStorageService {
   LocalStorageService._internal();
 
   // ============================================================
-  // PHẦN 1: SHARED PREFERENCES (SETTINGS)
+  // 1: SHARED PREFERENCES (SETTINGS)
   // ============================================================
 
   Future<void> saveString(String key, String value) async {
@@ -48,19 +48,16 @@ class LocalStorageService {
   }
 
   // ============================================================
-  // PHẦN 2: SEMBAST DATABASE (DATA)
+  // 2: SEMBAST DATABASE 
   // ============================================================
 
   Database? _db;
 
-  // Khai báo các Store (Bảng)
   final _transactionStore = intMapStoreFactory.store('transactions');
-  final _sampleStore = intMapStoreFactory.store(
-    'sample_categories',
-  ); 
+  final _sampleStore = intMapStoreFactory.store('sample_categories',); 
   final _suggestStore = intMapStoreFactory.store('suggest_categories');
+  final _budgetStore = intMapStoreFactory.store('budgets');
 
-  // Khởi tạo DB
   Future<Database> get database async {
     if (_db != null) return _db!;
     final dir = await getApplicationDocumentsDirectory();
@@ -70,10 +67,9 @@ class LocalStorageService {
   }
 
   // ------------------------------------------------------------
-  // QUẢN LÝ CATEGORIES (DANH MỤC)
+  // CATEGORIES
   // ------------------------------------------------------------
 
-  /// Hàm khởi tạo dữ liệu mẫu khi chạy app lần đầu
   Future<void> initializeData() async {
     final db = await database;
 
@@ -104,10 +100,8 @@ class LocalStorageService {
     return CategoryData.suggestedCategories;
   }
 
-  /// Lấy tất cả danh mục
   Future<List<CategoryModel>> getAllCategories() async {
     final db = await database;
-    // Sắp xếp theo tên (tùy chọn)
     final finder = Finder(sortOrders: [SortOrder('name')]);
     final snapshots = await _sampleStore.find(db, finder: finder);
 
@@ -182,17 +176,15 @@ class LocalStorageService {
     }
   }
 
-  /// Thêm danh mục mới
   Future<void> addCategory(CategoryModel category) async {
     final db = await database;
     await _sampleStore.add(db, category.toMap());
   }
 
   // ------------------------------------------------------------
-  // QUẢN LÝ TRANSACTIONS (GIAO DỊCH)
+  // TRANSACTIONS
   // ------------------------------------------------------------
 
-  /// Lưu giao dịch mới
   Future<void> addTransaction(TransactionModel transaction) async {
     final db = await database;
 
@@ -200,11 +192,9 @@ class LocalStorageService {
     await incrementCategoryUsage(transaction.category);
   }
 
-  /// Lấy tất cả giao dịch (Mới nhất lên đầu)
   Future<List<TransactionModel>> getAllTransactions() async {
     final db = await database;
 
-    // Sắp xếp: date giảm dần (false) -> Mới nhất lên đầu
     final finder = Finder(sortOrders: [SortOrder('date', false)]);
 
     final snapshots = await _transactionStore.find(db, finder: finder);
@@ -214,11 +204,9 @@ class LocalStorageService {
     }).toList();
   }
 
-  /// Lọc giao dịch theo tháng
   Future<List<TransactionModel>> getTransactionsByMonth(DateTime month) async {
     final db = await database;
 
-    // Tạo khoảng thời gian: Ngày 1 tháng này -> Ngày 1 tháng sau
     final start = DateTime(month.year, month.month, 1).toIso8601String();
     final end = DateTime(month.year, month.month + 1, 1).toIso8601String();
 
@@ -234,9 +222,68 @@ class LocalStorageService {
     return snapshots.map((s) => TransactionModel.fromMap(s.value)).toList();
   }
 
-  /// Xóa toàn bộ giao dịch
   Future<void> deleteAllTransactions() async {
     final db = await database;
     await _transactionStore.delete(db);
+  }
+
+  // ------------------------------------------------------------
+  // BUDGETS
+  // ------------------------------------------------------------
+
+  Future<void> saveBudget(BudgetModel budget) async {
+    final db = await database;
+
+    final finder = Finder(
+      filter: Filter.equals('category.iconKey', budget.category.iconKey),
+    );
+
+    final existingSnapshot = await _budgetStore.findFirst(db, finder: finder);
+
+    if (existingSnapshot != null) {
+      await _budgetStore
+          .record(existingSnapshot.key)
+          .update(db, budget.toMap());
+    } else {
+      await _budgetStore.add(db, budget.toMap());
+    }
+  }
+
+  Future<List<BudgetModel>> getBudgetsForMonth(DateTime month) async {
+    final db = await database;
+
+    final transactions = await getTransactionsByMonth(month);
+
+    final budgetSnapshots = await _budgetStore.find(db);
+
+    List<BudgetModel> result = [];
+
+    for (var snapshot in budgetSnapshots) {
+      final data = snapshot.value;
+
+      final categoryMap = data['category'] as Map<String, dynamic>;
+      final categoryIconKey =
+          categoryMap['iconKey']; 
+
+      double totalSpentForCategory = 0;
+      for (var tx in transactions) {
+        if (tx.category.iconKey == categoryIconKey && tx.isIncome == false) {
+          totalSpentForCategory += tx.amount;
+        }
+      }
+
+      final budget = BudgetModel.fromMap(data, totalSpentForCategory);
+      result.add(budget);
+    }
+
+    return result;
+  }
+
+  Future<void> deleteBudget(BudgetModel budget) async {
+    final db = await database;
+    final finder = Finder(
+      filter: Filter.equals('category.iconKey', budget.category.iconKey),
+    );
+    await _budgetStore.delete(db, finder: finder);
   }
 }

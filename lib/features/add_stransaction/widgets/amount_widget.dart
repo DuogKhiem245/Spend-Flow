@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
+import 'package:spend_flow/core/utils/currency_formatter_helper.dart';
 import 'package:spend_flow/core/utils/leading_zero_formatter_helper.dart';
 
 class AmountWidget extends StatefulWidget {
@@ -84,15 +85,13 @@ class _AmountWidgetState extends State<AmountWidget> {
                   },
                   decoration: null,
                   textAlign: TextAlign.end,
-                  cursorColor: CupertinoColors.transparent,
+                  cursorColor: CupertinoColors
+                      .transparent, 
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
                   ),
                   inputFormatters: [
-                    FilteringTextInputFormatter.allow(
-                      RegExp(r'^\d+\,?\d{0,2}'),
-                    ),
-                    LeadingZeroFormatter(),
+                    CurrencyInputFormatter(), 
                   ],
                   placeholder: '0,00',
                   placeholderStyle: TextStyle(

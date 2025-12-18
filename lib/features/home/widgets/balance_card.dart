@@ -45,7 +45,7 @@ class BalanceCard extends StatelessWidget {
               Text(
                 l10n.total_balance,
                 style: TextStyle(
-                  fontSize: 16.sp,
+                  fontSize: 15.sp,
                   fontWeight: FontWeight.w500,
                   color: CupertinoTheme.of(
                     context,
@@ -57,32 +57,13 @@ class BalanceCard extends StatelessWidget {
                 "\$${_viewModel.formatCurrency(balance)}",
                 style: TextStyle(
                   letterSpacing: 2,
-                  fontSize: 32.sp, 
+                  fontSize: 28.sp, 
                   fontWeight: FontWeight.w700,
                   color: balance >= 0
                       ? AppColors.secondaryColor
                       : AppColors.errorColor.withValues(alpha: .8),
                 ),
               ),
-              //SizedBox(height: 8.h),
-              // Row(
-              //   children: [
-              //     Icon(
-              //       CupertinoIcons.arrow_up,
-              //       color: Colors.green,
-              //       size: 14.sp,
-              //     ),
-              //     SizedBox(width: 4.w),
-              //     Text(
-              //       "+5.2% vs last month",
-              //       style: TextStyle(
-              //         color: Colors.green,
-              //         fontSize: 14.sp,
-              //         fontWeight: FontWeight.w500,
-              //       ),
-              //     ),
-              //   ],
-              // ),
             ],
           ),
         ),
@@ -125,7 +106,7 @@ class BalanceCard extends StatelessWidget {
                     ),
                     SizedBox(height: 12.h),
                     Text(
-                      "\$${_viewModel.formatCurrency(income)}",
+                      "\$${_viewModel.formatCompactCurrency(income)}",
                       style: TextStyle(
                         fontSize: 24.sp,
                         letterSpacing: 2,
@@ -178,7 +159,7 @@ class BalanceCard extends StatelessWidget {
                     ),
                     SizedBox(height: 12.h),
                     Text(
-                      "\$${_viewModel.formatCurrency(expenses)}",
+                      "\$${_viewModel.formatCompactCurrency(expenses)}",
                       style: TextStyle(
                         fontSize: 24.sp,
                         letterSpacing: 2,

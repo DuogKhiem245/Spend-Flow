@@ -20,6 +20,7 @@
   "amount": "Amount",
   "name": "Name",
   "date": "Date",
+  "month": "Month",
   "today": "Today",
   "other": "Other",
   "home": "Home",
@@ -135,6 +136,7 @@
   "category_name": "Category Name",
   "category_color": "Category Color",
   "category_icon": "Category Icon",
+  "vs_last_month": "vs Last Month",
 
   "scan_receipt": "Scan Receipt",
   "add_via_voice": "Add via Voice",
@@ -146,6 +148,16 @@
   "voice_example": "e.g., I spent 50 dollars on groceries",
   "tap_to_stop": "Tap to Stop",
   "tap_to_listen": "Tap to Listen",
+
+  "yesterday": "Yesterday",
+
+  "your_monthly_budget": "Your Monthly Budget",
+  "spent": "Spent ",
+  "out_of": " out of ",
+  "left_to_spend": "left to spend",
+  "add_budget": "Add Budget",
+  "no_budgets_yet": "No budgets yet",
+  "create_budget_description": "Tap + to create a spending limit",
 
   "settings": "Settings",
   "settings_description": "Keep your finance data synced across all your devices",

@@ -69,6 +69,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get date => 'Ngày';
 
   @override
+  String get month => 'Tháng';
+
+  @override
   String get today => 'Hôm nay';
 
   @override
@@ -406,6 +409,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get category_icon => 'Biểu tượng danh mục';
 
   @override
+  String get vs_last_month => 'so với Tháng trước';
+
+  @override
   String get scan_receipt => 'Quét hóa đơn';
 
   @override
@@ -428,6 +434,30 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get tap_to_listen => 'Chạm để nghe';
+
+  @override
+  String get yesterday => 'Hôm qua';
+
+  @override
+  String get your_monthly_budget => 'Ngân sách hàng tháng của bạn';
+
+  @override
+  String get spent => 'Đã chi ';
+
+  @override
+  String get out_of => ' trong tổng ';
+
+  @override
+  String get left_to_spend => 'còn lại để chi tiêu';
+
+  @override
+  String get add_budget => 'Thêm ngân sách';
+
+  @override
+  String get no_budgets_yet => 'Chưa có ngân sách nào';
+
+  @override
+  String get create_budget_description => 'Nhấn + để tạo giới hạn chi tiêu';
 
   @override
   String get settings => 'Cài đặt';

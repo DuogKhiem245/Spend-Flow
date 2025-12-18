@@ -69,6 +69,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get date => 'Date';
 
   @override
+  String get month => 'Month';
+
+  @override
   String get today => 'Today';
 
   @override
@@ -407,6 +410,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get category_icon => 'Category Icon';
 
   @override
+  String get vs_last_month => 'vs Last Month';
+
+  @override
   String get scan_receipt => 'Scan Receipt';
 
   @override
@@ -429,6 +435,30 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tap_to_listen => 'Tap to Listen';
+
+  @override
+  String get yesterday => 'Yesterday';
+
+  @override
+  String get your_monthly_budget => 'Your Monthly Budget';
+
+  @override
+  String get spent => 'Spent ';
+
+  @override
+  String get out_of => ' out of ';
+
+  @override
+  String get left_to_spend => 'left to spend';
+
+  @override
+  String get add_budget => 'Add Budget';
+
+  @override
+  String get no_budgets_yet => 'No budgets yet';
+
+  @override
+  String get create_budget_description => 'Tap + to create a spending limit';
 
   @override
   String get settings => 'Settings';

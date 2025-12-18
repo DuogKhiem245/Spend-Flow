@@ -32,7 +32,6 @@ void main() async {
   } else {
     for (var i = 0; i < transactions.length; i++) {
       final tx = transactions[i];
-      // In chi tiết từng giao dịch
       debugPrint(
         '[$i] ${tx.date.toString().substring(0, 10)} | '
         '${tx.category.name} | '
@@ -98,7 +97,7 @@ class MyApp extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
               ],
               supportedLocales: [Locale('en'), Locale('vi')],
-              initialRoute: AppRoutes.main,
+              initialRoute: onboardDone ? AppRoutes.home : AppRoutes.onboarding,
               routes: AppRoutes.getRoutes(),
             );
           },

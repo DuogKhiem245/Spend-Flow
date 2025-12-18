@@ -1,4 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
+import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/config/app_colors.dart';
+import 'package:spend_flow/config/app_icons.dart';
+import 'package:spend_flow/features/add_stransaction/model/transaction_model.dart';
+import 'package:spend_flow/features/report/report_viewmodel.dart';
 
 class ReportPage extends StatefulWidget {
   const ReportPage({super.key});
@@ -8,16 +16,382 @@ class ReportPage extends StatefulWidget {
 }
 
 class _ReportPageState extends State<ReportPage> {
+  final ReportViewModel _viewModel = ReportViewModel();
+
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final String locale = Localizations.localeOf(context).toString();
+
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(middle: Text('Report')),
-      child: Center(
-        child: Text(
-          'Report Page',
-          style: CupertinoTheme.of(context).textTheme.textStyle,
+      child: SafeArea(
+        child: ListenableBuilder(
+          listenable: _viewModel,
+          builder: (context, child) {
+            final groupedData = _viewModel.getGroupedTransactions();
+            final stats = _viewModel.getSummaryStats();
+
+            return Column(
+              children: [
+                _buildHeader(l10n),
+
+                _buildSummary(l10n, stats),
+
+                SizedBox(height: 10.h),
+
+                Expanded(
+                  child: groupedData.isEmpty
+                      ? _buildNoDataView(l10n)
+                      : ListView.builder(
+                          padding: EdgeInsets.symmetric(horizontal: 16.w),
+                          itemCount: groupedData.length,
+                          itemBuilder: (context, index) {
+                            final group = groupedData[index];
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 12.h),
+                                  child: Text(
+                                    _viewModel.formatDateHeader(group.date, l10n, locale),
+                                    style: TextStyle(
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: CupertinoTheme.of(
+                                        context,
+                                      ).textTheme.textStyle.color,
+                                    ),
+                                  ),
+                                ),
+                                ...group.transactions.map(
+                                  (tx) => _buildTransactionItem(tx),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                ),
+              ],
+            );
+          },
         ),
       ),
+    );
+  }
+
+  Widget _buildNoDataView(AppLocalizations l10n) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: EdgeInsets.all(20.w),
+            decoration: BoxDecoration(
+              color: CupertinoTheme.of(context).barBackgroundColor,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              CupertinoIcons.doc_text_search,
+              size: 50.sp,
+              color: CupertinoColors.systemGrey.withValues(alpha: .5),
+            ),
+          ),
+          SizedBox(height: 15.h),
+          Text(
+            l10n.no_transactions,
+            style: TextStyle(
+              fontSize: 16.sp,
+              color: CupertinoTheme.of(
+                context,
+              ).textTheme.textStyle.color?.withValues(alpha: .5),
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHeader(AppLocalizations l10n) {
+    final String locale = Localizations.localeOf(context).toString();
+
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              _buildCircleButton(
+                icon: CupertinoIcons.chevron_left,
+                onTap: _viewModel.previousMonth,
+              ),
+              SizedBox(width: 15.w),
+              SizedBox(
+                width: 130.w,
+                child: Column(
+                  children: [
+                    Text(
+                      toBeginningOfSentenceCase(
+                            DateFormat(
+                              'MMMM',
+                              locale,
+                            ).format(_viewModel.selectedMonth),
+                          ) ??
+                          '',
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w700,
+                        color: CupertinoTheme.of(
+                          context,
+                        ).textTheme.textStyle.color,
+                      ),
+                    ),
+
+                    Text(
+                      DateFormat(
+                        'yyyy',
+                        locale,
+                      ).format(_viewModel.selectedMonth),
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        color: CupertinoTheme.of(
+                          context,
+                        ).textTheme.textStyle.color?.withValues(alpha: .6),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: 15.w),
+              _buildCircleButton(
+                icon: CupertinoIcons.chevron_right,
+                onTap: _viewModel.nextMonth,
+              ),
+            ],
+          ),
+          GestureDetector(
+            onTap: () {
+              _showDatePicker(context, l10n);
+            },
+            child: Icon(
+              CupertinoIcons.calendar_today,
+              color: CupertinoColors.activeBlue,
+              size: 24.sp,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSummary(AppLocalizations l10n, Map<String, double> stats) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _buildStatItem(
+            l10n.expenses,
+            "-${_viewModel.formatCurrency(stats['expense']!).replaceAll('\$', '')}\$",
+            CupertinoTheme.of(context).textTheme.textStyle.color!,
+          ),
+          _buildStatItem(
+            l10n.income,
+            "+${_viewModel.formatCurrency(stats['income']!).replaceAll('\$', '')}\$",
+            CupertinoTheme.of(context).textTheme.textStyle.color!,
+          ),
+          _buildStatItem(
+            l10n.balance,
+            "${stats['balance']! < 0 ? '-' : ''}${_viewModel.formatCurrency(stats['balance']!.abs()).replaceAll('\$', '')}\$",
+            stats['balance']! >= 0
+                ? AppColors.secondaryColor
+                : AppColors.errorColor,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatItem(String label, String value, Color color) {
+    return Column(
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 13.sp,
+            color: CupertinoTheme.of(
+              context,
+            ).textTheme.textStyle.color?.withValues(alpha: .6),
+          ),
+        ),
+        SizedBox(height: 4.h),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 16.sp,
+            fontWeight: FontWeight.bold,
+            color: color,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTransactionItem(TransactionModel tx) {
+    final amountColor = tx.isIncome
+        ? CupertinoColors.activeGreen
+        : CupertinoTheme.of(context).textTheme.textStyle.color!;
+    final prefix = tx.isIncome ? "+" : "-";
+
+    final iconData = AppIcons.getIcon(tx.category.iconKey);
+
+    return Container(
+      margin: EdgeInsets.only(bottom: 12.h),
+      padding: EdgeInsets.all(16.w),
+      decoration: BoxDecoration(
+        color: CupertinoTheme.of(context).barBackgroundColor,
+        borderRadius: BorderRadius.circular(30.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: .03),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 48.w,
+            height: 48.w,
+            decoration: BoxDecoration(
+              color: tx.category.color.withValues(alpha: .15),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(iconData, color: tx.category.color, size: 24.sp),
+          ),
+          SizedBox(width: 14.w),
+
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  tx.title,
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w600,
+                    color: CupertinoTheme.of(context).textTheme.textStyle.color,
+                  ),
+                ),
+                SizedBox(height: 4.h),
+                Text(
+                  tx.category.name,
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                    color: CupertinoColors.systemGrey,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                "$prefix${_viewModel.formatCurrency(tx.amount).replaceAll('\$', '')}",
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.bold,
+                  color: amountColor,
+                ),
+              ),
+              SizedBox(height: 4.h),
+              Text(
+                _viewModel.formatTime(tx.date),
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  color: CupertinoTheme.of(
+                    context,
+                  ).textTheme.textStyle.color?.withValues(alpha: .6),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCircleButton({
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 32.w,
+        height: 32.w,
+        decoration: BoxDecoration(
+          color: CupertinoTheme.of(context).barBackgroundColor,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          icon,
+          size: 16.sp,
+          color: CupertinoTheme.of(context).textTheme.textStyle.color,
+        ),
+      ),
+    );
+  }
+
+  void _showDatePicker(BuildContext context, AppLocalizations l10n) {
+    DateTime tempDate = _viewModel.selectedMonth;
+
+    showCupertinoModalPopup(
+      context: context,
+      builder: (ctx) {
+        return Container(
+          height: 300.h,
+          color: CupertinoTheme.of(context).scaffoldBackgroundColor,
+          child: Column(
+            children: [
+              Container(
+                height: 50.h,
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                alignment: Alignment.centerRight,
+                child: GestureDetector(
+                  onTap: () {
+                    _viewModel.setMonth(tempDate);
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    l10n.done, 
+                    style: TextStyle(
+                      color: CupertinoTheme.of(context).primaryColor,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: CupertinoDatePicker(
+                  mode: CupertinoDatePickerMode.date,
+                  initialDateTime: _viewModel.selectedMonth,
+                  minimumDate: DateTime(2000),
+                  maximumDate: DateTime.now(),
+                  onDateTimeChanged: (newDate) {
+                    tempDate = newDate;
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

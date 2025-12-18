@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_icons.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/core/utils/category_helper.dart';
 import 'package:spend_flow/core/utils/vietnamese_utils.dart';
-import 'package:spend_flow/features/add_stransaction/add_stransaction_viewmodel.dart';
 import 'package:spend_flow/features/add_stransaction/category/create_category.dart';
 import 'package:spend_flow/features/add_stransaction/model/category_model.dart';
 
@@ -17,8 +17,6 @@ class SelectCategory extends StatefulWidget {
 }
 
 class _SelectCategoryState extends State<SelectCategory> {
-  final AddStransactionViewmodel _viewModel = AddStransactionViewmodel();
-
   List<CategoryModel> _allCategories = [];
   List<CategoryModel> _suggestedCategories = [];
   bool _isLoading = true;
@@ -52,11 +50,11 @@ class _SelectCategoryState extends State<SelectCategory> {
     final sortedList = List<CategoryModel>.from(inputList);
 
     sortedList.sort((a, b) {
-      final nameA = _viewModel.getTranslatedCategoryName(context, a);
-      final nameB = _viewModel.getTranslatedCategoryName(context, b);
+      final nameA = CategoryHelper.getTranslatedName(context, a);
+      final nameB = CategoryHelper.getTranslatedName(context, b);
 
-      final sortKeyA = VietnameseUtils.toSortable(nameA ?? a.name);
-      final sortKeyB = VietnameseUtils.toSortable(nameB ?? b.name);
+      final sortKeyA = VietnameseUtils.toSortable(nameA);
+      final sortKeyB = VietnameseUtils.toSortable(nameB);
 
       return sortKeyA.compareTo(sortKeyB);
     });
@@ -101,7 +99,7 @@ class _SelectCategoryState extends State<SelectCategory> {
                   children: [
                     _buildCategoryGroup(
                       context,
-                      title: l10n.suggested_category, 
+                      title: l10n.suggested_category,
                       categories: sortedSuggested,
                     ),
 
@@ -113,7 +111,7 @@ class _SelectCategoryState extends State<SelectCategory> {
                       categories: sortedAll,
                     ),
 
-                    SizedBox(height: 20.h), 
+                    SizedBox(height: 20.h),
                   ],
                 ),
               ),
@@ -182,11 +180,7 @@ class _SelectCategoryState extends State<SelectCategory> {
                           ),
                           SizedBox(width: 12.w),
                           Text(
-                            _viewModel.getTranslatedCategoryName(
-                                  context,
-                                  item,
-                                ) ??
-                                item.name,
+                            CategoryHelper.getTranslatedName(context, item),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 16.sp,

@@ -27,6 +27,7 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
 
   bool _isLoading = true;
   int touchedIndex = -1;
+  double _percentChange = 0.0;
 
   @override
   void initState() {
@@ -37,6 +38,7 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
   Future<void> _loadData() async {
     final chartDataFuture = _viewModel.getAllChartData();
     final transactionsFuture = _viewModel.getTransactionsForCurrentMonth();
+    final change = await _viewModel.calculateSpendingChange();
 
     final results = await Future.wait([chartDataFuture, transactionsFuture]);
 
@@ -45,6 +47,7 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
         _chartData = results[0] as List<SpendingModel>;
         _allTransactions = results[1] as List<TransactionModel>;
         _isLoading = false;
+        _percentChange = change;
       });
     }
   }
@@ -104,51 +107,79 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                l10n.total_spent,
-                                style: TextStyle(
-                                  color: CupertinoTheme.of(context)
-                                      .textTheme
-                                      .textStyle
-                                      .color!
-                                      .withValues(alpha: .6),
-                                  fontSize: 14.sp,
-                                ),
-                              ),
-                              SizedBox(height: 5.h),
-                              Text(
-                                "\$${_viewModel.formatCurrency(totalSpent)}",
-                                style: TextStyle(
-                                  fontSize: 28.sp,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 1,
-                                  color: CupertinoTheme.of(
-                                    context,
-                                  ).textTheme.textStyle.color,
-                                ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        l10n.total_spent,
+                                        style: TextStyle(
+                                          color: CupertinoTheme.of(context)
+                                              .textTheme
+                                              .textStyle
+                                              .color!
+                                              .withValues(alpha: .6),
+                                          fontSize: 14.sp,
+                                        ),
+                                      ),
+                                      SizedBox(height: 5.h),
+                                      Text(
+                                        "\$${_viewModel.formatCurrency(totalSpent)}",
+                                        style: TextStyle(
+                                          fontSize: 28.sp,
+                                          fontWeight: FontWeight.bold,
+                                          letterSpacing: 1,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 10.w,
+                                      vertical: 6.h,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: _percentChange > 0
+                                          ? AppColors.errorColor.withValues(
+                                              alpha: .15,
+                                            )
+                                          : AppColors.primaryColor.withValues(
+                                              alpha: .15,
+                                            ),
+                                      borderRadius: BorderRadius.circular(20.r),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          _percentChange > 0
+                                              ? CupertinoIcons.arrow_up_right
+                                              : CupertinoIcons.arrow_down_right,
+                                          size: 14.sp,
+                                          color: _percentChange > 0
+                                              ? AppColors.errorColor
+                                              : AppColors.primaryColor,
+                                        ),
+                                        SizedBox(width: 4.w),
+                                        Text(
+                                          "${_percentChange > 0 ? '+' : ''}${_percentChange.toStringAsFixed(1)}% ${l10n.vs_last_month}",
+                                          style: TextStyle(
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w600,
+                                            color: _percentChange > 0
+                                                ? AppColors.errorColor
+                                                : AppColors.primaryColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
-                          ),
-
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 10.w,
-                              vertical: 6.h,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppColors.primaryColor.withValues(
-                                alpha: .15,
-                              ),
-                              borderRadius: BorderRadius.circular(20.r),
-                            ),
-                            child: Text(
-                              "-5% vs Last Month",
-                              style: TextStyle(
-                                color: AppColors.primaryColor,
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
                           ),
                         ],
                       ),
@@ -160,7 +191,7 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
                             child: LoadingAnimationWidget.staggeredDotsWave(
                               color: CupertinoTheme.of(context).primaryColor,
                               size: 30.w,
-                            )
+                            ),
                           ),
                         )
                       else if (_chartData.isEmpty)

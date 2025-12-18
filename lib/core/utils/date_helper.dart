@@ -22,7 +22,7 @@ class DateHelper {
               child: GestureDetector(
                 onTap: () => Navigator.of(context).pop(),
                 child: Text(
-                  "Done",
+                  AppLocalizations.of(context)!.done,
                   style: TextStyle(
                     color: CupertinoTheme.of(context).primaryColor,
                     fontSize: 16.sp,

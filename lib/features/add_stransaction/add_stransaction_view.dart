@@ -38,8 +38,8 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
   void _onTabChanged(int index) {
     if (_index != index) {
       setState(() {
-        _index = index; 
-        _clearData(); 
+        _index = index;
+        _clearData();
       });
     }
   }
@@ -67,7 +67,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
         middle: Text(
           l10n.add_transaction,
           style: CupertinoTheme.of(context).textTheme.navTitleTextStyle
-              .copyWith(fontWeight: FontWeight.w600, fontSize: 20.sp,),
+              .copyWith(fontWeight: FontWeight.w600, fontSize: 20.sp),
         ),
         backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
       ),
@@ -79,9 +79,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
               labels: [l10n.expenses, l10n.income],
               height: 50.h,
               selectedIndex: _index,
-              onValueChanged: (i) => setState(
-                () => _onTabChanged(i)
-              ),
+              onValueChanged: (i) => setState(() => _onTabChanged(i)),
               color: CupertinoTheme.of(context).primaryColor,
             ),
             Expanded(
@@ -108,7 +106,6 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                         SizedBox(height: 20.h),
                         SuggestCategoryWidget(
                           selectedCategory: _selectedCategory,
-                          viewModel: _viewModel,
                           baseColor: baseColor,
                           transactionDate: _transactionDate,
                           onCategoryChanged: (CategoryModel category) {
@@ -118,7 +115,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                           },
                           onDateChanged: (DateTime newDate) {
                             setState(() {
-                              _transactionDate = newDate; 
+                              _transactionDate = newDate;
                             });
                           },
                         ),
@@ -131,9 +128,9 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                         SizedBox(
                           width: double.infinity,
                           child: CupertinoButton.filled(
-                            onPressed: () {
+                            onPressed: () async {
                               if (_index == 0) {
-                                _viewModel.addExpenseTransaction(
+                                await _viewModel.addExpenseTransaction(
                                   _amountController.text,
                                   _nameController.text,
                                   _selectedCategory,
@@ -141,7 +138,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                                   _noteController.text,
                                 );
                               } else {
-                                _viewModel.addIncomeTransaction(
+                                await _viewModel.addIncomeTransaction(
                                   _amountController.text,
                                   _nameController.text,
                                   _selectedCategory,
@@ -149,6 +146,9 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                                   _noteController.text,
                                 );
                               }
+                              if (!context.mounted) return;
+
+                              Navigator.pop(context);
                             },
                             borderRadius: BorderRadius.circular(30.r),
                             padding: EdgeInsets.symmetric(vertical: 16.h),

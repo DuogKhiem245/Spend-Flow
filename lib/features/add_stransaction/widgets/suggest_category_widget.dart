@@ -1,19 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/core/utils/category_helper.dart';
 import 'package:spend_flow/core/utils/date_helper.dart';
-import 'package:spend_flow/features/add_stransaction/add_stransaction_viewmodel.dart';
 import 'package:spend_flow/features/add_stransaction/category/select_category.dart';
 import 'package:spend_flow/features/add_stransaction/model/category_model.dart';
 
 class SuggestCategoryWidget extends StatefulWidget {
   final CategoryModel? selectedCategory;
   final DateTime? transactionDate;
-  final AddStransactionViewmodel viewModel;
   final Color? baseColor;
+  final bool isMonthPicker;
 
   final ValueChanged<CategoryModel> onCategoryChanged;
   final ValueChanged<DateTime> onDateChanged;
@@ -21,11 +22,11 @@ class SuggestCategoryWidget extends StatefulWidget {
   const SuggestCategoryWidget({
     super.key,
     required this.selectedCategory,
-    required this.viewModel,
     required this.baseColor,
     required this.transactionDate,
     required this.onCategoryChanged,
     required this.onDateChanged,
+    this.isMonthPicker = false,
   });
 
   @override
@@ -49,6 +50,63 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
         _displayCategories = suggestions;
       });
     }
+  }
+
+  void _showDatePicker(BuildContext context, DateTime initialDate) {
+    if (widget.isMonthPicker) {
+      showCupertinoModalPopup(
+        context: context,
+        builder: (context) => Container(
+          height: 300.h,
+          color: CupertinoTheme.of(context).scaffoldBackgroundColor,
+          child: Column(
+            children: [
+              Container(
+                height: 50.h,
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                alignment: Alignment.centerRight,
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Text(
+                    AppLocalizations.of(context)!.done,
+                    style: TextStyle(
+                      color: CupertinoTheme.of(context).primaryColor,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 250.h,
+                child: CupertinoDatePicker(
+                  initialDateTime: initialDate,
+                  mode: CupertinoDatePickerMode.monthYear,
+                  use24hFormat: true,
+                  maximumDate: DateTime.now(),
+                  onDateTimeChanged: (newDate) {
+                    widget.onDateChanged(newDate);
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    } else {
+      DateHelper.showDatePicker(
+        context,
+        initialDate: initialDate,
+        onDateChanged: widget.onDateChanged,
+      );
+    }
+  }
+
+  String _getDateText(DateTime date, AppLocalizations l10n) {
+    if (widget.isMonthPicker) {
+      return DateFormat.yMMMM(l10n.localeName).format(date);
+    }
+    return DateHelper.getDateText(date, l10n);
   }
 
   @override
@@ -82,7 +140,7 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
             runSpacing: 10.h,
             children: [
               ..._displayCategories.map((category) {
-                final isSelected = widget.selectedCategory == category;
+                final isSelected = widget.selectedCategory?.name == category.name;
                 return GestureDetector(
                   onTap: () {
                     setState(() {
@@ -108,11 +166,7 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                           : CupertinoTheme.of(context).barBackgroundColor,
                     ),
                     child: Text(
-                      widget.viewModel.getTranslatedCategoryName(
-                            context,
-                            category,
-                          ) ??
-                          '',
+                      CategoryHelper.getTranslatedName(context, category),
                       style: TextStyle(
                         color: isSelected
                             ? CupertinoColors.white
@@ -194,11 +248,7 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                           children: [
                             if (widget.selectedCategory != null)
                               Text(
-                                widget.viewModel.getTranslatedCategoryName(
-                                      context,
-                                      widget.selectedCategory!,
-                                    ) ??
-                                    '',
+                                CategoryHelper.getTranslatedName(context, widget.selectedCategory!),
                                 style: TextStyle(
                                   fontSize: 16.sp,
                                   color: widget.baseColor,
@@ -248,13 +298,15 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                             borderRadius: BorderRadius.circular(25.r),
                           ),
                           child: Icon(
-                            CupertinoIcons.calendar,
+                            widget.isMonthPicker
+                                ? CupertinoIcons.calendar_today
+                                : CupertinoIcons.calendar,
                             size: 25.w,
                             color: CupertinoTheme.of(context).primaryColor,
                           ),
                         ),
                         Text(
-                          l10n.date,
+                          widget.isMonthPicker ? l10n.month : l10n.date,
                           style: TextStyle(
                             fontSize: 18.sp,
                             fontWeight: FontWeight.w500,
@@ -267,18 +319,12 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                       margin: EdgeInsets.only(right: 16.w),
                       child: GestureDetector(
                         onTap: () {
-                          DateHelper.showDatePicker(
-                            context,
-                            initialDate: displayDate,
-                            onDateChanged: (newDate) {
-                              widget.onDateChanged(newDate);
-                            },
-                          );
+                          _showDatePicker(context, displayDate);
                         },
                         child: Row(
                           children: [
                             Text(
-                              DateHelper.getDateText(displayDate, l10n),
+                              _getDateText(displayDate, l10n),
                               style: TextStyle(
                                 fontSize: 16.sp,
                                 color: widget.baseColor,

@@ -9,9 +9,9 @@ class TransactionModel {
   final bool isIncome;
 
   TransactionModel({
-    required this.amount,
     required this.title,
     required this.category,
+    required this.amount,
     required this.date,
     required this.note,
     required this.isIncome,

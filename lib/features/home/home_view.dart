@@ -136,47 +136,34 @@ class _HomePageState extends State<HomePage> {
                         icon: CNSymbol('square.and.pencil', size: 18.sp),
                       ),
                     ],
-                    onSelected: (index) {
+                    onSelected: (index) async {
                       if (index == 0) {
-                        Navigator.push(
+                        await Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => const VoiceInputView()
+                            builder: (context) => const VoiceInputView(),
                           ),
                         );
+                        _loadHomeData();
                       } else if (index == 1) {
-                        Navigator.push(
+                        await Navigator.push(
                           context,
                           CupertinoPageRoute(
                             builder: (context) => const ScanReceiptView(),
                           ),
                         );
+                        _loadHomeData();
                       } else if (index == 2) {
-                        Navigator.push(
+                        await Navigator.push(
                           context,
                           CupertinoPageRoute(
                             builder: (context) => const AddTransactionPage(),
                           ),
                         );
+                        _loadHomeData();
                       }
                     },
                   ),
-                  // child: CNButton.icon(
-                  //   icon: CNSymbol(
-                  //     'plus.circle.fill',
-                  //     size: 24.sp,
-                  //     color: CupertinoTheme.of(context).primaryColor,
-                  //   ),
-                  //   size: 60.w,
-                  //   onPressed: () {
-                  //     Navigator.push(
-                  //       context,
-                  //       CupertinoPageRoute(
-                  //         builder: (context) => const AddTransactionPage(),
-                  //       ),
-                  //     );
-                  //   },
-                  // ),
                 ),
               ],
             ),

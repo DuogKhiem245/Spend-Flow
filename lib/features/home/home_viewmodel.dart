@@ -30,6 +30,15 @@ class HomeViewModel {
     return formatter.format(amount);
   }
 
+  String formatCompactCurrency(double amount) {
+    final formatter = NumberFormat.compactCurrency(
+      locale: "en_US",
+      decimalDigits: 1, 
+      symbol: '', 
+    );
+    return formatter.format(amount);
+  }
+
   double calculateTotalSpent(List<SpendingModel> data) {
     return data.fold(0, (sum, item) => sum + item.amount);
   }
@@ -214,5 +223,31 @@ class HomeViewModel {
     transactions.sort((a, b) => b.date.compareTo(a.date));
 
     return transactions;
+  }
+
+  Future<double> calculateSpendingChange() async {
+    final now = DateTime.now();
+    final lastMonthDate = DateTime(now.year, now.month - 1);
+
+    final currentTrans = await _storage.getTransactionsByMonth(now);
+    final lastMonthTrans = await _storage.getTransactionsByMonth(
+      lastMonthDate,
+    );
+
+    double currentSpent = 0;
+    for (var t in currentTrans) {
+      if (!t.isIncome) currentSpent += t.amount;
+    }
+
+    double lastSpent = 0;
+    for (var t in lastMonthTrans) {
+      if (!t.isIncome) lastSpent += t.amount;
+    }
+
+    if (lastSpent == 0) {
+      return currentSpent > 0 ? 100.0 : 0.0;
+    }
+
+    return ((currentSpent - lastSpent) / lastSpent) * 100;
   }
 }
