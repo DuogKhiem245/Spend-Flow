@@ -90,6 +90,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get all => 'All';
 
   @override
+  String get error => 'Error';
+
+  @override
   String get onboard_step1_title => 'Simplify Your Finances';
 
   @override
@@ -580,6 +583,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Add an extra layer of protection. A passcode ensures only you can access your financial data, even if your device is compromised.';
 
   @override
+  String get passcode => 'Passcode';
+
+  @override
   String get change_passcode => 'Change Passcode';
 
   @override
@@ -599,6 +605,74 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get enter_confirm_new_passcode => 'Enter confirm new passcode';
+
+  @override
+  String get turnOffPasscode => 'Turn Off Passcode';
+
+  @override
+  String get createPasscode => 'Create Passcode';
+
+  @override
+  String get changePasscode => 'Change Passcode';
+
+  @override
+  String get removePasscode => 'Remove Passcode';
+
+  @override
+  String get updatePasscode => 'Update Passcode';
+
+  @override
+  String get description_create_passcode =>
+      'Protect your account by regularly updating your 6-digit passcode.';
+
+  @override
+  String get description_remove_passcode =>
+      'Enter your current passcode to disable security.';
+
+  @override
+  String get currentPasscode => 'Current Passcode';
+
+  @override
+  String get enterCurrentPin => 'Enter current PIN';
+
+  @override
+  String get passcode_turn_off_success => 'Passcode turned off successfully!';
+
+  @override
+  String get passcode_update_success => 'Passcode updated successfully!';
+
+  @override
+  String get passcode_create_success => 'Passcode created successfully!';
+
+  @override
+  String get currentPasscodeIncorrect => 'Current passcode is incorrect.';
+
+  @override
+  String get errorSavingData => 'Error saving data.';
+
+  @override
+  String get newPasscodeMustBe6Digits => 'New passcode must be 6 digits.';
+
+  @override
+  String get passcodesDoNotMatch => 'Passcodes do not match.';
+
+  @override
+  String get enter_passcode => 'Enter Passcode';
+
+  @override
+  String get incorrect_passcode => 'Incorrect passcode.';
+
+  @override
+  String get face => 'Face ID';
+
+  @override
+  String get fingerprint => 'Fingerprint';
+
+  @override
+  String get report_locked => ' Locked Content';
+
+  @override
+  String get unlock => 'Unlock';
 
   @override
   String get unlock_untilimited_access => 'Unlock Unlimited Access';

@@ -4,9 +4,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/features/setting/security/security_view.dart';
+import 'package:spend_flow/features/setting/setting_viewmodel.dart';
 
-class SettingSecurityWidget extends StatelessWidget {
+class SettingSecurityWidget extends StatefulWidget {
   const SettingSecurityWidget({super.key});
+
+  @override
+  State<SettingSecurityWidget> createState() => _SettingSecurityWidgetState();
+}
+
+class _SettingSecurityWidgetState extends State<SettingSecurityWidget> {
+  final SettingViewmodel _viewModel = SettingViewmodel();
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +37,26 @@ class SettingSecurityWidget extends StatelessWidget {
           ),
         ),
 
-        _SecurityItem(
-          title: "Passcode & Face ID", 
-          icon: CupertinoIcons.lock_fill,
-          iconBgColor: const Color(0xFF71717A), 
-          onTap: () {
-            Navigator.push(
-              context,
-              CupertinoPageRoute(builder: (context) => const SecurityView()),
+        FutureBuilder<String>(
+          future: _viewModel.checkBiometricSupport(l10n),
+          builder: (context, snapshot) {
+            final String bioType = snapshot.data ?? "";
+            final String title = bioType.isEmpty
+                ? "Passcode"
+                : "Passcode & $bioType";
+
+            return _SecurityItem(
+              title: title,
+              icon: CupertinoIcons.lock_fill,
+              iconBgColor: const Color(0xFF71717A),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) => const SecurityView(),
+                  ),
+                );
+              },
             );
           },
         ),
@@ -64,7 +84,7 @@ class _SecurityItem extends StatelessWidget {
       height: 60.h,
       decoration: BoxDecoration(
         color: CupertinoTheme.of(context).barBackgroundColor,
-        borderRadius: BorderRadius.circular(30.r), 
+        borderRadius: BorderRadius.circular(30.r),
         boxShadow: [
           BoxShadow(
             color: AppColors.boxShadow.withValues(alpha: 0.05),

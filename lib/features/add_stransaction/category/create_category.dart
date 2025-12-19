@@ -114,6 +114,7 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
             if (_nameController.text.isEmpty) return;
 
             final newCategory = CategoryModel(
+              id: UniqueKey().toString(),
               name: _nameController.text,
               l10nKey: null,
               iconKey: _pickedImage != null ? '${_nameController.text}_img' : _selectedIconKey,

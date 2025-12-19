@@ -48,7 +48,54 @@ class LocalStorageService {
   }
 
   // ============================================================
-  // 2: SEMBAST DATABASE 
+  // 2: PASSCODE
+  // ============================================================
+
+  final _settingStore = stringMapStoreFactory.store('settings');
+  static const String _passcodeKey = 'user_passcode';
+  static const String _faceIdKey = 'is_face_id_enabled';
+
+  Future<bool> hasPasscode() async {
+    final db = await database;
+    final finder = Finder(filter: Filter.byKey('user_passcode'));
+    final record = await _settingStore.findFirst(db, finder: finder);
+    return record != null;
+  }
+
+  Future<String?> getPasscode() async {
+    final db = await database;
+    final finder = Finder(filter: Filter.byKey(_passcodeKey));
+    final record = await _settingStore.findFirst(db, finder: finder);
+    return record?.value['code'] as String?;
+  }
+
+  Future<void> savePasscode(String code) async {
+    final db = await database;
+    await _settingStore.record(_passcodeKey).put(db, {'code': code});
+  }
+
+  Future<void> removePasscode() async {
+    final db = await database;
+    await _settingStore.record(_passcodeKey).delete(db);
+  }
+
+  Future<bool> isFaceIdEnabled() async {
+    final db = await database;
+    final record = await _settingStore.record(_faceIdKey).get(db);
+    if (record is Map) {
+      return (record?['enabled'] as bool?) ?? false;
+    }
+    return false;
+  }
+
+  Future<void> setFaceIdEnabled(bool enabled) async {
+    final db = await database;
+    await _settingStore.record(_faceIdKey).put(db, {'enabled': enabled});
+  }
+
+
+  // ============================================================
+  // 3: SEMBAST DATABASE 
   // ============================================================
 
   Database? _db;
@@ -65,6 +112,8 @@ class LocalStorageService {
     _db = await databaseFactoryIo.openDatabase(dbPath);
     return _db!;
   }
+
+
 
   // ------------------------------------------------------------
   // CATEGORIES
@@ -112,7 +161,7 @@ class LocalStorageService {
 
   Future<List<CategoryModel>> getDefaultSuggestionsFromDB() async {
     final db = await database;
-    final snapshots = await _suggestStore.find(db); 
+    final snapshots = await _suggestStore.find(db);
 
     return snapshots
         .map((snapshot) => CategoryModel.fromMap(snapshot.value))
@@ -143,12 +192,12 @@ class LocalStorageService {
     final Map<String, CategoryModel> uniqueMap = {};
 
     for (var cat in mostUsed) {
-      uniqueMap[cat.iconKey] = cat;
+      uniqueMap[cat.id] = cat; 
     }
 
     for (var cat in defaults) {
-      if (!uniqueMap.containsKey(cat.iconKey)) {
-        uniqueMap[cat.iconKey] = cat;
+      if (!uniqueMap.containsKey(cat.id)) {
+        uniqueMap[cat.id] = cat;
       }
     }
 
@@ -158,27 +207,62 @@ class LocalStorageService {
   Future<void> incrementCategoryUsage(CategoryModel category) async {
     final db = await database;
 
-    final finder = Finder(filter: Filter.equals('iconKey', category.iconKey));
+    final finder = Finder(filter: Filter.equals('id', category.id));
     final snapshot = await _sampleStore.findFirst(db, finder: finder);
 
     if (snapshot != null) {
       final current = CategoryModel.fromMap(snapshot.value);
+
       final updated = CategoryModel(
+        id: current.id, 
         name: current.name,
         l10nKey: current.l10nKey,
         iconKey: current.iconKey,
         color: current.color,
-        count: current.count + 1, 
+        count: current.count + 1,
       );
+
       await _sampleStore.record(snapshot.key).update(db, updated.toMap());
     } else {
-      await _sampleStore.add(db, category.toMap());
+      final newCategory = CategoryModel(
+        id: category.id,
+        name: category.name,
+        l10nKey: category.l10nKey,
+        iconKey: category.iconKey,
+        color: category.color,
+        count: 1,
+      );
+      await _sampleStore.add(db, newCategory.toMap());
     }
   }
 
   Future<void> addCategory(CategoryModel category) async {
     final db = await database;
-    await _sampleStore.add(db, category.toMap());
+
+    final finder = Finder(filter: Filter.equals('id', category.id));
+    final existing = await _sampleStore.findFirst(db, finder: finder);
+
+    if (existing == null) {
+      await _sampleStore.add(db, category.toMap());
+    } else {
+      debugPrint("Category với ID ${category.id} đã tồn tại.");
+    }
+  }
+
+  Future<bool> deleteCategory(CategoryModel category) async {
+    if (int.tryParse(category.id) != null) {
+      debugPrint(
+        "Không thể xóa danh mục mặc định của hệ thống: ${category.name}",
+      );
+      return false;
+    }
+
+    final db = await database;
+
+    final finder = Finder(filter: Filter.equals('id', category.id));
+    final deletedCount = await _sampleStore.delete(db, finder: finder);
+
+    return deletedCount > 0;
   }
 
   // ------------------------------------------------------------
@@ -189,6 +273,7 @@ class LocalStorageService {
     final db = await database;
 
     await _transactionStore.add(db, transaction.toMap());
+
     await incrementCategoryUsage(transaction.category);
   }
 
@@ -200,7 +285,8 @@ class LocalStorageService {
     final snapshots = await _transactionStore.find(db, finder: finder);
 
     return snapshots.map((snapshot) {
-      return TransactionModel.fromMap(snapshot.value);
+      final data = Map<String, dynamic>.from(snapshot.value as Map);
+      return TransactionModel.fromMap(data);
     }).toList();
   }
 
@@ -219,7 +305,11 @@ class LocalStorageService {
     );
 
     final snapshots = await _transactionStore.find(db, finder: finder);
-    return snapshots.map((s) => TransactionModel.fromMap(s.value)).toList();
+
+    return snapshots.map((snapshot) {
+      final data = Map<String, dynamic>.from(snapshot.value as Map);
+      return TransactionModel.fromMap(data);
+    }).toList();
   }
 
   Future<void> deleteAllTransactions() async {
@@ -261,19 +351,18 @@ class LocalStorageService {
     for (var snapshot in budgetSnapshots) {
       final data = snapshot.value;
 
-      final categoryMap = data['category'] as Map<String, dynamic>;
-      final categoryIconKey =
-          categoryMap['iconKey']; 
+      final rawBudget = BudgetModel.fromMap(Map<String, dynamic>.from(data));
 
       double totalSpentForCategory = 0;
       for (var tx in transactions) {
-        if (tx.category.iconKey == categoryIconKey && tx.isIncome == false) {
+        if (tx.category.iconKey == rawBudget.category.iconKey && !tx.isIncome) {
           totalSpentForCategory += tx.amount;
         }
       }
 
-      final budget = BudgetModel.fromMap(data, totalSpentForCategory);
-      result.add(budget);
+      final finalBudget = rawBudget.copyWith(spent: totalSpentForCategory);
+
+      result.add(finalBudget);
     }
 
     return result;
@@ -281,9 +370,11 @@ class LocalStorageService {
 
   Future<void> deleteBudget(BudgetModel budget) async {
     final db = await database;
+
     final finder = Finder(
       filter: Filter.equals('category.iconKey', budget.category.iconKey),
     );
+
     await _budgetStore.delete(db, finder: finder);
   }
 }

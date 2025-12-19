@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
+import 'package:spend_flow/core/widgets/verify_passcode/verify_passcode_sheet.dart';
 import 'package:spend_flow/features/add_stransaction/model/transaction_model.dart';
 import 'package:spend_flow/features/report/report_viewmodel.dart';
 
@@ -28,6 +29,49 @@ class _ReportPageState extends State<ReportPage> {
         child: ListenableBuilder(
           listenable: _viewModel,
           builder: (context, child) {
+            if (_viewModel.isLocked) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      CupertinoIcons.lock_shield_fill,
+                      size: 80.sp,
+                      color: CupertinoTheme.of(context).primaryColor,
+                    ),
+                    SizedBox(height: 20.h),
+                    Text(
+                      l10n.report_locked,
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w600,
+                        color: CupertinoTheme.of(
+                          context,
+                        ).textTheme.textStyle.color,
+                      ),
+                    ),
+                    SizedBox(height: 10.h),
+                    CupertinoButton(
+                      child: Text(
+                        l10n.unlock,
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      onPressed: () {
+                        _viewModel.authenticateBiometric().then((_) {
+                          if (_viewModel.isLocked && context.mounted) {
+                            _showUnlockModal(context);
+                          }
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              );
+            }
+
             final groupedData = _viewModel.getGroupedTransactions();
             final stats = _viewModel.getSummaryStats();
 
@@ -392,6 +436,17 @@ class _ReportPageState extends State<ReportPage> {
           ),
         );
       },
+    );
+  }
+
+  void _showUnlockModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => VerifyPasscodeSheet(
+        onVerify: (code) => _viewModel.verifyPasscode(code),
+      ),
     );
   }
 }

@@ -2,13 +2,72 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/features/add_stransaction/model/transaction_model.dart';
 import 'package:spend_flow/features/home/home_model.dart';
 
-class HomeViewModel {
+class HomeViewModel extends ChangeNotifier {
   final LocalStorageService _storage = LocalStorageService();
+  final LocalAuthentication _auth = LocalAuthentication();
+
+  bool _isLocked = false;
+  bool _hasSecurity = false;
+  bool _isFaceIdAvailable = false;
+
+  bool get isLocked => _isLocked;
+  bool get hasSecurity => _hasSecurity;
+  bool get isFaceIdAvailable => _isFaceIdAvailable;
+
+  HomeViewModel() {
+    _checkSecurity();
+  }
+
+  Future<void> _checkSecurity() async {
+    final hasPasscode = await _storage.hasPasscode();
+    final faceEnabled = await _storage.isFaceIdEnabled();
+
+    _hasSecurity = hasPasscode;
+
+    _isFaceIdAvailable = hasPasscode && faceEnabled;
+
+    if (hasPasscode) {
+      _isLocked = true;
+      notifyListeners();
+    }
+  }
+
+  Future<bool> authenticateBiometric() async {
+    if (!_isFaceIdAvailable) return false; 
+
+    try {
+      final bool didAuthenticate = await _auth.authenticate(
+        localizedReason: 'Xác thực để xem giao dịch',
+        biometricOnly: true,
+        sensitiveTransaction: true,
+      );
+
+      if (didAuthenticate) {
+        _isLocked = false;
+        notifyListeners();
+        return true; // Thành công
+      }
+    } catch (e) {
+      debugPrint("Lỗi Auth: $e");
+    }
+    return false; 
+  }
+
+  Future<bool> verifyPasscode(String inputCode) async {
+    final savedCode = await _storage.getPasscode();
+    if (savedCode == inputCode) {
+      _isLocked = false;
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
 
   String getGreetingMessage(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;

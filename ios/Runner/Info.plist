@@ -53,5 +53,7 @@
 		<string>We need access to the microphone for video.</string>
 		<key>NSSpeechRecognitionUsageDescription</key>
 		<string>Ứng dụng cần quyền nhận diện giọng nói để chuyển đổi thành văn bản.</string>
+		<key>NSFaceIDUsageDescription</key>
+		<string>Ứng dụng cần sử dụng Face ID để bảo mật thông tin của bạn.</string>
 	</dict>
 </plist>

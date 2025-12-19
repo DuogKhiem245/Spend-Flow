@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart'; // Import service
 import 'package:spend_flow/features/add_stransaction/model/transaction_model.dart';
@@ -7,12 +8,68 @@ import 'package:spend_flow/features/report/daily_group_model.dart';
 
 class ReportViewModel extends ChangeNotifier {
   final LocalStorageService _storage = LocalStorageService();
+  final LocalAuthentication _auth = LocalAuthentication();
 
   DateTime selectedMonth = DateTime.now();
   List<TransactionModel> _transactions = [];
 
+  bool _isLocked = true;
+  bool _isFaceIdAvailable = false;
+
+  bool get isLocked => _isLocked;
+  bool get isFaceIdAvailable => _isFaceIdAvailable;
+
   ReportViewModel() {
     loadData();
+    _checkSecurity();
+  }
+
+  Future<void> _checkSecurity() async {
+    final hasPasscode = await _storage.hasPasscode();
+    final faceEnabled = await _storage.isFaceIdEnabled();
+
+    _isFaceIdAvailable = faceEnabled && hasPasscode;
+
+    if (!hasPasscode) {
+      _isLocked = false;
+      notifyListeners();
+    } else {
+      _isLocked = true;
+      notifyListeners();
+
+      if (_isFaceIdAvailable) {
+        authenticateBiometric();
+      }
+    }
+  }
+
+  Future<void> authenticateBiometric() async {
+    if (!_isFaceIdAvailable) return;
+    
+    try {
+      final bool didAuthenticate = await _auth.authenticate(
+        localizedReason: 'Xác thực để xem báo cáo',
+        biometricOnly: true,
+        sensitiveTransaction: true,
+      );
+
+      if (didAuthenticate) {
+        _isLocked = false;
+        notifyListeners();
+      }
+    } catch (e) {
+      debugPrint("Lỗi FaceID: $e");
+    }
+  }
+
+  Future<bool> verifyPasscode(String inputCode) async {
+    final savedCode = await _storage.getPasscode();
+    if (savedCode == inputCode) {
+      _isLocked = false;
+      notifyListeners();
+      return true;
+    }
+    return false;
   }
 
   Future<void> loadData() async {

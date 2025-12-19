@@ -117,16 +117,10 @@ class _BudgetPageState extends State<BudgetPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(height: 100.h),
-          Container(
-            decoration: BoxDecoration(
-              color: CupertinoColors.systemGrey6.withValues(alpha: .5),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              CupertinoIcons.creditcard,
-              size: 50.sp,
-              color: CupertinoColors.systemGrey,
-            ),
+          Icon(
+            CupertinoIcons.creditcard,
+            size: 50.sp,
+            color: CupertinoColors.systemGrey,
           ),
           SizedBox(height: 16.h),
           Text(
@@ -214,7 +208,6 @@ class _BudgetPageState extends State<BudgetPage> {
 
           _buildProgressBar(
             progress: _viewModel.totalProgress,
-            color: AppColors.secondaryColor,
             height: 12.h,
           ),
 
@@ -223,7 +216,7 @@ class _BudgetPageState extends State<BudgetPage> {
             "${_viewModel.formatCurrency(_viewModel.totalRemaining)} ${l10n.left_to_spend}",
             style: TextStyle(
               fontSize: 14.sp,
-              color: AppColors.secondaryColor,
+              color: _viewModel.getProgressBarColor(_viewModel.totalProgress),
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -273,7 +266,10 @@ class _BudgetPageState extends State<BudgetPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      CategoryHelper.getTranslatedName(context, budget.category),
+                      CategoryHelper.getTranslatedName(
+                        context,
+                        budget.category,
+                      ),
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
@@ -314,7 +310,6 @@ class _BudgetPageState extends State<BudgetPage> {
                       width: 100.w,
                       child: _buildProgressBar(
                         progress: budget.progress,
-                        color: budget.color,
                         height: 6.h,
                       ),
                     ),
@@ -330,9 +325,10 @@ class _BudgetPageState extends State<BudgetPage> {
 
   Widget _buildProgressBar({
     required double progress,
-    required Color color,
     required double height,
   }) {
+    final barColor = _viewModel.getProgressBarColor(progress);
+    
     return Container(
       height: height,
       width: double.infinity,
@@ -342,10 +338,10 @@ class _BudgetPageState extends State<BudgetPage> {
       ),
       child: FractionallySizedBox(
         alignment: Alignment.centerLeft,
-        widthFactor: progress,
+        widthFactor: progress.clamp(0.0, 1.0),
         child: Container(
           decoration: BoxDecoration(
-            color: color,
+            color: barColor,
             borderRadius: BorderRadius.circular(10),
           ),
         ),

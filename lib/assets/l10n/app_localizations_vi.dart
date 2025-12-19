@@ -90,6 +90,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get all => 'Tất cả';
 
   @override
+  String get error => 'Lỗi';
+
+  @override
   String get onboard_step1_title => 'Đơn giản hóa tài chính';
 
   @override
@@ -580,7 +583,10 @@ class AppLocalizationsVi extends AppLocalizations {
       'Thêm một lớp bảo vệ. Mã khóa đảm bảo chỉ bạn mới có thể truy cập dữ liệu tài chính, ngay cả khi thiết bị bị xâm phạm.';
 
   @override
-  String get change_passcode => 'Đổi mã khóa';
+  String get passcode => 'Passcode';
+
+  @override
+  String get change_passcode => 'Đổi passcode';
 
   @override
   String get old_passcode => 'Mã khóa cũ';
@@ -589,16 +595,84 @@ class AppLocalizationsVi extends AppLocalizations {
   String get enter_old_passcode => 'Nhập mã khóa cũ';
 
   @override
-  String get new_passcode => 'Mã khóa mới';
+  String get new_passcode => 'Passcode mới';
 
   @override
-  String get enter_new_passcode => 'Nhập mã khóa mới';
+  String get enter_new_passcode => 'Nhập Passcode mới';
 
   @override
-  String get confirm_new_passcode => 'Xác nhận mã khóa mới';
+  String get confirm_new_passcode => 'Xác nhận Passcode mới';
 
   @override
-  String get enter_confirm_new_passcode => 'Nhập lại mã khóa mới';
+  String get enter_confirm_new_passcode => 'Nhập lại Passcode mới';
+
+  @override
+  String get turnOffPasscode => 'Tắt Passcode';
+
+  @override
+  String get createPasscode => 'Tạo Passcode';
+
+  @override
+  String get changePasscode => 'Đổi Passcode';
+
+  @override
+  String get removePasscode => 'Xóa Passcode';
+
+  @override
+  String get updatePasscode => 'Cập nhật Passcode';
+
+  @override
+  String get description_create_passcode =>
+      'Bảo vệ tài khoản của bạn bằng cách thường xuyên cập nhật Passcode 6 chữ số.';
+
+  @override
+  String get description_remove_passcode =>
+      'Nhập Passcode hiện tại của bạn để tắt bảo mật.';
+
+  @override
+  String get currentPasscode => 'Passcode hiện tại';
+
+  @override
+  String get enterCurrentPin => 'Nhập mã PIN hiện tại';
+
+  @override
+  String get passcode_turn_off_success => 'Passcode đã được tắt thành công!';
+
+  @override
+  String get passcode_update_success => 'Cập nhật Passcode thành công!';
+
+  @override
+  String get passcode_create_success => 'Tạo Passcode thành công!';
+
+  @override
+  String get currentPasscodeIncorrect => 'Passcode hiện tại không đúng.';
+
+  @override
+  String get errorSavingData => 'Lỗi khi lưu dữ liệu.';
+
+  @override
+  String get newPasscodeMustBe6Digits => 'Passcode mới phải có 6 chữ số.';
+
+  @override
+  String get passcodesDoNotMatch => 'Passcode không khớp.';
+
+  @override
+  String get enter_passcode => 'Nhập Passcode';
+
+  @override
+  String get incorrect_passcode => 'Passcode không đúng.';
+
+  @override
+  String get face => 'Face ID';
+
+  @override
+  String get fingerprint => 'Vân tay';
+
+  @override
+  String get report_locked => 'Nội dung được khóa';
+
+  @override
+  String get unlock => 'Mở khóa';
 
   @override
   String get unlock_untilimited_access => 'Mở khóa truy cập không giới hạn';

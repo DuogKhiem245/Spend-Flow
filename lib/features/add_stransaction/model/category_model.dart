@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class CategoryModel {
+  final String id;
   final String name;
   final String? l10nKey;
   final String iconKey;
@@ -8,15 +10,17 @@ class CategoryModel {
   final int count;
 
   CategoryModel({
+    String? id, 
     required this.name,
     this.l10nKey,
     required this.iconKey,
     required this.color,
     this.count = 0,
-  });
+  }) : id = id ?? const Uuid().v4();
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'name': name,
       'l10nKey': l10nKey,
       'iconKey': iconKey,
@@ -27,6 +31,7 @@ class CategoryModel {
 
   factory CategoryModel.fromMap(Map<String, dynamic> map) {
     return CategoryModel(
+      id: map['id'],
       name: map['name'],
       l10nKey: map['l10nKey'],
       iconKey: map['iconKey'],

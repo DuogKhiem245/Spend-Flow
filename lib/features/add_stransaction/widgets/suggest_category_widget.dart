@@ -140,7 +140,7 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
             runSpacing: 10.h,
             children: [
               ..._displayCategories.map((category) {
-                final isSelected = widget.selectedCategory?.name == category.name;
+                final isSelected = widget.selectedCategory?.id == category.id;
                 return GestureDetector(
                   onTap: () {
                     setState(() {

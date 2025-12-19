@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/features/budget/budget_model.dart';
@@ -45,6 +45,13 @@ class BudgetViewModel extends ChangeNotifier {
   String formatCurrency(double amount) {
     final format = NumberFormat("#,##0", "en_US");
     return "\$${format.format(amount)}";
+  }
+
+  Color getProgressBarColor(double progress) {
+    if (progress >= 1.0) return Colors.red;
+    if (progress >= 0.8) return Colors.orange;
+    if (progress >= 0.5) return Colors.amber;
+    return Colors.green; 
   }
 
   void refreshData() {

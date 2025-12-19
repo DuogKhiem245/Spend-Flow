@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
-import 'package:spend_flow/features/auth/view/login_view.dart';
+import 'package:spend_flow/core/widgets/nav.dart';
 import '../model/onboarding_model.dart';
 
 class OnboardingViewModel {
@@ -11,16 +11,19 @@ class OnboardingViewModel {
   List<OnboardingModel> getPages(AppLocalizations l10n) {
     return [
       OnboardingModel(
+        id: '1',
         image: "lib/assets/images/onboard-1.png",
         title: l10n.onboard_step1_title,
         desc: l10n.onboard_step1_message,
       ),
       OnboardingModel(
+        id: '2',
         image: "lib/assets/images/onboard-2.png",
         title: l10n.onboard_step2_title,
         desc: l10n.onboard_step2_message,
       ),
       OnboardingModel(
+        id: '3',
         image: "lib/assets/images/onboard-3.png",
         title: l10n.onboard_step3_title,
         desc: l10n.onboard_step3_message,
@@ -55,7 +58,7 @@ class OnboardingViewModel {
 
     Navigator.pushAndRemoveUntil(
       context,
-      CupertinoPageRoute(builder: (context) => const LoginPage()),
+      CupertinoPageRoute(builder: (context) => const BottomNavbar()),
       (route) => false,
     );
   }

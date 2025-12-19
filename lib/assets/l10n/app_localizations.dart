@@ -260,6 +260,12 @@ abstract class AppLocalizations {
   /// **'Tất cả'**
   String get all;
 
+  /// No description provided for @error.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lỗi'**
+  String get error;
+
   /// No description provided for @onboard_step1_title.
   ///
   /// In vi, this message translates to:
@@ -1214,10 +1220,16 @@ abstract class AppLocalizations {
   /// **'Thêm một lớp bảo vệ. Mã khóa đảm bảo chỉ bạn mới có thể truy cập dữ liệu tài chính, ngay cả khi thiết bị bị xâm phạm.'**
   String get pass_code_description;
 
+  /// No description provided for @passcode.
+  ///
+  /// In vi, this message translates to:
+  /// **'Passcode'**
+  String get passcode;
+
   /// No description provided for @change_passcode.
   ///
   /// In vi, this message translates to:
-  /// **'Đổi mã khóa'**
+  /// **'Đổi passcode'**
   String get change_passcode;
 
   /// No description provided for @old_passcode.
@@ -1235,26 +1247,158 @@ abstract class AppLocalizations {
   /// No description provided for @new_passcode.
   ///
   /// In vi, this message translates to:
-  /// **'Mã khóa mới'**
+  /// **'Passcode mới'**
   String get new_passcode;
 
   /// No description provided for @enter_new_passcode.
   ///
   /// In vi, this message translates to:
-  /// **'Nhập mã khóa mới'**
+  /// **'Nhập Passcode mới'**
   String get enter_new_passcode;
 
   /// No description provided for @confirm_new_passcode.
   ///
   /// In vi, this message translates to:
-  /// **'Xác nhận mã khóa mới'**
+  /// **'Xác nhận Passcode mới'**
   String get confirm_new_passcode;
 
   /// No description provided for @enter_confirm_new_passcode.
   ///
   /// In vi, this message translates to:
-  /// **'Nhập lại mã khóa mới'**
+  /// **'Nhập lại Passcode mới'**
   String get enter_confirm_new_passcode;
+
+  /// No description provided for @turnOffPasscode.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tắt Passcode'**
+  String get turnOffPasscode;
+
+  /// No description provided for @createPasscode.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tạo Passcode'**
+  String get createPasscode;
+
+  /// No description provided for @changePasscode.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đổi Passcode'**
+  String get changePasscode;
+
+  /// No description provided for @removePasscode.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xóa Passcode'**
+  String get removePasscode;
+
+  /// No description provided for @updatePasscode.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cập nhật Passcode'**
+  String get updatePasscode;
+
+  /// No description provided for @description_create_passcode.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bảo vệ tài khoản của bạn bằng cách thường xuyên cập nhật Passcode 6 chữ số.'**
+  String get description_create_passcode;
+
+  /// No description provided for @description_remove_passcode.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập Passcode hiện tại của bạn để tắt bảo mật.'**
+  String get description_remove_passcode;
+
+  /// No description provided for @currentPasscode.
+  ///
+  /// In vi, this message translates to:
+  /// **'Passcode hiện tại'**
+  String get currentPasscode;
+
+  /// No description provided for @enterCurrentPin.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập mã PIN hiện tại'**
+  String get enterCurrentPin;
+
+  /// No description provided for @passcode_turn_off_success.
+  ///
+  /// In vi, this message translates to:
+  /// **'Passcode đã được tắt thành công!'**
+  String get passcode_turn_off_success;
+
+  /// No description provided for @passcode_update_success.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cập nhật Passcode thành công!'**
+  String get passcode_update_success;
+
+  /// No description provided for @passcode_create_success.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tạo Passcode thành công!'**
+  String get passcode_create_success;
+
+  /// No description provided for @currentPasscodeIncorrect.
+  ///
+  /// In vi, this message translates to:
+  /// **'Passcode hiện tại không đúng.'**
+  String get currentPasscodeIncorrect;
+
+  /// No description provided for @errorSavingData.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lỗi khi lưu dữ liệu.'**
+  String get errorSavingData;
+
+  /// No description provided for @newPasscodeMustBe6Digits.
+  ///
+  /// In vi, this message translates to:
+  /// **'Passcode mới phải có 6 chữ số.'**
+  String get newPasscodeMustBe6Digits;
+
+  /// No description provided for @passcodesDoNotMatch.
+  ///
+  /// In vi, this message translates to:
+  /// **'Passcode không khớp.'**
+  String get passcodesDoNotMatch;
+
+  /// No description provided for @enter_passcode.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập Passcode'**
+  String get enter_passcode;
+
+  /// No description provided for @incorrect_passcode.
+  ///
+  /// In vi, this message translates to:
+  /// **'Passcode không đúng.'**
+  String get incorrect_passcode;
+
+  /// No description provided for @face.
+  ///
+  /// In vi, this message translates to:
+  /// **'Face ID'**
+  String get face;
+
+  /// No description provided for @fingerprint.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vân tay'**
+  String get fingerprint;
+
+  /// No description provided for @report_locked.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nội dung được khóa'**
+  String get report_locked;
+
+  /// No description provided for @unlock.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mở khóa'**
+  String get unlock;
 
   /// No description provided for @unlock_untilimited_access.
   ///
