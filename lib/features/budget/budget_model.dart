@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:spend_flow/features/add_stransaction/model/category_model.dart';
-import 'package:uuid/uuid.dart'; // Cần thêm package này để tạo ID unique nếu muốn
+import 'package:uuid/uuid.dart'; 
 
 class BudgetModel {
   final String id; 
   final CategoryModel category;
   final double total; 
   final double spent; 
+  final DateTime date;
 
   BudgetModel({
     String? id,
     required this.category,
     required this.total,
     this.spent = 0.0, 
+    required this.date,
   }) : id = id ?? const Uuid().v4(); 
 
   String get name => category.name;
@@ -37,6 +39,7 @@ class BudgetModel {
       category: CategoryModel.fromMap(map['category']),
       total: (map['total'] as num?)?.toDouble() ?? 0.0,
       spent: 0.0,
+      date: DateTime.now(),
     );
   }
 
@@ -45,12 +48,14 @@ class BudgetModel {
     CategoryModel? category,
     double? total,
     double? spent,
+    DateTime? date,
   }) {
     return BudgetModel(
       id: id ?? this.id,
       category: category ?? this.category,
       total: total ?? this.total,
       spent: spent ?? this.spent,
+      date: date ?? this.date,
     );
   }
 }

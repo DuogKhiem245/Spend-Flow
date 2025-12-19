@@ -7,6 +7,7 @@ import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_theme.dart';
 import 'package:spend_flow/core/services/language_service.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/core/services/notification_service.dart';
 import 'package:spend_flow/core/services/theme_service.dart';
 import 'config/app_routes.dart';
 
@@ -39,6 +40,10 @@ void main() async {
       );
     }
   }
+  
+  final notificationService = NotificationService();
+  await notificationService.init();
+  // await notificationService.requestPermissions();
 
   runApp(MyApp(onboardDone: onboardDone));
 }

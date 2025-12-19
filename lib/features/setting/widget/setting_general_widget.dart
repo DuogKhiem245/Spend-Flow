@@ -6,8 +6,8 @@ import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/core/data/language_data.dart';
 import 'package:spend_flow/core/services/language_service.dart';
-import 'package:spend_flow/features/setting/currency/currency_view.dart';
 import 'package:spend_flow/features/setting/language/language_view.dart';
+import 'package:spend_flow/features/setting/notification/notification_viewmodel.dart';
 import 'package:spend_flow/main.dart' show themeService;
 
 class SettingGeneralWidget extends StatefulWidget {
@@ -18,21 +18,27 @@ class SettingGeneralWidget extends StatefulWidget {
 }
 
 class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
-  bool isNotificationsEnabled = true;
+  final NotificationViewmodel _viewModel = NotificationViewmodel();
 
-  static final List<Map<String, String>> _allLanguages = LanguageData.allLanguages;
+  static final List<Map<String, String>> _allLanguages =
+      LanguageData.allLanguages;
 
   static String getNameByCode(String code) {
     try {
       final language = _allLanguages.firstWhere(
         (element) => element['code'] == code,
-        orElse: () => _allLanguages
-            .first, 
+        orElse: () => _allLanguages.first,
       );
       return language['name'] ?? 'English';
     } catch (e) {
       return 'English';
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _viewModel.loadNotificationState();
   }
 
   @override
@@ -57,20 +63,24 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
           ),
         ),
 
-        _SettingItem(
-          title: l10n.notifications,
-          icon: CupertinoIcons.bell_fill,
-          iconBgColor: const Color(0xFFE97B35),
-          trailing: CNSwitch(
-            value: isNotificationsEnabled,
-            onChanged: (v) => setState(() => isNotificationsEnabled = v),
-          ),
+        ListenableBuilder(
+          listenable: _viewModel,
+          builder: (context, child) {
+            return _SettingItem(
+              title: l10n.notifications,
+              icon: CupertinoIcons.bell_fill,
+              iconBgColor: const Color(0xFFE97B35),
+              trailing: CNSwitch(
+                value: _viewModel.isNotificationsEnabled,
+                onChanged: (v) => _viewModel.toggleNotification(v),
+              ),
+            );
+          },
         ),
 
         _SettingItem(
           title: l10n.dark_mode,
-          icon: CupertinoIcons
-              .moon_fill, 
+          icon: CupertinoIcons.moon_fill,
           iconBgColor: const Color(0xFF3B82F6),
           trailing: CNSwitch(
             value: isDark,
@@ -88,21 +98,24 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
               CupertinoPageRoute(builder: (context) => const LanguageView()),
             );
           },
-          trailing: _buildTextTrailing(context, getNameByCode(LanguageService().currentLanguageName)),
+          trailing: _buildTextTrailing(
+            context,
+            getNameByCode(LanguageService().currentLanguageName),
+          ),
         ),
 
-        _SettingItem(
-          title: l10n.currency,
-          icon: CupertinoIcons.money_dollar_circle_fill,
-          iconBgColor: const Color(0xFF21C55E),
-          onTap: () {
-            Navigator.push(
-              context,
-              CupertinoPageRoute(builder: (context) => const CurrencyView()),
-            );
-          },
-          trailing: _buildTextTrailing(context, 'USD'),
-        ),
+        // _SettingItem(
+        //   title: l10n.currency,
+        //   icon: CupertinoIcons.money_dollar_circle_fill,
+        //   iconBgColor: const Color(0xFF21C55E),
+        //   onTap: () {
+        //     Navigator.push(
+        //       context,
+        //       CupertinoPageRoute(builder: (context) => const CurrencyView()),
+        //     );
+        //   },
+        //   trailing: _buildTextTrailing(context, 'USD'),
+        // ),
       ],
     );
   }
@@ -122,7 +135,7 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
         SizedBox(width: 6.w),
         Icon(
           CupertinoIcons.chevron_right,
-          size: 18.sp, 
+          size: 18.sp,
           color: CupertinoColors.systemGrey3,
         ),
       ],
@@ -148,16 +161,14 @@ class _SettingItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 12.h), 
+      margin: EdgeInsets.only(bottom: 12.h),
       height: 60.h,
       decoration: BoxDecoration(
         color: CupertinoTheme.of(context).barBackgroundColor,
-        borderRadius: BorderRadius.circular(30.r), 
+        borderRadius: BorderRadius.circular(30.r),
         boxShadow: [
           BoxShadow(
-            color: AppColors.boxShadow.withValues(
-              alpha: 0.05,
-            ), 
+            color: AppColors.boxShadow.withValues(alpha: 0.05),
             blurRadius: 10.r,
             offset: Offset(0, 4.h),
           ),
@@ -175,7 +186,7 @@ class _SettingItem extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                  width: 36.w, 
+                  width: 36.w,
                   height: 36.w,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(

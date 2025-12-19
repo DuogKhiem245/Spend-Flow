@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/core/services/notification_service.dart';
 import 'package:spend_flow/features/add_stransaction/add_stransaction_view.dart';
 import 'package:spend_flow/features/add_stransaction/model/transaction_model.dart';
 import 'package:spend_flow/features/home/home_model.dart';
@@ -25,6 +27,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final HomeViewModel _viewModel = HomeViewModel();
+  final notificationService = NotificationService();
 
   double _income = 0;
   double _expenses = 0;
@@ -39,6 +42,18 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _loadHomeData();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _checkPermissionStatus();
+    });
+  }
+
+  Future<void> _checkPermissionStatus() async {
+    final isUserEnabled = await LocalStorageService().getNotificationStatus();
+
+    if (isUserEnabled) {
+      await notificationService.requestPermissions();
+      await notificationService.scheduleDailyNotification();
+    }
   }
 
   Future<void> _loadHomeData() async {

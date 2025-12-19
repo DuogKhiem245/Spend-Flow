@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
+import 'package:spend_flow/core/utils/category_helper.dart';
 import 'package:spend_flow/features/home/home_model.dart';
 import 'package:spend_flow/features/home/home_viewmodel.dart';
 import 'package:spend_flow/features/home/widgets/spending_this_month_view.dart';
@@ -72,9 +73,7 @@ class _SpendingChartState extends State<SpendingChart>
               style: TextStyle(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.bold,
-                color: CupertinoTheme.of(
-                  context,
-                ).textTheme.textStyle.color,
+                color: CupertinoTheme.of(context).textTheme.textStyle.color,
               ),
             ),
             SizedBox(height: 20.h),
@@ -241,14 +240,24 @@ class _SpendingChartState extends State<SpendingChart>
                       ),
                     ),
                     SizedBox(width: 8.w),
+
                     Text(
-                      item.category == "Other" ? l10n.other : item.category,
+                      item.originalCategory != null
+                          ? CategoryHelper.getTranslatedName(
+                              context,
+                              item.originalCategory!,
+                            )
+                          : (item.category == "Other"
+                                ? l10n.other
+                                : item.category),
+
                       style: CupertinoTheme.of(context).textTheme.textStyle
                           .copyWith(
                             fontSize: 16.sp,
                             fontWeight: FontWeight.w500,
                           ),
                     ),
+
                     Spacer(),
                     Text(
                       "\$${_viewModel.formatCurrency(item.amount)}",

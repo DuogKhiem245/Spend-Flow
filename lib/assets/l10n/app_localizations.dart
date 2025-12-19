@@ -650,6 +650,30 @@ abstract class AppLocalizations {
   /// **'Chọn danh mục'**
   String get select_category;
 
+  /// No description provided for @edit_category.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chỉnh sửa danh mục'**
+  String get edit_category;
+
+  /// No description provided for @are_you_sure_delete_category.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn có chắc chắn muốn xóa danh mục {categoryName}? \n Hành động này không thể hoàn tác.'**
+  String are_you_sure_delete_category(Object categoryName);
+
+  /// No description provided for @system_category.
+  ///
+  /// In vi, this message translates to:
+  /// **'Danh mục hệ thống không thể xóa.'**
+  String get system_category;
+
+  /// No description provided for @system_category_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn không thể chỉnh sửa hoặc xóa danh mục mặc định này.'**
+  String get system_category_description;
+
   /// No description provided for @category_food.
   ///
   /// In vi, this message translates to:
@@ -991,6 +1015,18 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Nhấn + để tạo giới hạn chi tiêu'**
   String get create_budget_description;
+
+  /// No description provided for @edit_budget.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sửa ngân sách'**
+  String get edit_budget;
+
+  /// No description provided for @are_you_sure_delete_budget.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn có chắc muốn xóa ngân sách {budgetName}? \n Hành động này không thể hoàn tác.'**
+  String are_you_sure_delete_budget(Object budgetName);
 
   /// No description provided for @settings.
   ///

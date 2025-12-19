@@ -4,17 +4,39 @@ import 'package:spend_flow/features/add_stransaction/model/category_model.dart';
 import 'package:spend_flow/features/budget/budget_model.dart';
 
 class AddBudgetViewModel extends ChangeNotifier {
-  final LocalStorageService _storageService = LocalStorageService();
+  final LocalStorageService _storage = LocalStorageService();
 
-  Future<void> saveBudget(String amountStr, CategoryModel? category) async {
-    if (category == null) return;
+  Future<void> saveBudget({
+    required String amount,
+    required CategoryModel category,
+    required DateTime date,
+    String? idToUpdate, 
+  }) async {
+    final double parsedAmount = _parseAmount(amount);
 
-    final double amount = _parseAmount(amountStr);
-    if (amount <= 0) return;
+    if (idToUpdate != null) {
+      final updatedBudget = BudgetModel(
+        id: idToUpdate, 
+        category: category,
+        total: parsedAmount,
+        spent: 0, 
+        date: date,
+      );
+      
+      await _storage.updateBudget(updatedBudget);
 
-    final newBudget = BudgetModel(category: category, total: amount, spent: 0);
+    } else {
 
-    await _storageService.saveBudget(newBudget);
+      final newBudget = BudgetModel(
+        id: UniqueKey().toString(), 
+        category: category,
+        total: parsedAmount,
+        spent: 0,
+        date: date,
+      );
+      
+      await _storage.saveBudget(newBudget);
+    }
   }
 
   double _parseAmount(String input) {

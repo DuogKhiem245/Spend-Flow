@@ -6,11 +6,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
-import 'package:spend_flow/config/app_icons.dart'; 
+import 'package:spend_flow/config/app_icons.dart';
 import 'package:spend_flow/features/add_stransaction/model/category_model.dart';
 
 class AddCategoryPage extends StatefulWidget {
-  const AddCategoryPage({super.key});
+  final CategoryModel? categoryToEdit;
+
+  const AddCategoryPage({super.key, this.categoryToEdit});
 
   @override
   State<AddCategoryPage> createState() => _AddCategoryPageState();
@@ -58,6 +60,27 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
     'internet',
   ];
 
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.categoryToEdit != null) {
+      final item = widget.categoryToEdit!;
+      _nameController.text = item.name;
+      _selectedColor = item.color;
+
+      if (_iconKeys.contains(item.iconKey)) {
+        _selectedIconKey = item.iconKey;
+      } else {
+        _selectedIconKey = item.iconKey;
+      }
+    }
+
+    _nameController.addListener(() {
+      setState(() {});
+    });
+  }
+
   Future<void> _pickImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
@@ -65,14 +88,6 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
         _pickedImage = File(image.path);
       });
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _nameController.addListener(() {
-      setState(() {});
-    });
   }
 
   @override
@@ -86,6 +101,10 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
     final l10n = AppLocalizations.of(context)!;
     final primaryColor = CupertinoTheme.of(context).primaryColor;
 
+    final String pageTitle = widget.categoryToEdit != null
+        ? l10n.edit_category
+        : l10n.new_category;
+
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         padding: EdgeInsetsDirectional.only(end: 10.w),
@@ -94,7 +113,7 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
           onPressed: () => Navigator.pop(context),
         ),
         middle: Text(
-          l10n.new_category,
+          pageTitle,
           style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
             fontSize: 20.sp,
             fontWeight: FontWeight.w600,
@@ -114,11 +133,15 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
             if (_nameController.text.isEmpty) return;
 
             final newCategory = CategoryModel(
-              id: UniqueKey().toString(),
+              id: widget.categoryToEdit?.id ?? UniqueKey().toString(),
+
               name: _nameController.text,
               l10nKey: null,
-              iconKey: _pickedImage != null ? '${_nameController.text}_img' : _selectedIconKey,
+              iconKey: _pickedImage != null
+                  ? '${_nameController.text}_img'
+                  : _selectedIconKey,
               color: _selectedColor,
+              isCustom: true,
             );
 
             Navigator.pop(context, newCategory);
@@ -138,13 +161,6 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
                 decoration: BoxDecoration(
                   color: _selectedColor.withValues(alpha: .2),
                   shape: BoxShape.circle,
-                  // boxShadow: [
-                  //   BoxShadow(
-                  //     color: _selectedColor.withValues(alpha: .4),
-                  //     blurRadius: 20,
-                  //     offset: const Offset(0, 10),
-                  //   ),
-                  // ],
                   image: _pickedImage != null
                       ? DecorationImage(
                           image: FileImage(_pickedImage!),
@@ -158,7 +174,7 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
                         size: 50.w,
                         color: _selectedColor,
                       )
-                    : null, 
+                    : null,
               ),
 
               SizedBox(height: 30.h),
@@ -168,7 +184,6 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
                 decoration: BoxDecoration(
                   color: CupertinoTheme.of(context).barBackgroundColor,
                   borderRadius: BorderRadius.circular(30.r),
-                  // border: Border.all(color: CupertinoColors.systemGrey4),
                 ),
                 child: CupertinoTextField(
                   controller: _nameController,
@@ -199,52 +214,42 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
               SizedBox(height: 20.h),
 
               _buildSectionTitle(l10n.category_color),
-
               Container(
                 width: double.infinity,
                 padding: EdgeInsets.all(16.w),
                 decoration: BoxDecoration(
                   color: CupertinoTheme.of(context).barBackgroundColor,
                   borderRadius: BorderRadius.circular(30.r),
-
                 ),
                 child: Wrap(
                   spacing: 14.w,
                   runSpacing: 14.h,
                   alignment: WrapAlignment.start,
                   children: _colors.map((color) {
-                    final isSelected = _selectedColor == color;
+                    final isSelected = _selectedColor.value == color.value;
                     return GestureDetector(
                       onTap: () => setState(() => _selectedColor = color),
                       child: Container(
-                        width: 44.w, 
+                        width: 44.w,
                         height: 44.w,
                         padding: const EdgeInsets.all(3),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: isSelected
-                              ? Border.all(
-                                  color: color, 
-                                  width: 2.5,
-                                )
+                              ? Border.all(color: color, width: 2.5)
                               : null,
                         ),
-                        child: Stack(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: color,
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                          ],
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: color,
+                            shape: BoxShape.circle,
+                          ),
                         ),
                       ),
                     );
                   }).toList(),
                 ),
               ),
-              
 
               SizedBox(height: 20.h),
 
@@ -268,7 +273,7 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
                         onTap: () {
                           setState(() {
                             _selectedIconKey = key;
-                            _pickedImage = null; 
+                            _pickedImage = null;
                           });
                         },
                         child: Container(
@@ -291,9 +296,8 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
                         ),
                       );
                     }),
-
                     GestureDetector(
-                      onTap: _pickImage, 
+                      onTap: _pickImage,
                       child: Container(
                         width: 48.w,
                         height: 48.w,
@@ -307,11 +311,10 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
                             color: _pickedImage != null
                                 ? AppColors.primaryColor
                                 : CupertinoColors.systemGrey,
-                            style: BorderStyle.solid,
                           ),
                         ),
                         child: Icon(
-                          CupertinoIcons.photo_fill_on_rectangle_fill, 
+                          CupertinoIcons.photo_fill_on_rectangle_fill,
                           color: _pickedImage != null
                               ? AppColors.primaryColor
                               : CupertinoColors.systemGrey,

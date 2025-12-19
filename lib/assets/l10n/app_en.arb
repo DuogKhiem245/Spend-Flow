@@ -97,6 +97,11 @@
   "category": "Category",
   "categories": "Categories",
   "select_category": "Select Category",
+  "edit_category": "Edit Category",
+  "are_you_sure_delete_category": "Are you sure you want to delete {categoryName}? \n This action cannot be undone.",
+  "system_category": "System categories cannot be deleted.",
+  "system_category_description": "You cannot edit or delete this default category.",
+
   "category_food": "Food",
   "category_transport": "Transport",
   "category_salary": "Salary",
@@ -159,6 +164,8 @@
   "add_budget": "Add Budget",
   "no_budgets_yet": "No budgets yet",
   "create_budget_description": "Tap + to create a spending limit",
+  "edit_budget": "Edit Budget",
+  "are_you_sure_delete_budget": "Are you sure you want to delete {budgetName}? \n This action cannot be undone.",
 
   "settings": "Settings",
   "settings_description": "Keep your finance data synced across all your devices",

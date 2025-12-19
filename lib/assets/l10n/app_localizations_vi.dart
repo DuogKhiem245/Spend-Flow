@@ -292,6 +292,21 @@ class AppLocalizationsVi extends AppLocalizations {
   String get select_category => 'Chọn danh mục';
 
   @override
+  String get edit_category => 'Chỉnh sửa danh mục';
+
+  @override
+  String are_you_sure_delete_category(Object categoryName) {
+    return 'Bạn có chắc chắn muốn xóa danh mục $categoryName? \n Hành động này không thể hoàn tác.';
+  }
+
+  @override
+  String get system_category => 'Danh mục hệ thống không thể xóa.';
+
+  @override
+  String get system_category_description =>
+      'Bạn không thể chỉnh sửa hoặc xóa danh mục mặc định này.';
+
+  @override
   String get category_food => 'Ăn uống';
 
   @override
@@ -461,6 +476,14 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get create_budget_description => 'Nhấn + để tạo giới hạn chi tiêu';
+
+  @override
+  String get edit_budget => 'Sửa ngân sách';
+
+  @override
+  String are_you_sure_delete_budget(Object budgetName) {
+    return 'Bạn có chắc muốn xóa ngân sách $budgetName? \n Hành động này không thể hoàn tác.';
+  }
 
   @override
   String get settings => 'Cài đặt';

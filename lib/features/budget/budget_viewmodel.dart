@@ -29,6 +29,12 @@ class BudgetViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> deleteBudget(BudgetModel budget) async {
+    await _storageService.deleteBudget(budget.id);
+
+    await loadBudgets();
+  }
+
   double get totalBudget => budgets.fold(0, (sum, item) => sum + item.total);
   double get totalSpent => budgets.fold(0, (sum, item) => sum + item.spent);
 

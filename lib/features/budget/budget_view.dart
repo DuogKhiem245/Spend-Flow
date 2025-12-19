@@ -3,6 +3,7 @@ import 'package:cupertino_native/components/button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
@@ -206,10 +207,7 @@ class _BudgetPageState extends State<BudgetPage> {
           ),
           SizedBox(height: 20.h),
 
-          _buildProgressBar(
-            progress: _viewModel.totalProgress,
-            height: 12.h,
-          ),
+          _buildProgressBar(progress: _viewModel.totalProgress, height: 12.h),
 
           SizedBox(height: 12.h),
           Text(
@@ -228,107 +226,197 @@ class _BudgetPageState extends State<BudgetPage> {
   Widget _buildCategoryCard(BudgetModel budget) {
     final iconData = AppIcons.getIcon(budget.iconKey);
 
-    return Container(
-      margin: EdgeInsets.only(bottom: 16.h),
-      padding: EdgeInsets.all(16.w),
-      decoration: BoxDecoration(
-        color: CupertinoTheme.of(context).barBackgroundColor,
-        borderRadius: BorderRadius.circular(20.r),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.boxShadow,
-            blurRadius: 10,
-            offset: const Offset(0, 2),
+    return Padding(
+      padding: EdgeInsets.only(bottom: 16.h),
+      child: Slidable(
+        key: ValueKey(budget.id),
+        endActionPane: ActionPane(
+          motion: const ScrollMotion(),
+          extentRatio: 0.30,
+          children: [
+            CustomSlidableAction(
+              onPressed: (context) => _onEditBudget(budget),
+              backgroundColor: Colors.transparent,
+              foregroundColor: Colors.transparent,
+              padding: EdgeInsets.zero,
+              child: Container(
+                width: 40.w,
+                height: 40.w,
+                decoration: BoxDecoration(
+                  color: CupertinoColors.systemGrey.withValues(alpha: 0.2),
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child: Icon(
+                    CupertinoIcons.pencil,
+                    size: 20.sp,
+                    color: CupertinoTheme.of(context).textTheme.textStyle.color,
+                  ),
+                ),
+              ),
+            ),
+
+            CustomSlidableAction(
+              onPressed: (context) => _onDeleteBudget(budget),
+              backgroundColor: Colors.transparent,
+              foregroundColor: Colors.transparent,
+              padding: EdgeInsets.zero,
+              child: Container(
+                width: 40.w,
+                height: 40.w,
+                decoration: BoxDecoration(
+                  color: AppColors.errorColor.withValues(alpha: 0.2),
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child: Icon(
+                    CupertinoIcons.trash,
+                    size: 20.sp,
+                    color: AppColors.errorColor,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+
+        child: Container(
+          padding: EdgeInsets.all(16.w),
+          decoration: BoxDecoration(
+            color: CupertinoTheme.of(context).barBackgroundColor,
+            borderRadius: BorderRadius.circular(20.r),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.boxShadow,
+                blurRadius: 10,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
-        ],
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: 48.w,
+                height: 48.w,
+                decoration: BoxDecoration(
+                  color: budget.color.withValues(alpha: .15),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(iconData, color: budget.color, size: 24.sp),
+              ),
+              SizedBox(width: 14.w),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          CategoryHelper.getTranslatedName(
+                            context,
+                            budget.category,
+                          ),
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                            color: CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.color,
+                          ),
+                        ),
+                        SizedBox(height: 4.h),
+                        Text(
+                          "${_viewModel.formatCurrency(budget.remaining)} left",
+                          style: TextStyle(
+                            fontSize: 13.sp,
+                            color: CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.color!.withValues(alpha: .6),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          "${_viewModel.formatCurrency(budget.spent)} / ${_viewModel.formatCurrency(budget.total)}",
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.color!.withValues(alpha: .6),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(height: 6.h),
+                        SizedBox(
+                          width: 100.w,
+                          child: _buildProgressBar(
+                            progress: budget.progress,
+                            height: 6.h,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            width: 48.w,
-            height: 48.w,
-            decoration: BoxDecoration(
-              color: budget.color.withValues(alpha: .15),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(iconData, color: budget.color, size: 24.sp),
+    );
+  }
+
+  Future<void> _onEditBudget(BudgetModel budget) async {
+    await Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => AddBudgetView(budgetToEdit: budget),
+      ),
+    );
+    _viewModel.refreshData();
+  }
+
+  Future<void> _onDeleteBudget(BudgetModel budget) async {
+    final l10n = AppLocalizations.of(context)!;
+
+    showCupertinoDialog(
+      context: context,
+      builder: (ctx) => CupertinoAlertDialog(
+        title: Text(l10n.delete),
+        content: Text(l10n.are_you_sure_delete_budget(
+          CategoryHelper.getTranslatedName(
+            context,
+            budget.category,
           ),
+        )),
+        actions: [
+          CupertinoDialogAction(
+            child: Text(l10n.cancel),
+            onPressed: () => Navigator.pop(ctx),
+          ),
+          CupertinoDialogAction(
+            isDestructiveAction: true,
+            child: Text(l10n.delete),
+            onPressed: () async {
+              Navigator.pop(ctx);
 
-          SizedBox(width: 14.w),
-
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      CategoryHelper.getTranslatedName(
-                        context,
-                        budget.category,
-                      ),
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
-                        color: CupertinoTheme.of(
-                          context,
-                        ).textTheme.textStyle.color,
-                      ),
-                    ),
-                    SizedBox(height: 4.h),
-                    Text(
-                      "${_viewModel.formatCurrency(budget.remaining)} left",
-                      style: TextStyle(
-                        fontSize: 13.sp,
-                        color: CupertinoTheme.of(
-                          context,
-                        ).textTheme.textStyle.color!.withValues(alpha: .6),
-                      ),
-                    ),
-                  ],
-                ),
-
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      "${_viewModel.formatCurrency(budget.spent)} / ${_viewModel.formatCurrency(budget.total)}",
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: CupertinoTheme.of(
-                          context,
-                        ).textTheme.textStyle.color!.withValues(alpha: .6),
-
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    SizedBox(height: 6.h),
-                    SizedBox(
-                      width: 100.w,
-                      child: _buildProgressBar(
-                        progress: budget.progress,
-                        height: 6.h,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+              await _viewModel.deleteBudget(budget);
+            },
           ),
         ],
       ),
     );
   }
 
-  Widget _buildProgressBar({
-    required double progress,
-    required double height,
-  }) {
+  Widget _buildProgressBar({required double progress, required double height}) {
     final barColor = _viewModel.getProgressBarColor(progress);
-    
+
     return Container(
       height: height,
       width: double.infinity,

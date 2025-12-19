@@ -9,6 +9,7 @@ class CategoryData {
       l10nKey: 'category_food',
       iconKey: 'food',
       color: Colors.orange,
+      isCustom: false,
     ),
     CategoryModel(
       id: '2',
@@ -16,6 +17,7 @@ class CategoryData {
       l10nKey: 'category_transport',
       iconKey: 'transport',
       color: Colors.blue,
+      isCustom: false,
     ),
     CategoryModel(
       id: '3',
@@ -23,6 +25,7 @@ class CategoryData {
       l10nKey: 'category_shopping',
       iconKey: 'shopping',
       color: Colors.purple,
+      isCustom: false,
     ),
   ];
 
@@ -33,6 +36,7 @@ class CategoryData {
       l10nKey: 'category_food',
       iconKey: 'food',
       color: Colors.orange,
+      isCustom: false,
     ),
     CategoryModel(
       id: '2',
@@ -40,6 +44,7 @@ class CategoryData {
       l10nKey: 'category_transport',
       iconKey: 'transport',
       color: Colors.blue,
+      isCustom: false,
     ),
     CategoryModel(
       id: '3',
@@ -47,6 +52,7 @@ class CategoryData {
       l10nKey: 'category_shopping',
       iconKey: 'shopping',
       color: Colors.purple,
+      isCustom: false,
     ),
     CategoryModel(
       id: '4',
@@ -54,6 +60,7 @@ class CategoryData {
       l10nKey: 'category_salary',
       iconKey: 'salary',
       color: Colors.green,
+      isCustom: false,
     ),
     CategoryModel(
       id: '5',
@@ -61,6 +68,7 @@ class CategoryData {
       l10nKey: 'category_entertainment',
       iconKey: 'entertainment',
       color: Colors.pink,
+      isCustom: false,
     ),
     CategoryModel(
       id: '6',
@@ -68,6 +76,7 @@ class CategoryData {
       l10nKey: 'category_house',
       iconKey: 'house',
       color: Colors.brown,
+      isCustom: false,
     ),
     CategoryModel(
       id: '7',
@@ -75,6 +84,7 @@ class CategoryData {
       l10nKey: 'category_bill',
       iconKey: 'bill',
       color: Colors.blueGrey,
+      isCustom: false,
     ),
     CategoryModel(
       id: '8',
@@ -82,6 +92,7 @@ class CategoryData {
       l10nKey: 'category_electricity',
       iconKey: 'electricity',
       color: Colors.amber,
+      isCustom: false,
     ),
     CategoryModel(
       id: '9',
@@ -89,6 +100,7 @@ class CategoryData {
       l10nKey: 'category_water',
       iconKey: 'water',
       color: Colors.lightBlue,
+      isCustom: false,
     ),
     CategoryModel(
       id: '10',
@@ -96,6 +108,7 @@ class CategoryData {
       l10nKey: 'category_internet',
       iconKey: 'internet',
       color: Colors.indigoAccent,
+      isCustom: false,
     ),
     CategoryModel(
       id: '11',
@@ -103,6 +116,7 @@ class CategoryData {
       l10nKey: 'category_gas',
       iconKey: 'gas',
       color: Colors.deepOrangeAccent,
+      isCustom: false,
     ),
     CategoryModel(
       id: '12',
@@ -110,6 +124,7 @@ class CategoryData {
       l10nKey: 'category_repair',
       iconKey: 'repair',
       color: Colors.grey,
+      isCustom: false,
     ),
     CategoryModel(
       id: '13',
@@ -117,6 +132,7 @@ class CategoryData {
       l10nKey: 'category_cleaning',
       iconKey: 'cleaning',
       color: Colors.teal,
+      isCustom: false,
     ),
     CategoryModel(
       id: '14',
@@ -124,6 +140,7 @@ class CategoryData {
       l10nKey: 'category_phone',
       iconKey: 'phone',
       color: Colors.indigo,
+      isCustom: false,
     ),
     CategoryModel(
       id: '15',
@@ -131,6 +148,7 @@ class CategoryData {
       l10nKey: 'category_health',
       iconKey: 'health',
       color: Colors.redAccent,
+      isCustom: false,
     ),
     CategoryModel(
       id: '16',
@@ -138,6 +156,7 @@ class CategoryData {
       l10nKey: 'category_insurance',
       iconKey: 'insurance',
       color: Colors.cyan,
+      isCustom: false,
     ),
     CategoryModel(
       id: '17',
@@ -145,6 +164,7 @@ class CategoryData {
       l10nKey: 'category_sport',
       iconKey: 'sport',
       color: Colors.lightGreen,
+      isCustom: false,
     ),
     CategoryModel(
       id: '18',
@@ -152,6 +172,7 @@ class CategoryData {
       l10nKey: 'category_beauty',
       iconKey: 'beauty',
       color: Colors.pinkAccent,
+      isCustom: false,
     ),
     CategoryModel(
       id: '19',
@@ -159,6 +180,7 @@ class CategoryData {
       l10nKey: 'category_education',
       iconKey: 'education',
       color: Colors.deepPurpleAccent,
+      isCustom: false,
     ),
     CategoryModel(
       id: '20',
@@ -166,6 +188,7 @@ class CategoryData {
       l10nKey: 'category_baby',
       iconKey: 'baby',
       color: Colors.lime,
+      isCustom: false,
     ),
     CategoryModel(
       id: '21',
@@ -173,6 +196,7 @@ class CategoryData {
       l10nKey: 'category_pet',
       iconKey: 'pet',
       color: Colors.orangeAccent,
+      isCustom: false,
     ),
     CategoryModel(
       id: '22',
@@ -180,6 +204,7 @@ class CategoryData {
       l10nKey: 'category_game',
       iconKey: 'game',
       color: Colors.deepPurple,
+      isCustom: false,
     ),
     CategoryModel(
       id: '23',
@@ -187,6 +212,7 @@ class CategoryData {
       l10nKey: 'category_music',
       iconKey: 'music',
       color: Colors.purpleAccent,
+      isCustom: false,
     ),
     CategoryModel(
       id: '24',
@@ -194,6 +220,7 @@ class CategoryData {
       l10nKey: 'category_travel',
       iconKey: 'travel',
       color: Colors.lightBlueAccent,
+      isCustom: false,
     ),
     CategoryModel(
       id: '25',
@@ -201,6 +228,7 @@ class CategoryData {
       l10nKey: 'category_gift',
       iconKey: 'gift',
       color: Colors.red,
+      isCustom: false,
     ),
     CategoryModel(
       id: '26',
@@ -208,6 +236,7 @@ class CategoryData {
       l10nKey: 'category_savings',
       iconKey: 'savings',
       color: Colors.greenAccent,
+      isCustom: false,
     ),
     CategoryModel(
       id: '27',
@@ -215,6 +244,7 @@ class CategoryData {
       l10nKey: 'category_tax',
       iconKey: 'tax',
       color: Colors.blueGrey,
+      isCustom: false,
     ),
   ];
 }

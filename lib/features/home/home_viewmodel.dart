@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/features/add_stransaction/model/category_model.dart';
 import 'package:spend_flow/features/add_stransaction/model/transaction_model.dart';
 import 'package:spend_flow/features/home/home_model.dart';
 
@@ -39,7 +40,7 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   Future<bool> authenticateBiometric() async {
-    if (!_isFaceIdAvailable) return false; 
+    if (!_isFaceIdAvailable) return false;
 
     try {
       final bool didAuthenticate = await _auth.authenticate(
@@ -51,12 +52,12 @@ class HomeViewModel extends ChangeNotifier {
       if (didAuthenticate) {
         _isLocked = false;
         notifyListeners();
-        return true; // Thành công
+        return true;
       }
     } catch (e) {
       debugPrint("Lỗi Auth: $e");
     }
-    return false; 
+    return false;
   }
 
   Future<bool> verifyPasscode(String inputCode) async {
@@ -92,8 +93,8 @@ class HomeViewModel extends ChangeNotifier {
   String formatCompactCurrency(double amount) {
     final formatter = NumberFormat.compactCurrency(
       locale: "en_US",
-      decimalDigits: 1, 
-      symbol: '', 
+      decimalDigits: 1,
+      symbol: '',
     );
     return formatter.format(amount);
   }
@@ -154,11 +155,10 @@ class HomeViewModel extends ChangeNotifier {
 
   Future<List<SpendingModel>> getChartData() async {
     final now = DateTime.now();
-
     final transactions = await _storage.getTransactionsByMonth(now);
 
     final Map<String, double> categorySpending = {};
-    final Map<String, Color> categoryColors = {};
+    final Map<String, CategoryModel> categoryObjects = {};
 
     for (var tx in transactions) {
       if (tx.isIncome == false) {
@@ -167,17 +167,19 @@ class HomeViewModel extends ChangeNotifier {
 
         categorySpending[catName] = (categorySpending[catName] ?? 0) + amount;
 
-        if (!categoryColors.containsKey(catName)) {
-          categoryColors[catName] = tx.category.color;
+        if (!categoryObjects.containsKey(catName)) {
+          categoryObjects[catName] = tx.category;
         }
       }
     }
 
     List<SpendingModel> allSpending = categorySpending.entries.map((e) {
+      final catModel = categoryObjects[e.key];
       return SpendingModel(
         category: e.key,
         amount: e.value,
-        color: categoryColors[e.key] ?? CupertinoColors.systemGrey,
+        color: catModel?.color ?? CupertinoColors.systemGrey,
+        originalCategory: catModel,
       );
     }).toList();
 
@@ -200,6 +202,7 @@ class HomeViewModel extends ChangeNotifier {
         category: "Other",
         amount: otherTotal,
         color: CupertinoColors.systemGrey,
+        originalCategory: null,
       ),
     );
 
@@ -208,11 +211,10 @@ class HomeViewModel extends ChangeNotifier {
 
   Future<List<SpendingModel>> getAllChartData() async {
     final now = DateTime.now();
-
     final transactions = await _storage.getTransactionsByMonth(now);
 
     final Map<String, double> categorySpending = {};
-    final Map<String, Color> categoryColors = {};
+    final Map<String, CategoryModel> categoryObjects = {};
 
     for (var tx in transactions) {
       if (tx.isIncome == false) {
@@ -221,17 +223,19 @@ class HomeViewModel extends ChangeNotifier {
 
         categorySpending[catName] = (categorySpending[catName] ?? 0) + amount;
 
-        if (!categoryColors.containsKey(catName)) {
-          categoryColors[catName] = tx.category.color;
+        if (!categoryObjects.containsKey(catName)) {
+          categoryObjects[catName] = tx.category;
         }
       }
     }
 
     List<SpendingModel> allSpending = categorySpending.entries.map((e) {
+      final catModel = categoryObjects[e.key];
       return SpendingModel(
         category: e.key,
         amount: e.value,
-        color: categoryColors[e.key] ?? CupertinoColors.systemGrey,
+        color: catModel?.color ?? CupertinoColors.systemGrey,
+        originalCategory: catModel,
       );
     }).toList();
 
@@ -289,9 +293,7 @@ class HomeViewModel extends ChangeNotifier {
     final lastMonthDate = DateTime(now.year, now.month - 1);
 
     final currentTrans = await _storage.getTransactionsByMonth(now);
-    final lastMonthTrans = await _storage.getTransactionsByMonth(
-      lastMonthDate,
-    );
+    final lastMonthTrans = await _storage.getTransactionsByMonth(lastMonthDate);
 
     double currentSpent = 0;
     for (var t in currentTrans) {

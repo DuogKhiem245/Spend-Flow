@@ -5,9 +5,12 @@ import 'package:spend_flow/features/add_stransaction/model/category_model.dart';
 import 'package:spend_flow/features/add_stransaction/widgets/amount_widget.dart';
 import 'package:spend_flow/features/add_stransaction/widgets/suggest_category_widget.dart';
 import 'package:spend_flow/features/budget/add_budget/add_budget_viewmodel.dart';
+import 'package:spend_flow/features/budget/budget_model.dart';
 
 class AddBudgetView extends StatefulWidget {
-  const AddBudgetView({super.key});
+  final BudgetModel? budgetToEdit;
+  
+  const AddBudgetView({super.key, this.budgetToEdit});
 
   @override
   State<AddBudgetView> createState() => _AddBudgetViewState();
@@ -21,6 +24,18 @@ class _AddBudgetViewState extends State<AddBudgetView> {
   CategoryModel? _selectedCategory;
 
   @override
+  void initState() {
+    super.initState();
+
+    if (widget.budgetToEdit != null) {
+      final item = widget.budgetToEdit!;
+      _amountController.text = item.total.toStringAsFixed(0);
+      _selectedCategory = item.category;
+      _selectedDate = item.date;
+    }
+  }
+
+  @override
   void dispose() {
     _amountController.dispose();
     super.dispose();
@@ -30,6 +45,9 @@ class _AddBudgetViewState extends State<AddBudgetView> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final baseColor = CupertinoTheme.of(context).textTheme.textStyle.color;
+    final String pageTitle = widget.budgetToEdit != null
+        ? l10n.edit_budget
+        : l10n.add_budget;
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
@@ -39,7 +57,7 @@ class _AddBudgetViewState extends State<AddBudgetView> {
           onPressed: () => Navigator.pop(context),
         ),
         middle: Text(
-          l10n.add_budget,
+          pageTitle,
           style: CupertinoTheme.of(context).textTheme.navTitleTextStyle
               .copyWith(fontWeight: FontWeight.w600, fontSize: 20.sp),
         ),
@@ -99,8 +117,10 @@ class _AddBudgetViewState extends State<AddBudgetView> {
                       }
 
                       await _viewModel.saveBudget(
-                        _amountController.text,
-                        _selectedCategory,
+                        idToUpdate: widget.budgetToEdit?.id,
+                        amount: _amountController.text,
+                        category: _selectedCategory!,
+                        date: _selectedDate, 
                       );
 
                       if (!context.mounted) return;

@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
@@ -32,9 +32,7 @@ class _LanguageViewState extends State<LanguageView> {
     final suggestedLangs = _allLanguages
         .where((l) => ['en', 'vi'].contains(l['code']))
         .toList();
-    final otherLangs = _allLanguages
-        .where((l) => !['en', 'vi'].contains(l['code']))
-        .toList();
+    final otherLangs = _allLanguages.toList();
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(

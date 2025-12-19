@@ -1,14 +1,17 @@
 import 'package:flutter/cupertino.dart';
+import 'package:spend_flow/features/add_stransaction/model/category_model.dart';
 
 class SpendingModel {
   final String category;
   final double amount;
   final Color color;
+  final CategoryModel? originalCategory;
 
   SpendingModel({
     required this.category,
     required this.amount,
     required this.color,
+    this.originalCategory,
   });
 
   SpendingModel copyWith({String? category, double? amount, Color? color}) {

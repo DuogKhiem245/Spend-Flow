@@ -293,6 +293,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get select_category => 'Select Category';
 
   @override
+  String get edit_category => 'Edit Category';
+
+  @override
+  String are_you_sure_delete_category(Object categoryName) {
+    return 'Are you sure you want to delete $categoryName? \n This action cannot be undone.';
+  }
+
+  @override
+  String get system_category => 'System categories cannot be deleted.';
+
+  @override
+  String get system_category_description =>
+      'You cannot edit or delete this default category.';
+
+  @override
   String get category_food => 'Food';
 
   @override
@@ -462,6 +477,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get create_budget_description => 'Tap + to create a spending limit';
+
+  @override
+  String get edit_budget => 'Edit Budget';
+
+  @override
+  String are_you_sure_delete_budget(Object budgetName) {
+    return 'Are you sure you want to delete $budgetName? \n This action cannot be undone.';
+  }
 
   @override
   String get settings => 'Settings';

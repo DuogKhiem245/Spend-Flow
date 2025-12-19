@@ -47,6 +47,18 @@ class LocalStorageService {
     await prefs.remove(key);
   }
 
+  static const String _kNotificationKey = 'is_notification_enabled';
+
+  Future<bool> getNotificationStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_kNotificationKey) ?? false;
+  }
+
+  Future<void> saveNotificationStatus(bool isEnabled) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_kNotificationKey, isEnabled);
+  }
+
   // ============================================================
   // 2: PASSCODE
   // ============================================================
@@ -112,8 +124,6 @@ class LocalStorageService {
     _db = await databaseFactoryIo.openDatabase(dbPath);
     return _db!;
   }
-
-
 
   // ------------------------------------------------------------
   // CATEGORIES
@@ -249,6 +259,25 @@ class LocalStorageService {
     }
   }
 
+  Future<void> updateCategory(CategoryModel updatedCategory) async {
+    final db = await database;
+
+    final finder = Finder(filter: Filter.equals('id', updatedCategory.id));
+
+    final snapshot = await _sampleStore.findFirst(db, finder: finder);
+
+    if (snapshot != null) {
+      await _sampleStore
+          .record(snapshot.key)
+          .update(db, updatedCategory.toMap());
+      debugPrint("Đã cập nhật category: ${updatedCategory.name}");
+    } else {
+      debugPrint(
+        "Lỗi: Không tìm thấy category có ID ${updatedCategory.id} để cập nhật.",
+      );
+    }
+  }
+
   Future<bool> deleteCategory(CategoryModel category) async {
     if (int.tryParse(category.id) != null) {
       debugPrint(
@@ -368,12 +397,24 @@ class LocalStorageService {
     return result;
   }
 
-  Future<void> deleteBudget(BudgetModel budget) async {
+  Future<void> updateBudget(BudgetModel budget) async {
     final db = await database;
 
-    final finder = Finder(
-      filter: Filter.equals('category.iconKey', budget.category.iconKey),
-    );
+    final finder = Finder(filter: Filter.equals('id', budget.id));
+
+    final snapshot = await _budgetStore.findFirst(db, finder: finder);
+
+    if (snapshot != null) {
+      await _budgetStore.record(snapshot.key).update(db, budget.toMap());
+    } else {
+      debugPrint("Lỗi: Không tìm thấy budget có id ${budget.id} để update");
+    }
+  }
+
+  Future<void> deleteBudget(String budgetId) async {
+    final db = await database;
+
+    final finder = Finder(filter: Filter.equals('id', budgetId));
 
     await _budgetStore.delete(db, finder: finder);
   }

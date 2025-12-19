@@ -8,6 +8,7 @@ class CategoryModel {
   final String iconKey;
   final Color color;
   final int count;
+  final bool isCustom;
 
   CategoryModel({
     String? id, 
@@ -16,6 +17,7 @@ class CategoryModel {
     required this.iconKey,
     required this.color,
     this.count = 0,
+    this.isCustom = false,
   }) : id = id ?? const Uuid().v4();
 
   Map<String, dynamic> toMap() {
@@ -26,6 +28,7 @@ class CategoryModel {
       'iconKey': iconKey,
       'colorValue': color.value,
       'count': count,
+      'isCustom': isCustom,
     };
   }
 
@@ -37,6 +40,7 @@ class CategoryModel {
       iconKey: map['iconKey'],
       color: Color(map['colorValue']),
       count: map['count'] ?? 0,
+      isCustom: map['isCustom'] ?? false,
     );
   }
 }
