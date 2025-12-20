@@ -271,7 +271,7 @@ class _CreateOrUpdateViewState extends State<CreateOrUpdateView> {
             ? const Color(0xFF2C2C2E) 
             : CupertinoColors.white,
 
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(15.r),
 
         border: Border.all(
           color: isFocused

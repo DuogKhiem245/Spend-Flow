@@ -74,7 +74,7 @@ class _SecurityViewState extends State<SecurityView> {
                     padding: EdgeInsets.all(16.w),
                     decoration: BoxDecoration(
                       color: CupertinoTheme.of(context).barBackgroundColor,
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(30.r),
                       boxShadow: [
                         BoxShadow(
                           color: AppColors.boxShadow,
@@ -169,7 +169,7 @@ class _SecurityViewState extends State<SecurityView> {
                     padding: EdgeInsets.all(16.w),
                     decoration: BoxDecoration(
                       color: CupertinoTheme.of(context).barBackgroundColor,
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(30.r),
                       boxShadow: [
                         BoxShadow(
                           color: AppColors.boxShadow,
@@ -282,7 +282,7 @@ class _SecurityViewState extends State<SecurityView> {
       height: 36.w,
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(8.r),
+        borderRadius: BorderRadius.circular(30.r),
       ),
       child: Icon(icon, color: Colors.white, size: 20.sp),
     );
@@ -299,7 +299,7 @@ class _SecurityViewState extends State<SecurityView> {
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
         decoration: BoxDecoration(
           color: AppColors.primaryColor,
-          borderRadius: BorderRadius.circular(8.r),
+          borderRadius: BorderRadius.circular(30.r),
           border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
         ),
         child: Row(
@@ -347,7 +347,7 @@ class _SecurityViewState extends State<SecurityView> {
                   margin: EdgeInsets.symmetric(vertical: 10.h),
                   decoration: BoxDecoration(
                     color: CupertinoColors.systemGrey3,
-                    borderRadius: BorderRadius.circular(2.5.r),
+                    borderRadius: BorderRadius.circular(30.r),
                   ),
                 ),
               ),

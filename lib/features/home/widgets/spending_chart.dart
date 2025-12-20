@@ -57,7 +57,7 @@ class _SpendingChartState extends State<SpendingChart>
         padding: EdgeInsets.all(20.w),
         decoration: BoxDecoration(
           color: CupertinoTheme.of(context).barBackgroundColor,
-          borderRadius: BorderRadius.circular(12.r),
+          borderRadius: BorderRadius.circular(30.r),
           boxShadow: [
             BoxShadow(
               color: AppColors.boxShadow,

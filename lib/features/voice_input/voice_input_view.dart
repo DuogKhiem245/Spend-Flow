@@ -83,7 +83,7 @@ class _VoiceInputViewState extends State<VoiceInputView> {
                         height: _viewModel.heights[index],
                         decoration: BoxDecoration(
                           color: primaryColor,
-                          borderRadius: BorderRadius.circular(50),
+                          borderRadius: BorderRadius.circular(50.r),
                           boxShadow: [
                             BoxShadow(
                               color: primaryColor.withValues(alpha: .4),

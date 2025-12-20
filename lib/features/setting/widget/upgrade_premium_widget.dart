@@ -49,7 +49,7 @@ class _UpgradePremiumWidgetState extends State<UpgradePremiumWidget>
       width: double.infinity,
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.r),
+        borderRadius: BorderRadius.circular(30.r),
         gradient: const LinearGradient(
           colors: [Color(0xFF9C2CF3), Color(0xFF3A49F9)],
           begin: Alignment.topLeft,

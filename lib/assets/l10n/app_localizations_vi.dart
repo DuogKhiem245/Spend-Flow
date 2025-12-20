@@ -193,6 +193,14 @@ class AppLocalizationsVi extends AppLocalizations {
   String get create_new_password => 'Gần xong rồi! Tạo mật khẩu mới của bạn.';
 
   @override
+  String get or_continue_with => 'Hoặc đăng nhập với';
+
+  @override
+  String sign_in_with(Object provider) {
+    return 'Đăng nhập với $provider';
+  }
+
+  @override
   String get welcome_back => 'Chào mừng trở lại';
 
   @override
@@ -493,7 +501,7 @@ class AppLocalizationsVi extends AppLocalizations {
       'Giữ dữ liệu tài chính luôn đồng bộ trên tất cả thiết bị của bạn';
 
   @override
-  String get sign_in_now => 'Đăng nhập ngay.';
+  String get sign_in_now => 'Đăng nhập ngay';
 
   @override
   String get get_started => 'Bắt đầu ngay';

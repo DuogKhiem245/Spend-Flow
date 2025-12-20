@@ -458,6 +458,18 @@ abstract class AppLocalizations {
   /// **'Gần xong rồi! Tạo mật khẩu mới của bạn.'**
   String get create_new_password;
 
+  /// No description provided for @or_continue_with.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hoặc đăng nhập với'**
+  String get or_continue_with;
+
+  /// No description provided for @sign_in_with.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đăng nhập với {provider}'**
+  String sign_in_with(Object provider);
+
   /// No description provided for @welcome_back.
   ///
   /// In vi, this message translates to:
@@ -1043,7 +1055,7 @@ abstract class AppLocalizations {
   /// No description provided for @sign_in_now.
   ///
   /// In vi, this message translates to:
-  /// **'Đăng nhập ngay.'**
+  /// **'Đăng nhập ngay'**
   String get sign_in_now;
 
   /// No description provided for @get_started.

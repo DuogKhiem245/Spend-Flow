@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 
 enum BiometricDisplayType { faceId, touchId, none }

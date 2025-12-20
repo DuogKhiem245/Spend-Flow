@@ -259,7 +259,7 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
                 padding: EdgeInsets.all(16.w),
                 decoration: BoxDecoration(
                   color: CupertinoTheme.of(context).barBackgroundColor,
-                  borderRadius: BorderRadius.circular(16.r),
+                  borderRadius: BorderRadius.circular(30.r),
                 ),
                 child: Wrap(
                   spacing: 14.w,

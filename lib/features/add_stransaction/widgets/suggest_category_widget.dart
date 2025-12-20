@@ -212,7 +212,7 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                             color: CupertinoTheme.of(
                               context,
                             ).primaryColor.withValues(alpha: .15),
-                            borderRadius: BorderRadius.circular(25.r),
+                            borderRadius: BorderRadius.circular(30.r),
                           ),
                           child: Icon(
                             CupertinoIcons.tag_fill,
@@ -295,7 +295,7 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                             color: CupertinoTheme.of(
                               context,
                             ).primaryColor.withValues(alpha: .15),
-                            borderRadius: BorderRadius.circular(25.r),
+                            borderRadius: BorderRadius.circular(30.r),
                           ),
                           child: Icon(
                             widget.isMonthPicker

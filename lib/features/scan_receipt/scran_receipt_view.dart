@@ -77,7 +77,7 @@ class _ScanReceiptViewState extends State<ScanReceiptView>
                     ),
                     decoration: BoxDecoration(
                       color: Colors.black.withValues(alpha: .6),
-                      borderRadius: BorderRadius.circular(20.r),
+                      borderRadius: BorderRadius.circular(30.r),
                     ),
                     child: Text(
                       l10n.align_receipt,
@@ -122,7 +122,7 @@ class _ScanReceiptViewState extends State<ScanReceiptView>
       height: 450.h,
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.primaryColor, width: 3.w),
-        borderRadius: BorderRadius.circular(24.r),
+        borderRadius: BorderRadius.circular(30.r),
         color: Colors.transparent,
       ),
       child: FutureBuilder(

@@ -61,7 +61,7 @@ class _LanguageViewState extends State<LanguageView> {
                     Container(
                       decoration: BoxDecoration(
                         color: CupertinoTheme.of(context).barBackgroundColor,
-                        borderRadius: BorderRadius.circular(16.r),
+                        borderRadius: BorderRadius.circular(30.r),
                       ),
                       child: Column(
                         children: List.generate(suggestedLangs.length, (index) {
@@ -81,7 +81,7 @@ class _LanguageViewState extends State<LanguageView> {
                     Container(
                       decoration: BoxDecoration(
                         color: CupertinoTheme.of(context).barBackgroundColor,
-                        borderRadius: BorderRadius.circular(16.r),
+                        borderRadius: BorderRadius.circular(30.r),
                       ),
                       child: Column(
                         children: List.generate(otherLangs.length, (index) {

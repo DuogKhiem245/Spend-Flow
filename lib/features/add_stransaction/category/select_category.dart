@@ -170,8 +170,8 @@ class _SelectCategoryState extends State<SelectCategory> {
                             margin: EdgeInsets.only(left: 12.w),
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
-                              color: item.color.withValues(alpha: .2),
-                              borderRadius: BorderRadius.circular(25.r),
+                              color: item.color.withValues(alpha: .15),
+                              borderRadius: BorderRadius.circular(30.r),
                             ),
                             child: Icon(
                               AppIcons.getIcon(item.iconKey),
@@ -358,8 +358,8 @@ class _SelectCategoryState extends State<SelectCategory> {
                   height: 5.h,
                   margin: EdgeInsets.symmetric(vertical: 10.h),
                   decoration: BoxDecoration(
-                    color: CupertinoColors.systemGrey3,
-                    borderRadius: BorderRadius.circular(2.5.r),
+                    color: AppColors.primaryColor,
+                    borderRadius: BorderRadius.circular(30.r),
                   ),
                 ),
               ),

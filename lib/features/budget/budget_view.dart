@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cupertino_native/style/sf_symbol.dart';
 import 'package:cupertino_native/components/button.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,6 +23,14 @@ class BudgetPage extends StatefulWidget {
 
 class _BudgetPageState extends State<BudgetPage> {
   final BudgetViewModel _viewModel = BudgetViewModel();
+
+  Future<void> _navigateToAddBudget() async {
+    await Navigator.push(
+      context,
+      CupertinoPageRoute(builder: (context) => const AddBudgetView()),
+    );
+    _viewModel.refreshData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,32 +93,48 @@ class _BudgetPageState extends State<BudgetPage> {
 
                 Positioned(
                   right: 20.w,
-                  bottom: 65.h,
-                  child: CNButton.icon(
-                    icon: CNSymbol(
-                      'plus.circle.fill',
-                      size: 24.sp,
-                      color: CupertinoTheme.of(
-                        context,
-                      ).textTheme.textStyle.color,
-                    ),
-                    size: 60.w,
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                          builder: (context) => const AddBudgetView(),
-                        ),
-                      );
-                      _viewModel.refreshData();
-                    },
-                  ),
+                  bottom: 75.h,
+                  child: Platform.isIOS
+                      ? _buildIOSAddButton()
+                      : _buildAndroidAddButton(),
                 ),
               ],
             ),
           ),
         );
       },
+    );
+  }
+
+  Widget _buildIOSAddButton() {
+    return CNButton.icon(
+      icon: CNSymbol(
+        'plus.circle.fill',
+        size: 24.sp,
+        color: CupertinoTheme.of(context).textTheme.textStyle.color,
+      ),
+      size: 60.w,
+      onPressed: _navigateToAddBudget,
+    );
+  }
+
+  Widget _buildAndroidAddButton() {
+    return GestureDetector(
+      onTap: _navigateToAddBudget,
+      child: Container(
+        width: 60.w,
+        height: 60.w,
+        decoration: BoxDecoration(
+          color: CupertinoTheme.of(context).primaryColor,
+          shape: BoxShape.circle,
+          
+        ),
+        child: Icon(
+          CupertinoIcons.add, 
+          color: Colors.white,
+          size: 30.sp,
+        ),
+      ),
     );
   }
 

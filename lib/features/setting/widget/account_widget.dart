@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
-import 'package:spend_flow/features/auth/view/register/register_step_1.dart';
+import 'package:spend_flow/features/auth/view/login_view.dart';
 import 'package:spend_flow/features/setting/profile/profile_view.dart';
 
 class AccountWidget extends StatelessWidget {
@@ -44,9 +44,7 @@ class AccountWidget extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          CupertinoPageRoute(
-            builder: (context) => const ProfileView(),
-          ),
+          CupertinoPageRoute(builder: (context) => const ProfileView()),
         );
       },
       child: Row(
@@ -119,68 +117,75 @@ class AccountWidget extends StatelessWidget {
   }
 
   Widget _buildGuestView(AppLocalizations l10n, BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          l10n.welcome,
-          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-            fontSize: 20.sp,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        SizedBox(height: 8.h),
-        Text(
-          l10n.settings_description,
-          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w500,
-            height: 1.6,
-            color: CupertinoTheme.of(
-              context,
-            ).textTheme.textStyle.color!.withValues(alpha: .8),
-          ),
-          textAlign: TextAlign.center,
-          softWrap: true,
-        ),
-        SizedBox(height: 12.h),
-        CupertinoButton.filled(
-          onPressed: () {
-            Navigator.push(
-              context,
-              CupertinoPageRoute(
-                builder: (context) => const RegisterStep1Page(),
-              ),
-            );
-          },
-          minimumSize: Size(double.infinity, 40.h),
-          child: Text(
-            l10n.get_started,
-            style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),
-          ),
-        ),
-        SizedBox(height: 12.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              l10n.have_account,
-              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w500,
-              ),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          CupertinoPageRoute(builder: (context) => const LoginPage()),
+        );
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Row(
+              children: [
+                Container(
+                  width: 60.r,
+                  height: 60.r,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.borderColor.withValues(alpha: .2),
+                  ),
+                  child: Icon(
+                    CupertinoIcons.person_crop_circle,
+                    size: 30.r,
+                    color: CupertinoTheme.of(context).textTheme.textStyle.color,
+                  ),
+                ),
+                SizedBox(width: 12.w),
+
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        l10n.sign_in_now,
+                        style: TextStyle(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.primaryColor,
+                        ),
+                      ),
+                      SizedBox(height: 4.h),
+                      Text(
+                        l10n.settings_description,
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w500,
+                              color: CupertinoTheme.of(
+                                context,
+                              ).textTheme.textStyle.color,
+                            ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            SizedBox(width: 4.w),
-            Text(
-              l10n.sign_in_now,
-              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w500,
-                color: CupertinoColors.activeBlue,
-              ),
+          ),
+
+          Padding(
+            padding: EdgeInsets.only(left: 8.w),
+            child: Icon(
+              CupertinoIcons.chevron_right,
+              size: 24.r,
+              color: CupertinoTheme.of(context).textTheme.textStyle.color,
             ),
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }

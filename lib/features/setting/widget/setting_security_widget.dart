@@ -97,7 +97,7 @@ class _SecurityItem extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(16.r),
+          borderRadius: BorderRadius.circular(30.r),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
             child: Row(
@@ -111,7 +111,7 @@ class _SecurityItem extends StatelessWidget {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: iconBgColor,
-                        borderRadius: BorderRadius.circular(10.r),
+                        borderRadius: BorderRadius.circular(30.r),
                       ),
                       child: Icon(icon, size: 20.sp, color: Colors.white),
                     ),

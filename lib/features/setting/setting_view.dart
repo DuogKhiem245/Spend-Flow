@@ -42,7 +42,7 @@ class _SettingPageState extends State<SettingPage> {
                     const UpgradePremiumWidget(),
                     SizedBox(height: 30.h),
                     const SettingGeneralWidget(),
-                    SizedBox(height: 20.h),
+                    SizedBox(height: 10.h),
                     const SettingSecurityWidget(),
                     SizedBox(height: 40.h),
                     _isLoggedIn

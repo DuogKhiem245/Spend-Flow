@@ -191,7 +191,7 @@ class _SettingItem extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: iconBgColor,
-                    borderRadius: BorderRadius.circular(10.r),
+                    borderRadius: BorderRadius.circular(30.r),
                   ),
                   child: Icon(icon, size: 20.sp, color: Colors.white),
                 ),

@@ -193,6 +193,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get create_new_password => 'Almost there! Create your new password.';
 
   @override
+  String get or_continue_with => 'Or continue with';
+
+  @override
+  String sign_in_with(Object provider) {
+    return 'Sign in with $provider';
+  }
+
+  @override
   String get welcome_back => 'Welcome Back';
 
   @override
@@ -494,7 +502,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Keep your finance data synced across all your devices';
 
   @override
-  String get sign_in_now => 'Sign in now.';
+  String get sign_in_now => 'Sign in now';
 
   @override
   String get get_started => 'Get Started';

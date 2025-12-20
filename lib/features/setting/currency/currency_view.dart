@@ -114,7 +114,7 @@ class _CurrencyViewState extends State<CurrencyView> {
       margin: EdgeInsets.symmetric(horizontal: 16.w),
       decoration: BoxDecoration(
         color: CupertinoTheme.of(context).barBackgroundColor,
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(30.r),
       ),
       child: Column(
         children: List.generate(currencies.length, (index) {
