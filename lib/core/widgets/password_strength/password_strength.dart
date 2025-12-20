@@ -7,9 +7,47 @@ class PasswordStrength extends StatelessWidget {
 
   const PasswordStrength({super.key, required this.password});
 
+  static Map<String, dynamic> analyzePassword(String pass) {
+    int score = 0;
+
+    if (pass.isEmpty) {
+      return {
+        'score': 0,
+        'hasMinLength': false,
+        'hasDigit': false,
+        'hasSpecial': false,
+      };
+    }
+
+    score += 1;
+
+    bool hasMinLength = pass.length >= 8;
+    if (hasMinLength) score += 1;
+
+    bool hasDigit = RegExp(r'[0-9]').hasMatch(pass);
+    if (hasDigit) score += 1;
+
+    bool hasSpecial = RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(pass);
+    if (hasSpecial) score += 1;
+
+    if (score > 4) score = 4;
+
+    return {
+      'score': score,
+      'hasMinLength': hasMinLength,
+      'hasDigit': hasDigit,
+      'hasSpecial': hasSpecial,
+    };
+  }
+
+  static bool isValid(String pass) {
+    final result = analyzePassword(pass);
+    return (result['score'] as int) >= 3;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final checkResult = _analyzePassword(password);
+    final checkResult = analyzePassword(password);
     final int score = checkResult['score'] as int;
 
     final bool hasMinLength = checkResult['hasMinLength'] as bool;
@@ -77,39 +115,6 @@ class PasswordStrength extends StatelessWidget {
     );
   }
 
-  Map<String, dynamic> _analyzePassword(String pass) {
-    int score = 0;
-
-    if (pass.isEmpty) {
-      return {
-        'score': 0,
-        'hasMinLength': false,
-        'hasDigit': false,
-        'hasSpecial': false,
-      };
-    }
-
-    score += 1;
-
-    bool hasMinLength = pass.length >= 8;
-    if (hasMinLength) score += 1;
-
-    bool hasDigit = RegExp(r'[0-9]').hasMatch(pass);
-    if (hasDigit) score += 1;
-
-    bool hasSpecial = RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(pass);
-    if (hasSpecial) score += 1;
-
-    if (score > 4) score = 4;
-
-    return {
-      'score': score,
-      'hasMinLength': hasMinLength,
-      'hasDigit': hasDigit,
-      'hasSpecial': hasSpecial,
-    };
-  }
-
   Color _getColor(int score) {
     switch (score) {
       case 0:
@@ -152,28 +157,27 @@ class PasswordStrength extends StatelessWidget {
   ) {
     final l10n = AppLocalizations.of(context)!;
 
-    if (score == 0) return l10n.low_pass; 
+    if (score == 0) return l10n.low_pass;
 
-    if (score == 4) return l10n.strong_pass; 
-
+    if (score == 4) return l10n.strong_pass;
 
     if (!hasMinLength) {
       if (hasDigit && hasSpecial) {
-        return l10n.good_pass_special; 
+        return l10n.good_pass_special;
       }
-      return l10n.low_pass; 
+      return l10n.low_pass;
     }
 
     if (!hasDigit) {
-      return l10n.good_pass_num; 
+      return l10n.good_pass_num;
     }
 
     if (!hasSpecial) {
-      return l10n.good_pass_char; 
+      return l10n.good_pass_char;
     }
 
     if (score == 1) {
-      return l10n.weak_pass; 
+      return l10n.weak_pass;
     }
 
     return l10n.fair_pass;

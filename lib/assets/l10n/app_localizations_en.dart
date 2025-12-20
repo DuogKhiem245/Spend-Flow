@@ -201,6 +201,47 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get check_your_mail => 'Check your mail';
+
+  @override
+  String get we_have_sent_mail => 'Chúng tôi đã gửi một email đến:';
+
+  @override
+  String get please_check_your_mail_to_verify_account =>
+      'Please check your email to verify your account before logging in.';
+
+  @override
+  String get register_failed => 'Registration failed';
+
+  @override
+  String get please_fill_all_fields => 'Please fill in all fields.';
+
+  @override
+  String get please_enter_email_and_password =>
+      'Please enter both email and password.';
+
+  @override
+  String get incorrect_email_or_password => 'Incorrect email or password.';
+
+  @override
+  String get invalid_email_format => 'Invalid email format.';
+
+  @override
+  String get this_account_has_been_disabled =>
+      'This account has been disabled.';
+
+  @override
+  String get too_many_requests_please_try_later =>
+      'Too many requests. Please try again later.';
+
+  @override
+  String get email_not_verified => 'Email Not Verified';
+
+  @override
+  String get please_verify_your_email_to_continue =>
+      'Please verify your email to continue.';
+
+  @override
   String get welcome_back => 'Welcome Back';
 
   @override

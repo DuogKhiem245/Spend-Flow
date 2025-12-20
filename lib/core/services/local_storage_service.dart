@@ -140,7 +140,6 @@ class LocalStorageService {
           await _sampleStore.add(txn, cat.toMap());
         }
       });
-      debugPrint("Đã nạp bảng SAMPLE: ${samples.length} mục.");
     }
 
     final suggestCount = await _suggestStore.count(db);
@@ -151,7 +150,6 @@ class LocalStorageService {
           await _suggestStore.add(txn, cat.toMap());
         }
       });
-      debugPrint("Đã nạp bảng SUGGEST: ${suggests.length} mục.");
     }
   }
 
@@ -255,7 +253,7 @@ class LocalStorageService {
     if (existing == null) {
       await _sampleStore.add(db, category.toMap());
     } else {
-      debugPrint("Category với ID ${category.id} đã tồn tại.");
+      debugPrint("Category ID ${category.id} already exists.");
     }
   }
 
@@ -270,10 +268,10 @@ class LocalStorageService {
       await _sampleStore
           .record(snapshot.key)
           .update(db, updatedCategory.toMap());
-      debugPrint("Đã cập nhật category: ${updatedCategory.name}");
+      debugPrint("Updated category: ${updatedCategory.name}");
     } else {
       debugPrint(
-        "Lỗi: Không tìm thấy category có ID ${updatedCategory.id} để cập nhật.",
+        "Error: Category with ID ${updatedCategory.id} not found for update.",
       );
     }
   }
@@ -281,7 +279,7 @@ class LocalStorageService {
   Future<bool> deleteCategory(CategoryModel category) async {
     if (int.tryParse(category.id) != null) {
       debugPrint(
-        "Không thể xóa danh mục mặc định của hệ thống: ${category.name}",
+        "Cannot delete default system category: ${category.name}",
       );
       return false;
     }
@@ -407,7 +405,7 @@ class LocalStorageService {
     if (snapshot != null) {
       await _budgetStore.record(snapshot.key).update(db, budget.toMap());
     } else {
-      debugPrint("Lỗi: Không tìm thấy budget có id ${budget.id} để update");
+      debugPrint("Not found budget with ID ${budget.id} to update");
     }
   }
 

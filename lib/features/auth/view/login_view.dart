@@ -1,10 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
-import 'package:spend_flow/features/auth/view/register/register_step_1.dart';
+import 'package:spend_flow/core/services/auth_service.dart';
+import 'package:spend_flow/features/auth/view/register/register_view.dart';
+import 'package:spend_flow/features/home/home_view.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -15,6 +18,128 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _obscurePassword = true;
+  bool _isLoading = false;
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  final AuthService _authService = AuthService();
+
+  Future<void> _handleLogin() async {
+    FocusScope.of(context).unfocus();
+
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
+    final l10n = AppLocalizations.of(context)!;
+
+
+    if (email.isEmpty || password.isEmpty) {
+      _showErrorDialog(l10n.please_enter_email_and_password);
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    try {
+      final credential = await _authService.signInWithEmail(
+        email: email,
+        password: password,
+      );
+
+      if (credential != null && credential.user != null) {
+        final user = credential.user!;
+
+        if (user.emailVerified) {
+          if (mounted) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              CupertinoPageRoute(builder: (context) => const HomePage()),
+              (route) => false,
+            );
+          }
+        } else {
+          await _authService.signOut();
+          if (mounted) _showVerificationDialog(user);
+        }
+      }
+    } on FirebaseAuthException catch (e) {
+      String message = l10n.login_error;
+      switch (e.code) {
+        case 'user-not-found':
+        case 'wrong-password':
+        case 'invalid-credential':
+          message = l10n.incorrect_email_or_password;
+          break;
+        case 'invalid-email':
+          message = l10n.invalid_email_format;
+          break;
+        case 'user-disabled':
+          message = l10n.this_account_has_been_disabled;
+          break;
+        case 'too-many-requests':
+          message = l10n.too_many_requests_please_try_later;
+          break;
+        default:
+          message = e.message ?? message;
+      }
+      if (mounted) _showErrorDialog(message);
+    } catch (e) {
+      if (mounted) _showErrorDialog(l10n.login_error);
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  void _showErrorDialog(String message) {
+    final l10n = AppLocalizations.of(context)!;
+    showCupertinoDialog(
+      context: context,
+      builder: (ctx) => CupertinoAlertDialog(
+        title: Text(l10n.error),
+        content: Text(message),
+        actions: [
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            child: Text(l10n.ok),
+            onPressed: () => Navigator.pop(ctx),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showVerificationDialog(User user) {
+    final l10n = AppLocalizations.of(context)!;
+    showCupertinoDialog(
+      context: context,
+      builder: (ctx) => CupertinoAlertDialog(
+        title: Text(l10n.email_not_verified),
+        content: Text(
+          l10n.please_verify_your_email_to_continue,
+        ),
+        actions: [
+          CupertinoDialogAction(
+            child: Text(l10n.resend),
+            onPressed: () async {
+              try {
+                await user.sendEmailVerification();
+                if (!context.mounted) return;
+                Navigator.pop(ctx);
+              } catch (e) {
+                debugPrint(e.toString());
+              }
+            },
+          ),
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            child: Text(l10n.ok),
+            onPressed: () => Navigator.pop(ctx),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,6 +226,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               Expanded(
                                 child: CupertinoTextField(
+                                  controller: _emailController,
                                   placeholder: l10n.enter_email,
                                   keyboardType: TextInputType.emailAddress,
                                   padding: EdgeInsets.all(16.w),
@@ -145,6 +271,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               Expanded(
                                 child: CupertinoTextField(
+                                  controller: _passwordController,
                                   placeholder: l10n.enter_your_password,
                                   obscureText: _obscurePassword,
                                   padding: EdgeInsets.all(16.h),
@@ -175,17 +302,20 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(height: 24.h),
                       
                         CupertinoButton.filled(
-                          onPressed: () {
-                            // Handle login action
-                          },
+                          onPressed: _isLoading ? null : _handleLogin,
+
                           borderRadius: BorderRadius.circular(30.r),
-                          child: Text(
-                            l10n.login,
-                            style: TextStyle(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+                          child: _isLoading
+                              ? const CupertinoActivityIndicator(
+                                  color: CupertinoColors.white,
+                                )
+                              : Text(
+                                  l10n.login,
+                                  style: TextStyle(
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
                         ),
                       
                         SizedBox(height: 6.h),
@@ -213,7 +343,7 @@ class _LoginPageState extends State<LoginPage> {
                                 Navigator.push(
                                   context,
                                   CupertinoPageRoute(
-                                    builder: (context) => const RegisterStep1Page(),
+                                    builder: (context) => const RegisterPage(),
                                   ),
                                 );
                               },
@@ -282,6 +412,8 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                   ),
+
+                  SizedBox(height: 20.h),
                 ],
               ),
             ),

@@ -470,6 +470,78 @@ abstract class AppLocalizations {
   /// **'Đăng nhập với {provider}'**
   String sign_in_with(Object provider);
 
+  /// No description provided for @check_your_mail.
+  ///
+  /// In vi, this message translates to:
+  /// **'Kiểm tra email của bạn'**
+  String get check_your_mail;
+
+  /// No description provided for @we_have_sent_mail.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chúng tôi đã gửi một email đến:'**
+  String get we_have_sent_mail;
+
+  /// No description provided for @please_check_your_mail_to_verify_account.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng kiểm tra email của bạn để xác thực tài khoản trước khi đăng nhập.'**
+  String get please_check_your_mail_to_verify_account;
+
+  /// No description provided for @register_failed.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đăng ký thất bại'**
+  String get register_failed;
+
+  /// No description provided for @please_fill_all_fields.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng điền vào tất cả các trường.'**
+  String get please_fill_all_fields;
+
+  /// No description provided for @please_enter_email_and_password.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng nhập cả email và mật khẩu.'**
+  String get please_enter_email_and_password;
+
+  /// No description provided for @incorrect_email_or_password.
+  ///
+  /// In vi, this message translates to:
+  /// **'Email hoặc mật khẩu không đúng.'**
+  String get incorrect_email_or_password;
+
+  /// No description provided for @invalid_email_format.
+  ///
+  /// In vi, this message translates to:
+  /// **'Định dạng email không hợp lệ.'**
+  String get invalid_email_format;
+
+  /// No description provided for @this_account_has_been_disabled.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tài khoản này đã bị vô hiệu hóa.'**
+  String get this_account_has_been_disabled;
+
+  /// No description provided for @too_many_requests_please_try_later.
+  ///
+  /// In vi, this message translates to:
+  /// **'Quá nhiều yêu cầu. Vui lòng thử lại sau.'**
+  String get too_many_requests_please_try_later;
+
+  /// No description provided for @email_not_verified.
+  ///
+  /// In vi, this message translates to:
+  /// **'Email chưa được xác thực'**
+  String get email_not_verified;
+
+  /// No description provided for @please_verify_your_email_to_continue.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng xác thực email của bạn để tiếp tục.'**
+  String get please_verify_your_email_to_continue;
+
   /// No description provided for @welcome_back.
   ///
   /// In vi, this message translates to:

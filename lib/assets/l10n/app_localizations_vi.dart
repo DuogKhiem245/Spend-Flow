@@ -201,6 +201,47 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
+  String get check_your_mail => 'Kiểm tra email của bạn';
+
+  @override
+  String get we_have_sent_mail => 'Chúng tôi đã gửi một email đến:';
+
+  @override
+  String get please_check_your_mail_to_verify_account =>
+      'Vui lòng kiểm tra email của bạn để xác thực tài khoản trước khi đăng nhập.';
+
+  @override
+  String get register_failed => 'Đăng ký thất bại';
+
+  @override
+  String get please_fill_all_fields => 'Vui lòng điền vào tất cả các trường.';
+
+  @override
+  String get please_enter_email_and_password =>
+      'Vui lòng nhập cả email và mật khẩu.';
+
+  @override
+  String get incorrect_email_or_password => 'Email hoặc mật khẩu không đúng.';
+
+  @override
+  String get invalid_email_format => 'Định dạng email không hợp lệ.';
+
+  @override
+  String get this_account_has_been_disabled =>
+      'Tài khoản này đã bị vô hiệu hóa.';
+
+  @override
+  String get too_many_requests_please_try_later =>
+      'Quá nhiều yêu cầu. Vui lòng thử lại sau.';
+
+  @override
+  String get email_not_verified => 'Email chưa được xác thực';
+
+  @override
+  String get please_verify_your_email_to_continue =>
+      'Vui lòng xác thực email của bạn để tiếp tục.';
+
+  @override
   String get welcome_back => 'Chào mừng trở lại';
 
   @override
