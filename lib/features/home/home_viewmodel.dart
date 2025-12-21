@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,6 +13,8 @@ import 'package:spend_flow/features/home/home_model.dart';
 class HomeViewModel extends ChangeNotifier {
   final LocalStorageService _storage = LocalStorageService();
   final LocalAuthentication _auth = LocalAuthentication();
+
+  User? get currentUser => FirebaseAuth.instance.currentUser;
 
   bool _isLocked = false;
   bool _hasSecurity = false;

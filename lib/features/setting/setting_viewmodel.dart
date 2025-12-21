@@ -26,4 +26,6 @@ class SettingViewmodel {
 
     return biometricText;
   }
+
+  
 }

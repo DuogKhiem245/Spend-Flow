@@ -28,6 +28,7 @@
   "budgets": "Ngân sách",
   "all": "Tất cả",
   "error": "Lỗi",
+  "user": "Người dùng",
 
   "onboard_step1_title": "Đơn giản hóa tài chính",
   "onboard_step1_message": "Tất cả tài khoản của bạn trong một nơi. Xem tiền của bạn đi đâu và đạt mục tiêu tài chính dễ dàng.",
@@ -76,6 +77,8 @@
   "too_many_requests_please_try_later": "Quá nhiều yêu cầu. Vui lòng thử lại sau.",
   "email_not_verified": "Email chưa được xác thực",
   "please_verify_your_email_to_continue": "Vui lòng xác thực email của bạn để tiếp tục.",
+  "are_you_sure_logout": "Bạn có chắc chắn muốn đăng xuất không?",
+  "have_error_occurred": "Đã xảy ra lỗi. Vui lòng thử lại.",
 
   "welcome_back": "Chào mừng trở lại",
   "back_login": "Quay lại đăng nhập",
@@ -114,6 +117,7 @@
   "are_you_sure_delete_category": "Bạn có chắc chắn muốn xóa danh mục {categoryName}? \n Hành động này không thể hoàn tác.",
   "system_category": "Danh mục hệ thống không thể xóa.",
   "system_category_description": "Bạn không thể chỉnh sửa hoặc xóa danh mục mặc định này.",
+
   "category_food": "Ăn uống",
   "category_transport": "Di chuyển",
   "category_salary": "Lương",

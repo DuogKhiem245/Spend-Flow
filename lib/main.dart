@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,19 @@ void main() async {
   // await notificationService.requestPermissions();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  User? user = FirebaseAuth.instance.currentUser;
+  try {
+    await user?.reload();
+    user = FirebaseAuth.instance.currentUser;
+
+    if (user != null && user.emailVerified) {
+    } else {
+      await FirebaseAuth.instance.signOut();
+    }
+  } catch (e) {
+    await FirebaseAuth.instance.signOut();
+  }
 
   runApp(MyApp(onboardDone: onboardDone));
 }

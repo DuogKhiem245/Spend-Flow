@@ -93,6 +93,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get error => 'Lỗi';
 
   @override
+  String get user => 'Người dùng';
+
+  @override
   String get onboard_step1_title => 'Đơn giản hóa tài chính';
 
   @override
@@ -240,6 +243,12 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get please_verify_your_email_to_continue =>
       'Vui lòng xác thực email của bạn để tiếp tục.';
+
+  @override
+  String get are_you_sure_logout => 'Bạn có chắc chắn muốn đăng xuất không?';
+
+  @override
+  String get have_error_occurred => 'Đã xảy ra lỗi. Vui lòng thử lại.';
 
   @override
   String get welcome_back => 'Chào mừng trở lại';

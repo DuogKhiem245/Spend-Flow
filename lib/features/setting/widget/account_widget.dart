@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
@@ -6,22 +7,25 @@ import 'package:spend_flow/features/auth/view/login_view.dart';
 import 'package:spend_flow/features/setting/profile/profile_view.dart';
 
 class AccountWidget extends StatelessWidget {
-  final bool isLoggedIn;
-  final bool isHaveProfile;
+  final User? currentUser;
+  final bool isLoading;
 
   const AccountWidget({
     super.key,
-    required this.isLoggedIn,
-    this.isHaveProfile = true,
+    required this.currentUser,
+    this.isLoading = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final bool isLoggedIn = currentUser != null;
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(16.w),
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      height: 100.h,
+      alignment: Alignment.center,
       decoration: BoxDecoration(
         color: CupertinoTheme.of(context).barBackgroundColor,
         borderRadius: BorderRadius.circular(30.r),
@@ -33,13 +37,72 @@ class AccountWidget extends StatelessWidget {
           ),
         ],
       ),
-      child: isLoggedIn
-          ? _buildUserView(l10n, context)
-          : _buildGuestView(l10n, context),
+      child: isLoading
+          ? _buildSkeletonView(context)
+          : (isLoggedIn
+                ? _buildUserView(l10n, context)
+                : _buildGuestView(l10n, context)),
+    );
+  }
+
+  Widget _buildSkeletonView(BuildContext context) {
+    final placeholderColor = CupertinoColors.systemGrey5.resolveFrom(context);
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: 60.r,
+                height: 60.r,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: placeholderColor,
+                ),
+              ),
+              SizedBox(width: 12.w),
+
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 150.w,
+                      height: 18.h,
+                      decoration: BoxDecoration(
+                        color: placeholderColor,
+                        borderRadius: BorderRadius.circular(4.r),
+                      ),
+                    ),
+                    SizedBox(height: 10.h),
+                    Container(
+                      width: 100.w,
+                      height: 14.h,
+                      decoration: BoxDecoration(
+                        color: placeholderColor,
+                        borderRadius: BorderRadius.circular(4.r),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
   Widget _buildUserView(AppLocalizations l10n, BuildContext context) {
+    final String displayName = currentUser?.displayName ?? l10n.user;
+    final String email = currentUser!.email!;
+    final String? photoUrl = currentUser?.photoURL;
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -49,63 +112,76 @@ class AccountWidget extends StatelessWidget {
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            children: [
-              isHaveProfile
-                  ? Container(
-                      width: 60.r,
-                      height: 60.r,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColors.borderColor,
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(30.r),
-                        child: Image.asset(
-                          'lib/assets/images/avatar.png',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    )
-                  : Container(
-                      width: 60.r,
-                      height: 60.r,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColors.borderColor,
-                      ),
-                      child: Icon(
-                        CupertinoIcons.person_fill,
-                        size: 36.r,
-                        color: AppColors.lightCard,
-                      ),
-                    ),
-              SizedBox(width: 12.w),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'John Doe',
-                    style: CupertinoTheme.of(context).textTheme.textStyle
-                        .copyWith(fontSize: 20.sp, fontWeight: FontWeight.w600),
+          Expanded(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 60.r,
+                  height: 60.r,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.borderColor,
                   ),
-                  SizedBox(height: 4.h),
-                  Text(
-                    'john.doe@example.com',
-                    style: CupertinoTheme.of(context).textTheme.textStyle
-                        .copyWith(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                          color: CupertinoTheme.of(
-                            context,
-                          ).textTheme.textStyle.color!.withValues(alpha: .6),
-                        ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(30.r),
+                    child: photoUrl != null
+                        ? Image.network(
+                            photoUrl,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) => Image.asset(
+                              'lib/assets/images/avatar.png',
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        : Image.asset(
+                            'lib/assets/images/avatar.png',
+                            fit: BoxFit.cover,
+                          ),
                   ),
-                ],
-              ),
-            ],
+                ),
+                SizedBox(width: 12.w),
+
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        displayName,
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      SizedBox(height: 6.h),
+                      Text(
+                        email,
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w500,
+                              color: CupertinoTheme.of(context)
+                                  .textTheme
+                                  .textStyle
+                                  .color!
+                                  .withValues(alpha: .6),
+                            ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
+
           Icon(
             CupertinoIcons.chevron_right,
             size: 24.r,
@@ -126,9 +202,11 @@ class AccountWidget extends StatelessWidget {
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
                   width: 60.r,
@@ -148,11 +226,12 @@ class AccountWidget extends StatelessWidget {
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         l10n.sign_in_now,
                         style: TextStyle(
-                          fontSize: 20.sp,
+                          fontSize: 18.sp,
                           fontWeight: FontWeight.w600,
                           color: AppColors.primaryColor,
                         ),
@@ -162,12 +241,15 @@ class AccountWidget extends StatelessWidget {
                         l10n.settings_description,
                         style: CupertinoTheme.of(context).textTheme.textStyle
                             .copyWith(
-                              fontSize: 14.sp,
+                              fontSize: 13.sp,
+                              height: 1.4, // Giãn dòng đẹp
                               fontWeight: FontWeight.w500,
                               color: CupertinoTheme.of(
                                 context,
                               ).textTheme.textStyle.color,
                             ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),

@@ -266,6 +266,12 @@ abstract class AppLocalizations {
   /// **'Lỗi'**
   String get error;
 
+  /// No description provided for @user.
+  ///
+  /// In vi, this message translates to:
+  /// **'Người dùng'**
+  String get user;
+
   /// No description provided for @onboard_step1_title.
   ///
   /// In vi, this message translates to:
@@ -541,6 +547,18 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Vui lòng xác thực email của bạn để tiếp tục.'**
   String get please_verify_your_email_to_continue;
+
+  /// No description provided for @are_you_sure_logout.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn có chắc chắn muốn đăng xuất không?'**
+  String get are_you_sure_logout;
+
+  /// No description provided for @have_error_occurred.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã xảy ra lỗi. Vui lòng thử lại.'**
+  String get have_error_occurred;
 
   /// No description provided for @welcome_back.
   ///

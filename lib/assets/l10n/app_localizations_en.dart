@@ -93,6 +93,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get error => 'Error';
 
   @override
+  String get user => 'User';
+
+  @override
   String get onboard_step1_title => 'Simplify Your Finances';
 
   @override
@@ -240,6 +243,12 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get please_verify_your_email_to_continue =>
       'Please verify your email to continue.';
+
+  @override
+  String get are_you_sure_logout => 'Are you sure you want to logout?';
+
+  @override
+  String get have_error_occurred => 'An error has occurred. Please try again.';
 
   @override
   String get welcome_back => 'Welcome Back';

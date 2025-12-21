@@ -28,6 +28,7 @@
   "budgets": "Budgets",
   "all": "All",
   "error": "Error",
+  "user": "User",
   
   "onboard_step1_title": "Simplify Your Finances",
   "onboard_step1_message": "All your accounts in one place. See where your money goes and achieve your financial goals effortlessly.",
@@ -76,6 +77,8 @@
   "too_many_requests_please_try_later": "Too many requests. Please try again later.",
   "email_not_verified": "Email Not Verified",
   "please_verify_your_email_to_continue": "Please verify your email to continue.",
+  "are_you_sure_logout": "Are you sure you want to logout?",
+  "have_error_occurred": "An error has occurred. Please try again.",
 
   "welcome_back": "Welcome Back",
   "back_login": "Back to Login",
@@ -95,7 +98,6 @@
   "good_morning": "Good Morning",
   "good_afternoon": "Good Afternoon",
   "good_evening": "Good Evening",
-  "good_night": "Good Night",
   "hello": "Hello",
   "income": "Income",
   "expenses": "Expenses",
