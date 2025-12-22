@@ -29,6 +29,7 @@
   "all": "All",
   "error": "Error",
   "user": "User",
+  "success": "Success",
   
   "onboard_step1_title": "Simplify Your Finances",
   "onboard_step1_message": "All your accounts in one place. See where your money goes and achieve your financial goals effortlessly.",
@@ -94,6 +95,9 @@
   "good_pass_num": "Almost there! Add a number to make it stronger.",
   "good_pass_special": "Almost there! Add any character to make it stronger.",
   "strong_pass": "Great! Your password is secure.",
+  "password_reset_email_sent": "We have sent a password reset link to your email.",
+  "forgot_password_description": "Enter the email associated with your account to reset your password.",
+  "send_email_reset": "Send Email Reset",
   
   "good_morning": "Good Morning",
   "good_afternoon": "Good Afternoon",
@@ -211,6 +215,10 @@
   "day_of_birth": "Date of Birth",
   "select_day_of_birth": "Select date of birth",
   "save_changes": "Save Changes",
+  "profile_updated_success": "Profile updated successfully!",
+  "error_updating_profile": "Error updating profile.",
+  "error_uploading_avatar": "Error uploading avatar.",
+
   "upgrade_premium": "Upgrade to Premium!",
   "upgrade_premium_description": "Unlock exclusive features and enhance your experience.",
   "upgrade_now": "Upgrade Now",

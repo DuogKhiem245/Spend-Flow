@@ -7,6 +7,7 @@ import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/core/widgets/nav.dart';
 import 'package:spend_flow/features/auth/auth_viewmodel.dart';
+import 'package:spend_flow/features/auth/view/forgot_password_view.dart';
 import 'package:spend_flow/features/auth/view/register/register_view.dart';
 
 class LoginPage extends StatefulWidget {
@@ -159,6 +160,16 @@ class _LoginPageState extends State<LoginPage> {
         final isLoading = _viewModel.isLoading;
 
         return CupertinoPageScaffold(
+          navigationBar: CupertinoNavigationBar(
+            backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
+            leading: CupertinoNavigationBarBackButton(
+              color: CupertinoTheme.of(context).primaryColor,
+              onPressed: () => Navigator.pushReplacement(
+                context,
+                CupertinoPageRoute(builder: (context) => BottomNavbar(currentIndex: 3)),
+              ),
+            ),
+          ),
           child: SafeArea(
             top: true,
             child: GestureDetector(
@@ -188,7 +199,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 24.h),
+                      SizedBox(height: 20.h),
                       Text(
                         l10n.login,
                         style: CupertinoTheme.of(context).textTheme.textStyle
@@ -197,7 +208,7 @@ class _LoginPageState extends State<LoginPage> {
                               fontWeight: FontWeight.bold,
                             ),
                       ),
-                      SizedBox(height: 30.h),
+                      SizedBox(height: 20.h),
 
                       Container(
                         padding: EdgeInsets.all(15.w),
@@ -323,14 +334,43 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
 
-                            SizedBox(height: 24.h),
+                            SizedBox(height: 8.h), 
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: CupertinoButton(
+                                padding: EdgeInsets.zero,
+                                minimumSize: Size(0, 0), 
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (context) =>
+                                          const ForgotPasswordPage(),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  l10n.forgot_password, 
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: CupertinoTheme.of(context)
+                                        .primaryColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            SizedBox(height: 20.h),
 
                             CupertinoButton.filled(
                               onPressed: isLoading ? null : _handleLogin,
                               borderRadius: BorderRadius.circular(30.r),
                               child: isLoading
-                                  ? const CupertinoActivityIndicator(
-                                      color: CupertinoColors.white,
+                                  ? CupertinoActivityIndicator(
+                                      color: CupertinoTheme.of(
+                                        context,
+                                      ).textTheme.textStyle.color,
                                     )
                                   : Text(
                                       l10n.login,
@@ -414,7 +454,7 @@ class _LoginPageState extends State<LoginPage> {
                               label: l10n.sign_in_with('Google'),
                               onTap: () => _handleSocialLogin(
                                 _viewModel.signInWithGoogle,
-                              )
+                              ),
                             ),
 
                             SizedBox(height: 12.h),
@@ -481,13 +521,13 @@ class _LoginPageState extends State<LoginPage> {
             color: backgroundColor,
             borderRadius: BorderRadius.circular(30.r),
             border: border,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: .1),
-                offset: const Offset(0, 2),
-                blurRadius: 4,
-              ),
-            ],
+            // boxShadow: [
+            //   BoxShadow(
+            //     color: Colors.black.withValues(alpha: .1),
+            //     offset: const Offset(0, 2),
+            //     blurRadius: 4,
+            //   ),
+            // ],
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

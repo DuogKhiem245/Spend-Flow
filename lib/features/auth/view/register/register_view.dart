@@ -57,21 +57,17 @@ class _RegisterPageState extends State<RegisterPage> {
     final confirmPass = _confirmPasswordController.text.trim();
 
     if (email.isEmpty || password.isEmpty || confirmPass.isEmpty) {
-      _showErrorDialog(
-        l10n.please_fill_all_fields,
-      ); 
+      _showErrorDialog(l10n.please_fill_all_fields);
       return;
     }
 
     if (password != confirmPass) {
-      _showErrorDialog(l10n.passwords_mismatch); 
+      _showErrorDialog(l10n.passwords_mismatch);
       return;
     }
 
     if (!PasswordStrength.isValid(password)) {
-      _showErrorDialog(
-        l10n.weak_pass,
-      );
+      _showErrorDialog(l10n.weak_pass);
       return;
     }
 
@@ -86,6 +82,8 @@ class _RegisterPageState extends State<RegisterPage> {
       if (credential != null && credential.user != null) {
         await credential.user!.sendEmailVerification();
 
+        await _authService.signOut();
+
         if (mounted) {
           Navigator.pushReplacement(
             context,
@@ -96,7 +94,7 @@ class _RegisterPageState extends State<RegisterPage> {
         }
       }
     } catch (e) {
-      debugPrint("Lỗi đăng ký: $e");
+      _showErrorDialog(e.toString());
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -173,7 +171,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         _buildPasswordField(
                           context: context,
                           controller: _passwordController,
-                          placeholder: l10n.password, 
+                          placeholder: l10n.password,
                           obscureText: _obscurePassword,
                           onToggle: () => setState(
                             () => _obscurePassword = !_obscurePassword,
@@ -189,17 +187,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
                         Container(
                           padding: EdgeInsets.only(left: 8.w),
-                          child: PasswordStrength(
-                            password: password,
-                          ),
+                          child: PasswordStrength(password: password),
                         ),
 
                         SizedBox(height: 16.h),
 
-                        _buildLabel(
-                          l10n.confirm_password,
-                          context,
-                        ), 
+                        _buildLabel(l10n.confirm_password, context),
                         SizedBox(height: 8.h),
                         _buildPasswordField(
                           context: context,
@@ -223,11 +216,13 @@ class _RegisterPageState extends State<RegisterPage> {
                           onPressed: _isLoading ? null : _handleRegister,
                           borderRadius: BorderRadius.circular(30.r),
                           child: _isLoading
-                              ? const CupertinoActivityIndicator(
-                                  color: CupertinoColors.white,
+                              ? CupertinoActivityIndicator(
+                                  color: CupertinoTheme.of(
+                                    context,
+                                  ).textTheme.textStyle.color,
                                 )
                               : Text(
-                                  l10n.register, 
+                                  l10n.register,
                                   style: TextStyle(
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.w600,

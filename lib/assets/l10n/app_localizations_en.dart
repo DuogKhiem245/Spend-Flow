@@ -96,6 +96,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get user => 'User';
 
   @override
+  String get success => 'Success';
+
+  @override
   String get onboard_step1_title => 'Simplify Your Finances';
 
   @override
@@ -295,6 +298,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get strong_pass => 'Great! Your password is secure.';
+
+  @override
+  String get password_reset_email_sent =>
+      'We have sent a password reset link to your email.';
+
+  @override
+  String get forgot_password_description =>
+      'Enter the email associated with your account to reset your password.';
+
+  @override
+  String get send_email_reset => 'Send Email Reset';
 
   @override
   String get good_morning => 'Good Morning';
@@ -628,6 +642,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get save_changes => 'Save Changes';
+
+  @override
+  String get profile_updated_success => 'Profile updated successfully!';
+
+  @override
+  String get error_updating_profile => 'Error updating profile.';
+
+  @override
+  String get error_uploading_avatar => 'Error uploading avatar.';
 
   @override
   String get upgrade_premium => 'Upgrade to Premium!';

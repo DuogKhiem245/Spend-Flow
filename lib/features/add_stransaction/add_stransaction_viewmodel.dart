@@ -1,6 +1,6 @@
 import 'package:spend_flow/core/services/local_storage_service.dart';
-import 'package:spend_flow/features/add_stransaction/model/transaction_model.dart';
-import 'model/category_model.dart';
+import 'package:spend_flow/core/model/transaction_model.dart';
+import '../../core/model/category_model.dart';
 
 class AddStransactionViewmodel {
   final LocalStorageService _storageService = LocalStorageService();

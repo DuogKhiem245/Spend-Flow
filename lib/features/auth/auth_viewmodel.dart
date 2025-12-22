@@ -29,6 +29,20 @@ class AuthViewModel extends ChangeNotifier {
     }
   }
 
+
+  Future<void> resetPassword(String email) async {
+    _setLoading(true);
+    try {
+      await _authService.sendPasswordResetEmail(
+        email,
+      ); 
+    } catch (e) {
+      rethrow;
+    } finally {
+      _setLoading(false);
+    }
+  }
+
   Future<UserCredential?> loginWithSocial(
     Future<UserCredential?> Function() method,
   ) async {

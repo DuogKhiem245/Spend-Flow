@@ -8,7 +8,7 @@ import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/utils/category_helper.dart';
 import 'package:spend_flow/core/utils/date_helper.dart';
 import 'package:spend_flow/features/add_stransaction/category/select_category.dart';
-import 'package:spend_flow/features/add_stransaction/model/category_model.dart';
+import 'package:spend_flow/core/model/category_model.dart';
 
 class SuggestCategoryWidget extends StatefulWidget {
   final CategoryModel? selectedCategory;

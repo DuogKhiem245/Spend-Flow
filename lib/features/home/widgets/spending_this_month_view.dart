@@ -6,7 +6,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
-import 'package:spend_flow/features/add_stransaction/model/transaction_model.dart';
+import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/features/home/home_model.dart';
 import 'package:spend_flow/features/home/home_viewmodel.dart';
 

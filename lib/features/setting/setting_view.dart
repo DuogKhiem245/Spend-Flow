@@ -17,13 +17,18 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   final authService = AuthService();
 
+   @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
     return CupertinoPageScaffold(
       child: StreamBuilder<User?>(
-        stream: authService.authStateChanges,
+        stream: authService.userChanges,
         builder: (context, snapshot) {
           final user = snapshot.data;
           final bool isLoading =

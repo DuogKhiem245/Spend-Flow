@@ -1,8 +1,8 @@
-import 'dart:io'; 
+import 'dart:io';
 import 'package:cupertino_native/components/tab_bar.dart';
 import 'package:cupertino_native/style/sf_symbol.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/features/budget/budget_view.dart';
@@ -11,14 +11,16 @@ import 'package:spend_flow/features/report/report_view.dart';
 import 'package:spend_flow/features/setting/setting_view.dart';
 
 class BottomNavbar extends StatefulWidget {
-  const BottomNavbar({super.key});
+  final int currentIndex;
+
+  const BottomNavbar({super.key, this.currentIndex = 0});
 
   @override
   State<BottomNavbar> createState() => _BottomNavbarState();
 }
 
 class _BottomNavbarState extends State<BottomNavbar> {
-  int _currentIndex = 0;
+  late int _currentIndex = widget.currentIndex;
 
   final List<Widget> _pages = const [
     HomePage(),

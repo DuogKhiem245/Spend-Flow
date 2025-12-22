@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
-import 'package:spend_flow/features/add_stransaction/model/category_model.dart';
+import 'package:spend_flow/core/model/category_model.dart';
 import 'package:spend_flow/features/budget/budget_model.dart';
 
 class AddBudgetViewModel extends ChangeNotifier {

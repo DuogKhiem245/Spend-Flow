@@ -12,6 +12,8 @@ class AuthService {
 
   Stream<User?> get authStateChanges => _auth.authStateChanges();
 
+  Stream<User?> get userChanges => _auth.userChanges();
+
   Future<UserCredential?> signUpWithEmail({
     required String email,
     required String password,

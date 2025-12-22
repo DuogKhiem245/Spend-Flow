@@ -1,4 +1,4 @@
-import 'package:spend_flow/features/add_stransaction/model/transaction_model.dart';
+import 'package:spend_flow/core/model/transaction_model.dart';
 
 class DailyGroup {
   final DateTime date;

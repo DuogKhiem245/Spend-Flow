@@ -29,6 +29,7 @@
   "all": "Tất cả",
   "error": "Lỗi",
   "user": "Người dùng",
+  "success": "Thành công",
 
   "onboard_step1_title": "Đơn giản hóa tài chính",
   "onboard_step1_message": "Tất cả tài khoản của bạn trong một nơi. Xem tiền của bạn đi đâu và đạt mục tiêu tài chính dễ dàng.",
@@ -94,6 +95,9 @@
   "good_pass_num": "Sắp hoàn hảo! Hãy thêm số để tăng bảo mật.",
   "good_pass_special": "Sắp hoàn hảo! Hãy thêm ký tự bất kì để tăng bảo mật.",
   "strong_pass": "Tuyệt vời! Mật khẩu của bạn đã an toàn.",
+  "password_reset_email_sent": "Chúng tôi đã gửi một liên kết đặt lại mật khẩu đến email của bạn.",
+  "forgot_password_description": "Nhập email được liên kết với tài khoản của bạn để đặt lại mật khẩu.",
+  "send_email_reset": "Gửi email đặt lại",
   
   "good_morning": "Chào buổi sáng",
   "good_afternoon": "Chào buổi chiều",
@@ -212,6 +216,10 @@
   "day_of_birth": "Ngày sinh",
   "select_day_of_birth": "Chọn ngày sinh",
   "save_changes": "Lưu thay đổi",
+  "profile_updated_success": "Cập nhật hồ sơ thành công!",
+  "error_updating_profile": "Lỗi khi cập nhật hồ sơ.",
+  "error_uploading_avatar": "Lỗi khi tải lên ảnh đại diện.",
+
   "upgrade_premium": "Nâng cấp lên Premium!",
   "upgrade_premium_description": "Mở khóa các tính năng cao cấp và nâng cao trải nghiệm của bạn.",
   "upgrade_now": "Nâng cấp ngay",

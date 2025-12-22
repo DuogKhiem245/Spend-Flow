@@ -1,5 +1,5 @@
 import 'package:spend_flow/core/data/category_data.dart';
-import 'package:spend_flow/features/add_stransaction/model/transaction_model.dart';
+import 'package:spend_flow/core/model/transaction_model.dart';
 
 class TransactionData {
   static List<TransactionModel> getMockTransactions() {

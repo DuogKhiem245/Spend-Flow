@@ -12,7 +12,7 @@ import 'package:spend_flow/core/services/daily_limit_service.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/services/notification_service.dart';
 import 'package:spend_flow/features/add_stransaction/add_stransaction_view.dart';
-import 'package:spend_flow/features/add_stransaction/model/transaction_model.dart';
+import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/features/home/home_model.dart';
 import 'package:spend_flow/features/home/home_viewmodel.dart';
 import 'package:spend_flow/features/home/widgets/balance_card.dart';

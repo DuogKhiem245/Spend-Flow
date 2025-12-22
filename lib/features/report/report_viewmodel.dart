@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart'; // Import service
-import 'package:spend_flow/features/add_stransaction/model/transaction_model.dart';
+import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/features/report/daily_group_model.dart';
 
 class ReportViewModel extends ChangeNotifier {

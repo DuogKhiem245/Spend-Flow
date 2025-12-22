@@ -11,7 +11,7 @@ import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/utils/category_helper.dart';
 import 'package:spend_flow/core/utils/vietnamese_utils.dart';
 import 'package:spend_flow/features/add_stransaction/category/create_category.dart';
-import 'package:spend_flow/features/add_stransaction/model/category_model.dart';
+import 'package:spend_flow/core/model/category_model.dart';
 
 class SelectCategory extends StatefulWidget {
   const SelectCategory({super.key});

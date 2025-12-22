@@ -96,6 +96,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get user => 'Người dùng';
 
   @override
+  String get success => 'Thành công';
+
+  @override
   String get onboard_step1_title => 'Đơn giản hóa tài chính';
 
   @override
@@ -294,6 +297,17 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get strong_pass => 'Tuyệt vời! Mật khẩu của bạn đã an toàn.';
+
+  @override
+  String get password_reset_email_sent =>
+      'Chúng tôi đã gửi một liên kết đặt lại mật khẩu đến email của bạn.';
+
+  @override
+  String get forgot_password_description =>
+      'Nhập email được liên kết với tài khoản của bạn để đặt lại mật khẩu.';
+
+  @override
+  String get send_email_reset => 'Gửi email đặt lại';
 
   @override
   String get good_morning => 'Chào buổi sáng';
@@ -627,6 +641,15 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get save_changes => 'Lưu thay đổi';
+
+  @override
+  String get profile_updated_success => 'Cập nhật hồ sơ thành công!';
+
+  @override
+  String get error_updating_profile => 'Lỗi khi cập nhật hồ sơ.';
+
+  @override
+  String get error_uploading_avatar => 'Lỗi khi tải lên ảnh đại diện.';
 
   @override
   String get upgrade_premium => 'Nâng cấp lên Premium!';

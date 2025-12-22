@@ -272,6 +272,12 @@ abstract class AppLocalizations {
   /// **'Người dùng'**
   String get user;
 
+  /// No description provided for @success.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thành công'**
+  String get success;
+
   /// No description provided for @onboard_step1_title.
   ///
   /// In vi, this message translates to:
@@ -643,6 +649,24 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Tuyệt vời! Mật khẩu của bạn đã an toàn.'**
   String get strong_pass;
+
+  /// No description provided for @password_reset_email_sent.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chúng tôi đã gửi một liên kết đặt lại mật khẩu đến email của bạn.'**
+  String get password_reset_email_sent;
+
+  /// No description provided for @forgot_password_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập email được liên kết với tài khoản của bạn để đặt lại mật khẩu.'**
+  String get forgot_password_description;
+
+  /// No description provided for @send_email_reset.
+  ///
+  /// In vi, this message translates to:
+  /// **'Gửi email đặt lại'**
+  String get send_email_reset;
 
   /// No description provided for @good_morning.
   ///
@@ -1297,6 +1321,24 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Lưu thay đổi'**
   String get save_changes;
+
+  /// No description provided for @profile_updated_success.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cập nhật hồ sơ thành công!'**
+  String get profile_updated_success;
+
+  /// No description provided for @error_updating_profile.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lỗi khi cập nhật hồ sơ.'**
+  String get error_updating_profile;
+
+  /// No description provided for @error_uploading_avatar.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lỗi khi tải lên ảnh đại diện.'**
+  String get error_uploading_avatar;
 
   /// No description provided for @upgrade_premium.
   ///

@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
-import 'package:spend_flow/features/add_stransaction/model/category_model.dart';
+import 'package:spend_flow/core/model/category_model.dart';
 
 class AddCategoryPage extends StatefulWidget {
   final CategoryModel? categoryToEdit;

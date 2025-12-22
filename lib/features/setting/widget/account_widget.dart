@@ -16,6 +16,8 @@ class AccountWidget extends StatelessWidget {
     this.isLoading = false,
   });
 
+
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
