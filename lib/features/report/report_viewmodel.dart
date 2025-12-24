@@ -15,13 +15,21 @@ class ReportViewModel extends ChangeNotifier {
 
   bool _isLocked = true;
   bool _isFaceIdAvailable = false;
+  bool _isLoading = true;
 
   bool get isLocked => _isLocked;
   bool get isFaceIdAvailable => _isFaceIdAvailable;
+  bool get isLoading => _isLoading; 
+
+  String _currencySymbol = '\$';
+  String get currencySymbol => _currencySymbol;
 
   ReportViewModel() {
-    loadData();
-    _checkSecurity();
+    Future.wait([
+      _checkSecurity(),
+      _loadCurrency(),
+    ]);
+    _loadData();
   }
 
   Future<void> _checkSecurity() async {
@@ -72,12 +80,22 @@ class ReportViewModel extends ChangeNotifier {
     return false;
   }
 
-  Future<void> loadData() async {
-    final data = await _storage.getTransactionsByMonth(selectedMonth);
+  Future<void> _loadCurrency() async {
+    final Map<String, String> currencyData = await _storage.getCurrency();
+    _currencySymbol = currencyData['symbol'] ?? '\$';
+  }
 
+  Future<void> _loadData() async {
+    _isLoading = true;
+    notifyListeners();
+
+    await Future.delayed(const Duration(milliseconds: 300));
+
+    final data = await _storage.getTransactionsByMonth(selectedMonth);
     data.sort((a, b) => b.date.compareTo(a.date));
 
     _transactions = data;
+    _isLoading = false;
     notifyListeners();
   }
 
@@ -115,19 +133,19 @@ class ReportViewModel extends ChangeNotifier {
 
   void nextMonth() {
     selectedMonth = DateTime(selectedMonth.year, selectedMonth.month + 1);
-    loadData(); 
+    _loadData(); 
     notifyListeners();
   }
 
   void previousMonth() {
     selectedMonth = DateTime(selectedMonth.year, selectedMonth.month - 1);
-    loadData();
+    _loadData();
     notifyListeners();
   }
 
   String formatCurrency(double amount) {
     final format = NumberFormat("#,##0.00", "en_US");
-    return "\$${format.format(amount)}";
+    return format.format(amount);
   }
 
   String formatDateHeader(DateTime date, AppLocalizations l10n, String locale) {
@@ -155,7 +173,7 @@ class ReportViewModel extends ChangeNotifier {
 
   void setMonth(DateTime date) {
     selectedMonth = DateTime(date.year, date.month, 1);
-    loadData(); 
+    _loadData(); 
     notifyListeners();
   }
 

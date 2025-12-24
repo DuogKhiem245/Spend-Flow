@@ -24,8 +24,12 @@ class HomeViewModel extends ChangeNotifier {
   bool get hasSecurity => _hasSecurity;
   bool get isFaceIdAvailable => _isFaceIdAvailable;
 
+  String _currencySymbol = '\$';
+  String get currencySymbol => _currencySymbol;
+
   HomeViewModel() {
     _checkSecurity();
+    _loadCurrency();
   }
 
   Future<void> _checkSecurity() async {
@@ -88,6 +92,13 @@ class HomeViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> _loadCurrency() async {
+    final Map<String, String> currencyData = await _storage.getCurrency();
+    final String symbol = currencyData['symbol'] ?? '\$';
+    _currencySymbol = symbol;
+    notifyListeners();
+  }
+
   String formatCurrency(double amount) {
     final formatter = NumberFormat("#,##0.0", "en_US");
     return formatter.format(amount);
@@ -97,7 +108,7 @@ class HomeViewModel extends ChangeNotifier {
     final formatter = NumberFormat.compactCurrency(
       locale: "en_US",
       decimalDigits: 1,
-      symbol: '',
+      symbol: '', 
     );
     return formatter.format(amount);
   }

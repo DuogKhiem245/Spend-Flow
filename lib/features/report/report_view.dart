@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
+import 'package:spend_flow/core/widgets/skeleton/skeleton_report_view.dart';
 import 'package:spend_flow/core/widgets/verify_passcode/verify_passcode_sheet.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/features/report/report_viewmodel.dart';
@@ -18,6 +19,7 @@ class ReportPage extends StatefulWidget {
 
 class _ReportPageState extends State<ReportPage> {
   final ReportViewModel _viewModel = ReportViewModel();
+  bool get _isLoading => _viewModel.isLoading; 
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,10 @@ class _ReportPageState extends State<ReportPage> {
         child: ListenableBuilder(
           listenable: _viewModel,
           builder: (context, child) {
+            if (_isLoading) {
+              return const SkeletonReportView();
+            }
+            
             if (_viewModel.isLocked) {
               return Center(
                 child: Column(
@@ -230,6 +236,8 @@ class _ReportPageState extends State<ReportPage> {
   }
 
   Widget _buildSummary(AppLocalizations l10n, Map<String, double> stats) {
+    final symbol = _viewModel.currencySymbol;
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
       child: Row(
@@ -237,17 +245,17 @@ class _ReportPageState extends State<ReportPage> {
         children: [
           _buildStatItem(
             l10n.expenses,
-            "-${_viewModel.formatCurrency(stats['expense']!).replaceAll('\$', '')}\$",
+            "-$symbol ${_viewModel.formatCurrency(stats['expense']!)}",
             CupertinoTheme.of(context).textTheme.textStyle.color!,
           ),
           _buildStatItem(
             l10n.income,
-            "+${_viewModel.formatCurrency(stats['income']!).replaceAll('\$', '')}\$",
+            "+$symbol ${_viewModel.formatCurrency(stats['income']!)}",
             CupertinoTheme.of(context).textTheme.textStyle.color!,
           ),
           _buildStatItem(
             l10n.balance,
-            "${stats['balance']! < 0 ? '-' : ''}${_viewModel.formatCurrency(stats['balance']!.abs()).replaceAll('\$', '')}\$",
+            "${stats['balance']! < 0 ? '-' : ''}$symbol ${_viewModel.formatCurrency(stats['balance']!.abs())}",
             stats['balance']! >= 0
                 ? AppColors.secondaryColor
                 : AppColors.errorColor,
@@ -287,7 +295,7 @@ class _ReportPageState extends State<ReportPage> {
         ? CupertinoColors.activeGreen
         : CupertinoTheme.of(context).textTheme.textStyle.color!;
     final prefix = tx.isIncome ? "+" : "-";
-
+    final symbol = _viewModel.currencySymbol;
     final iconData = AppIcons.getIcon(tx.category.iconKey);
 
     return Container(
@@ -345,7 +353,7 @@ class _ReportPageState extends State<ReportPage> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                "$prefix${_viewModel.formatCurrency(tx.amount).replaceAll('\$', '')}",
+                "$prefix$symbol ${_viewModel.formatCurrency(tx.amount)}",
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,

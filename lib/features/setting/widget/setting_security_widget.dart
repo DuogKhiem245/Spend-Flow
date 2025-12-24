@@ -14,7 +14,7 @@ class SettingSecurityWidget extends StatefulWidget {
 }
 
 class _SettingSecurityWidgetState extends State<SettingSecurityWidget> {
-  final SettingViewmodel _viewModel = SettingViewmodel();
+  final SettingViewModel _viewModel = SettingViewModel();
 
   @override
   Widget build(BuildContext context) {

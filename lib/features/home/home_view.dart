@@ -1,11 +1,9 @@
 import 'dart:io';
-
 import 'package:cupertino_native/components/popup_menu_button.dart';
 import 'package:cupertino_native/style/button_style.dart';
 import 'package:cupertino_native/style/sf_symbol.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/core/services/daily_limit_service.dart';
@@ -18,6 +16,7 @@ import 'package:spend_flow/features/home/home_viewmodel.dart';
 import 'package:spend_flow/features/home/widgets/balance_card.dart';
 import 'package:spend_flow/features/home/widgets/home_header.dart';
 import 'package:spend_flow/features/home/widgets/recent_transaction.dart';
+import 'package:spend_flow/core/widgets/skeleton/skeleton_home_view.dart';
 import 'package:spend_flow/features/home/widgets/spending_chart.dart';
 import 'package:spend_flow/features/scan_receipt/scran_receipt_view.dart';
 import 'package:spend_flow/features/voice_input/voice_input_view.dart';
@@ -46,6 +45,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    _isLoading = true;
     _loadHomeData();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _checkPermissionStatus();
@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
         _chartData = chartData;
 
         _recentTransactions = recentTransactions;
-
+        
         _isLoading = false;
       });
     }
@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> {
     showCupertinoDialog(
       context: context,
       builder: (context) => CupertinoAlertDialog(
-        title: const Text("Limit Reached"), 
+        title: const Text("Limit Reached"),
         content: Text(
           "You have used $featureName $limit times today.\nPlease come back tomorrow or upgrade to Premium.",
         ),
@@ -138,63 +138,69 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
-    return CupertinoPageScaffold(
-      child: _isLoading
-          ? LoadingAnimationWidget.staggeredDotsWave(
-              color: CupertinoTheme.of(context).primaryColor,
-              size: 30.w,
-            )
-          : Stack(
-              children: [
-                Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).padding.top + 10.h,
-                        left: 16.w,
-                        right: 16.w,
-                        bottom: 10.h,
-                      ),
-                      color: CupertinoTheme.of(context).scaffoldBackgroundColor,
-                      child: HomeHeader(),
-                    ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        padding: EdgeInsets.only(
-                          left: 16.w,
-                          right: 16.w,
-                          top: 10.h,
-                          bottom: 100.h,
-                        ),
-                        child: Column(
-                          children: [
-                            BalanceCard(
-                              income: _income,
-                              expenses: _expenses,
-                              balance: _balance,
-                            ),
-                            SizedBox(height: 24.h),
-                            SpendingChart(chartData: _chartData),
-                            SizedBox(height: 24.h),
-                            RecentTransaction(
-                              transactions: _recentTransactions,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+    if (_isLoading) {
+      return CupertinoPageScaffold(
+        backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
+        child: const SkeletonHomeView(),
+      );
+    }
 
-                Positioned(
-                  right: 20.w,
-                  bottom: 100.h,
-                  child: Platform.isIOS
-                      ? _buildIOSFloatingButton(l10n)
-                      : _buildAndroidFloatingButton(l10n),
+    return CupertinoPageScaffold(
+      // child: _isLoading
+      //     ? LoadingAnimationWidget.staggeredDotsWave(
+      //         color: CupertinoTheme.of(context).primaryColor,
+      //         size: 30.w,
+      //       )
+      //     :
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              Container(
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).padding.top + 10.h,
+                  left: 16.w,
+                  right: 16.w,
+                  bottom: 10.h,
                 ),
-              ],
-            ),
+                color: CupertinoTheme.of(context).scaffoldBackgroundColor,
+                child: HomeHeader(),
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.only(
+                    left: 16.w,
+                    right: 16.w,
+                    top: 10.h,
+                    bottom: 100.h,
+                  ),
+                  child: Column(
+                    children: [
+                      BalanceCard(
+                        income: _income,
+                        expenses: _expenses,
+                        balance: _balance,
+                      ),
+                      SizedBox(height: 24.h),
+                      SpendingChart(chartData: _chartData),
+                      SizedBox(height: 24.h),
+                      RecentTransaction(transactions: _recentTransactions),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          Positioned(
+            right: 20.w,
+            bottom: 100.h,
+            child: Platform.isIOS
+                ? _buildIOSFloatingButton(l10n)
+                : _buildAndroidFloatingButton(l10n),
+          ),
+        ],
+      ),
     );
   }
 

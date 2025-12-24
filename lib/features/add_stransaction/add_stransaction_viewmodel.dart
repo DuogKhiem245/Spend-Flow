@@ -1,16 +1,31 @@
+import 'package:flutter/foundation.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import '../../core/model/category_model.dart';
 
-class AddStransactionViewmodel {
+class AddStransactionViewmodel extends ChangeNotifier {
   final LocalStorageService _storageService = LocalStorageService();
+
+  String _currencySymbol = '\$';
+  String get currencySymbol => _currencySymbol;
+
+  AddStransactionViewmodel() {
+    _loadCurrency();
+  }
+
+  Future<void> _loadCurrency() async {
+    final Map<String, String> currencyData = await _storageService
+        .getCurrency();
+    _currencySymbol = currencyData['symbol'] ?? '\$';
+    notifyListeners();
+  }
 
   Future<void> addExpenseTransaction(
     String amount,
     String name,
     CategoryModel? selectedCategory,
     DateTime? transactionDate,
-    String note,
+    String note,  
   ) async {
     if (selectedCategory == null) return;
 

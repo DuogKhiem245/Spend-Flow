@@ -43,6 +43,7 @@ dependencies:
   sign_in_with_apple: ^7.0.1
   cloud_firestore: ^6.1.1
   firebase_storage: ^13.0.5
+  shimmer: ^3.0.0
   
 dev_dependencies:
   flutter_test:

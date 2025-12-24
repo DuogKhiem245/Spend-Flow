@@ -185,7 +185,7 @@
   "no_budgets_yet": "No budgets yet",
   "create_budget_description": "Tap + to create a spending limit",
   "edit_budget": "Edit Budget",
-  "are_you_sure_delete_budget": "Are you sure you want to delete {budgetName}? \n This action cannot be undone.",
+  "are_you_sure_delete_budget": "Are you sure you want to delete {budgetName}?",
 
   "settings": "Settings",
   "settings_description": "Keep your finance data synced across all your devices",
@@ -285,5 +285,6 @@
   "select_currency": "Select Currency",
   "search_currency": "Search currency or country...",
   "popular": "Popular",
-  "all_currencies": "All Currencies"
+  "all_currencies": "All Currencies",
+  "currency_change_warning": "Changing currency will only update the display symbol. Past transaction rates will not be recalculated."
 }

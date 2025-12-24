@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/services/notification_service.dart';
 
-class NotificationViewmodel extends ChangeNotifier {
+class NotificationViewModel extends ChangeNotifier {
   bool _isNotificationsEnabled = false;
 
   bool get isNotificationsEnabled => _isNotificationsEnabled;

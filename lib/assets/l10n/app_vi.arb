@@ -185,7 +185,7 @@
   "no_budgets_yet": "Chưa có ngân sách nào",
   "create_budget_description": "Nhấn + để tạo giới hạn chi tiêu",
   "edit_budget": "Sửa ngân sách",
-  "are_you_sure_delete_budget": "Bạn có chắc muốn xóa ngân sách {budgetName}? \n Hành động này không thể hoàn tác.",
+  "are_you_sure_delete_budget": "Bạn có chắc muốn xóa ngân sách {budgetName}? \n",
 
   "settings": "Cài đặt",
   "settings_description": "Giữ dữ liệu tài chính luôn đồng bộ trên tất cả thiết bị của bạn",
@@ -205,7 +205,6 @@
   "terms": "Điều khoản & Điều kiện",
   "privacy_policy": "Chính sách quyền riêng tư",
   "version": "Phiên bản",
-
   "edit_profile": "Chỉnh sửa hồ sơ",
   "full_name": "Họ và tên",
   "enter_full_name": "Nhập họ và tên",
@@ -286,5 +285,6 @@
   "select_currency": "Chọn tiền tệ",
   "search_currency": "Tìm kiếm tiền tệ hoặc quốc gia...",
   "popular": "Phổ biến",
-  "all_currencies": "Tất cả tiền tệ"
+  "all_currencies": "Tất cả tiền tệ",
+  "currency_change_warning": "Thay đổi tiền tệ chỉ cập nhật ký hiệu hiển thị. Tỷ giá giao dịch trước đó sẽ không được tính toán lại."
 }

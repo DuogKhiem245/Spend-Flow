@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/core/data/currency_data.dart';
+import 'package:spend_flow/features/setting/setting_viewmodel.dart'; // <--- 1. Import ViewModel
 
 class CurrencyView extends StatefulWidget {
   const CurrencyView({super.key});
@@ -13,7 +14,7 @@ class CurrencyView extends StatefulWidget {
 }
 
 class _CurrencyViewState extends State<CurrencyView> {
-  String _selectedCurrencyCode = 'USD';
+  final _settingViewModel = SettingViewModel();
 
   final TextEditingController _searchController = TextEditingController();
   String _searchText = '';
@@ -71,6 +72,8 @@ class _CurrencyViewState extends State<CurrencyView> {
             ),
           ),
 
+          _buildWarningNote(context, l10n),
+
           Expanded(
             child: ListView(
               children: [
@@ -85,6 +88,42 @@ class _CurrencyViewState extends State<CurrencyView> {
                 ],
                 SizedBox(height: 40.h),
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildWarningNote(BuildContext context, AppLocalizations l10n) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+      padding: EdgeInsets.all(12.w),
+      decoration: BoxDecoration(
+        color: AppColors.warningColor.withValues(alpha: 0.15),
+        borderRadius: BorderRadius.circular(12.r),
+        border: Border.all(
+          color: AppColors.warningColor.withValues(alpha: 0.3),
+        ),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(
+            CupertinoIcons.exclamationmark_circle_fill,
+            color: AppColors.warningColor, 
+            size: 20.sp,
+          ),
+          SizedBox(width: 10.w),
+          Expanded(
+            child: Text(
+              l10n.currency_change_warning,
+              style: TextStyle(
+                fontSize: 13.sp,
+                fontWeight: FontWeight.w400,
+                height: 1.4, 
+                color: CupertinoTheme.of(context).textTheme.textStyle.color,
+              ),
             ),
           ),
         ],
@@ -127,14 +166,14 @@ class _CurrencyViewState extends State<CurrencyView> {
   }
 
   Widget _buildItem(Map<String, String> item, {bool isLast = false}) {
-    final isSelected = _selectedCurrencyCode == item['code'];
+    final isSelected = _settingViewModel.currentCurrencyCode == item['code'];
 
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedCurrencyCode = item['code']!;
-        });
-        // Todo: Lưu vào LocalStorage hoặc gọi Service update tiền tệ
+      onTap: () async {
+        await _settingViewModel.setCurrency(item['code']!);
+        setState(() {});
+        if (!mounted) return;
+        Navigator.pop(context);
       },
       child: Container(
         color: Colors.transparent,
@@ -146,19 +185,32 @@ class _CurrencyViewState extends State<CurrencyView> {
                 children: [
                   Text(item['flag']!, style: TextStyle(fontSize: 28.sp)),
                   SizedBox(width: 16.w),
-
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          item['code']!,
-                          style: TextStyle(
-                            color: CupertinoTheme.of(
-                              context,
-                            ).textTheme.textStyle.color,
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w600,
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: item['code']!,
+                                style: TextStyle(
+                                  color: CupertinoTheme.of(
+                                    context,
+                                  ).textTheme.textStyle.color,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              TextSpan(
+                                text: " (${item['symbol']})",
+                                style: TextStyle(
+                                  color: CupertinoColors.systemGrey,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         SizedBox(height: 2.h),
@@ -172,7 +224,6 @@ class _CurrencyViewState extends State<CurrencyView> {
                       ],
                     ),
                   ),
-
                   if (isSelected)
                     Icon(
                       CupertinoIcons.checkmark,

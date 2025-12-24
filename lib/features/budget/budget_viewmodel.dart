@@ -7,15 +7,42 @@ class BudgetViewModel extends ChangeNotifier {
   final LocalStorageService _storageService = LocalStorageService();
 
   List<BudgetModel> budgets = [];
-  bool isLoading = true; 
   DateTime currentMonth = DateTime.now(); 
 
+  String _currencySymbol = '\$';
+  String get currencySymbol => _currencySymbol;
+
+  bool _isLoading = true;
+  bool get isLoading => _isLoading;
+
   BudgetViewModel() {
-    loadBudgets();
+    _initData();
   }
 
-  Future<void> loadBudgets() async {
-    isLoading = true;
+  Future<void> _initData() async {
+    _isLoading = true;
+    notifyListeners();
+
+    await Future.delayed(const Duration(milliseconds: 300));
+
+    try {
+      await Future.wait([_loadCurrency(), _fetchBudgetsFromStorage()]);
+    } catch (e) {
+      debugPrint("Error initializing budget data: $e");
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> _loadCurrency() async {
+    final Map<String, String> currencyData = await _storageService.getCurrency();
+    _currencySymbol = currencyData['symbol'] ?? '\$';
+    notifyListeners();
+  }
+
+  Future<void> _fetchBudgetsFromStorage() async {
+    _isLoading = true;
     notifyListeners();
 
     try {
@@ -24,7 +51,7 @@ class BudgetViewModel extends ChangeNotifier {
       debugPrint("Error loading budgets: $e");
       budgets = [];
     } finally {
-      isLoading = false;
+      _isLoading = false;
       notifyListeners(); 
     }
   }
@@ -32,7 +59,7 @@ class BudgetViewModel extends ChangeNotifier {
   Future<void> deleteBudget(BudgetModel budget) async {
     await _storageService.deleteBudget(budget.id);
 
-    await loadBudgets();
+    await _fetchBudgetsFromStorage();
   }
 
   double get totalBudget => budgets.fold(0, (sum, item) => sum + item.total);
@@ -50,7 +77,7 @@ class BudgetViewModel extends ChangeNotifier {
 
   String formatCurrency(double amount) {
     final format = NumberFormat("#,##0", "en_US");
-    return "\$${format.format(amount)}";
+    return "$_currencySymbol${format.format(amount)}";
   }
 
   Color getProgressBarColor(double progress) {
@@ -61,6 +88,6 @@ class BudgetViewModel extends ChangeNotifier {
   }
 
   void refreshData() {
-    loadBudgets();
+    _fetchBudgetsFromStorage();
   }
 }

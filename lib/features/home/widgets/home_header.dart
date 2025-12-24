@@ -8,6 +8,7 @@ class HomeHeader extends StatelessWidget {
   HomeHeader({super.key});
 
   final HomeViewModel _viewModel = HomeViewModel();
+  
   @override
   Widget build(BuildContext context) {
     final greetingMessage = _viewModel.getGreetingMessage(context);

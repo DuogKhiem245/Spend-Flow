@@ -554,7 +554,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String are_you_sure_delete_budget(Object budgetName) {
-    return 'Bạn có chắc muốn xóa ngân sách $budgetName? \n Hành động này không thể hoàn tác.';
+    return 'Bạn có chắc muốn xóa ngân sách $budgetName? \n';
   }
 
   @override
@@ -849,4 +849,8 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get all_currencies => 'Tất cả tiền tệ';
+
+  @override
+  String get currency_change_warning =>
+      'Thay đổi tiền tệ chỉ cập nhật ký hiệu hiển thị. Tỷ giá giao dịch trước đó sẽ không được tính toán lại.';
 }

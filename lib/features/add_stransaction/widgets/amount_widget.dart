@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/core/utils/currency_formatter_helper.dart';
+import 'package:spend_flow/features/add_stransaction/add_stransaction_viewmodel.dart';
 
 class AmountWidget extends StatefulWidget {
   final TextEditingController amountController;
@@ -21,93 +22,98 @@ class AmountWidget extends StatefulWidget {
 }
 
 class _AmountWidgetState extends State<AmountWidget> {
+  final AddStransactionViewmodel _viewModel = AddStransactionViewmodel();
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          alignment: Alignment.centerLeft,
-          margin: EdgeInsets.symmetric(horizontal: 6.w),
-          child: Text(
-            l10n.amount,
-            style: TextStyle(
-              color: CupertinoTheme.of(
-                context,
-              ).textTheme.textStyle.color?.withValues(alpha: .7),
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-        SizedBox(height: 10.h),
-        Container(
-          width: double.infinity,
-          height: 100.h,
-          margin: EdgeInsets.symmetric(horizontal: 6.w),
-          decoration: BoxDecoration(
-            color: CupertinoTheme.of(context).barBackgroundColor,
-            borderRadius: BorderRadius.circular(30.r),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.boxShadow,
-                blurRadius: 10.r,
-                offset: Offset(0, 4.h),
-              ),
-            ],
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '\$',
+    return ListenableBuilder(
+      listenable: _viewModel,
+      builder: (context, child) {
+        final symbol = _viewModel.currencySymbol;
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              alignment: Alignment.centerLeft,
+              margin: EdgeInsets.symmetric(horizontal: 6.w),
+              child: Text(
+                l10n.amount,
                 style: TextStyle(
-                  fontSize: 40.sp,
-                  fontWeight: FontWeight.w700,
-                  color: widget.amountController.text.isEmpty
-                      ? widget.baseColor?.withValues(alpha: .7)
-                      : widget.baseColor,
+                  color: CupertinoTheme.of(
+                    context,
+                  ).textTheme.textStyle.color?.withValues(alpha: .7),
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
-              Expanded(
-                child: CupertinoTextField(
-                  controller: widget.amountController,
-                  onChanged: (value) {
-                    setState(() {});
-                    if (widget.onChanged != null) {
-                      widget.onChanged!(value);
-                    }
-                  },
-                  decoration: null,
-                  textAlign: TextAlign.end,
-                  cursorColor: CupertinoColors
-                      .transparent, 
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
+            ),
+            SizedBox(height: 10.h),
+            Container(
+              width: double.infinity,
+              height: 100.h,
+              margin: EdgeInsets.symmetric(horizontal: 6.w),
+              decoration: BoxDecoration(
+                color: CupertinoTheme.of(context).barBackgroundColor,
+                borderRadius: BorderRadius.circular(30.r),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.boxShadow,
+                    blurRadius: 10.r,
+                    offset: Offset(0, 4.h),
                   ),
-                  inputFormatters: [
-                    CurrencyInputFormatter(), 
-                  ],
-                  placeholder: '0,00',
-                  placeholderStyle: TextStyle(
-                    fontSize: 40.sp,
-                    fontWeight: FontWeight.w700,
-                    color: widget.baseColor?.withAlpha((0.7 * 255).toInt()),
-                  ),
-                  style: TextStyle(
-                    fontSize: 36.sp,
-                    fontWeight: FontWeight.w700,
-                    color: widget.baseColor,
-                  ),
-                ),
+                ],
               ),
-            ],
-          ),
-        ),
-      ],
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    symbol,
+                    style: TextStyle(
+                      fontSize: 40.sp,
+                      fontWeight: FontWeight.w700,
+                      color: widget.amountController.text.isEmpty
+                          ? widget.baseColor?.withValues(alpha: .7)
+                          : widget.baseColor,
+                    ),
+                  ),
+                  Expanded(
+                    child: CupertinoTextField(
+                      controller: widget.amountController,
+                      onChanged: (value) {
+                        setState(() {});
+                        if (widget.onChanged != null) {
+                          widget.onChanged!(value);
+                        }
+                      },
+                      decoration: null,
+                      textAlign: TextAlign.end,
+                      cursorColor: CupertinoColors.transparent,
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      inputFormatters: [CurrencyInputFormatter()],
+                      placeholder: '0,00',
+                      placeholderStyle: TextStyle(
+                        fontSize: 40.sp,
+                        fontWeight: FontWeight.w700,
+                        color: widget.baseColor?.withAlpha((0.7 * 255).toInt()),
+                      ),
+                      style: TextStyle(
+                        fontSize: 36.sp,
+                        fontWeight: FontWeight.w700,
+                        color: widget.baseColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

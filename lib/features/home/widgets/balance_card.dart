@@ -8,6 +8,7 @@ class BalanceCard extends StatelessWidget {
   final double income;
   final double expenses;
   final double balance;
+
   final HomeViewModel _viewModel = HomeViewModel();
 
   BalanceCard({
@@ -23,7 +24,7 @@ class BalanceCard extends StatelessWidget {
 
     final boxDecoration = BoxDecoration(
       color: CupertinoTheme.of(context).barBackgroundColor,
-      borderRadius: BorderRadius.circular(30.r), 
+      borderRadius: BorderRadius.circular(30.r),
       boxShadow: [
         BoxShadow(
           color: AppColors.boxShadow,
@@ -33,149 +34,161 @@ class BalanceCard extends StatelessWidget {
       ],
     );
 
-    return Column(
-      children: [
-        Container(
-          width: double.infinity,
-          padding: EdgeInsets.all(20.w),
-          decoration: boxDecoration,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                l10n.total_balance,
-                style: TextStyle(
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w500,
-                  color: CupertinoTheme.of(
-                    context,
-                  ).textTheme.textStyle.color?.withValues(alpha: .6),
-                ),
-              ),
-              SizedBox(height: 8.h),
-              Text(
-                "\$${_viewModel.formatCurrency(balance)}",
-                style: TextStyle(
-                  letterSpacing: 2,
-                  fontSize: 28.sp, 
-                  fontWeight: FontWeight.w700,
-                  color: balance >= 0
-                      ? AppColors.secondaryColor
-                      : AppColors.errorColor.withValues(alpha: .8),
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        SizedBox(height: 16.h),
-
-        Row(
+    return ListenableBuilder(
+      listenable: _viewModel,
+      builder: (context, child) {
+        final symbol = _viewModel.currencySymbol;
+        return Column(
           children: [
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.all(16.w),
-                decoration: boxDecoration,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(8.w),
-                          decoration: BoxDecoration(
-                            color: AppColors.secondaryColor.withAlpha(30), 
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            CupertinoIcons.arrow_up,
-                            color: AppColors.secondaryColor,
-                            size: 16.sp,
-                          ),
-                        ),
-                        SizedBox(width: 8.w),
-                        Text(
-                          l10n.income,
-                          style: TextStyle(
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.w500,
-                            color: CupertinoTheme.of(context).textTheme.textStyle.color?.withValues(alpha: .6),
-                          ),
-                        ),
-                      ],
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.all(20.w),
+              decoration: boxDecoration,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    l10n.total_balance,
+                    style: TextStyle(
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.w500,
+                      color: CupertinoTheme.of(
+                        context,
+                      ).textTheme.textStyle.color?.withValues(alpha: .6),
                     ),
-                    SizedBox(height: 12.h),
-                    Text(
-                      "\$${_viewModel.formatCompactCurrency(income)}",
-                      style: TextStyle(
-                        fontSize: 24.sp,
-                        letterSpacing: 2,
-                        fontWeight: FontWeight.bold,
-                        color: CupertinoTheme.of(
-                          context,
-                        ).textTheme.textStyle.color,
-                      ),
+                  ),
+                  SizedBox(height: 8.h),
+                  Text(
+                    "$symbol ${_viewModel.formatCurrency(balance)}",
+                    style: TextStyle(
+                      letterSpacing: 2,
+                      fontSize: 28.sp,
+                      fontWeight: FontWeight.w700,
+                      color: balance >= 0
+                          ? AppColors.secondaryColor
+                          : AppColors.errorColor.withValues(alpha: .8),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
 
-            SizedBox(width: 16.w), 
-            
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.all(16.w),
-                decoration: boxDecoration,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+            SizedBox(height: 16.h),
+
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.all(16.w),
+                    decoration: boxDecoration,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          padding: EdgeInsets.all(8.w),
-                          decoration: BoxDecoration(
-                            color: AppColors.errorColor.withAlpha(30), 
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            CupertinoIcons.arrow_down,
-                            color: AppColors.errorColor,
-                            size: 16.sp,
-                          ),
+                        Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(8.w),
+                              decoration: BoxDecoration(
+                                color: AppColors.secondaryColor.withAlpha(30),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                CupertinoIcons.arrow_up,
+                                color: AppColors.secondaryColor,
+                                size: 16.sp,
+                              ),
+                            ),
+                            SizedBox(width: 8.w),
+                            Text(
+                              l10n.income,
+                              style: TextStyle(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w500,
+                                color: CupertinoTheme.of(context)
+                                    .textTheme
+                                    .textStyle
+                                    .color
+                                    ?.withValues(alpha: .6),
+                              ),
+                            ),
+                          ],
                         ),
-                        SizedBox(width: 8.w),
+                        SizedBox(height: 12.h),
                         Text(
-                          l10n.expenses,
+                          "$symbol ${_viewModel.formatCompactCurrency(income)}",
                           style: TextStyle(
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.w500,
+                            fontSize: 24.sp,
+                            letterSpacing: 2,
+                            fontWeight: FontWeight.bold,
                             color: CupertinoTheme.of(
                               context,
-                            ).textTheme.textStyle.color?.withValues(alpha: .6),
+                            ).textTheme.textStyle.color,
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 12.h),
-                    Text(
-                      "\$${_viewModel.formatCompactCurrency(expenses)}",
-                      style: TextStyle(
-                        fontSize: 24.sp,
-                        letterSpacing: 2,
-                        fontWeight: FontWeight.bold,
-                        color: CupertinoTheme.of(
-                          context,
-                        ).textTheme.textStyle.color,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+
+                SizedBox(width: 16.w),
+
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.all(16.w),
+                    decoration: boxDecoration,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(8.w),
+                              decoration: BoxDecoration(
+                                color: AppColors.errorColor.withAlpha(30),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                CupertinoIcons.arrow_down,
+                                color: AppColors.errorColor,
+                                size: 16.sp,
+                              ),
+                            ),
+                            SizedBox(width: 8.w),
+                            Text(
+                              l10n.expenses,
+                              style: TextStyle(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w500,
+                                color: CupertinoTheme.of(context)
+                                    .textTheme
+                                    .textStyle
+                                    .color
+                                    ?.withValues(alpha: .6),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 12.h),
+                        Text(
+                          "$symbol ${_viewModel.formatCompactCurrency(expenses)}",
+                          style: TextStyle(
+                            fontSize: 24.sp,
+                            letterSpacing: 2,
+                            fontWeight: FontWeight.bold,
+                            color: CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.color,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
-        ),
-      ],
+        );
+      },
     );
   }
 }

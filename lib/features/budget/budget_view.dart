@@ -10,6 +10,7 @@ import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
 import 'package:spend_flow/core/utils/category_helper.dart';
+import 'package:spend_flow/core/widgets/skeleton/skeleton_budget_view.dart';
 import 'package:spend_flow/features/budget/add_budget/add_budget_view.dart';
 import 'budget_model.dart';
 import 'budget_viewmodel.dart';
@@ -41,65 +42,67 @@ class _BudgetPageState extends State<BudgetPage> {
       builder: (context, child) {
         return CupertinoPageScaffold(
           child: SafeArea(
-            child: Stack(
-              children: [
-                Column(
-                  children: [
-                    _buildTotalBudgetCard(l10n),
-                    SizedBox(height: 24.h),
+            child: _viewModel.isLoading
+                ? const SkeletonBudgetView()
+                : Stack(
+                    children: [
+                      Column(
+                        children: [
+                          _buildTotalBudgetCard(l10n),
+                          SizedBox(height: 24.h),
+                          Expanded(
+                            child: SingleChildScrollView(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16.w,
+                                vertical: 10.h,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    l10n.categories,
+                                    style: TextStyle(
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: CupertinoTheme.of(
+                                        context,
+                                      ).textTheme.textStyle.color,
+                                    ),
+                                  ),
+                                  SizedBox(height: 12.h),
 
-                    Expanded(
-                      child: SingleChildScrollView(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16.w,
-                          vertical: 10.h,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              l10n.categories,
-                              style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold,
-                                color: CupertinoTheme.of(
-                                  context,
-                                ).textTheme.textStyle.color,
+                                  if (_viewModel.isLoading)
+                                    Center(
+                                      child: Padding(
+                                        padding: EdgeInsets.only(top: 50.h),
+                                        child:
+                                            const CupertinoActivityIndicator(),
+                                      ),
+                                    )
+                                  else if (_viewModel.budgets.isEmpty)
+                                    _buildEmptyState(l10n)
+                                  else
+                                    ..._viewModel.budgets.map(
+                                      (e) => _buildCategoryCard(e),
+                                    ),
+
+                                  SizedBox(height: 80.h),
+                                ],
                               ),
                             ),
-                            SizedBox(height: 12.h),
-
-                            if (_viewModel.isLoading)
-                              Center(
-                                child: Padding(
-                                  padding: EdgeInsets.only(top: 50.h),
-                                  child: const CupertinoActivityIndicator(),
-                                ),
-                              )
-                            else if (_viewModel.budgets.isEmpty)
-                              _buildEmptyState(l10n)
-                            else
-                              ..._viewModel.budgets.map(
-                                (e) => _buildCategoryCard(e),
-                              ),
-
-                            SizedBox(height: 80.h),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
 
-                Positioned(
-                  right: 20.w,
-                  bottom: 75.h,
-                  child: Platform.isIOS
-                      ? _buildIOSAddButton()
-                      : _buildAndroidAddButton(),
-                ),
-              ],
-            ),
+                      Positioned(
+                        right: 20.w,
+                        bottom: 75.h,
+                        child: Platform.isIOS
+                            ? _buildIOSAddButton()
+                            : _buildAndroidAddButton(),
+                      ),
+                    ],
+                  ),
           ),
         );
       },
@@ -127,13 +130,8 @@ class _BudgetPageState extends State<BudgetPage> {
         decoration: BoxDecoration(
           color: CupertinoTheme.of(context).primaryColor,
           shape: BoxShape.circle,
-          
         ),
-        child: Icon(
-          CupertinoIcons.add, 
-          color: Colors.white,
-          size: 30.sp,
-        ),
+        child: Icon(CupertinoIcons.add, color: Colors.white, size: 30.sp),
       ),
     );
   }
@@ -415,12 +413,11 @@ class _BudgetPageState extends State<BudgetPage> {
       context: context,
       builder: (ctx) => CupertinoAlertDialog(
         title: Text(l10n.delete),
-        content: Text(l10n.are_you_sure_delete_budget(
-          CategoryHelper.getTranslatedName(
-            context,
-            budget.category,
+        content: Text(
+          l10n.are_you_sure_delete_budget(
+            CategoryHelper.getTranslatedName(context, budget.category),
           ),
-        )),
+        ),
         actions: [
           CupertinoDialogAction(
             child: Text(l10n.cancel),
@@ -431,7 +428,6 @@ class _BudgetPageState extends State<BudgetPage> {
             child: Text(l10n.delete),
             onPressed: () async {
               Navigator.pop(ctx);
-
               await _viewModel.deleteBudget(budget);
             },
           ),

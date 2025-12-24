@@ -1151,7 +1151,7 @@ abstract class AppLocalizations {
   /// No description provided for @are_you_sure_delete_budget.
   ///
   /// In vi, this message translates to:
-  /// **'Bạn có chắc muốn xóa ngân sách {budgetName}? \n Hành động này không thể hoàn tác.'**
+  /// **'Bạn có chắc muốn xóa ngân sách {budgetName}? \n'**
   String are_you_sure_delete_budget(Object budgetName);
 
   /// No description provided for @settings.
@@ -1717,6 +1717,12 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Tất cả tiền tệ'**
   String get all_currencies;
+
+  /// No description provided for @currency_change_warning.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thay đổi tiền tệ chỉ cập nhật ký hiệu hiển thị. Tỷ giá giao dịch trước đó sẽ không được tính toán lại.'**
+  String get currency_change_warning;
 }
 
 class _AppLocalizationsDelegate

@@ -10,6 +10,9 @@ class TransactionModel {
   final String note;
   final bool isIncome;
 
+  final String currency; 
+  final double exchangeRate;
+
   TransactionModel({
     String?
     id, 
@@ -19,17 +22,23 @@ class TransactionModel {
     required this.date,
     required this.note,
     required this.isIncome,
+    this.currency = 'USD',
+    this.exchangeRate = 1.0,
   }) : id = id ?? const Uuid().v4(); 
+
+  double get valueInBaseCurrency => amount * exchangeRate;
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id, // Lưu ID vào map
+      'id': id, 
       'amount': amount,
       'title': title,
       'note': note,
       'date': date.toIso8601String(),
       'category': category.toMap(),
       'isIncome': isIncome,
+      'currency': currency,
+      'exchangeRate': exchangeRate,
     };
   }
 
@@ -42,6 +51,8 @@ class TransactionModel {
       date: DateTime.parse(map['date']),
       category: CategoryModel.fromMap(map['category']),
       isIncome: map['isIncome'],
+      currency: map['currency'],
+      exchangeRate: map['exchangeRate'],
     );
   }
 }

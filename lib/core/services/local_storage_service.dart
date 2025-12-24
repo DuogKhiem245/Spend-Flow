@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast_io.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/core/data/category_data.dart';
+import 'package:spend_flow/core/data/currency_data.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/core/model/category_model.dart';
 import 'package:spend_flow/features/budget/budget_model.dart'; 
@@ -48,6 +49,7 @@ class LocalStorageService {
   }
 
   static const String _kNotificationKey = 'is_notification_enabled';
+  static const String _kCurrencyCodeKey ='selected_currency_code'; 
 
   Future<bool> getNotificationStatus() async {
     final prefs = await SharedPreferences.getInstance();
@@ -57,6 +59,29 @@ class LocalStorageService {
   Future<void> saveNotificationStatus(bool isEnabled) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_kNotificationKey, isEnabled);
+  }
+
+  Future<void> saveCurrencyCode(String code) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_kCurrencyCodeKey, code);
+  }
+
+  Future<Map<String, String>> getCurrency() async {
+    final prefs = await SharedPreferences.getInstance();
+    
+    final String savedCode = prefs.getString(_kCurrencyCodeKey) ?? 'USD';
+
+    final allCurrencies = [
+      ...CurrencyData().popularList,
+      ...CurrencyData().allList
+    ];
+
+    final currency = allCurrencies.firstWhere(
+      (element) => element['code'] == savedCode,
+      orElse: () => CurrencyData().popularList[0], 
+    );
+
+    return currency; 
   }
 
   // ============================================================

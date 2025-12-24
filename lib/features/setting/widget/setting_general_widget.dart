@@ -6,8 +6,10 @@ import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/core/data/language_data.dart';
 import 'package:spend_flow/core/services/language_service.dart';
+import 'package:spend_flow/features/setting/currency/currency_view.dart';
 import 'package:spend_flow/features/setting/language/language_view.dart';
 import 'package:spend_flow/features/setting/notification/notification_viewmodel.dart';
+import 'package:spend_flow/features/setting/setting_viewmodel.dart';
 import 'package:spend_flow/main.dart' show themeService;
 
 class SettingGeneralWidget extends StatefulWidget {
@@ -18,7 +20,8 @@ class SettingGeneralWidget extends StatefulWidget {
 }
 
 class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
-  final NotificationViewmodel _viewModel = NotificationViewmodel();
+  final NotificationViewModel _viewModel = NotificationViewModel();
+  final SettingViewModel _settingViewModel = SettingViewModel();
 
   static final List<Map<String, String>> _allLanguages =
       LanguageData.allLanguages;
@@ -104,18 +107,28 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
           ),
         ),
 
-        // _SettingItem(
-        //   title: l10n.currency,
-        //   icon: CupertinoIcons.money_dollar_circle_fill,
-        //   iconBgColor: const Color(0xFF21C55E),
-        //   onTap: () {
-        //     Navigator.push(
-        //       context,
-        //       CupertinoPageRoute(builder: (context) => const CurrencyView()),
-        //     );
-        //   },
-        //   trailing: _buildTextTrailing(context, 'USD'),
-        // ),
+        ListenableBuilder(
+          listenable: _settingViewModel, 
+          builder: (context, child) {
+            return _SettingItem(
+              title: l10n.currency,
+              icon: CupertinoIcons.money_dollar_circle_fill,
+              iconBgColor: const Color(0xFF21C55E),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) => const CurrencyView(),
+                  ),
+                );
+              },
+              trailing: _buildTextTrailing(
+                context,
+                _settingViewModel.currentCurrencyCode,
+              ),
+            );
+          },
+        ),
       ],
     );
   }

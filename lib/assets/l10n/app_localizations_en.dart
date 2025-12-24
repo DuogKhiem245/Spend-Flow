@@ -555,7 +555,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String are_you_sure_delete_budget(Object budgetName) {
-    return 'Are you sure you want to delete $budgetName? \n This action cannot be undone.';
+    return 'Are you sure you want to delete $budgetName?';
   }
 
   @override
@@ -849,4 +849,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get all_currencies => 'All Currencies';
+
+  @override
+  String get currency_change_warning =>
+      'Changing currency will only update the display symbol. Past transaction rates will not be recalculated.';
 }

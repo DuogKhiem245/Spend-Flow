@@ -5,6 +5,7 @@ import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/features/auth/view/login_view.dart';
 import 'package:spend_flow/features/setting/profile/profile_view.dart';
+import 'package:spend_flow/features/setting/setting_viewmodel.dart';
 
 class AccountWidget extends StatelessWidget {
   final User? currentUser;
@@ -15,8 +16,6 @@ class AccountWidget extends StatelessWidget {
     required this.currentUser,
     this.isLoading = false,
   });
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +100,7 @@ class AccountWidget extends StatelessWidget {
   }
 
   Widget _buildUserView(AppLocalizations l10n, BuildContext context) {
-    final String displayName = currentUser?.displayName ?? l10n.user;
+    final String displayName = currentUser?.displayName ?? SettingViewModel().getGreetingMessage(context);
     final String email = currentUser!.email!;
     final String? photoUrl = currentUser?.photoURL;
 
@@ -244,7 +243,7 @@ class AccountWidget extends StatelessWidget {
                         style: CupertinoTheme.of(context).textTheme.textStyle
                             .copyWith(
                               fontSize: 13.sp,
-                              height: 1.4, // Giãn dòng đẹp
+                              height: 1.4, 
                               fontWeight: FontWeight.w500,
                               color: CupertinoTheme.of(
                                 context,
