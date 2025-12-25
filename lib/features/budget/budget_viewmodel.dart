@@ -7,13 +7,25 @@ class BudgetViewModel extends ChangeNotifier {
   final LocalStorageService _storageService = LocalStorageService();
 
   List<BudgetModel> budgets = [];
-  DateTime currentMonth = DateTime.now(); 
+
+  DateTime selectedMonth = DateTime.now();
 
   String _currencySymbol = '\$';
   String get currencySymbol => _currencySymbol;
 
   bool _isLoading = true;
   bool get isLoading => _isLoading;
+
+  bool get canEdit {
+    final now = DateTime.now();
+    final currentMonthStart = DateTime(now.year, now.month);
+    final selectedMonthStart = DateTime(
+      selectedMonth.year,
+      selectedMonth.month,
+    );
+
+    return !selectedMonthStart.isBefore(currentMonthStart);
+  }
 
   BudgetViewModel() {
     _initData();
@@ -36,9 +48,9 @@ class BudgetViewModel extends ChangeNotifier {
   }
 
   Future<void> _loadCurrency() async {
-    final Map<String, String> currencyData = await _storageService.getCurrency();
+    final Map<String, String> currencyData = await _storageService
+        .getCurrency();
     _currencySymbol = currencyData['symbol'] ?? '\$';
-    notifyListeners();
   }
 
   Future<void> _fetchBudgetsFromStorage() async {
@@ -46,19 +58,20 @@ class BudgetViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      budgets = await _storageService.getBudgetsForMonth(currentMonth);
+      budgets = await _storageService.getBudgetsForMonth(selectedMonth);
     } catch (e) {
       debugPrint("Error loading budgets: $e");
       budgets = [];
     } finally {
       _isLoading = false;
-      notifyListeners(); 
+      notifyListeners();
     }
   }
 
   Future<void> deleteBudget(BudgetModel budget) async {
-    await _storageService.deleteBudget(budget.id);
+    if (!canEdit) return;
 
+    await _storageService.deleteBudget(budget.id);
     await _fetchBudgetsFromStorage();
   }
 
@@ -67,7 +80,7 @@ class BudgetViewModel extends ChangeNotifier {
 
   double get totalRemaining {
     final remaining = totalBudget - totalSpent;
-    return remaining < 0 ? 0 : remaining; 
+    return remaining < 0 ? 0 : remaining;
   }
 
   double get totalProgress {
@@ -84,10 +97,25 @@ class BudgetViewModel extends ChangeNotifier {
     if (progress >= 1.0) return Colors.red;
     if (progress >= 0.8) return Colors.orange;
     if (progress >= 0.5) return Colors.amber;
-    return Colors.green; 
+    return Colors.green;
   }
 
   void refreshData() {
+    _fetchBudgetsFromStorage();
+  }
+
+  void nextMonth() {
+    selectedMonth = DateTime(selectedMonth.year, selectedMonth.month + 1);
+    _fetchBudgetsFromStorage();
+  }
+
+  void previousMonth() {
+    selectedMonth = DateTime(selectedMonth.year, selectedMonth.month - 1);
+    _fetchBudgetsFromStorage();
+  }
+
+  void setMonth(DateTime date) {
+    selectedMonth = DateTime(date.year, date.month, 1);
     _fetchBudgetsFromStorage();
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:timezone/data/latest_10y.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -15,14 +16,37 @@ class NotificationService {
   Future<void> init() async {
     tz.initializeTimeZones();
 
-    final dynamic tmpName = await FlutterTimezone.getLocalTimezone();
-    final String timeZoneName = tmpName.toString();
+    String timeZoneName;
+    try {
+      final timezoneInfo = await FlutterTimezone.getLocalTimezone();
+      final String rawTimezone = timezoneInfo.identifier;      
+
+      timeZoneName = rawTimezone;
+    } catch (e) {
+      debugPrint("Error getting local timezone: $e, using fallback America/New_York.");
+      timeZoneName = 'America/New_York';
+    }
 
     try {
+      final regex = RegExp(r'([A-Za-z]+/[A-Za-z_]+)');
+      final match = regex.firstMatch(timeZoneName);
+
+      if (match != null) {
+        timeZoneName = match.group(0)!; 
+      }
+
       tz.setLocalLocation(tz.getLocation(timeZoneName));
+      debugPrint("Successfully set timezone: $timeZoneName");
     } catch (e) {
-      debugPrint("Không tìm thấy múi giờ '$timeZoneName', dùng mặc định UTC");
-      tz.setLocalLocation(tz.getLocation('UTC'));
+      debugPrint(
+        "Error setting timezone '$timeZoneName'. Using fallback Asia/Ho_Chi_Minh.",
+      );
+
+      try {
+        tz.setLocalLocation(tz.getLocation('Asia/Ho_Chi_Minh'));
+      } catch (_) {
+        tz.setLocalLocation(tz.getLocation('UTC'));
+      }
     }
 
     const AndroidInitializationSettings initializationSettingsAndroid =
@@ -74,17 +98,18 @@ class NotificationService {
     return (isAndroidGranted ?? false) || (isIOSGranted ?? false);
   }
 
- Future<void> scheduleDailyNotification() async {
+ Future<void> scheduleDailyNotification(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
     await flutterLocalNotificationsPlugin.zonedSchedule(
       0,
-      'Nhắc nhở chi tiêu',
-      'Bạn đã ghi chép chi tiêu hôm nay chưa? 💸',
+      l10n.reminder_title,
+      l10n.reminder_body,
       _nextInstanceOf8PM(),
       const NotificationDetails(
         android: AndroidNotificationDetails(
           'daily_reminder_channel',
           'Daily Reminders',
-          channelDescription: 'Nhắc nhở ghi chép chi tiêu hàng ngày',
+          channelDescription: 'Daily reminders to log your expenses',
           importance: Importance.max,
           priority: Priority.high,
         ),
@@ -92,6 +117,7 @@ class NotificationService {
       ),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       matchDateTimeComponents: DateTimeComponents.time,
+      
     );
   }
 
@@ -107,7 +133,7 @@ class NotificationService {
       now.year,
       now.month,
       now.day,
-      20,
+      17,
       00,
     );
 

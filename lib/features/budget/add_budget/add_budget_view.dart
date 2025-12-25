@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/model/category_model.dart';
-import 'package:spend_flow/features/add_stransaction/widgets/amount_widget.dart';
-import 'package:spend_flow/features/add_stransaction/widgets/suggest_category_widget.dart';
+import 'package:spend_flow/features/transaction/add_transaction/widgets/amount_widget.dart';
+import 'package:spend_flow/features/transaction/add_transaction/widgets/suggest_category_widget.dart';
 import 'package:spend_flow/features/budget/add_budget/add_budget_viewmodel.dart';
 import 'package:spend_flow/features/budget/budget_model.dart';
 
@@ -89,6 +89,7 @@ class _AddBudgetViewState extends State<AddBudgetView> {
                         baseColor: baseColor,
                         transactionDate: _selectedDate,
                         isMonthPicker: true,
+                        setMinDate: true,
                         onCategoryChanged: (CategoryModel category) {
                           setState(() {
                             _selectedCategory = category;

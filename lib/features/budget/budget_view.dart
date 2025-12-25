@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:intl/intl.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
@@ -48,6 +49,8 @@ class _BudgetPageState extends State<BudgetPage> {
                     children: [
                       Column(
                         children: [
+                          _buildHeader(l10n),
+                          SizedBox(height: 20.h),
                           _buildTotalBudgetCard(l10n),
                           SizedBox(height: 24.h),
                           Expanded(
@@ -254,6 +257,7 @@ class _BudgetPageState extends State<BudgetPage> {
       padding: EdgeInsets.only(bottom: 16.h),
       child: Slidable(
         key: ValueKey(budget.id),
+        enabled: _viewModel.canEdit,
         endActionPane: ActionPane(
           motion: const ScrollMotion(),
           extentRatio: 0.30,
@@ -305,10 +309,10 @@ class _BudgetPageState extends State<BudgetPage> {
         ),
 
         child: Container(
-          padding: EdgeInsets.all(16.w),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
           decoration: BoxDecoration(
             color: CupertinoTheme.of(context).barBackgroundColor,
-            borderRadius: BorderRadius.circular(20.r),
+            borderRadius: BorderRadius.circular(30.r),
             boxShadow: [
               BoxShadow(
                 color: AppColors.boxShadow,
@@ -456,6 +460,148 @@ class _BudgetPageState extends State<BudgetPage> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildHeader(AppLocalizations l10n) {
+    final String locale = Localizations.localeOf(context).toString();
+
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              _buildCircleButton(
+                icon: CupertinoIcons.chevron_left,
+                onTap: _viewModel.previousMonth,
+              ),
+              SizedBox(width: 15.w),
+              SizedBox(
+                width: 130.w,
+                child: Column(
+                  children: [
+                    Text(
+                      toBeginningOfSentenceCase(
+                            DateFormat(
+                              'MMMM',
+                              locale,
+                            ).format(_viewModel.selectedMonth),
+                          ) ??
+                          '',
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w700,
+                        color: CupertinoTheme.of(
+                          context,
+                        ).textTheme.textStyle.color,
+                      ),
+                    ),
+
+                    Text(
+                      DateFormat(
+                        'yyyy',
+                        locale,
+                      ).format(_viewModel.selectedMonth),
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        color: CupertinoTheme.of(
+                          context,
+                        ).textTheme.textStyle.color?.withValues(alpha: .6),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: 15.w),
+              _buildCircleButton(
+                icon: CupertinoIcons.chevron_right,
+                onTap: _viewModel.nextMonth,
+              ),
+            ],
+          ),
+          GestureDetector(
+            onTap: () {
+              _showDatePicker(context, l10n);
+            },
+            child: Icon(
+              CupertinoIcons.calendar_today,
+              color: CupertinoColors.activeBlue,
+              size: 24.sp,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCircleButton({
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 32.w,
+        height: 32.w,
+        decoration: BoxDecoration(
+          color: CupertinoTheme.of(context).barBackgroundColor,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          icon,
+          size: 16.sp,
+          color: CupertinoTheme.of(context).textTheme.textStyle.color,
+        ),
+      ),
+    );
+  }
+
+  void _showDatePicker(BuildContext context, AppLocalizations l10n) {
+    DateTime tempDate = _viewModel.selectedMonth;
+
+    showCupertinoModalPopup(
+      context: context,
+      builder: (ctx) {
+        return Container(
+          height: 300.h,
+          color: CupertinoTheme.of(context).scaffoldBackgroundColor,
+          child: Column(
+            children: [
+              Container(
+                height: 50.h,
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                alignment: Alignment.centerRight,
+                child: GestureDetector(
+                  onTap: () {
+                    _viewModel.setMonth(tempDate);
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    l10n.done,
+                    style: TextStyle(
+                      color: CupertinoTheme.of(context).primaryColor,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: CupertinoDatePicker(
+                  mode: CupertinoDatePickerMode.monthYear,
+                  initialDateTime: _viewModel.selectedMonth,
+                  minimumDate: DateTime(2000),
+                  onDateTimeChanged: (newDate) {
+                    tempDate = newDate;
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/widgets/loading_overlay.dart';
-import 'package:spend_flow/features/add_stransaction/add_stransaction_viewmodel.dart';
+import 'package:spend_flow/features/transaction/add_transaction/add_transaction_viewmodel.dart';
 import 'package:spend_flow/core/model/category_model.dart';
-import 'package:spend_flow/features/add_stransaction/widgets/amount_widget.dart';
-import 'package:spend_flow/features/add_stransaction/widgets/name_stransaction_widget.dart';
-import 'package:spend_flow/features/add_stransaction/widgets/note_widget.dart';
-import 'package:spend_flow/features/add_stransaction/widgets/suggest_category_widget.dart';
+import 'package:spend_flow/features/transaction/add_transaction/widgets/amount_widget.dart';
+import 'package:spend_flow/features/transaction/add_transaction/widgets/name_stransaction_widget.dart';
+import 'package:spend_flow/features/transaction/add_transaction/widgets/note_widget.dart';
+import 'package:spend_flow/features/transaction/add_transaction/widgets/suggest_category_widget.dart';
 
 class AddTransactionPage extends StatefulWidget {
   const AddTransactionPage({super.key});
@@ -18,7 +18,7 @@ class AddTransactionPage extends StatefulWidget {
 }
 
 class _AddTransactionPageState extends State<AddTransactionPage> {
-  final AddStransactionViewmodel _viewModel = AddStransactionViewmodel();
+  final AddTransactionViewmodel _viewModel = AddTransactionViewmodel();
 
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
@@ -166,7 +166,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                                         if (!context.mounted) return;
                                         Navigator.pop(context);
                                       } catch (e) {
-                                        debugPrint("Lỗi thêm giao dịch: $e");
+                                        debugPrint("Error add transaction: $e");
                                       } finally {
                                         if (mounted) {
                                           setState(() {

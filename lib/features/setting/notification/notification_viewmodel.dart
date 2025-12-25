@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/services/notification_service.dart';
 
@@ -14,7 +13,7 @@ class NotificationViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> toggleNotification(bool value) async {
+  Future<void> toggleNotification(bool value, BuildContext context) async {
     final service = NotificationService();
 
     _isNotificationsEnabled = value;
@@ -25,7 +24,8 @@ class NotificationViewModel extends ChangeNotifier {
     if (value) {
       final granted = await service.requestPermissions();
       if (granted) {
-        await service.scheduleDailyNotification();
+        if (!context.mounted) return;
+        await service.scheduleDailyNotification(context);
       } else {
         _isNotificationsEnabled = false;
         notifyListeners();

@@ -785,7 +785,7 @@ abstract class AppLocalizations {
   /// No description provided for @are_you_sure_delete_category.
   ///
   /// In vi, this message translates to:
-  /// **'Bạn có chắc chắn muốn xóa danh mục {categoryName}? \n Hành động này không thể hoàn tác.'**
+  /// **'Bạn có chắc chắn muốn xóa danh mục {categoryName}?'**
   String are_you_sure_delete_category(Object categoryName);
 
   /// No description provided for @system_category.
@@ -1063,6 +1063,18 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Thêm thủ công'**
   String get add_manually;
+
+  /// No description provided for @limit_reached.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã đạt giới hạn'**
+  String get limit_reached;
+
+  /// No description provided for @limit_reached_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn đã sử dụng {featureName} {limit} lần hôm nay.\nVui lòng quay lại vào ngày mai hoặc nâng cấp lên Premium.'**
+  String limit_reached_description(Object featureName, Object limit);
 
   /// No description provided for @align_receipt.
   ///
@@ -1723,6 +1735,24 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Thay đổi tiền tệ chỉ cập nhật ký hiệu hiển thị. Tỷ giá giao dịch trước đó sẽ không được tính toán lại.'**
   String get currency_change_warning;
+
+  /// No description provided for @card.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thẻ'**
+  String get card;
+
+  /// No description provided for @reminder_title.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhắc nhở chi tiêu hàng ngày'**
+  String get reminder_title;
+
+  /// No description provided for @reminder_body.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn đã ghi chép chi tiêu hôm nay chưa? 💸'**
+  String get reminder_body;
 }
 
 class _AppLocalizationsDelegate

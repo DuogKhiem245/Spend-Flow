@@ -11,7 +11,7 @@ class CategoryModel {
   final bool isCustom;
 
   CategoryModel({
-    String? id, 
+    String? id,
     required this.name,
     this.l10nKey,
     required this.iconKey,
@@ -19,6 +19,26 @@ class CategoryModel {
     this.count = 0,
     this.isCustom = false,
   }) : id = id ?? const Uuid().v4();
+
+  CategoryModel copyWith({
+    String? id,
+    String? name,
+    String? l10nKey,
+    String? iconKey,
+    Color? color,
+    int? count,
+    bool? isCustom,
+  }) {
+    return CategoryModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      l10nKey: l10nKey ?? this.l10nKey,
+      iconKey: iconKey ?? this.iconKey,
+      color: color ?? this.color,
+      count: count ?? this.count,
+      isCustom: isCustom ?? this.isCustom,
+    );
+  }
 
   Map<String, dynamic> toMap() {
     return {

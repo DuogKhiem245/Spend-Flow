@@ -118,7 +118,7 @@
   "categories": "Danh mục",
   "select_category": "Chọn danh mục",
   "edit_category": "Chỉnh sửa danh mục",
-  "are_you_sure_delete_category": "Bạn có chắc chắn muốn xóa danh mục {categoryName}? \n Hành động này không thể hoàn tác.",
+  "are_you_sure_delete_category": "Bạn có chắc chắn muốn xóa danh mục {categoryName}?",
   "system_category": "Danh mục hệ thống không thể xóa.",
   "system_category_description": "Bạn không thể chỉnh sửa hoặc xóa danh mục mặc định này.",
 
@@ -167,6 +167,8 @@
   "scan_receipt": "Quét hóa đơn",
   "add_via_voice": "Thêm bằng giọng nói",
   "add_manually": "Thêm thủ công",
+  "limit_reached": "Đã đạt giới hạn",
+  "limit_reached_description": "Bạn đã sử dụng {featureName} {limit} lần hôm nay.\nVui lòng quay lại vào ngày mai hoặc nâng cấp lên Premium.",
 
   "align_receipt": "Căn chỉnh hóa đơn của bạn vào khung",
 
@@ -174,7 +176,7 @@
   "voice_example": "Ví dụ: Tôi đã chi 50 đô la cho thực phẩm",
   "tap_to_stop": "Chạm để dừng",
   "tap_to_listen": "Chạm để nghe",
-
+  
   "yesterday": "Hôm qua",
 
   "your_monthly_budget": "Ngân sách hàng tháng của bạn",
@@ -286,5 +288,10 @@
   "search_currency": "Tìm kiếm tiền tệ hoặc quốc gia...",
   "popular": "Phổ biến",
   "all_currencies": "Tất cả tiền tệ",
-  "currency_change_warning": "Thay đổi tiền tệ chỉ cập nhật ký hiệu hiển thị. Tỷ giá giao dịch trước đó sẽ không được tính toán lại."
+  "currency_change_warning": "Thay đổi tiền tệ chỉ cập nhật ký hiệu hiển thị. Tỷ giá giao dịch trước đó sẽ không được tính toán lại.",
+
+  "card": "Thẻ",
+  
+  "reminder_title": "Nhắc nhở chi tiêu hàng ngày",
+  "reminder_body": "Bạn đã ghi chép chi tiêu hôm nay chưa? 💸"
 }

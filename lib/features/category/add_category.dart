@@ -7,18 +7,19 @@ import 'package:image_picker/image_picker.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
+import 'package:spend_flow/core/data/category_data.dart';
 import 'package:spend_flow/core/model/category_model.dart';
 
-class AddCategoryPage extends StatefulWidget {
+class AddCategoryView extends StatefulWidget {
   final CategoryModel? categoryToEdit;
 
-  const AddCategoryPage({super.key, this.categoryToEdit});
+  const AddCategoryView({super.key, this.categoryToEdit});
 
   @override
-  State<AddCategoryPage> createState() => _AddCategoryPageState();
+  State<AddCategoryView> createState() => _AddCategoryViewState();
 }
 
-class _AddCategoryPageState extends State<AddCategoryPage> {
+class _AddCategoryViewState extends State<AddCategoryView> {
   final TextEditingController _nameController = TextEditingController();
 
   Color _selectedColor = Colors.orange;
@@ -27,38 +28,8 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
   File? _pickedImage;
   final ImagePicker _picker = ImagePicker();
 
-  final List<Color> _colors = [
-    Colors.orange,
-    Colors.blue,
-    Colors.green,
-    Colors.purple,
-    Colors.pink,
-    Colors.red,
-    Colors.teal,
-    Colors.brown,
-    Colors.amber,
-    Colors.indigo,
-    Colors.grey,
-    Colors.black,
-  ];
-
-  final List<String> _iconKeys = [
-    'food',
-    'transport',
-    'salary',
-    'shopping',
-    'game',
-    'house',
-    'bill',
-    'health',
-    'education',
-    'pet',
-    'travel',
-    'repair',
-    'water',
-    'electricity',
-    'internet',
-  ];
+  final List<Color> _colors = CategoryData.colors;
+  final List<String> _iconKeys = CategoryData.iconKeys;
 
   @override
   void initState() {
@@ -69,10 +40,15 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
       _nameController.text = item.name;
       _selectedColor = item.color;
 
-      if (_iconKeys.contains(item.iconKey)) {
-        _selectedIconKey = item.iconKey;
+      final isFile =
+          item.iconKey.contains('/') && File(item.iconKey).existsSync();
+
+      if (isFile) {
+        _pickedImage = File(item.iconKey);
+        _selectedIconKey = '';
       } else {
         _selectedIconKey = item.iconKey;
+        _pickedImage = null;
       }
     }
 
@@ -134,17 +110,17 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
 
             final newCategory = CategoryModel(
               id: widget.categoryToEdit?.id ?? UniqueKey().toString(),
-
               name: _nameController.text,
               l10nKey: null,
-              iconKey: _pickedImage != null
-                  ? '${_nameController.text}_img'
-                  : _selectedIconKey,
+              iconKey: _pickedImage != null ? '' : _selectedIconKey,
               color: _selectedColor,
               isCustom: true,
             );
 
-            Navigator.pop(context, newCategory);
+            Navigator.pop(context, {
+              'category': newCategory,
+              'imageFile': _pickedImage,
+            });
           },
         ),
       ),
@@ -178,7 +154,6 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
               ),
 
               SizedBox(height: 30.h),
-
               _buildSectionTitle(l10n.category_name),
               Container(
                 decoration: BoxDecoration(
@@ -212,119 +187,12 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
               ),
 
               SizedBox(height: 20.h),
-
               _buildSectionTitle(l10n.category_color),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(16.w),
-                decoration: BoxDecoration(
-                  color: CupertinoTheme.of(context).barBackgroundColor,
-                  borderRadius: BorderRadius.circular(30.r),
-                ),
-                child: Wrap(
-                  spacing: 14.w,
-                  runSpacing: 14.h,
-                  alignment: WrapAlignment.start,
-                  children: _colors.map((color) {
-                    final isSelected = _selectedColor.value == color.value;
-                    return GestureDetector(
-                      onTap: () => setState(() => _selectedColor = color),
-                      child: Container(
-                        width: 44.w,
-                        height: 44.w,
-                        padding: const EdgeInsets.all(3),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: isSelected
-                              ? Border.all(color: color, width: 2.5)
-                              : null,
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: color,
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
+              _buildColorPicker(),
 
               SizedBox(height: 20.h),
-
               _buildSectionTitle(l10n.category_icon),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(16.w),
-                decoration: BoxDecoration(
-                  color: CupertinoTheme.of(context).barBackgroundColor,
-                  borderRadius: BorderRadius.circular(30.r),
-                ),
-                child: Wrap(
-                  spacing: 14.w,
-                  runSpacing: 14.h,
-                  alignment: WrapAlignment.start,
-                  children: [
-                    ..._iconKeys.map((key) {
-                      final isSelected =
-                          _selectedIconKey == key && _pickedImage == null;
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedIconKey = key;
-                            _pickedImage = null;
-                          });
-                        },
-                        child: Container(
-                          width: 48.w,
-                          height: 48.w,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: isSelected
-                                ? AppColors.primaryColor.withValues(alpha: .2)
-                                : CupertinoColors.systemGrey6,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            AppIcons.getIcon(key),
-                            color: isSelected
-                                ? AppColors.primaryColor
-                                : CupertinoColors.systemGrey,
-                            size: 24.w,
-                          ),
-                        ),
-                      );
-                    }),
-                    GestureDetector(
-                      onTap: _pickImage,
-                      child: Container(
-                        width: 48.w,
-                        height: 48.w,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: _pickedImage != null
-                              ? AppColors.primaryColor.withValues(alpha: .2)
-                              : CupertinoColors.transparent,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: _pickedImage != null
-                                ? AppColors.primaryColor
-                                : CupertinoColors.systemGrey,
-                          ),
-                        ),
-                        child: Icon(
-                          CupertinoIcons.photo_fill_on_rectangle_fill,
-                          color: _pickedImage != null
-                              ? AppColors.primaryColor
-                              : CupertinoColors.systemGrey,
-                          size: 24.w,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              _buildIconPicker(),
             ],
           ),
         ),
@@ -347,6 +215,115 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
             fontWeight: FontWeight.w500,
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildColorPicker() {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(16.w),
+      decoration: BoxDecoration(
+        color: CupertinoTheme.of(context).barBackgroundColor,
+        borderRadius: BorderRadius.circular(30.r),
+      ),
+      child: Wrap(
+        spacing: 14.w,
+        runSpacing: 14.h,
+        alignment: WrapAlignment.start,
+        children: _colors.map((color) {
+          final isSelected = _selectedColor.value == color.value;
+          return GestureDetector(
+            onTap: () => setState(() => _selectedColor = color),
+            child: Container(
+              width: 44.w,
+              height: 44.w,
+              padding: const EdgeInsets.all(3),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: isSelected
+                    ? Border.all(color: color, width: 2.5)
+                    : null,
+              ),
+              child: Container(
+                decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+              ),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  Widget _buildIconPicker() {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(16.w),
+      decoration: BoxDecoration(
+        color: CupertinoTheme.of(context).barBackgroundColor,
+        borderRadius: BorderRadius.circular(30.r),
+      ),
+      child: Wrap(
+        spacing: 14.w,
+        runSpacing: 14.h,
+        alignment: WrapAlignment.start,
+        children: [
+          ..._iconKeys.map((key) {
+            final isSelected = _selectedIconKey == key && _pickedImage == null;
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  _selectedIconKey = key;
+                  _pickedImage = null;
+                });
+              },
+              child: Container(
+                width: 48.w,
+                height: 48.w,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? AppColors.primaryColor.withValues(alpha: .2)
+                      : CupertinoColors.systemGrey6,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  AppIcons.getIcon(key),
+                  color: isSelected
+                      ? AppColors.primaryColor
+                      : CupertinoColors.systemGrey,
+                  size: 24.w,
+                ),
+              ),
+            );
+          }),
+          GestureDetector(
+            onTap: _pickImage,
+            child: Container(
+              width: 48.w,
+              height: 48.w,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: _pickedImage != null
+                    ? AppColors.primaryColor.withValues(alpha: .2)
+                    : CupertinoColors.transparent,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: _pickedImage != null
+                      ? AppColors.primaryColor
+                      : CupertinoColors.systemGrey,
+                ),
+              ),
+              child: Icon(
+                CupertinoIcons.photo_fill_on_rectangle_fill,
+                color: _pickedImage != null
+                    ? AppColors.primaryColor
+                    : CupertinoColors.systemGrey,
+                size: 24.w,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

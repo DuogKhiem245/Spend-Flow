@@ -247,4 +247,37 @@ class CategoryData {
       isCustom: false,
     ),
   ];
+
+  static final List<Color> colors = [
+    Colors.orange,
+    Colors.blue,
+    Colors.green,
+    Colors.purple,
+    Colors.pink,
+    Colors.red,
+    Colors.teal,
+    Colors.brown,
+    Colors.amber,
+    Colors.indigo,
+    Colors.grey,
+    Colors.black,
+  ];
+
+  static final List<String> iconKeys = [
+    'food',
+    'transport',
+    'salary',
+    'shopping',
+    'game',
+    'house',
+    'bill',
+    'health',
+    'education',
+    'pet',
+    'travel',
+    'repair',
+    'water',
+    'electricity',
+    'internet',
+  ];
 }

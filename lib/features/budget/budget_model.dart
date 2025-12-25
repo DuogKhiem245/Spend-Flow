@@ -30,6 +30,7 @@ class BudgetModel {
       'id': id,
       'category': category.toMap(),
       'total': total,
+      'date': date.toIso8601String(),
     };
   }
 
@@ -39,7 +40,7 @@ class BudgetModel {
       category: CategoryModel.fromMap(map['category']),
       total: (map['total'] as num?)?.toDouble() ?? 0.0,
       spent: 0.0,
-      date: DateTime.now(),
+      date: map['date'] != null ? DateTime.parse(map['date']) : DateTime.now(),
     );
   }
 

@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/core/utils/currency_formatter_helper.dart';
-import 'package:spend_flow/features/add_stransaction/add_stransaction_viewmodel.dart';
+import 'package:spend_flow/features/transaction/add_transaction/add_transaction_viewmodel.dart';
 
 class AmountWidget extends StatefulWidget {
   final TextEditingController amountController;
@@ -22,7 +22,7 @@ class AmountWidget extends StatefulWidget {
 }
 
 class _AmountWidgetState extends State<AmountWidget> {
-  final AddStransactionViewmodel _viewModel = AddStransactionViewmodel();
+  final AddTransactionViewmodel _viewModel = AddTransactionViewmodel();
 
   @override
   Widget build(BuildContext context) {

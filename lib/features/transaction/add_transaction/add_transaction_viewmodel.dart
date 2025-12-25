@@ -1,15 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
-import '../../core/model/category_model.dart';
+import '../../../core/model/category_model.dart';
 
-class AddStransactionViewmodel extends ChangeNotifier {
+class AddTransactionViewmodel extends ChangeNotifier {
   final LocalStorageService _storageService = LocalStorageService();
 
   String _currencySymbol = '\$';
   String get currencySymbol => _currencySymbol;
 
-  AddStransactionViewmodel() {
+  AddTransactionViewmodel() {
     _loadCurrency();
   }
 

@@ -118,7 +118,7 @@
   "categories": "Categories",
   "select_category": "Select Category",
   "edit_category": "Edit Category",
-  "are_you_sure_delete_category": "Are you sure you want to delete {categoryName}? \n This action cannot be undone.",
+  "are_you_sure_delete_category": "Are you sure you want to delete {categoryName}?",
   "system_category": "System categories cannot be deleted.",
   "system_category_description": "You cannot edit or delete this default category.",
 
@@ -167,6 +167,8 @@
   "scan_receipt": "Scan Receipt",
   "add_via_voice": "Add via Voice",
   "add_manually": "Add Manually",
+  "limit_reached": "Limit Reached",
+  "limit_reached_description": "You have used {featureName} {limit} times today.\nPlease come back tomorrow or upgrade to Premium.",
 
   "align_receipt": "Align your receipt",
 
@@ -286,5 +288,10 @@
   "search_currency": "Search currency or country...",
   "popular": "Popular",
   "all_currencies": "All Currencies",
-  "currency_change_warning": "Changing currency will only update the display symbol. Past transaction rates will not be recalculated."
+  "currency_change_warning": "Changing currency will only update the display symbol. Past transaction rates will not be recalculated.",
+
+  "card": "Card",
+
+  "reminder_title": "Daily Expense Reminder",
+  "reminder_body": "Have you logged your expenses for today? 💸"
 }

@@ -25,7 +25,7 @@ class AccountWidget extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 16.w),
-      height: 100.h,
+      height: 90.h,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: CupertinoTheme.of(context).barBackgroundColor,

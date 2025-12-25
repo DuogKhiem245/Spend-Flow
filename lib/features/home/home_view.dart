@@ -9,7 +9,7 @@ import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/core/services/daily_limit_service.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/services/notification_service.dart';
-import 'package:spend_flow/features/add_stransaction/add_stransaction_view.dart';
+import 'package:spend_flow/features/transaction/add_transaction/add_transaction_view.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/features/home/home_model.dart';
 import 'package:spend_flow/features/home/home_viewmodel.dart';
@@ -57,7 +57,8 @@ class _HomePageState extends State<HomePage> {
 
     if (isUserEnabled) {
       await notificationService.requestPermissions();
-      await notificationService.scheduleDailyNotification();
+      if (!mounted) return;
+      await notificationService.scheduleDailyNotification(context);
     }
   }
 
@@ -75,7 +76,7 @@ class _HomePageState extends State<HomePage> {
         _chartData = chartData;
 
         _recentTransactions = recentTransactions;
-        
+
         _isLoading = false;
       });
     }
@@ -93,7 +94,7 @@ class _HomePageState extends State<HomePage> {
           CupertinoPageRoute(builder: (context) => const VoiceInputView()),
         );
       } else {
-        _showLimitAlert(l10n, "Voice Input", 5);
+        _showLimitAlert(l10n, l10n.add_via_voice, 5);
       }
     } else if (index == 1) {
       final canUse = await _limitService.canUseScan();
@@ -104,7 +105,7 @@ class _HomePageState extends State<HomePage> {
           CupertinoPageRoute(builder: (context) => const ScanReceiptView()),
         );
       } else {
-        _showLimitAlert(l10n, "Scan Receipt", 3);
+        _showLimitAlert(l10n, l10n.scan_receipt, 3);
       }
     } else if (index == 2) {
       await Navigator.push(
@@ -120,10 +121,8 @@ class _HomePageState extends State<HomePage> {
     showCupertinoDialog(
       context: context,
       builder: (context) => CupertinoAlertDialog(
-        title: const Text("Limit Reached"),
-        content: Text(
-          "You have used $featureName $limit times today.\nPlease come back tomorrow or upgrade to Premium.",
-        ),
+        title: Text(l10n.limit_reached),
+        content: Text(l10n.limit_reached_description(featureName, limit)),
         actions: [
           CupertinoDialogAction(
             child: const Text("OK"),

@@ -9,6 +9,7 @@ import 'package:spend_flow/core/services/language_service.dart';
 import 'package:spend_flow/features/setting/currency/currency_view.dart';
 import 'package:spend_flow/features/setting/language/language_view.dart';
 import 'package:spend_flow/features/setting/notification/notification_viewmodel.dart';
+import 'package:spend_flow/features/setting/payment/payment_view.dart';
 import 'package:spend_flow/features/setting/setting_viewmodel.dart';
 import 'package:spend_flow/main.dart' show themeService;
 
@@ -72,10 +73,10 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
             return _SettingItem(
               title: l10n.notifications,
               icon: CupertinoIcons.bell_fill,
-              iconBgColor: const Color(0xFFE97B35),
+              iconBgColor: const Color.fromARGB(255, 255, 98, 0),
               trailing: CNSwitch(
                 value: _viewModel.isNotificationsEnabled,
-                onChanged: (v) => _viewModel.toggleNotification(v),
+                onChanged: (v) => _viewModel.toggleNotification(v, context),
               ),
             );
           },
@@ -94,7 +95,7 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
         _SettingItem(
           title: l10n.language,
           icon: CupertinoIcons.globe,
-          iconBgColor: const Color(0xFF6366F1),
+          iconBgColor: Color(0xFF7C3AED),
           onTap: () {
             Navigator.push(
               context,
@@ -128,6 +129,22 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
               ),
             );
           },
+        ),
+
+        _SettingItem(
+          title: l10n.card,
+          icon: CupertinoIcons.creditcard,
+          iconBgColor: Color(0xFFF59E0B),
+          onTap: () {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(builder: (context) => const PaymentView()),
+            );
+          },
+          trailing: _buildTextTrailing(
+            context,
+            ''
+          ),
         ),
       ],
     );

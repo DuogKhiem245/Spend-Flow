@@ -369,7 +369,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String are_you_sure_delete_category(Object categoryName) {
-    return 'Are you sure you want to delete $categoryName? \n This action cannot be undone.';
+    return 'Are you sure you want to delete $categoryName?';
   }
 
   @override
@@ -510,6 +510,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get add_manually => 'Add Manually';
+
+  @override
+  String get limit_reached => 'Limit Reached';
+
+  @override
+  String limit_reached_description(Object featureName, Object limit) {
+    return 'You have used $featureName $limit times today.\nPlease come back tomorrow or upgrade to Premium.';
+  }
 
   @override
   String get align_receipt => 'Align your receipt';
@@ -853,4 +861,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get currency_change_warning =>
       'Changing currency will only update the display symbol. Past transaction rates will not be recalculated.';
+
+  @override
+  String get card => 'Card';
+
+  @override
+  String get reminder_title => 'Daily Expense Reminder';
+
+  @override
+  String get reminder_body => 'Have you logged your expenses for today? 💸';
 }

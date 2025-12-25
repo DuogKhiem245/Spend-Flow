@@ -7,7 +7,7 @@ import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/utils/category_helper.dart';
 import 'package:spend_flow/core/utils/date_helper.dart';
-import 'package:spend_flow/features/add_stransaction/category/select_category.dart';
+import 'package:spend_flow/features/category/category_view.dart';
 import 'package:spend_flow/core/model/category_model.dart';
 
 class SuggestCategoryWidget extends StatefulWidget {
@@ -15,6 +15,7 @@ class SuggestCategoryWidget extends StatefulWidget {
   final DateTime? transactionDate;
   final Color? baseColor;
   final bool isMonthPicker;
+  final bool setMinDate;
 
   final ValueChanged<CategoryModel> onCategoryChanged;
   final ValueChanged<DateTime> onDateChanged;
@@ -26,6 +27,7 @@ class SuggestCategoryWidget extends StatefulWidget {
     required this.transactionDate,
     required this.onCategoryChanged,
     required this.onDateChanged,
+    this.setMinDate = false,
     this.isMonthPicker = false,
   });
 
@@ -54,6 +56,21 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
 
   void _showDatePicker(BuildContext context, DateTime initialDate) {
     if (widget.isMonthPicker) {
+      final now = DateTime.now();
+
+      DateTime? minDate = widget.setMinDate ? now : null;
+      DateTime? maxDate = widget.setMinDate ? null : now;
+
+      DateTime validInitialDate = initialDate;
+
+      if (minDate != null && validInitialDate.isBefore(minDate)) {
+        validInitialDate = minDate;
+      }
+
+      if (maxDate != null && validInitialDate.isAfter(maxDate)) {
+        validInitialDate = maxDate;
+      }
+
       showCupertinoModalPopup(
         context: context,
         builder: (context) => Container(
@@ -80,10 +97,11 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
               SizedBox(
                 height: 250.h,
                 child: CupertinoDatePicker(
-                  initialDateTime: initialDate,
+                  initialDateTime: validInitialDate,
                   mode: CupertinoDatePickerMode.monthYear,
                   use24hFormat: true,
-                  maximumDate: DateTime.now(),
+                  minimumDate: minDate,
+                  maximumDate: maxDate,
                   onDateTimeChanged: (newDate) {
                     widget.onDateChanged(newDate);
                   },
@@ -237,7 +255,7 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                           final result = await Navigator.push(
                             context,
                             CupertinoPageRoute(
-                              builder: (context) => SelectCategory(),
+                              builder: (context) => CategoryView(),
                             ),
                           );
                           if (result != null && result is CategoryModel) {
@@ -248,7 +266,10 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                           children: [
                             if (widget.selectedCategory != null)
                               Text(
-                                CategoryHelper.getTranslatedName(context, widget.selectedCategory!),
+                                CategoryHelper.getTranslatedName(
+                                  context,
+                                  widget.selectedCategory!,
+                                ),
                                 style: TextStyle(
                                   fontSize: 16.sp,
                                   color: widget.baseColor,

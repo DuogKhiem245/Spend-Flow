@@ -368,7 +368,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String are_you_sure_delete_category(Object categoryName) {
-    return 'Bạn có chắc chắn muốn xóa danh mục $categoryName? \n Hành động này không thể hoàn tác.';
+    return 'Bạn có chắc chắn muốn xóa danh mục $categoryName?';
   }
 
   @override
@@ -509,6 +509,14 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get add_manually => 'Thêm thủ công';
+
+  @override
+  String get limit_reached => 'Đã đạt giới hạn';
+
+  @override
+  String limit_reached_description(Object featureName, Object limit) {
+    return 'Bạn đã sử dụng $featureName $limit lần hôm nay.\nVui lòng quay lại vào ngày mai hoặc nâng cấp lên Premium.';
+  }
 
   @override
   String get align_receipt => 'Căn chỉnh hóa đơn của bạn vào khung';
@@ -853,4 +861,13 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get currency_change_warning =>
       'Thay đổi tiền tệ chỉ cập nhật ký hiệu hiển thị. Tỷ giá giao dịch trước đó sẽ không được tính toán lại.';
+
+  @override
+  String get card => 'Thẻ';
+
+  @override
+  String get reminder_title => 'Nhắc nhở chi tiêu hàng ngày';
+
+  @override
+  String get reminder_body => 'Bạn đã ghi chép chi tiêu hôm nay chưa? 💸';
 }

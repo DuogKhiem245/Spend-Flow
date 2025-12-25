@@ -293,7 +293,6 @@ class LocalStorageService {
       await _sampleStore
           .record(snapshot.key)
           .update(db, updatedCategory.toMap());
-      debugPrint("Updated category: ${updatedCategory.name}");
     } else {
       debugPrint(
         "Error: Category with ID ${updatedCategory.id} not found for update.",
@@ -377,15 +376,29 @@ class LocalStorageService {
     final db = await database;
 
     final finder = Finder(
-      filter: Filter.equals('category.iconKey', budget.category.iconKey),
+      filter: Filter.custom((record) {
+        final value = record.value as Map<String, dynamic>;
+
+        final categoryMap = value['category'] as Map<String, dynamic>;
+        if (categoryMap['iconKey'] != budget.category.iconKey) return false;
+
+        if (value['date'] == null) return false; 
+        final storedDate = DateTime.parse(value['date']);
+
+        return storedDate.year == budget.date.year &&
+            storedDate.month == budget.date.month;
+      }),
     );
 
     final existingSnapshot = await _budgetStore.findFirst(db, finder: finder);
 
     if (existingSnapshot != null) {
+      final updatedBudget = budget.copyWith(
+        id: existingSnapshot.value['id'] as String,
+      );
       await _budgetStore
           .record(existingSnapshot.key)
-          .update(db, budget.toMap());
+          .update(db, updatedBudget.toMap());
     } else {
       await _budgetStore.add(db, budget.toMap());
     }
@@ -396,23 +409,34 @@ class LocalStorageService {
 
     final transactions = await getTransactionsByMonth(month);
 
-    final budgetSnapshots = await _budgetStore.find(db);
+    Map<String, double> spendingByCategory = {};
+    for (var tx in transactions) {
+      if (!tx.isIncome) {
+        final key = tx.category.iconKey;
+        spendingByCategory[key] = (spendingByCategory[key] ?? 0) + tx.amount;
+      }
+    }
+
+    final finder = Finder(
+      filter: Filter.custom((record) {
+        final value = record.value as Map<String, dynamic>;
+        if (value['date'] == null) return false;
+
+        final storedDate = DateTime.parse(value['date']);
+        return storedDate.year == month.year && storedDate.month == month.month;
+      }),
+    );
+
+    final budgetSnapshots = await _budgetStore.find(db, finder: finder);
 
     List<BudgetModel> result = [];
 
     for (var snapshot in budgetSnapshots) {
       final data = snapshot.value;
-
       final rawBudget = BudgetModel.fromMap(Map<String, dynamic>.from(data));
 
-      double totalSpentForCategory = 0;
-      for (var tx in transactions) {
-        if (tx.category.iconKey == rawBudget.category.iconKey && !tx.isIncome) {
-          totalSpentForCategory += tx.amount;
-        }
-      }
-
-      final finalBudget = rawBudget.copyWith(spent: totalSpentForCategory);
+      final spentAmount = spendingByCategory[rawBudget.category.iconKey] ?? 0.0;
+      final finalBudget = rawBudget.copyWith(spent: spentAmount);
 
       result.add(finalBudget);
     }
@@ -424,7 +448,6 @@ class LocalStorageService {
     final db = await database;
 
     final finder = Finder(filter: Filter.equals('id', budget.id));
-
     final snapshot = await _budgetStore.findFirst(db, finder: finder);
 
     if (snapshot != null) {
@@ -436,9 +459,7 @@ class LocalStorageService {
 
   Future<void> deleteBudget(String budgetId) async {
     final db = await database;
-
     final finder = Finder(filter: Filter.equals('id', budgetId));
-
     await _budgetStore.delete(db, finder: finder);
   }
 }

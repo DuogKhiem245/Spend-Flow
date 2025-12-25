@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
@@ -298,81 +299,136 @@ class _ReportPageState extends State<ReportPage> {
     final symbol = _viewModel.currencySymbol;
     final iconData = AppIcons.getIcon(tx.category.iconKey);
 
-    return Container(
-      margin: EdgeInsets.only(bottom: 12.h),
-      padding: EdgeInsets.all(16.w),
-      decoration: BoxDecoration(
-        color: CupertinoTheme.of(context).barBackgroundColor,
-        borderRadius: BorderRadius.circular(30.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: .03),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 48.w,
-            height: 48.w,
-            decoration: BoxDecoration(
-              color: tx.category.color.withValues(alpha: .15),
-              shape: BoxShape.circle,
+    return Padding(
+      padding: EdgeInsets.only(bottom: 12.h),
+      child: Slidable(
+        key: ValueKey(tx.id),
+        endActionPane: ActionPane(
+          motion: const ScrollMotion(),
+          extentRatio: 0.30,
+          children: [
+            CustomSlidableAction(
+              onPressed: (context) => _onViewTransaction(tx),
+              backgroundColor: Colors.transparent,
+              foregroundColor: Colors.transparent,
+              padding: EdgeInsets.zero,
+              child: Container(
+                width: 40.w,
+                height: 40.w,
+                decoration: BoxDecoration(
+                  color: CupertinoColors.systemGrey.withValues(alpha: 0.2),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  CupertinoIcons.eye_solid,
+                  size: 20.sp,
+                  color: CupertinoTheme.of(context).textTheme.textStyle.color,
+                ),
+              ),
             ),
-            child: Icon(iconData, color: tx.category.color, size: 24.sp),
-          ),
-          SizedBox(width: 14.w),
 
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  tx.title,
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
+            CustomSlidableAction(
+              onPressed: (context) => _onEditTransaction(tx),
+              backgroundColor: Colors.transparent,
+              foregroundColor: Colors.transparent,
+              padding: EdgeInsets.zero,
+              child: Container(
+                width: 40.w,
+                height: 40.w,
+                decoration: BoxDecoration(
+                  color: CupertinoColors.systemGrey.withValues(alpha: 0.2),
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child: Icon(
+                    CupertinoIcons.pencil,
+                    size: 20.sp,
                     color: CupertinoTheme.of(context).textTheme.textStyle.color,
                   ),
                 ),
-                SizedBox(height: 4.h),
-                Text(
-                  tx.category.name,
-                  style: TextStyle(
-                    fontSize: 13.sp,
-                    color: CupertinoColors.systemGrey,
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                "$prefix$symbol ${_viewModel.formatCurrency(tx.amount)}",
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.bold,
-                  color: amountColor,
-                ),
               ),
-              SizedBox(height: 4.h),
-              Text(
-                _viewModel.formatTime(tx.date),
-                style: TextStyle(
-                  fontSize: 12.sp,
-                  color: CupertinoTheme.of(
-                    context,
-                  ).textTheme.textStyle.color?.withValues(alpha: .6),
-                ),
+            ),
+          ],
+        ),
+
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+          decoration: BoxDecoration(
+            color: CupertinoTheme.of(context).barBackgroundColor,
+            borderRadius: BorderRadius.circular(30.r),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.boxShadow,
+                blurRadius: 10,
+                offset: const Offset(0, 2),
               ),
             ],
           ),
-        ],
+          child: Row(
+            children: [
+              Container(
+                width: 48.w,
+                height: 48.w,
+                decoration: BoxDecoration(
+                  color: tx.category.color.withValues(alpha: 0.15),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(iconData, color: tx.category.color, size: 24.sp),
+              ),
+              SizedBox(width: 14.w),
+
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      tx.title,
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
+                        color: CupertinoTheme.of(
+                          context,
+                        ).textTheme.textStyle.color,
+                      ),
+                    ),
+                    SizedBox(height: 4.h),
+                    Text(
+                      tx.category.name,
+                      style: TextStyle(
+                        fontSize: 13.sp,
+                        color: CupertinoColors.systemGrey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    "$prefix$symbol ${_viewModel.formatCurrency(tx.amount)}",
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                      color: amountColor,
+                    ),
+                  ),
+                  SizedBox(height: 4.h),
+                  Text(
+                    _viewModel.formatTime(tx.date),
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      color: CupertinoTheme.of(
+                        context,
+                      ).textTheme.textStyle.color?.withValues(alpha: 0.6),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -397,6 +453,14 @@ class _ReportPageState extends State<ReportPage> {
         ),
       ),
     );
+  }
+
+  void _onViewTransaction(TransactionModel tx) {
+    debugPrint("View transaction: ${tx.title}");
+  }
+
+  void _onEditTransaction(TransactionModel tx) {
+    debugPrint("Edit transaction: ${tx.title}");
   }
 
   void _showDatePicker(BuildContext context, AppLocalizations l10n) {
@@ -431,9 +495,9 @@ class _ReportPageState extends State<ReportPage> {
               ),
               Expanded(
                 child: CupertinoDatePicker(
-                  mode: CupertinoDatePickerMode.date,
+                  mode: CupertinoDatePickerMode.monthYear,
                   initialDateTime: _viewModel.selectedMonth,
-                  minimumDate: DateTime(2000),
+                  minimumDate: DateTime(1900),
                   maximumDate: DateTime.now(),
                   onDateTimeChanged: (newDate) {
                     tempDate = newDate;
