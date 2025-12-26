@@ -133,7 +133,7 @@ class NotificationService {
       now.year,
       now.month,
       now.day,
-      17,
+      20,
       00,
     );
 

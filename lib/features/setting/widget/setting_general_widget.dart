@@ -9,9 +9,8 @@ import 'package:spend_flow/core/services/language_service.dart';
 import 'package:spend_flow/features/setting/currency/currency_view.dart';
 import 'package:spend_flow/features/setting/language/language_view.dart';
 import 'package:spend_flow/features/setting/notification/notification_viewmodel.dart';
-import 'package:spend_flow/features/setting/payment/payment_view.dart';
 import 'package:spend_flow/features/setting/setting_viewmodel.dart';
-import 'package:spend_flow/main.dart' show themeService;
+import 'package:spend_flow/main.dart';
 
 class SettingGeneralWidget extends StatefulWidget {
   const SettingGeneralWidget({super.key});
@@ -109,7 +108,7 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
         ),
 
         ListenableBuilder(
-          listenable: _settingViewModel, 
+          listenable: _settingViewModel,
           builder: (context, child) {
             return _SettingItem(
               title: l10n.currency,
@@ -131,21 +130,21 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
           },
         ),
 
-        _SettingItem(
-          title: l10n.card,
-          icon: CupertinoIcons.creditcard,
-          iconBgColor: Color(0xFFF59E0B),
-          onTap: () {
-            Navigator.push(
-              context,
-              CupertinoPageRoute(builder: (context) => const PaymentView()),
-            );
-          },
-          trailing: _buildTextTrailing(
-            context,
-            ''
-          ),
-        ),
+        // _SettingItem(
+        //   title: l10n.card,
+        //   icon: CupertinoIcons.creditcard,
+        //   iconBgColor: Color(0xFFF59E0B),
+        //   onTap: () {
+        //     Navigator.push(
+        //       context,
+        //       CupertinoPageRoute(builder: (context) => const PaymentView()),
+        //     );
+        //   },
+        //   trailing: _buildTextTrailing(
+        //     context,
+        //     ''
+        //   ),
+        // ),
       ],
     );
   }

@@ -25,3 +25,8 @@ doc/api/
 
 .flutter-plugins
 .flutter-plugins-dependencies
+
+# Firebase functions
+functions/node_modules/
+functions/lib/
+functions/.firebase/
