@@ -24,7 +24,7 @@ class DailyLimitService {
     final prefs = await SharedPreferences.getInstance();
     final currentCount = prefs.getInt(_keyScanCount) ?? 0;
 
-    if (currentCount < 3) {
+    if (currentCount < 5) {
       await prefs.setInt(_keyScanCount, currentCount + 1);
       return true; 
     }
@@ -36,7 +36,7 @@ class DailyLimitService {
     final prefs = await SharedPreferences.getInstance();
     final currentCount = prefs.getInt(_keyVoiceCount) ?? 0;
 
-    if (currentCount < 5) {
+    if (currentCount < 10) {
       await prefs.setInt(_keyVoiceCount, currentCount + 1);
       return true;
     }

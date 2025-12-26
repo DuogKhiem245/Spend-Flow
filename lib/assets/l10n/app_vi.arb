@@ -12,6 +12,7 @@
   "yes": "Có",
   "no": "Không",
   "done": "Hoàn tất",
+  "close": "Đóng",
   "back": "Quay lại",
   "start": "Bắt đầu",
   "continueAction": "Tiếp tục",
@@ -30,6 +31,7 @@
   "error": "Lỗi",
   "user": "Người dùng",
   "success": "Thành công",
+  "loading": "Đang tải...",
 
   "onboard_step1_title": "Đơn giản hóa tài chính",
   "onboard_step1_message": "Tất cả tài khoản của bạn trong một nơi. Xem tiền của bạn đi đâu và đạt mục tiêu tài chính dễ dàng.",
@@ -293,5 +295,8 @@
   "card": "Thẻ",
   
   "reminder_title": "Nhắc nhở chi tiêu hàng ngày",
-  "reminder_body": "Bạn đã ghi chép chi tiêu hôm nay chưa? 💸"
+  "reminder_body": "Bạn đã ghi chép chi tiêu hôm nay chưa? 💸",
+
+  "defaultTransactionTitle": "Giao dịch mới",
+  "invoice_analysis": "Đang phân tích hóa đơn ..."
 }

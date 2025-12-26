@@ -45,6 +45,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get done => 'Done';
 
   @override
+  String get close => 'Close';
+
+  @override
   String get back => 'Back';
 
   @override
@@ -97,6 +100,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get success => 'Success';
+
+  @override
+  String get loading => 'Loading...';
 
   @override
   String get onboard_step1_title => 'Simplify Your Finances';
@@ -870,4 +876,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reminder_body => 'Have you logged your expenses for today? 💸';
+
+  @override
+  String get defaultTransactionTitle => 'New Transaction';
+
+  @override
+  String get invoice_analysis => 'Analyzing invoices...';
 }

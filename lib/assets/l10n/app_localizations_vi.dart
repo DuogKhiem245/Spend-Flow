@@ -45,6 +45,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get done => 'Hoàn tất';
 
   @override
+  String get close => 'Đóng';
+
+  @override
   String get back => 'Quay lại';
 
   @override
@@ -97,6 +100,9 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get success => 'Thành công';
+
+  @override
+  String get loading => 'Đang tải...';
 
   @override
   String get onboard_step1_title => 'Đơn giản hóa tài chính';
@@ -870,4 +876,10 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get reminder_body => 'Bạn đã ghi chép chi tiêu hôm nay chưa? 💸';
+
+  @override
+  String get defaultTransactionTitle => 'Giao dịch mới';
+
+  @override
+  String get invoice_analysis => 'Đang phân tích hóa đơn ...';
 }

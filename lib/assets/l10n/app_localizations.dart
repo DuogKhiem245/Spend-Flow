@@ -170,6 +170,12 @@ abstract class AppLocalizations {
   /// **'Hoàn tất'**
   String get done;
 
+  /// No description provided for @close.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đóng'**
+  String get close;
+
   /// No description provided for @back.
   ///
   /// In vi, this message translates to:
@@ -277,6 +283,12 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Thành công'**
   String get success;
+
+  /// No description provided for @loading.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đang tải...'**
+  String get loading;
 
   /// No description provided for @onboard_step1_title.
   ///
@@ -1753,6 +1765,18 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Bạn đã ghi chép chi tiêu hôm nay chưa? 💸'**
   String get reminder_body;
+
+  /// No description provided for @defaultTransactionTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giao dịch mới'**
+  String get defaultTransactionTitle;
+
+  /// No description provided for @invoice_analysis.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đang phân tích hóa đơn ...'**
+  String get invoice_analysis;
 }
 
 class _AppLocalizationsDelegate

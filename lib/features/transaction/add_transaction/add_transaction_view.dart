@@ -2,6 +2,7 @@ import 'package:cupertino_native/components/segmented_control.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/core/widgets/loading_overlay.dart';
 import 'package:spend_flow/features/transaction/add_transaction/add_transaction_viewmodel.dart';
 import 'package:spend_flow/core/model/category_model.dart';
@@ -11,7 +12,8 @@ import 'package:spend_flow/features/transaction/add_transaction/widgets/note_wid
 import 'package:spend_flow/features/transaction/add_transaction/widgets/suggest_category_widget.dart';
 
 class AddTransactionPage extends StatefulWidget {
-  const AddTransactionPage({super.key});
+  final TransactionModel? transactionData;
+  const AddTransactionPage({super.key, this.transactionData});
 
   @override
   State<AddTransactionPage> createState() => _AddTransactionPageState();
@@ -29,6 +31,20 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
   int _index = 0;
 
   bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.transactionData != null) {
+      final t = widget.transactionData!;
+      _amountController.text = t.amount.toString(); 
+      _nameController.text = t.title;
+      _noteController.text = t.note;
+      _selectedCategory = t.category;
+      _transactionDate = t.date;
+    }
+  }
 
   @override
   void dispose() {

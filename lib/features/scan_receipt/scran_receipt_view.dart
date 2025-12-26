@@ -94,6 +94,32 @@ class _ScanReceiptViewState extends State<ScanReceiptView>
                   _buildBottomBar(),
                 ],
               ),
+
+              if (_viewModel.isScanning)
+                Container(
+                  color: Colors.black.withValues(alpha: 0.7),
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        LoadingAnimationWidget.staggeredDotsWave(
+                          color: Colors.white,
+                          size: 50.w,
+                        ),
+                        SizedBox(height: 16.h),
+                        Text(
+                          l10n.invoice_analysis,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.sp,
+                            decoration: TextDecoration.none,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
             ],
           ),
         );
@@ -133,7 +159,7 @@ class _ScanReceiptViewState extends State<ScanReceiptView>
               child: LoadingAnimationWidget.staggeredDotsWave(
                 color: CupertinoTheme.of(context).primaryColor,
                 size: 30.w,
-              )
+              ),
             );
           }
           return const SizedBox.shrink();
@@ -162,7 +188,7 @@ class _ScanReceiptViewState extends State<ScanReceiptView>
 
           GestureDetector(
             onTap: () {
-              // Todo: Xử lý chụp ảnh
+              _viewModel.takePicture(context);
             },
             child: Container(
               width: 72.w,
@@ -177,6 +203,9 @@ class _ScanReceiptViewState extends State<ScanReceiptView>
                   color: AppColors.primaryColor,
                   shape: BoxShape.circle,
                 ),
+                child: _viewModel.isTakingPicture
+                    ? const CupertinoActivityIndicator(color: Colors.white)
+                    : null,
               ),
             ),
           ),
@@ -184,7 +213,9 @@ class _ScanReceiptViewState extends State<ScanReceiptView>
           _buildCircleButton(
             icon: CupertinoIcons.photo,
             backgroundColor: const Color(0xFF2C2C2E),
-            onTap: () {},
+            onTap: () {
+              _viewModel.pickFromGallery(context);
+            },
           ),
         ],
       ),

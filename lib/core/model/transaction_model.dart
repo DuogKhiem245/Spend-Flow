@@ -1,3 +1,4 @@
+import 'package:path/path.dart' as AppLocalizations;
 import 'package:spend_flow/core/model/category_model.dart';
 import 'package:uuid/uuid.dart'; 
 
@@ -55,4 +56,39 @@ class TransactionModel {
       exchangeRate: map['exchangeRate'],
     );
   }
+
+  factory TransactionModel.fromAIResponse({
+    required Map<String, dynamic> aiData,
+    required List<CategoryModel> availableCategories,
+  }) {
+    final String? aiCategoryId = aiData['categoryId'];
+
+    CategoryModel selectedCategory;
+
+    try {
+      selectedCategory = availableCategories.firstWhere(
+        (cat) => cat.id == aiCategoryId,
+        orElse: () => availableCategories.first,
+      );
+    } catch (e) {
+      selectedCategory = availableCategories.isNotEmpty
+          ? availableCategories.first
+          : throw Exception("List categories is empty");
+    }
+
+    return TransactionModel(
+      id: const Uuid().v4(), 
+      amount: (aiData['amount'] as num?)?.toDouble() ?? 0.0,
+      title: aiData['title'],
+      category: selectedCategory, 
+      date: aiData['date'] != null
+          ? DateTime.parse(aiData['date'])
+          : DateTime.now(),
+      note: aiData['note'] ?? '',
+      isIncome: aiData['isIncome'] ?? false,
+      currency: 'USD', 
+      exchangeRate: 1.0,
+    );
+  }
+
 }

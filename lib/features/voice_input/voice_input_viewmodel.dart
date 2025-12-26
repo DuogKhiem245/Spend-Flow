@@ -1,14 +1,23 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/core/services/ai_service.dart';
+import 'package:spend_flow/core/data/category_data.dart';
+import 'package:spend_flow/core/model/transaction_model.dart';
+import 'package:spend_flow/features/transaction/add_transaction/add_transaction_view.dart';
 
 class VoiceInputViewModel extends ChangeNotifier {
   final SpeechToText _speechToText = SpeechToText();
+  final AIService _aiService = AIService();
 
   bool _isListening = false;
   bool _isSpeechEnabled = false;
   String _lastWords = '';
+
+  bool _isProcessing = false;
 
   List<double> heights = List.filled(7, 20.0);
   Timer? _waveTimer;
@@ -17,6 +26,7 @@ class VoiceInputViewModel extends ChangeNotifier {
   bool get isListening => _isListening;
   String get lastWords => _lastWords;
   bool get isSpeechEnabled => _isSpeechEnabled;
+  bool get isProcessing => _isProcessing; 
 
   Future<void> initSpeech() async {
     try {
@@ -49,7 +59,7 @@ class VoiceInputViewModel extends ChangeNotifier {
 
     if (_isSpeechEnabled) {
       _isListening = true;
-      _lastWords = ''; 
+      _lastWords = '';
       _startWaveAnimation();
       notifyListeners();
 
@@ -58,7 +68,7 @@ class VoiceInputViewModel extends ChangeNotifier {
           _lastWords = result.recognizedWords;
           notifyListeners();
         },
-        localeId: localeId, 
+        localeId: localeId,
         listenFor: const Duration(seconds: 45),
         listenOptions: SpeechListenOptions(
           cancelOnError: true,
@@ -75,11 +85,69 @@ class VoiceInputViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void toggleListening(String localeId) {
+  void toggleListening(BuildContext context, String localeId) {
     if (_isListening) {
       stopListening();
+      processVoiceInput(context);
     } else {
       startListening(localeId);
+    }
+  }
+
+  Future<void> processVoiceInput(BuildContext context) async {
+    if (_lastWords.isEmpty) return;
+
+    try {
+      _isProcessing = true;
+      notifyListeners(); 
+
+      final categories = CategoryData.getAll();
+
+      final aiResult = await _aiService.analyzeText(_lastWords, categories);
+
+      debugPrint("🔍 === KẾT QUẢ AI TRẢ VỀ ===");
+      debugPrint("Raw Data: $aiResult");
+      aiResult.forEach((key, value) {
+        debugPrint(
+          " 👉 Key: $key | Value: $value | Type: ${value?.runtimeType}",
+        );
+      });
+      debugPrint("============================");
+
+      if (!context.mounted) return;
+
+      final transaction = TransactionModel.fromAIResponse(
+        aiData: aiResult,
+        availableCategories: categories,
+      );
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              AddTransactionPage(transactionData: transaction),
+        ),
+      );
+    } catch (e) {
+      debugPrint("Lỗi xử lý voice: $e");
+      if (context.mounted) {
+        showCupertinoDialog(
+          context: context,
+          builder: (ctx) => CupertinoAlertDialog(
+            title: Text(AppLocalizations.of(context)!.error),
+            content: Text("Không thể xử lý giọng nói: $e"),
+            actions: [
+              CupertinoDialogAction(
+                child: Text(AppLocalizations.of(context)!.close),
+                onPressed: () => Navigator.pop(ctx),
+              ),
+            ],
+          ),
+        );
+      }
+    } finally {
+      _isProcessing = false;
+      notifyListeners();
     }
   }
 
@@ -97,15 +165,6 @@ class VoiceInputViewModel extends ChangeNotifier {
     _waveTimer?.cancel();
     heights = List.filled(7, 20.0);
     notifyListeners();
-  }
-
-  void confirmInput(BuildContext context) {
-    stopListening();
-    if (_lastWords.isNotEmpty) {
-      Navigator.pop(context, _lastWords);
-    } else {
-      Navigator.pop(context);
-    }
   }
 
   @override

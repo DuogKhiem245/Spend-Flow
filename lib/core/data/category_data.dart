@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:spend_flow/core/model/category_model.dart';
 
 class CategoryData {
+  static List<CategoryModel> getAll() {
+    return sampleCategories;
+  }
+
   static final List<CategoryModel> suggestedCategories = [
     CategoryModel(
       id: '1',

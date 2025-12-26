@@ -12,6 +12,7 @@
   "yes": "Yes",
   "no": "No",
   "done": "Done",
+  "close": "Close",
   "back": "Back",
   "start": "Start",
   "continueAction": "Continue",
@@ -30,6 +31,7 @@
   "error": "Error",
   "user": "User",
   "success": "Success",
+  "loading": "Loading...",
   
   "onboard_step1_title": "Simplify Your Finances",
   "onboard_step1_message": "All your accounts in one place. See where your money goes and achieve your financial goals effortlessly.",
@@ -293,5 +295,8 @@
   "card": "Card",
 
   "reminder_title": "Daily Expense Reminder",
-  "reminder_body": "Have you logged your expenses for today? 💸"
+  "reminder_body": "Have you logged your expenses for today? 💸",
+
+  "defaultTransactionTitle": "New Transaction",
+  "invoice_analysis": "Analyzing invoices..."
 }

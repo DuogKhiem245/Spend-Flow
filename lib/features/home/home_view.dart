@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
           CupertinoPageRoute(builder: (context) => const VoiceInputView()),
         );
       } else {
-        _showLimitAlert(l10n, l10n.add_via_voice, 5);
+        _showLimitAlert(l10n, l10n.add_via_voice, 10);
       }
     } else if (index == 1) {
       final canUse = await _limitService.canUseScan();
@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> {
           CupertinoPageRoute(builder: (context) => const ScanReceiptView()),
         );
       } else {
-        _showLimitAlert(l10n, l10n.scan_receipt, 3);
+        _showLimitAlert(l10n, l10n.scan_receipt, 5);
       }
     } else if (index == 2) {
       await Navigator.push(
