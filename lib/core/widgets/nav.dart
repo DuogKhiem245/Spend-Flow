@@ -59,7 +59,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
       backgroundColor: CupertinoTheme.of(context).barBackgroundColor,
       items: [
         CNTabBarItem(label: l10n.home, icon: CNSymbol('square.grid.2x2')),
-        CNTabBarItem(label: l10n.reports, icon: CNSymbol('chart.bar')),
+        CNTabBarItem(label: l10n.transaction, icon: CNSymbol('chart.bar')),
         CNTabBarItem(label: l10n.budgets, icon: CNSymbol('creditcard')),
         CNTabBarItem(label: l10n.settings, icon: CNSymbol('gearshape.fill')),
       ],
@@ -94,7 +94,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
               ),
             ),
             BottomNavigationBarItem(
-              label: l10n.reports,
+              label: l10n.transaction,
               icon: Icon(CupertinoIcons.chart_bar, size: 24.sp),
               activeIcon: Icon(CupertinoIcons.chart_bar_fill, size: 24.sp),
             ),

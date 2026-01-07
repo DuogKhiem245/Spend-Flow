@@ -1,15 +1,14 @@
 import 'package:cupertino_native/components/switch.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
-import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/core/data/language_data.dart';
 import 'package:spend_flow/core/services/language_service.dart';
 import 'package:spend_flow/features/setting/currency/currency_view.dart';
 import 'package:spend_flow/features/setting/language/language_view.dart';
 import 'package:spend_flow/features/setting/notification/notification_viewmodel.dart';
 import 'package:spend_flow/features/setting/setting_viewmodel.dart';
+import 'package:spend_flow/features/setting/widget/setting_item_widget.dart';
 import 'package:spend_flow/main.dart';
 
 class SettingGeneralWidget extends StatefulWidget {
@@ -69,7 +68,7 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
         ListenableBuilder(
           listenable: _viewModel,
           builder: (context, child) {
-            return _SettingItem(
+            return SettingItem(
               title: l10n.notifications,
               icon: CupertinoIcons.bell_fill,
               iconBgColor: const Color.fromARGB(255, 255, 98, 0),
@@ -81,7 +80,7 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
           },
         ),
 
-        _SettingItem(
+        SettingItem(
           title: l10n.dark_mode,
           icon: CupertinoIcons.moon_fill,
           iconBgColor: const Color(0xFF3B82F6),
@@ -91,7 +90,7 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
           ),
         ),
 
-        _SettingItem(
+        SettingItem(
           title: l10n.language,
           icon: CupertinoIcons.globe,
           iconBgColor: Color(0xFF7C3AED),
@@ -110,7 +109,7 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
         ListenableBuilder(
           listenable: _settingViewModel,
           builder: (context, child) {
-            return _SettingItem(
+            return SettingItem(
               title: l10n.currency,
               icon: CupertinoIcons.money_dollar_circle_fill,
               iconBgColor: const Color(0xFF21C55E),
@@ -172,79 +171,3 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
   }
 }
 
-class _SettingItem extends StatelessWidget {
-  final String title;
-  final IconData icon;
-  final Color iconBgColor;
-  final Widget trailing;
-  final VoidCallback? onTap;
-
-  const _SettingItem({
-    required this.title,
-    required this.icon,
-    required this.iconBgColor,
-    required this.trailing,
-    this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 12.h),
-      height: 60.h,
-      decoration: BoxDecoration(
-        color: CupertinoTheme.of(context).barBackgroundColor,
-        borderRadius: BorderRadius.circular(30.r),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.boxShadow.withValues(alpha: 0.05),
-            blurRadius: 10.r,
-            offset: Offset(0, 4.h),
-          ),
-        ],
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(30.r),
-          splashColor: onTap == null ? Colors.transparent : null,
-          highlightColor: onTap == null ? Colors.transparent : null,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-            child: Row(
-              children: [
-                Container(
-                  width: 36.w,
-                  height: 36.w,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: iconBgColor,
-                    borderRadius: BorderRadius.circular(30.r),
-                  ),
-                  child: Icon(icon, size: 20.sp, color: Colors.white),
-                ),
-                SizedBox(width: 14.w),
-
-                Expanded(
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 17.sp,
-                      fontWeight: FontWeight.w500,
-                      color: CupertinoTheme.of(
-                        context,
-                      ).textTheme.textStyle.color,
-                    ),
-                  ),
-                ),
-
-                trailing,
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}

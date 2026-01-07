@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
-import 'package:spend_flow/core/services/local_storage_service.dart'; // Import service
+import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/features/report/daily_group_model.dart';
 
@@ -66,7 +67,7 @@ class ReportViewModel extends ChangeNotifier {
         notifyListeners();
       }
     } catch (e) {
-      debugPrint("Lỗi FaceID: $e");
+      debugPrint("Error FaceID: $e");
     }
   }
 
@@ -85,16 +86,30 @@ class ReportViewModel extends ChangeNotifier {
     _currencySymbol = currencyData['symbol'] ?? '\$';
   }
 
+  Future<String?> _getCurrentWalletId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('current_wallet_id');
+  }
+
   Future<void> _loadData() async {
     _isLoading = true;
     notifyListeners();
 
     await Future.delayed(const Duration(milliseconds: 300));
 
-    final data = await _storage.getTransactionsByMonth(selectedMonth);
-    data.sort((a, b) => b.date.compareTo(a.date));
+    final walletId = await _getCurrentWalletId();
 
-    _transactions = data;
+    if (walletId != null) {
+      final data = await _storage.getTransactionsByMonth(
+        selectedMonth,
+        walletId,
+      );
+      data.sort((a, b) => b.date.compareTo(a.date));
+      _transactions = data;
+    } else {
+      _transactions = [];
+    }
+
     _isLoading = false;
     notifyListeners();
   }

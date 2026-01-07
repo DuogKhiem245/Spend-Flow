@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
-import 'package:spend_flow/core/widgets/nav.dart';
+import 'package:spend_flow/features/wallet/wallet_view.dart';
 import '../model/onboarding_model.dart';
 
 class OnboardingViewModel {
@@ -58,7 +58,7 @@ class OnboardingViewModel {
 
     Navigator.pushAndRemoveUntil(
       context,
-      CupertinoPageRoute(builder: (context) => const BottomNavbar()),
+      CupertinoPageRoute(builder: (context) => const WalletView(firstWallet: true,)),
       (route) => false,
     );
   }

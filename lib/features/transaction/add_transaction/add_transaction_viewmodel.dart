@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import '../../../core/model/category_model.dart';
@@ -20,6 +21,11 @@ class AddTransactionViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<String?> _getCurrentWalletId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('current_wallet_id');
+  }
+
   Future<void> addExpenseTransaction(
     String amount,
     String name,
@@ -32,7 +38,17 @@ class AddTransactionViewmodel extends ChangeNotifier {
     final double value = _parseAmount(amount);
     if (value == 0) return;
 
+    final walletId = await _getCurrentWalletId();
+
+    if (walletId == null) {
+      return;
+    }
+
+    debugPrint('Adding expense transaction with amount: $value');
+    debugPrint('Wallet ID: $walletId');
+
     final transaction = TransactionModel(
+      walletId: walletId, 
       amount: value.abs(),
       title: name.isEmpty ? selectedCategory.name : name,
       category: selectedCategory,
@@ -56,7 +72,14 @@ class AddTransactionViewmodel extends ChangeNotifier {
     final double value = _parseAmount(amount);
     if (value == 0) return;
 
+    final walletId = await _getCurrentWalletId();
+
+    if (walletId == null) {
+      return;
+    }
+
     final transaction = TransactionModel(
+      walletId: walletId, 
       amount: value.abs(),
       title: name.isEmpty ? selectedCategory.name : name,
       category: selectedCategory,

@@ -126,6 +126,52 @@ class AppLocalizationsVi extends AppLocalizations {
       'Thiết lập mục tiêu tiết kiệm tự động, làm tròn các giao dịch và khám phá cách thông minh để tiết kiệm tiền dễ dàng.';
 
   @override
+  String get create_first_wallet => 'Tạo ví đầu tiên của bạn';
+
+  @override
+  String get welcome_create_wallet =>
+      'Chào mừng đến với SpendFlow!\nHãy tạo ví đầu tiên của bạn để bắt đầu.';
+
+  @override
+  String get enter_wallet_name => 'Nhập tên ví';
+
+  @override
+  String get eg_my_wallet => 'ví dụ: Ví của tôi, Tiền mặt, Thẻ tín dụng';
+
+  @override
+  String get currency_unit => 'Đơn vị tiền tệ';
+
+  @override
+  String get create_wallet => 'Tạo ví';
+
+  @override
+  String get please_enter_wallet_name => 'Vui lòng nhập tên ví.';
+
+  @override
+  String get add_wallet => 'Thêm ví mới';
+
+  @override
+  String get wallet_name => 'Tên ví';
+
+  @override
+  String get add_wallet_description =>
+      'Thêm nhiều ví để quản lí và theo dõi tài chính hiệu quả hơn.';
+
+  @override
+  String get cannot_delete_last_wallet => 'Bạn không thể xóa ví duy nhất.';
+
+  @override
+  String get delete_wallet => 'Xóa ví';
+
+  @override
+  String delete_wallet_confirmation(Object walletName) {
+    return 'Bạn có chắc chắn muốn xóa ví \'$walletName\' không? Hành động này không thể hoàn tác.';
+  }
+
+  @override
+  String get in_use => 'Đang sử dụng';
+
+  @override
   String get login => 'Đăng nhập';
 
   @override
@@ -508,6 +554,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get vs_last_month => 'so với Tháng trước';
 
   @override
+  String get transaction => 'Giao dịch';
+
+  @override
   String get scan_receipt => 'Quét hóa đơn';
 
   @override
@@ -867,6 +916,23 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get currency_change_warning =>
       'Thay đổi tiền tệ chỉ cập nhật ký hiệu hiển thị. Tỷ giá giao dịch trước đó sẽ không được tính toán lại.';
+
+  @override
+  String get data_management => 'Quản lý dữ liệu';
+
+  @override
+  String get export_data => 'Xuất dữ liệu';
+
+  @override
+  String get export_data_description =>
+      'Xuất dữ liệu tài chính của bạn để sao lưu hoặc phân tích.';
+
+  @override
+  String get import_data => 'Nhập dữ liệu';
+
+  @override
+  String get import_data_description =>
+      'Nhập dữ liệu tài chính của bạn từ tệp sao lưu.';
 
   @override
   String get card => 'Thẻ';

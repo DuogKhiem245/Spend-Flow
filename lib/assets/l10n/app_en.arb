@@ -40,6 +40,21 @@
   "onboard_step3_title": "Watch Your Savings Grow",
   "onboard_step3_message": "Set automated saving goals, round up transactions, and discover smart ways to save money with ease.",
 
+  "create_first_wallet": "Create Your First Wallet",
+  "welcome_create_wallet": "Welcome to SpendFlow!\nLet's create your first wallet to get started.",
+  "enter_wallet_name": "Enter wallet name",
+  "eg_my_wallet": "e.g., My Wallet, Cash, Credit Card",
+  "currency_unit": "Currency unit",
+  "create_wallet": "Create Wallet",
+  "please_enter_wallet_name": "Please enter wallet name.",
+  "add_wallet": "Add New Wallet",
+  "wallet_name": "Wallet Name",
+  "add_wallet_description": "Add more wallets to manage and track your finances more effectively.",
+  "cannot_delete_last_wallet": "You cannot delete the last wallet.",
+  "delete_wallet": "Delete Wallet",
+  "delete_wallet_confirmation": "Are you sure you want to delete the wallet '{walletName}'? This action cannot be undone.",
+  "in_use": "In Use",
+
   "login": "Login",
   "register": "Register",
   "logout": "Logout",
@@ -165,6 +180,7 @@
   "category_color": "Category Color",
   "category_icon": "Category Icon",
   "vs_last_month": "vs Last Month",
+  "transaction": "Transaction",
 
   "scan_receipt": "Scan Receipt",
   "add_via_voice": "Add via Voice",
@@ -291,6 +307,12 @@
   "popular": "Popular",
   "all_currencies": "All Currencies",
   "currency_change_warning": "Changing currency will only update the display symbol. Past transaction rates will not be recalculated.",
+
+  "data_management": "Data Management",
+  "export_data": "Export Data",
+  "export_data_description": "Export your financial data for backup or analysis.",
+  "import_data": "Import Data",
+  "import_data_description": "Import your financial data from a backup file.",
 
   "card": "Card",
 

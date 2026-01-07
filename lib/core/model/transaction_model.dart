@@ -1,4 +1,3 @@
-import 'package:path/path.dart' as AppLocalizations;
 import 'package:spend_flow/core/model/category_model.dart';
 import 'package:uuid/uuid.dart'; 
 
@@ -14,6 +13,8 @@ class TransactionModel {
   final String currency; 
   final double exchangeRate;
 
+  final String walletId;
+
   TransactionModel({
     String?
     id, 
@@ -23,6 +24,7 @@ class TransactionModel {
     required this.date,
     required this.note,
     required this.isIncome,
+    required this.walletId,
     this.currency = 'USD',
     this.exchangeRate = 1.0,
   }) : id = id ?? const Uuid().v4(); 
@@ -40,6 +42,7 @@ class TransactionModel {
       'isIncome': isIncome,
       'currency': currency,
       'exchangeRate': exchangeRate,
+      'walletId': walletId,
     };
   }
 
@@ -54,6 +57,7 @@ class TransactionModel {
       isIncome: map['isIncome'],
       currency: map['currency'],
       exchangeRate: map['exchangeRate'],
+      walletId: map['walletId'],
     );
   }
 
@@ -86,6 +90,7 @@ class TransactionModel {
           : DateTime.now(),
       note: aiData['note'] ?? '',
       isIncome: aiData['isIncome'] ?? false,
+      walletId: aiData['walletId'] ?? '',
       currency: 'USD', 
       exchangeRate: 1.0,
     );

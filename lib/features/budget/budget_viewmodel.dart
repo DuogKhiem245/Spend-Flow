@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
-import 'package:spend_flow/features/budget/budget_model.dart';
+import 'package:spend_flow/core/model/budget_model.dart';
 
 class BudgetViewModel extends ChangeNotifier {
   final LocalStorageService _storageService = LocalStorageService();
@@ -53,12 +54,27 @@ class BudgetViewModel extends ChangeNotifier {
     _currencySymbol = currencyData['symbol'] ?? '\$';
   }
 
+  Future<String?> _getCurrentWalletId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('current_wallet_id');
+  }
+
   Future<void> _fetchBudgetsFromStorage() async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      budgets = await _storageService.getBudgetsForMonth(selectedMonth);
+      final walletId = await _getCurrentWalletId();
+
+      if (walletId != null) {
+        budgets = await _storageService.getBudgetsForMonth(
+          selectedMonth,
+          walletId,
+        );
+      } else {
+        budgets = [];
+        debugPrint("Warning: No wallet selected");
+      }
     } catch (e) {
       debugPrint("Error loading budgets: $e");
       budgets = [];

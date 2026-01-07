@@ -48,11 +48,11 @@ class _RecentTransactionState extends State<RecentTransaction> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final symbol = _viewModel.currencySymbol;
 
     if (widget.transactions.isEmpty) {
       return const SizedBox();
     }
-    
 
     return Container(
       width: double.infinity,
@@ -115,7 +115,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
                       itemCount: widget.transactions.length,
                       itemBuilder: (context, index) {
                         final item = widget.transactions[index];
-                        return _buildTransactionItem(item, context);
+                        return _buildTransactionItem(item, context, symbol);
                       },
                     ),
                   ),
@@ -158,7 +158,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
     );
   }
 
-  Widget _buildTransactionItem(TransactionModel item, BuildContext context) {
+  Widget _buildTransactionItem(TransactionModel item, BuildContext context, String symbol) {
     final isExpense = item.isIncome == false;
     final color = isExpense ? AppColors.errorColor : AppColors.secondaryColor;
 
@@ -209,8 +209,8 @@ class _RecentTransactionState extends State<RecentTransaction> {
             children: [
               Text(
                 isExpense
-                    ? "-\$${_viewModel.formatCurrency(item.amount.abs())}"
-                    : "+\$${_viewModel.formatCurrency(item.amount)}",
+                    ? "-$symbol ${_viewModel.formatCurrency(item.amount)}"
+                    : "+$symbol ${_viewModel.formatCurrency(item.amount)}",
                 style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w700,

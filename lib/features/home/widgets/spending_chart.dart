@@ -105,6 +105,8 @@ class _SpendingChartState extends State<SpendingChart>
     );
     final totalSpent = _viewModel.calculateTotalSpent(widget.chartData);
 
+    final symbol = _viewModel.currencySymbol;
+
     return Container(
       width: double.infinity,
       padding: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0.w),
@@ -207,7 +209,7 @@ class _SpendingChartState extends State<SpendingChart>
                     ScaleTransition(
                       scale: _animation,
                       child: Text(
-                        "\$${_viewModel.formatCurrency(totalSpent)}",
+                        "$symbol ${_viewModel.formatCompactCurrency(totalSpent)}",
                         style: CupertinoTheme.of(context).textTheme.textStyle
                             .copyWith(
                               fontSize: 28.sp,
@@ -260,7 +262,7 @@ class _SpendingChartState extends State<SpendingChart>
 
                     Spacer(),
                     Text(
-                      "\$${_viewModel.formatCurrency(item.amount)}",
+                      "$symbol ${_viewModel.formatCurrency(item.amount)}",
                       style: CupertinoTheme.of(context).textTheme.textStyle
                           .copyWith(
                             fontSize: 16.sp,

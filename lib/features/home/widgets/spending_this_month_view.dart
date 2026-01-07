@@ -372,7 +372,7 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
 
     filteredList.sort((a, b) => b.date.compareTo(a.date));
 
-    final groupedData = viewModel.groupTransactionsByDate(filteredList);
+    final groupedData = viewModel.groupTransactionsByDate(filteredList, context);
 
     if (groupedData.isEmpty) {
       return Padding(

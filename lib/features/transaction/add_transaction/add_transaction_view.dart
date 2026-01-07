@@ -154,7 +154,6 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                               onPressed: _isLoading
                                   ? null
                                   : () async {
-                                      // Bật loading
                                       setState(() {
                                         _isLoading = true;
                                       });

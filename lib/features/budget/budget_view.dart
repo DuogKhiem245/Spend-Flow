@@ -13,7 +13,7 @@ import 'package:spend_flow/config/app_icons.dart';
 import 'package:spend_flow/core/utils/category_helper.dart';
 import 'package:spend_flow/core/widgets/skeleton/skeleton_budget_view.dart';
 import 'package:spend_flow/features/budget/add_budget/add_budget_view.dart';
-import 'budget_model.dart';
+import '../../core/model/budget_model.dart';
 import 'budget_viewmodel.dart';
 
 class BudgetPage extends StatefulWidget {

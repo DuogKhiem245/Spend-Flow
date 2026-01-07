@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/auth_service.dart';
 import 'package:spend_flow/features/setting/widget/account_widget.dart';
+import 'package:spend_flow/features/setting/widget/setting_data_widget.dart';
 import 'package:spend_flow/features/setting/widget/setting_general_widget.dart';
 import 'package:spend_flow/features/setting/widget/setting_security_widget.dart';
 
@@ -59,6 +60,10 @@ class _SettingPageState extends State<SettingPage> {
                         // SizedBox(height: 30.h),
                         const SettingGeneralWidget(),
                         SizedBox(height: 10.h),
+
+                        const SettingDataWidget(),
+                        SizedBox(height: 10.h),
+
                         const SettingSecurityWidget(),
                         SizedBox(height: 40.h),
 

@@ -5,7 +5,7 @@ import 'package:spend_flow/core/model/category_model.dart';
 import 'package:spend_flow/features/transaction/add_transaction/widgets/amount_widget.dart';
 import 'package:spend_flow/features/transaction/add_transaction/widgets/suggest_category_widget.dart';
 import 'package:spend_flow/features/budget/add_budget/add_budget_viewmodel.dart';
-import 'package:spend_flow/features/budget/budget_model.dart';
+import 'package:spend_flow/core/model/budget_model.dart';
 
 class AddBudgetView extends StatefulWidget {
   final BudgetModel? budgetToEdit;

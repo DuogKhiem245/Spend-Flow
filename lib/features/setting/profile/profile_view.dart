@@ -135,80 +135,93 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
               ),
               child: SafeArea(
-                child: SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20.w,
-                    vertical: 20.h,
-                  ),
-                  child: Column(
-                    children: [
-                      ProfileAvatar(
-                        imageFile: _viewModel.selectedAvatarFile,
-                        photoUrl: _viewModel.userModel?.photoUrl,
-                        onEditTap: () async {
-                          await _viewModel.pickAvatar();
-                        },
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    return SingleChildScrollView(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20.w,
+                        vertical: 20.h,
                       ),
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: constraints.maxHeight - 40.h,
+                        ),
+                        child: IntrinsicHeight(
+                          child: Column(
+                            children: [
+                              ProfileAvatar(
+                                imageFile: _viewModel.selectedAvatarFile,
+                                photoUrl: _viewModel.userModel?.photoUrl,
+                                onEditTap: () async {
+                                  await _viewModel.pickAvatar();
+                                },
+                              ),
 
-                      SizedBox(height: 30.h),
+                              SizedBox(height: 30.h),
 
-                      ProfileInfoItem(
-                        label: l10n.full_name,
-                        controller: _nameController,
-                      ),
+                              ProfileInfoItem(
+                                label: l10n.full_name,
+                                controller: _nameController,
+                              ),
 
-                      SizedBox(height: 20.h),
+                              SizedBox(height: 20.h),
 
-                      ProfileInfoItem(
-                        label: l10n.email_address,
-                        controller: _emailController,
-                        isReadOnly: true,
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-                      SizedBox(height: 20.h),
+                              ProfileInfoItem(
+                                label: l10n.email_address,
+                                controller: _emailController,
+                                isReadOnly: true,
+                                keyboardType: TextInputType.emailAddress,
+                              ),
+                              SizedBox(height: 20.h),
 
-                      ProfileInfoItem(
-                        label: l10n.phone_number,
-                        controller: _phoneController,
-                        keyboardType: TextInputType.phone,
-                      ),
-                      SizedBox(height: 20.h),
+                              ProfileInfoItem(
+                                label: l10n.phone_number,
+                                controller: _phoneController,
+                                keyboardType: TextInputType.phone,
+                              ),
+                              SizedBox(height: 20.h),
 
-                      ProfileInfoItem(
-                        label: l10n.day_of_birth,
-                        textValue: DateFormat(
-                          'dd/MM/yyyy',
-                        ).format(_selectedDob),
-                        icon: CupertinoIcons.calendar,
-                        onTap: () {
-                          DateHelper.showDatePicker(
-                            context,
-                            initialDate: _selectedDob,
-                            onDateChanged: (newDate) {
-                              setState(() => _selectedDob = newDate);
-                            },
-                          );
-                        },
-                      ),
+                              ProfileInfoItem(
+                                label: l10n.day_of_birth,
+                                textValue: DateFormat(
+                                  'dd/MM/yyyy',
+                                ).format(_selectedDob),
+                                icon: CupertinoIcons.calendar,
+                                onTap: () {
+                                  DateHelper.showDatePicker(
+                                    context,
+                                    initialDate: _selectedDob,
+                                    onDateChanged: (newDate) {
+                                      setState(() => _selectedDob = newDate);
+                                    },
+                                  );
+                                },
+                              ),
 
-                      SizedBox(height: 40.h),
+                              const Spacer(),
 
-                      CupertinoButton(
-                        onPressed: _handleSave,
-                        minimumSize: Size(double.infinity, 50.h),
-                        borderRadius: BorderRadius.circular(30.r),
-                        color: AppColors.primaryColor,
-                        child: Text(
-                          l10n.save_changes,
-                          style: TextStyle(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFFFFFFFF),
+                              SizedBox(height: 40.h),
+
+                              CupertinoButton(
+                                onPressed: _handleSave,
+                                minimumSize: Size(double.infinity, 50.h),
+                                borderRadius: BorderRadius.circular(30.r),
+                                color: AppColors.primaryColor,
+                                child: Text(
+                                  l10n.save_changes,
+                                  style: TextStyle(
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xFFFFFFFF),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
               ),
             ),

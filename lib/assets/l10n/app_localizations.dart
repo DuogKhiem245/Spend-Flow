@@ -326,6 +326,90 @@ abstract class AppLocalizations {
   /// **'Thiết lập mục tiêu tiết kiệm tự động, làm tròn các giao dịch và khám phá cách thông minh để tiết kiệm tiền dễ dàng.'**
   String get onboard_step3_message;
 
+  /// No description provided for @create_first_wallet.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tạo ví đầu tiên của bạn'**
+  String get create_first_wallet;
+
+  /// No description provided for @welcome_create_wallet.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chào mừng đến với SpendFlow!\nHãy tạo ví đầu tiên của bạn để bắt đầu.'**
+  String get welcome_create_wallet;
+
+  /// No description provided for @enter_wallet_name.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập tên ví'**
+  String get enter_wallet_name;
+
+  /// No description provided for @eg_my_wallet.
+  ///
+  /// In vi, this message translates to:
+  /// **'ví dụ: Ví của tôi, Tiền mặt, Thẻ tín dụng'**
+  String get eg_my_wallet;
+
+  /// No description provided for @currency_unit.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đơn vị tiền tệ'**
+  String get currency_unit;
+
+  /// No description provided for @create_wallet.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tạo ví'**
+  String get create_wallet;
+
+  /// No description provided for @please_enter_wallet_name.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng nhập tên ví.'**
+  String get please_enter_wallet_name;
+
+  /// No description provided for @add_wallet.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm ví mới'**
+  String get add_wallet;
+
+  /// No description provided for @wallet_name.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tên ví'**
+  String get wallet_name;
+
+  /// No description provided for @add_wallet_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm nhiều ví để quản lí và theo dõi tài chính hiệu quả hơn.'**
+  String get add_wallet_description;
+
+  /// No description provided for @cannot_delete_last_wallet.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn không thể xóa ví duy nhất.'**
+  String get cannot_delete_last_wallet;
+
+  /// No description provided for @delete_wallet.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xóa ví'**
+  String get delete_wallet;
+
+  /// No description provided for @delete_wallet_confirmation.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn có chắc chắn muốn xóa ví \'{walletName}\' không? Hành động này không thể hoàn tác.'**
+  String delete_wallet_confirmation(Object walletName);
+
+  /// No description provided for @in_use.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đang sử dụng'**
+  String get in_use;
+
   /// No description provided for @login.
   ///
   /// In vi, this message translates to:
@@ -1058,6 +1142,12 @@ abstract class AppLocalizations {
   /// **'so với Tháng trước'**
   String get vs_last_month;
 
+  /// No description provided for @transaction.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giao dịch'**
+  String get transaction;
+
   /// No description provided for @scan_receipt.
   ///
   /// In vi, this message translates to:
@@ -1747,6 +1837,36 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Thay đổi tiền tệ chỉ cập nhật ký hiệu hiển thị. Tỷ giá giao dịch trước đó sẽ không được tính toán lại.'**
   String get currency_change_warning;
+
+  /// No description provided for @data_management.
+  ///
+  /// In vi, this message translates to:
+  /// **'Quản lý dữ liệu'**
+  String get data_management;
+
+  /// No description provided for @export_data.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xuất dữ liệu'**
+  String get export_data;
+
+  /// No description provided for @export_data_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xuất dữ liệu tài chính của bạn để sao lưu hoặc phân tích.'**
+  String get export_data_description;
+
+  /// No description provided for @import_data.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập dữ liệu'**
+  String get import_data;
+
+  /// No description provided for @import_data_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập dữ liệu tài chính của bạn từ tệp sao lưu.'**
+  String get import_data_description;
 
   /// No description provided for @card.
   ///

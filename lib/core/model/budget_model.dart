@@ -8,6 +8,7 @@ class BudgetModel {
   final double total; 
   final double spent; 
   final DateTime date;
+  final String walletId;
 
   BudgetModel({
     String? id,
@@ -15,6 +16,7 @@ class BudgetModel {
     required this.total,
     this.spent = 0.0, 
     required this.date,
+    required this.walletId,
   }) : id = id ?? const Uuid().v4(); 
 
   String get name => category.name;
@@ -31,6 +33,7 @@ class BudgetModel {
       'category': category.toMap(),
       'total': total,
       'date': date.toIso8601String(),
+      'walletId': walletId,
     };
   }
 
@@ -41,6 +44,7 @@ class BudgetModel {
       total: (map['total'] as num?)?.toDouble() ?? 0.0,
       spent: 0.0,
       date: map['date'] != null ? DateTime.parse(map['date']) : DateTime.now(),
+      walletId: map['walletId'],
     );
   }
 
@@ -57,6 +61,7 @@ class BudgetModel {
       total: total ?? this.total,
       spent: spent ?? this.spent,
       date: date ?? this.date,
+      walletId: walletId,
     );
   }
 }

@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/model/category_model.dart';
-import 'package:spend_flow/features/budget/budget_model.dart';
+import 'package:spend_flow/core/model/budget_model.dart';
 
 class AddBudgetViewModel extends ChangeNotifier {
   final LocalStorageService _storage = LocalStorageService();
+
+  Future<String?> _getCurrentWalletId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('current_wallet_id');
+  }
 
   Future<void> saveBudget({
     required String amount,
@@ -14,8 +20,16 @@ class AddBudgetViewModel extends ChangeNotifier {
   }) async {
     final double parsedAmount = _parseAmount(amount);
 
+    final walletId = await _getCurrentWalletId();
+
+    if (walletId == null) {
+      debugPrint("Lỗi: Không tìm thấy ví hiện tại");
+      return;
+    }
+
     if (idToUpdate != null) {
       final updatedBudget = BudgetModel(
+        walletId: walletId,
         id: idToUpdate, 
         category: category,
         total: parsedAmount,
@@ -29,6 +43,7 @@ class AddBudgetViewModel extends ChangeNotifier {
 
       final newBudget = BudgetModel(
         id: UniqueKey().toString(), 
+        walletId: walletId,
         category: category,
         total: parsedAmount,
         spent: 0,

@@ -43,7 +43,7 @@ class SecurityViewModel extends ChangeNotifier {
       _isPasscodeEnabled = hasPass;
       _isBiometricEnabled = bioEnabled && hasPass;
     } catch (e) {
-      debugPrint("Lỗi load settings: $e");
+      debugPrint("Error loading settings: $e");
     } finally {
       _isLoading = false;
       notifyListeners();

@@ -126,6 +126,52 @@ class AppLocalizationsEn extends AppLocalizations {
       'Set automated saving goals, round up transactions, and discover smart ways to save money with ease.';
 
   @override
+  String get create_first_wallet => 'Create Your First Wallet';
+
+  @override
+  String get welcome_create_wallet =>
+      'Welcome to SpendFlow!\nLet\'s create your first wallet to get started.';
+
+  @override
+  String get enter_wallet_name => 'Enter wallet name';
+
+  @override
+  String get eg_my_wallet => 'e.g., My Wallet, Cash, Credit Card';
+
+  @override
+  String get currency_unit => 'Currency unit';
+
+  @override
+  String get create_wallet => 'Create Wallet';
+
+  @override
+  String get please_enter_wallet_name => 'Please enter wallet name.';
+
+  @override
+  String get add_wallet => 'Add New Wallet';
+
+  @override
+  String get wallet_name => 'Wallet Name';
+
+  @override
+  String get add_wallet_description =>
+      'Add more wallets to manage and track your finances more effectively.';
+
+  @override
+  String get cannot_delete_last_wallet => 'You cannot delete the last wallet.';
+
+  @override
+  String get delete_wallet => 'Delete Wallet';
+
+  @override
+  String delete_wallet_confirmation(Object walletName) {
+    return 'Are you sure you want to delete the wallet \'$walletName\'? This action cannot be undone.';
+  }
+
+  @override
+  String get in_use => 'In Use';
+
+  @override
   String get login => 'Login';
 
   @override
@@ -509,6 +555,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vs_last_month => 'vs Last Month';
 
   @override
+  String get transaction => 'Transaction';
+
+  @override
   String get scan_receipt => 'Scan Receipt';
 
   @override
@@ -867,6 +916,23 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get currency_change_warning =>
       'Changing currency will only update the display symbol. Past transaction rates will not be recalculated.';
+
+  @override
+  String get data_management => 'Data Management';
+
+  @override
+  String get export_data => 'Export Data';
+
+  @override
+  String get export_data_description =>
+      'Export your financial data for backup or analysis.';
+
+  @override
+  String get import_data => 'Import Data';
+
+  @override
+  String get import_data_description =>
+      'Import your financial data from a backup file.';
 
   @override
   String get card => 'Card';

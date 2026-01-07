@@ -68,7 +68,7 @@ class ProfileViewModel extends ChangeNotifier {
         notifyListeners(); 
       }
     } catch (e) {
-      debugPrint("Lỗi chọn ảnh: $e");
+      debugPrint("Error picking image: $e");
     }
   }
 

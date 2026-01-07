@@ -44,7 +44,7 @@ class _CurrencyViewState extends State<CurrencyView> {
         ),
         middle: Text(
           l10n.select_currency,
-          style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),
+          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
         ),
       ),
       child: Column(

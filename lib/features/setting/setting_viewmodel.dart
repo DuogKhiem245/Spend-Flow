@@ -56,7 +56,7 @@ class SettingViewModel extends ChangeNotifier {
         biometricText = l10n.fingerprint; // Dùng text từ l10n
       }
     } catch (e) {
-      debugPrint("Lỗi check biometric: $e");
+      debugPrint("Error checking biometric: $e");
     }
 
     return biometricText;

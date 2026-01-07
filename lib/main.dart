@@ -25,6 +25,7 @@ void main() async {
 
   final prefs = await SharedPreferences.getInstance();
   final bool onboardDone = prefs.getBool('onboard_done') ?? false;
+  final bool createFirstWallet = prefs.getBool('create_first_wallet') ?? false;
 
   final notificationService = NotificationService();
   await notificationService.init();
@@ -45,13 +46,14 @@ void main() async {
     await FirebaseAuth.instance.signOut();
   }
 
-  runApp(MyApp(onboardDone: onboardDone));
+  runApp(MyApp(onboardDone: onboardDone, createFirstWallet: createFirstWallet));
 }
 
 class MyApp extends StatelessWidget {
   final bool onboardDone;
+  final bool createFirstWallet;
 
-  const MyApp({super.key, required this.onboardDone});
+  const MyApp({super.key, required this.onboardDone, required this.createFirstWallet});
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +104,7 @@ class MyApp extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
               ],
               supportedLocales: [Locale('en'), Locale('vi')],
-              initialRoute: onboardDone ? AppRoutes.home : AppRoutes.onboarding,
+              initialRoute: onboardDone ? (createFirstWallet ? AppRoutes.home : AppRoutes.wallet) : AppRoutes.onboarding,
               routes: AppRoutes.getRoutes(),
             );
           },

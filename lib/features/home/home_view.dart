@@ -10,8 +10,6 @@ import 'package:spend_flow/core/services/daily_limit_service.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/services/notification_service.dart';
 import 'package:spend_flow/features/transaction/add_transaction/add_transaction_view.dart';
-import 'package:spend_flow/core/model/transaction_model.dart';
-import 'package:spend_flow/features/home/home_model.dart';
 import 'package:spend_flow/features/home/home_viewmodel.dart';
 import 'package:spend_flow/features/home/widgets/balance_card.dart';
 import 'package:spend_flow/features/home/widgets/home_header.dart';
@@ -30,23 +28,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final HomeViewModel _viewModel = HomeViewModel();
+
   final notificationService = NotificationService();
   final DailyLimitService _limitService = DailyLimitService();
-
-  double _income = 0;
-  double _expenses = 0;
-  double _balance = 0;
-  bool _isLoading = true;
-
-  List<SpendingModel> _chartData = [];
-
-  List<TransactionModel> _recentTransactions = [];
 
   @override
   void initState() {
     super.initState();
-    _isLoading = true;
-    _loadHomeData();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _checkPermissionStatus();
     });
@@ -59,26 +47,6 @@ class _HomePageState extends State<HomePage> {
       await notificationService.requestPermissions();
       if (!mounted) return;
       await notificationService.scheduleDailyNotification(context);
-    }
-  }
-
-  Future<void> _loadHomeData() async {
-    final stats = await _viewModel.getCurrentMonthStats();
-    final chartData = await _viewModel.getChartData();
-    final recentTransactions = await _viewModel.getRecentTransactionsList();
-
-    if (mounted) {
-      setState(() {
-        _income = stats['income'] ?? 0;
-        _expenses = stats['expenses'] ?? 0;
-        _balance = stats['balance'] ?? 0;
-
-        _chartData = chartData;
-
-        _recentTransactions = recentTransactions;
-
-        _isLoading = false;
-      });
     }
   }
 
@@ -114,7 +82,7 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    _loadHomeData();
+    await _viewModel.reloadData();
   }
 
   void _showLimitAlert(AppLocalizations l10n, String featureName, int limit) {
@@ -137,7 +105,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
-    if (_isLoading) {
+    if (_viewModel.isLoading) {
       return CupertinoPageScaffold(
         backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
         child: const SkeletonHomeView(),
@@ -163,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                   bottom: 10.h,
                 ),
                 color: CupertinoTheme.of(context).scaffoldBackgroundColor,
-                child: HomeHeader(),
+                child: HomeHeader(viewModel: _viewModel),
               ),
               Expanded(
                 child: SingleChildScrollView(
@@ -176,14 +144,16 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     children: [
                       BalanceCard(
-                        income: _income,
-                        expenses: _expenses,
-                        balance: _balance,
+                        income: _viewModel.income,
+                        expenses: _viewModel.expenses,
+                        balance: _viewModel.balance,
                       ),
                       SizedBox(height: 24.h),
-                      SpendingChart(chartData: _chartData),
+                      SpendingChart(chartData: _viewModel.chartData),
                       SizedBox(height: 24.h),
-                      RecentTransaction(transactions: _recentTransactions),
+                      RecentTransaction(
+                        transactions: _viewModel.recentTransactions,
+                      ),
                     ],
                   ),
                 ),

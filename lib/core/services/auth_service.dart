@@ -69,7 +69,7 @@ class AuthService {
 
       return await _auth.signInWithCredential(credential);
     } catch (e) {
-      debugPrint("Lỗi đăng nhập Google: $e");
+      debugPrint("Error signing in with Google: $e");
       throw e.toString();
     }
   }
@@ -91,7 +91,7 @@ class AuthService {
 
       return await _auth.signInWithCredential(credential);
     } catch (e) {
-      debugPrint("Lỗi đăng nhập Apple: $e");
+      debugPrint("Error signing in with Apple: $e");
       throw e.toString();
     }
   }

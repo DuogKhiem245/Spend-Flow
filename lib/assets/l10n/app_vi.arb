@@ -40,6 +40,21 @@
   "onboard_step3_title": "Xem khoản tiết kiệm tăng trưởng",
   "onboard_step3_message": "Thiết lập mục tiêu tiết kiệm tự động, làm tròn các giao dịch và khám phá cách thông minh để tiết kiệm tiền dễ dàng.",
 
+  "create_first_wallet": "Tạo ví đầu tiên của bạn",
+  "welcome_create_wallet": "Chào mừng đến với SpendFlow!\nHãy tạo ví đầu tiên của bạn để bắt đầu.",
+  "enter_wallet_name": "Nhập tên ví",
+  "eg_my_wallet": "ví dụ: Ví của tôi, Tiền mặt, Thẻ tín dụng",
+  "currency_unit": "Đơn vị tiền tệ",
+  "create_wallet": "Tạo ví",
+  "please_enter_wallet_name": "Vui lòng nhập tên ví.",
+  "add_wallet": "Thêm ví mới",
+  "wallet_name": "Tên ví",
+  "add_wallet_description": "Thêm nhiều ví để quản lí và theo dõi tài chính hiệu quả hơn.",
+  "cannot_delete_last_wallet": "Bạn không thể xóa ví duy nhất.",
+  "delete_wallet": "Xóa ví",
+  "delete_wallet_confirmation": "Bạn có chắc chắn muốn xóa ví '{walletName}' không? Hành động này không thể hoàn tác.",
+  "in_use": "Đang sử dụng",
+
   "login": "Đăng nhập",
   "register": "Đăng ký",
   "logout": "Đăng xuất",
@@ -165,6 +180,7 @@
   "category_color": "Màu danh mục",
   "category_icon": "Biểu tượng danh mục",
   "vs_last_month": "so với Tháng trước",
+  "transaction": "Giao dịch",
 
   "scan_receipt": "Quét hóa đơn",
   "add_via_voice": "Thêm bằng giọng nói",
@@ -291,6 +307,12 @@
   "popular": "Phổ biến",
   "all_currencies": "Tất cả tiền tệ",
   "currency_change_warning": "Thay đổi tiền tệ chỉ cập nhật ký hiệu hiển thị. Tỷ giá giao dịch trước đó sẽ không được tính toán lại.",
+
+  "data_management": "Quản lý dữ liệu",
+  "export_data": "Xuất dữ liệu",
+  "export_data_description": "Xuất dữ liệu tài chính của bạn để sao lưu hoặc phân tích.",
+  "import_data": "Nhập dữ liệu",
+  "import_data_description": "Nhập dữ liệu tài chính của bạn từ tệp sao lưu.",
 
   "card": "Thẻ",
   

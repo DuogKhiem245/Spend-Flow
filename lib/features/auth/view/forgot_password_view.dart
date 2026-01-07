@@ -84,7 +84,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         middle: Text(
           l10n.forgot_password,
           style: CupertinoTheme.of(context).textTheme.navTitleTextStyle
-              .copyWith(fontWeight: FontWeight.w600, fontSize: 20.sp),
+              .copyWith(fontWeight: FontWeight.w600, fontSize: 18.sp),
         ),
         border: null,
       ),

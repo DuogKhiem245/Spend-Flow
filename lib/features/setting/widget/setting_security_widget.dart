@@ -5,6 +5,7 @@ import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/features/setting/security/security_view.dart';
 import 'package:spend_flow/features/setting/setting_viewmodel.dart';
+import 'package:spend_flow/features/setting/widget/setting_item_widget.dart';
 
 class SettingSecurityWidget extends StatefulWidget {
   const SettingSecurityWidget({super.key});
@@ -45,7 +46,7 @@ class _SettingSecurityWidgetState extends State<SettingSecurityWidget> {
                 ? "Passcode"
                 : "Passcode & $bioType";
 
-            return _SecurityItem(
+            return SettingItem(
               title: title,
               icon: CupertinoIcons.lock_fill,
               iconBgColor: const Color(0xFF71717A),
@@ -57,89 +58,15 @@ class _SettingSecurityWidgetState extends State<SettingSecurityWidget> {
                   ),
                 );
               },
+              trailing: Icon(
+                CupertinoIcons.chevron_right,
+                size: 18.sp,
+                color: CupertinoColors.systemGrey3,
+              ),
             );
           },
         ),
       ],
-    );
-  }
-}
-
-class _SecurityItem extends StatelessWidget {
-  final String title;
-  final IconData icon;
-  final Color iconBgColor;
-  final VoidCallback onTap;
-
-  const _SecurityItem({
-    required this.title,
-    required this.icon,
-    required this.iconBgColor,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 60.h,
-      decoration: BoxDecoration(
-        color: CupertinoTheme.of(context).barBackgroundColor,
-        borderRadius: BorderRadius.circular(30.r),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.boxShadow.withValues(alpha: 0.05),
-            blurRadius: 10.r,
-            offset: Offset(0, 4.h),
-          ),
-        ],
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(30.r),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 36.w,
-                      height: 36.w,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: iconBgColor,
-                        borderRadius: BorderRadius.circular(30.r),
-                      ),
-                      child: Icon(icon, size: 20.sp, color: Colors.white),
-                    ),
-                    SizedBox(width: 14.w),
-
-                    Text(
-                      title,
-                      style: TextStyle(
-                        fontSize: 17.sp,
-                        fontWeight: FontWeight.w500,
-                        color: CupertinoTheme.of(
-                          context,
-                        ).textTheme.textStyle.color,
-                      ),
-                    ),
-                  ],
-                ),
-
-                Icon(
-                  CupertinoIcons.chevron_right,
-                  size: 18.sp,
-                  color: CupertinoColors.systemGrey3,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
