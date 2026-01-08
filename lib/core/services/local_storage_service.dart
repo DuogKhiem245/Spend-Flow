@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -353,7 +354,10 @@ class LocalStorageService {
     });
   }
 
-  Future<void> addCategory(CategoryModel category) async {
+  Future<void> addCategory(
+    CategoryModel category, {
+    bool forceUpdate = false,
+  }) async {
     final db = await database;
 
     await db.transaction((txn) async {
@@ -363,9 +367,15 @@ class LocalStorageService {
       if (existing == null) {
         await _sampleStore.add(txn, category.toMap());
 
-        await _syncCategoryStore.add(txn, category.toMap());
+        if (!forceUpdate) {
+          await _syncCategoryStore.add(txn, category.toMap());
+        }
       } else {
-        debugPrint("Category ID ${category.id} already exists.");
+        if (forceUpdate) {
+          await _sampleStore.record(existing.key).update(txn, category.toMap());
+        } else {
+          debugPrint("Category ID ${category.id} already exists.");
+        }
       }
     });
   }
@@ -397,10 +407,64 @@ class LocalStorageService {
 
     final db = await database;
 
-    final finder = Finder(filter: Filter.equals('id', category.id));
-    final deletedCount = await _sampleStore.delete(db, finder: finder);
+    return await db.transaction((txn) async {
+      final finder = Finder(filter: Filter.equals('id', category.id));
+      final deletedCount = await _sampleStore.delete(txn, finder: finder);
 
-    return deletedCount > 0;
+      if (deletedCount > 0) {
+        final deletedCategory = category.copyWith(
+          isDeleted: true,
+        ); 
+
+        await _syncCategoryStore.add(txn, deletedCategory.toMap());
+      }
+
+      return deletedCount > 0;
+    });
+  }
+
+  Future<List<CategoryModel>> getPendingSyncCategories() async {
+    final db = await database;
+    final snapshots = await _syncCategoryStore.find(db);
+
+    return snapshots.map((snapshot) {
+      final data = Map<String, dynamic>.from(snapshot.value as Map);
+      return CategoryModel.fromMap(data);
+    }).toList();
+  }
+
+  Future<void> removeSyncedCategories(List<String> categoryIds) async {
+    final db = await database;
+    final finder = Finder(filter: Filter.inList('id', categoryIds));
+    await _syncCategoryStore.delete(db, finder: finder);
+  }
+
+  Future<bool> checkIconExists(String fileName) async {
+    final dir = await getApplicationDocumentsDirectory();
+    final file = File('${dir.path}/$fileName');
+    return file.existsSync();
+  }
+
+  Future<void> saveCategoryFromSync(CategoryModel category) async {
+    final db = await database;
+    await db.transaction((txn) async {
+      final finder = Finder(filter: Filter.equals('id', category.id));
+      final existing = await _sampleStore.findFirst(txn, finder: finder);
+
+      if (existing != null) {
+        await _sampleStore.record(existing.key).update(txn, category.toMap());
+      } else {
+        await _sampleStore.add(txn, category.toMap());
+      }
+    });
+  }
+
+  Future<void> deleteCategoryFromSync(String categoryId) async {
+    final db = await database;
+    final finder = Finder(filter: Filter.equals('id', categoryId));
+
+    await _sampleStore.delete(db, finder: finder);
+
   }
 
   // ============================================================

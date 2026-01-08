@@ -12,6 +12,7 @@ import 'package:spend_flow/core/model/wallet_model.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/model/category_model.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
+import 'package:spend_flow/core/services/sync_service/sync_service.dart';
 import 'package:spend_flow/features/home/home_model.dart';
 
 class HomeViewModel extends ChangeNotifier {
@@ -85,6 +86,7 @@ class HomeViewModel extends ChangeNotifier {
         _fetchChartData(walletId),
         _fetchRecentTransactions(walletId),
       ]);
+      SyncService().syncData();
     } catch (e) {
       debugPrint("Error reloading data: $e");
     } finally {

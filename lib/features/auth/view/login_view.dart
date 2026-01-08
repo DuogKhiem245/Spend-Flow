@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
+import 'package:spend_flow/core/services/sync_service/sync_service.dart';
 import 'package:spend_flow/core/widgets/nav.dart';
 import 'package:spend_flow/features/auth/auth_viewmodel.dart';
 import 'package:spend_flow/features/auth/view/forgot_password_view.dart';
@@ -80,6 +81,7 @@ class _LoginPageState extends State<LoginPage> {
     try {
       final credential = await method();
       if (credential != null && credential.user != null) {
+        await SyncService().syncData();
         _navigateToHome();
       }
     } catch (e) {

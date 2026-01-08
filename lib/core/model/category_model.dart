@@ -9,6 +9,10 @@ class CategoryModel {
   final Color color;
   final int count;
   final bool isCustom;
+  final String? remoteIconUrl;
+
+  final bool isDeleted; 
+  final int updatedAt; 
 
   CategoryModel({
     String? id,
@@ -18,7 +22,11 @@ class CategoryModel {
     required this.color,
     this.count = 0,
     this.isCustom = false,
-  }) : id = id ?? const Uuid().v4();
+    this.remoteIconUrl,
+    this.isDeleted = false,
+    int? updatedAt,
+  }) : id = id ?? const Uuid().v4(),
+       updatedAt = updatedAt ?? DateTime.now().millisecondsSinceEpoch;
 
   CategoryModel copyWith({
     String? id,
@@ -28,6 +36,9 @@ class CategoryModel {
     Color? color,
     int? count,
     bool? isCustom,
+    String? remoteIconUrl,
+    bool? isDeleted,
+    int? updatedAt,
   }) {
     return CategoryModel(
       id: id ?? this.id,
@@ -37,6 +48,9 @@ class CategoryModel {
       color: color ?? this.color,
       count: count ?? this.count,
       isCustom: isCustom ?? this.isCustom,
+      remoteIconUrl: remoteIconUrl ?? this.remoteIconUrl,
+      updatedAt: updatedAt ?? DateTime.now().millisecondsSinceEpoch,
+      isDeleted: isDeleted ?? this.isDeleted,
     );
   }
 
@@ -48,7 +62,11 @@ class CategoryModel {
       'iconKey': iconKey,
       'colorValue': color.value,
       'count': count,
-      'isCustom': isCustom,
+      'isCustom': isCustom ? 1 : 0,
+      'remoteIconUrl': remoteIconUrl,
+
+      'isDeleted': isDeleted ? 1 : 0,
+      'updatedAt': updatedAt,
     };
   }
 
@@ -60,7 +78,12 @@ class CategoryModel {
       iconKey: map['iconKey'],
       color: Color(map['colorValue']),
       count: map['count'] ?? 0,
-      isCustom: map['isCustom'] ?? false,
+
+      isCustom: map['isCustom'] == 1 || map['isCustom'] == true,
+      remoteIconUrl: map['remoteIconUrl'],
+
+      isDeleted: map['isDeleted'] == 1 || map['isDeleted'] == true,
+      updatedAt: map['updatedAt'] ?? DateTime.now().millisecondsSinceEpoch,
     );
   }
 }
