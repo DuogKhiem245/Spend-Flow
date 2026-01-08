@@ -3,16 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
+import 'package:spend_flow/features/premium/premium_viewmodel.dart';
 
 class PremiumView extends StatelessWidget {
-  const PremiumView({super.key});
+  final bool isMaximized;
+  const PremiumView({super.key, this.isMaximized = false});
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final PremiumViewModel viewModel = PremiumViewModel();
 
     return Container(
-      height: MediaQuery.of(context).size.height * 0.9,
+      height: MediaQuery.of(context).size.height * 0.92,
       decoration: BoxDecoration(
         color: CupertinoTheme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.vertical(top: Radius.circular(30.r)),
@@ -84,58 +87,65 @@ class PremiumView extends StatelessWidget {
 
                       SizedBox(height: 24.h),
 
-                      Container(
-                        padding: EdgeInsets.all(16.w),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFFFF7ED),
-                          borderRadius: BorderRadius.circular(30.r),
-                          border: Border.all(color: const Color(0xFFFFEDD5)),
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(6.w),
-                              decoration: const BoxDecoration(
-                                color: Color(0xFFFDBA74),
-                                shape: BoxShape.circle,
+                      isMaximized
+                          ? Container(
+                              padding: EdgeInsets.all(16.w),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFFFF7ED),
+                                borderRadius: BorderRadius.circular(30.r),
+                                border: Border.all(
+                                  color: const Color(0xFFFFEDD5),
+                                ),
                               ),
-                              child: Icon(
-                                CupertinoIcons.exclamationmark,
-                                color: Colors.white,
-                                size: 16.sp,
-                              ),
-                            ),
-                            SizedBox(width: 12.w),
-                            Expanded(
-                              child: Column(
+                              child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    l10n.daily_input_cap_reached,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 14.sp,
-                                      color: Colors.black87,
+                                  Container(
+                                    padding: EdgeInsets.all(6.w),
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xFFFDBA74),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Icon(
+                                      CupertinoIcons.exclamationmark,
+                                      color: Colors.white,
+                                      size: 16.sp,
                                     ),
                                   ),
-                                  SizedBox(height: 4.h),
-                                  Text(
-                                    l10n.daily_input_cap_reached_description,
-                                    style: TextStyle(
-                                      fontSize: 13.sp,
-                                      color: Colors.black54,
-                                      height: 1.4,
+                                  SizedBox(width: 12.w),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          l10n.daily_input_cap_reached,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 14.sp,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                        SizedBox(height: 4.h),
+                                        Text(
+                                          l10n.daily_input_cap_reached_description,
+                                          style: TextStyle(
+                                            fontSize: 13.sp,
+                                            color: Colors.black54,
+                                            height: 1.4,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
+                            )
+                          : const SizedBox.shrink(),
 
-                      SizedBox(height: 30.h),
+                      isMaximized
+                          ? SizedBox(height: 30.h)
+                          : const SizedBox.shrink(),
 
                       Align(
                         alignment: Alignment.centerLeft,
@@ -156,23 +166,6 @@ class PremiumView extends StatelessWidget {
                         isHeader: true,
                         context: context,
                       ),
-                      Divider(height: 24.h),
-
-                      _buildComparisonRow(
-                        l10n.no_ads,
-                        "ads",
-                        "check",
-                        context: context,
-                      ),
-
-                      Divider(height: 24.h),
-
-                      _buildComparisonRow(
-                        l10n.unlimited_scans,
-                        "10/${l10n.day}",
-                        "check",
-                        context: context,
-                      ),
 
                       Divider(height: 24.h),
 
@@ -186,7 +179,43 @@ class PremiumView extends StatelessWidget {
                       Divider(height: 24.h),
 
                       _buildComparisonRow(
+                        l10n.unlimited_scans,
+                        "ads",
+                        "check",
+                        context: context,
+                      ),
+
+                      Divider(height: 24.h),
+
+                      _buildComparisonRow(
+                        l10n.sync_data,
+                        "ads",
+                        "check",
+                        context: context,
+                      ),
+
+                      Divider(height: 24.h),
+
+                      _buildComparisonRow(
+                        l10n.no_ads,
+                        "ads",
+                        "check",
+                        context: context,
+                      ),
+
+                      Divider(height: 24.h),
+
+                      _buildComparisonRow(
                         l10n.transaction_locking,
+                        "ads",
+                        "check",
+                        context: context,
+                      ),
+
+                      Divider(height: 24.h),
+
+                      _buildComparisonRow(
+                        l10n.import_export_data,
                         "ads",
                         "check",
                         context: context,
@@ -211,8 +240,11 @@ class PremiumView extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
+                    SizedBox(height: 16.h),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        viewModel.purchasePremium();
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF3B82F6),
                         foregroundColor: Colors.white,
@@ -222,28 +254,36 @@ class PremiumView extends StatelessWidget {
                         ),
                         elevation: 0,
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            l10n.upgrade_premium,
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          SizedBox(width: 8.w),
-                          Icon(CupertinoIcons.arrow_right, size: 18.sp),
-                        ],
+                      child: ListenableBuilder(
+                        listenable: viewModel,
+                        builder: (context, _) {
+                          if (viewModel.priceString.isEmpty) {
+                            return const CupertinoActivityIndicator(
+                              color: Colors.white,
+                            );
+                          }
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                l10n.continue_with(viewModel.priceString),
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              SizedBox(width: 8.w),
+                              Icon(CupertinoIcons.arrow_right, size: 18.sp),
+                            ],
+                          );
+                        },
                       ),
                     ),
                     SizedBox(height: 12.h),
                     Text(
                       l10n.accept_terms_conditions,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 11.sp,
-                      ),
+                      style: TextStyle(fontSize: 11.sp),
                     ),
                   ],
                 ),
@@ -280,7 +320,7 @@ class PremiumView extends StatelessWidget {
             right: 20.w,
             child: GestureDetector(
               onTap: () {
-                // Handle restore purchase action
+                viewModel.restorePurchase();
               },
               child: Text(
                 l10n.restore,

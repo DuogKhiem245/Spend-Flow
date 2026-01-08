@@ -1148,6 +1148,42 @@ abstract class AppLocalizations {
   /// **'Giao dịch'**
   String get transaction;
 
+  /// No description provided for @delete_transaction.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xóa giao dịch'**
+  String get delete_transaction;
+
+  /// No description provided for @delete_transaction_confirmation.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn có chắc chắn muốn xóa giao dịch này không?'**
+  String get delete_transaction_confirmation;
+
+  /// No description provided for @transaction_details.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chi tiết giao dịch'**
+  String get transaction_details;
+
+  /// No description provided for @spending_trend.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xu hướng chi tiêu'**
+  String get spending_trend;
+
+  /// No description provided for @spending_last_7_days.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chi tiêu trong 7 ngày qua'**
+  String get spending_last_7_days;
+
+  /// No description provided for @note_2.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ghi chú'**
+  String get note_2;
+
   /// No description provided for @scan_receipt.
   ///
   /// In vi, this message translates to:
@@ -1483,6 +1519,24 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Tận hưởng trải nghiệm nâng cao của bạn.'**
   String get you_are_premium_description;
+
+  /// No description provided for @import_export_data.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập/Xuất dữ liệu'**
+  String get import_export_data;
+
+  /// No description provided for @sync_data.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đồng bộ dữ liệu'**
+  String get sync_data;
+
+  /// No description provided for @continue_with.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tiếp tục với {price} / tháng'**
+  String continue_with(Object price);
 
   /// No description provided for @biometric_authentication.
   ///
@@ -1844,6 +1898,12 @@ abstract class AppLocalizations {
   /// **'Quản lý dữ liệu'**
   String get data_management;
 
+  /// No description provided for @select_format.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn định dạng'**
+  String get select_format;
+
   /// No description provided for @export_data.
   ///
   /// In vi, this message translates to:
@@ -1856,6 +1916,12 @@ abstract class AppLocalizations {
   /// **'Xuất dữ liệu tài chính của bạn để sao lưu hoặc phân tích.'**
   String get export_data_description;
 
+  /// No description provided for @confirm_export.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xác nhận xuất'**
+  String get confirm_export;
+
   /// No description provided for @import_data.
   ///
   /// In vi, this message translates to:
@@ -1867,6 +1933,72 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Nhập dữ liệu tài chính của bạn từ tệp sao lưu.'**
   String get import_data_description;
+
+  /// No description provided for @confirm_import.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xác nhận nhập'**
+  String get confirm_import;
+
+  /// No description provided for @csv_format.
+  ///
+  /// In vi, this message translates to:
+  /// **'Định dạng CSV'**
+  String get csv_format;
+
+  /// No description provided for @csv_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Dữ liệu được phân tách bằng dấu phẩy, tương thích với hầu hết các ứng dụng bảng tính.'**
+  String get csv_description;
+
+  /// No description provided for @json_format.
+  ///
+  /// In vi, this message translates to:
+  /// **'Định dạng JSON'**
+  String get json_format;
+
+  /// No description provided for @json_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Định dạng dữ liệu linh hoạt, lý tưởng cho việc trao đổi dữ liệu giữa các ứng dụng.'**
+  String get json_description;
+
+  /// No description provided for @excel_format.
+  ///
+  /// In vi, this message translates to:
+  /// **'Định dạng Excel'**
+  String get excel_format;
+
+  /// No description provided for @excel_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Định dạng bảng tính phổ biến, hỗ trợ các tính năng nâng cao và phân tích dữ liệu.'**
+  String get excel_description;
+
+  /// No description provided for @select_file.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn tệp'**
+  String get select_file;
+
+  /// No description provided for @no_file_selected.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa chọn tệp nào'**
+  String get no_file_selected;
+
+  /// No description provided for @import_successful.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập dữ liệu thành công!'**
+  String get import_successful;
+
+  /// No description provided for @error_importing_data.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lỗi khi nhập dữ liệu.'**
+  String get error_importing_data;
 
   /// No description provided for @card.
   ///

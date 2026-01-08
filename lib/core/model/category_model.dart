@@ -63,5 +63,4 @@ class CategoryModel {
       isCustom: map['isCustom'] ?? false,
     );
   }
-  
 }

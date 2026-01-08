@@ -1,9 +1,11 @@
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/model/wallet_model.dart';
@@ -17,6 +19,8 @@ class HomeViewModel extends ChangeNotifier {
   final LocalAuthentication _auth = LocalAuthentication();
 
   User? get currentUser => FirebaseAuth.instance.currentUser;
+
+  String? _appDocumentsPath;
 
   bool _isLocked = false;
   bool _hasSecurity = false;
@@ -50,11 +54,13 @@ class HomeViewModel extends ChangeNotifier {
   List<SpendingModel> get chartData => _chartData;
   List<TransactionModel> get recentTransactions => _recentTransactions;
 
-  HomeViewModel() {
-    _initData();
-  }
+  Future<void> initData() async {
+    _isLoading = true;
+    notifyListeners();
 
-  Future<void> _initData() async {
+    final directory = await getApplicationDocumentsDirectory();
+    _appDocumentsPath = directory.path;
+
     final prefs = await SharedPreferences.getInstance();
     _currentWalletId = prefs.getString('current_wallet_id');
 
@@ -64,8 +70,7 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   Future<void> reloadData() async {
-    _isLoading = true;
-    notifyListeners();
+    await _loadWallets();
 
     final walletId = await _ensureWalletId();
     if (walletId == null) {
@@ -84,7 +89,7 @@ class HomeViewModel extends ChangeNotifier {
       debugPrint("Error reloading data: $e");
     } finally {
       _isLoading = false;
-      notifyListeners(); 
+      notifyListeners();
     }
   }
 
@@ -100,6 +105,20 @@ class HomeViewModel extends ChangeNotifier {
       _isLocked = true;
       notifyListeners();
     }
+  }
+
+  File? getRealImageFile(String iconKey) {
+    if (_appDocumentsPath == null || iconKey.isEmpty) return null;
+
+    if (!iconKey.contains('/')) {
+      final file = File('$_appDocumentsPath/$iconKey');
+      return file.existsSync() ? file : null;
+    }
+
+    final fileName = iconKey.split('/').last;
+    final fixedFile = File('$_appDocumentsPath/$fileName');
+
+    return fixedFile.existsSync() ? fixedFile : null;
   }
 
   Future<void> _fetchMonthStats(String walletId) async {
@@ -232,6 +251,8 @@ class HomeViewModel extends ChangeNotifier {
     await prefs.setString('current_wallet_id', walletId);
 
     _currentWalletId = walletId;
+
+    await reloadData();
 
     notifyListeners();
   }

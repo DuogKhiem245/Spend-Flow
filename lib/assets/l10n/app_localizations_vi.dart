@@ -557,6 +557,25 @@ class AppLocalizationsVi extends AppLocalizations {
   String get transaction => 'Giao dịch';
 
   @override
+  String get delete_transaction => 'Xóa giao dịch';
+
+  @override
+  String get delete_transaction_confirmation =>
+      'Bạn có chắc chắn muốn xóa giao dịch này không?';
+
+  @override
+  String get transaction_details => 'Chi tiết giao dịch';
+
+  @override
+  String get spending_trend => 'Xu hướng chi tiêu';
+
+  @override
+  String get spending_last_7_days => 'Chi tiêu trong 7 ngày qua';
+
+  @override
+  String get note_2 => 'Ghi chú';
+
+  @override
   String get scan_receipt => 'Quét hóa đơn';
 
   @override
@@ -730,6 +749,17 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get you_are_premium_description =>
       'Tận hưởng trải nghiệm nâng cao của bạn.';
+
+  @override
+  String get import_export_data => 'Nhập/Xuất dữ liệu';
+
+  @override
+  String get sync_data => 'Đồng bộ dữ liệu';
+
+  @override
+  String continue_with(Object price) {
+    return 'Tiếp tục với $price / tháng';
+  }
 
   @override
   String get biometric_authentication => 'Xác thực sinh trắc học';
@@ -921,6 +951,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get data_management => 'Quản lý dữ liệu';
 
   @override
+  String get select_format => 'Chọn định dạng';
+
+  @override
   String get export_data => 'Xuất dữ liệu';
 
   @override
@@ -928,11 +961,50 @@ class AppLocalizationsVi extends AppLocalizations {
       'Xuất dữ liệu tài chính của bạn để sao lưu hoặc phân tích.';
 
   @override
+  String get confirm_export => 'Xác nhận xuất';
+
+  @override
   String get import_data => 'Nhập dữ liệu';
 
   @override
   String get import_data_description =>
       'Nhập dữ liệu tài chính của bạn từ tệp sao lưu.';
+
+  @override
+  String get confirm_import => 'Xác nhận nhập';
+
+  @override
+  String get csv_format => 'Định dạng CSV';
+
+  @override
+  String get csv_description =>
+      'Dữ liệu được phân tách bằng dấu phẩy, tương thích với hầu hết các ứng dụng bảng tính.';
+
+  @override
+  String get json_format => 'Định dạng JSON';
+
+  @override
+  String get json_description =>
+      'Định dạng dữ liệu linh hoạt, lý tưởng cho việc trao đổi dữ liệu giữa các ứng dụng.';
+
+  @override
+  String get excel_format => 'Định dạng Excel';
+
+  @override
+  String get excel_description =>
+      'Định dạng bảng tính phổ biến, hỗ trợ các tính năng nâng cao và phân tích dữ liệu.';
+
+  @override
+  String get select_file => 'Chọn tệp';
+
+  @override
+  String get no_file_selected => 'Chưa chọn tệp nào';
+
+  @override
+  String get import_successful => 'Nhập dữ liệu thành công!';
+
+  @override
+  String get error_importing_data => 'Lỗi khi nhập dữ liệu.';
 
   @override
   String get card => 'Thẻ';

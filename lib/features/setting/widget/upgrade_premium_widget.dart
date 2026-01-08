@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
-import 'package:spend_flow/core/widgets/premium/premium_view.dart';
+import 'package:spend_flow/features/premium/premium_view.dart';
 
 class UpgradePremiumWidget extends StatefulWidget {
   const UpgradePremiumWidget({super.key});

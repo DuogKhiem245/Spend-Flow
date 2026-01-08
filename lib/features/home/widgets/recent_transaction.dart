@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,12 @@ class _RecentTransactionState extends State<RecentTransaction> {
         onVerify: (code) => _viewModel.verifyPasscode(code),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _viewModel.initData();
   }
 
   @override
@@ -160,6 +167,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
 
   Widget _buildTransactionItem(TransactionModel item, BuildContext context, String symbol) {
     final isExpense = item.isIncome == false;
+    final File? imageFile = _viewModel.getRealImageFile(item.category.iconKey);
     final color = isExpense ? AppColors.errorColor : AppColors.secondaryColor;
 
     return Padding(
@@ -176,11 +184,22 @@ class _RecentTransactionState extends State<RecentTransaction> {
                   color: item.category.color.withValues(alpha: .15),
                   borderRadius: BorderRadius.circular(30.r),
                 ),
-                child: Icon(
-                  AppIcons.getIcon(item.category.iconKey),
-                  size: 24.w,
-                  color: item.category.color,
-                ),
+                child: imageFile != null 
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(30.r),
+                        child: Image.file(
+                          imageFile, 
+                          width: 24.w,
+                          height: 24.w,
+                          fit: BoxFit
+                              .cover, 
+                        ),
+                      )
+                    : Icon(
+                        AppIcons.getIcon(item.category.iconKey),
+                        size: 24.w,
+                        color: item.category.color,
+                      ),
               ),
               SizedBox(width: 12.w),
               Column(

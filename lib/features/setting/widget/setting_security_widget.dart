@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
-import 'package:spend_flow/config/app_colors.dart';
+import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/features/premium/premium_view.dart';
 import 'package:spend_flow/features/setting/security/security_view.dart';
 import 'package:spend_flow/features/setting/setting_viewmodel.dart';
 import 'package:spend_flow/features/setting/widget/setting_item_widget.dart';
@@ -16,6 +17,15 @@ class SettingSecurityWidget extends StatefulWidget {
 
 class _SettingSecurityWidgetState extends State<SettingSecurityWidget> {
   final SettingViewModel _viewModel = SettingViewModel();
+
+  void _showPremiumModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
+      builder: (context) => const PremiumView(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,13 +60,20 @@ class _SettingSecurityWidgetState extends State<SettingSecurityWidget> {
               title: title,
               icon: CupertinoIcons.lock_fill,
               iconBgColor: const Color(0xFF71717A),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                    builder: (context) => const SecurityView(),
-                  ),
-                );
+              onTap: () async {
+                final bool isPremium = await LocalStorageService()
+                    .getPremiumStatus();
+                if (!context.mounted) return;
+                if (isPremium) {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => const SecurityView(),
+                    ),
+                  );
+                } else {
+                  _showPremiumModal(context);
+                }
               },
               trailing: Icon(
                 CupertinoIcons.chevron_right,

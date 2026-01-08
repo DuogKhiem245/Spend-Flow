@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -9,7 +10,7 @@ import 'package:spend_flow/core/data/currency_data.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/core/model/category_model.dart';
 import 'package:spend_flow/core/model/budget_model.dart';
-import 'package:spend_flow/core/model/wallet_model.dart'; 
+import 'package:spend_flow/core/model/wallet_model.dart';
 
 class LocalStorageService {
   static final LocalStorageService _instance = LocalStorageService._internal();
@@ -50,7 +51,8 @@ class LocalStorageService {
   }
 
   static const String _kNotificationKey = 'is_notification_enabled';
-  static const String _kCurrencyCodeKey ='selected_currency_code'; 
+  static const String _kCurrencyCodeKey = 'selected_currency_code';
+  static const String _isPremiumKey = 'is_premium_user';
 
   Future<bool> getNotificationStatus() async {
     final prefs = await SharedPreferences.getInstance();
@@ -69,20 +71,30 @@ class LocalStorageService {
 
   Future<Map<String, String>> getCurrency() async {
     final prefs = await SharedPreferences.getInstance();
-    
+
     final String savedCode = prefs.getString(_kCurrencyCodeKey) ?? 'USD';
 
     final allCurrencies = [
       ...CurrencyData().popularList,
-      ...CurrencyData().allList
+      ...CurrencyData().allList,
     ];
 
     final currency = allCurrencies.firstWhere(
       (element) => element['code'] == savedCode,
-      orElse: () => CurrencyData().popularList[0], 
+      orElse: () => CurrencyData().popularList[0],
     );
 
-    return currency; 
+    return currency;
+  }
+
+  Future<bool> getPremiumStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_isPremiumKey) ?? false;
+  }
+
+  Future<void> setPremiumStatus(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_isPremiumKey, value);
   }
 
   // ============================================================
@@ -131,18 +143,80 @@ class LocalStorageService {
     await _settingStore.record(_faceIdKey).put(db, {'enabled': enabled});
   }
 
+  // ------------------------------------------------------------
+  // 3: IMPORT, EXPORT DATA
+  // ------------------------------------------------------------
+
+  Future<String> exportDataToJson() async {
+    final db = await database;
+
+    final walletsSnapshot = await _walletStore.find(db);
+    final transactionsSnapshot = await _transactionStore.find(db);
+    final budgetsSnapshot = await _budgetStore.find(db);
+
+    final Map<String, dynamic> exportData = {
+      'metadata': {
+        'timestamp': DateTime.now().toIso8601String(),
+        'app_version': '1.0.0',
+        'exported_by': 'SpendFlow',
+      },
+      'wallets': walletsSnapshot.map((snapshot) => snapshot.value).toList(),
+      'transactions': transactionsSnapshot
+          .map((snapshot) => snapshot.value)
+          .toList(),
+      'budgets': budgetsSnapshot.map((snapshot) => snapshot.value).toList(),
+    };
+
+    return jsonEncode(exportData);
+  }
+
+  Future<void> importDataFromJson(String jsonString) async {
+    final db = await database;
+
+    try {
+      final Map<String, dynamic> data = jsonDecode(jsonString);
+
+      await db.transaction((txn) async {
+        await _walletStore.delete(txn);
+        await _transactionStore.delete(txn);
+
+        if (data['wallets'] != null) {
+          final List<dynamic> wallets = data['wallets'];
+          for (var item in wallets) {
+            await _walletStore.add(txn, item as Map<String, dynamic>);
+          }
+        }
+
+        if (data['transactions'] != null) {
+          final List<dynamic> transactions = data['transactions'];
+          for (var item in transactions) {
+            await _transactionStore.add(txn, item as Map<String, dynamic>);
+          }
+        }
+      });
+    } catch (e) {
+      debugPrint("Lỗi Import Data: $e");
+      throw Exception("Dữ liệu backup không hợp lệ hoặc bị lỗi.");
+    }
+  }
 
   // ============================================================
-  // 3: SEMBAST DATABASE 
+  // 4: SEMBAST DATABASE
   // ============================================================
 
   Database? _db;
 
-  final _transactionStore = intMapStoreFactory.store('transactions');
-  final _sampleStore = intMapStoreFactory.store('sample_categories',); 
+  final _sampleStore = intMapStoreFactory.store('sample_categories');
   final _suggestStore = intMapStoreFactory.store('suggest_categories');
+
+  final _transactionStore = intMapStoreFactory.store('transactions');
   final _budgetStore = intMapStoreFactory.store('budgets');
   final _walletStore = intMapStoreFactory.store('wallets');
+
+  final _syncCategoryStore = intMapStoreFactory.store('sync_categories_queue');
+  final _syncTransactionStore = intMapStoreFactory.store('sync_transactions_queue');
+  final _syncWalletStore = intMapStoreFactory.store('sync_wallets_queue');
+  final _syncBudgetStore = intMapStoreFactory.store('sync_budgets_queue');
 
   Future<Database> get database async {
     if (_db != null) return _db!;
@@ -227,7 +301,7 @@ class LocalStorageService {
     final Map<String, CategoryModel> uniqueMap = {};
 
     for (var cat in mostUsed) {
-      uniqueMap[cat.id] = cat; 
+      uniqueMap[cat.id] = cat;
     }
 
     for (var cat in defaults) {
@@ -242,71 +316,82 @@ class LocalStorageService {
   Future<void> incrementCategoryUsage(CategoryModel category) async {
     final db = await database;
 
-    final finder = Finder(filter: Filter.equals('id', category.id));
-    final snapshot = await _sampleStore.findFirst(db, finder: finder);
+    await db.transaction((txn) async {
+      final finder = Finder(filter: Filter.equals('id', category.id));
+      final snapshot = await _sampleStore.findFirst(txn, finder: finder);
 
-    if (snapshot != null) {
-      final current = CategoryModel.fromMap(snapshot.value);
+      CategoryModel categoryToSync;
 
-      final updated = CategoryModel(
-        id: current.id, 
-        name: current.name,
-        l10nKey: current.l10nKey,
-        iconKey: current.iconKey,
-        color: current.color,
-        count: current.count + 1,
-      );
+      if (snapshot != null) {
+        final current = CategoryModel.fromMap(snapshot.value);
+        final updated = CategoryModel(
+          id: current.id,
+          name: current.name,
+          l10nKey: current.l10nKey,
+          iconKey: current.iconKey,
+          color: current.color,
+          count: current.count + 1,
+          isCustom: current.isCustom, 
+        );
+        await _sampleStore.record(snapshot.key).update(txn, updated.toMap());
+        categoryToSync = updated;
+      } else {
+        final newCategory = CategoryModel(
+          id: category.id,
+          name: category.name,
+          l10nKey: category.l10nKey,
+          iconKey: category.iconKey,
+          color: category.color,
+          count: 1,
+          isCustom: category.isCustom,
+        );
+        await _sampleStore.add(txn, newCategory.toMap());
+        categoryToSync = newCategory;
+      }
 
-      await _sampleStore.record(snapshot.key).update(db, updated.toMap());
-    } else {
-      final newCategory = CategoryModel(
-        id: category.id,
-        name: category.name,
-        l10nKey: category.l10nKey,
-        iconKey: category.iconKey,
-        color: category.color,
-        count: 1,
-      );
-      await _sampleStore.add(db, newCategory.toMap());
-    }
+      await _syncCategoryStore.add(txn, categoryToSync.toMap());
+    });
   }
 
   Future<void> addCategory(CategoryModel category) async {
     final db = await database;
 
-    final finder = Finder(filter: Filter.equals('id', category.id));
-    final existing = await _sampleStore.findFirst(db, finder: finder);
+    await db.transaction((txn) async {
+      final finder = Finder(filter: Filter.equals('id', category.id));
+      final existing = await _sampleStore.findFirst(txn, finder: finder);
 
-    if (existing == null) {
-      await _sampleStore.add(db, category.toMap());
-    } else {
-      debugPrint("Category ID ${category.id} already exists.");
-    }
+      if (existing == null) {
+        await _sampleStore.add(txn, category.toMap());
+
+        await _syncCategoryStore.add(txn, category.toMap());
+      } else {
+        debugPrint("Category ID ${category.id} already exists.");
+      }
+    });
   }
 
   Future<void> updateCategory(CategoryModel updatedCategory) async {
     final db = await database;
 
-    final finder = Finder(filter: Filter.equals('id', updatedCategory.id));
+    await db.transaction((txn) async {
+      final finder = Finder(filter: Filter.equals('id', updatedCategory.id));
+      final snapshot = await _sampleStore.findFirst(txn, finder: finder);
 
-    final snapshot = await _sampleStore.findFirst(db, finder: finder);
+      if (snapshot != null) {
+        await _sampleStore
+            .record(snapshot.key)
+            .update(txn, updatedCategory.toMap());
 
-    if (snapshot != null) {
-      await _sampleStore
-          .record(snapshot.key)
-          .update(db, updatedCategory.toMap());
-    } else {
-      debugPrint(
-        "Error: Category with ID ${updatedCategory.id} not found for update.",
-      );
-    }
+        await _syncCategoryStore.add(txn, updatedCategory.toMap());
+      } else {
+        debugPrint("Error: Category ${updatedCategory.id} not found.");
+      }
+    });
   }
 
   Future<bool> deleteCategory(CategoryModel category) async {
     if (int.tryParse(category.id) != null) {
-      debugPrint(
-        "Cannot delete default system category: ${category.name}",
-      );
+      debugPrint("Cannot delete default system category: ${category.name}");
       return false;
     }
 
@@ -322,16 +407,20 @@ class LocalStorageService {
   // WALLETS
   // ============================================================
 
-  Future<void> saveWallet(WalletModel wallet) async {
+ Future<void> saveWallet(WalletModel wallet) async {
     final db = await database;
-    final finder = Finder(filter: Filter.equals('id', wallet.id));
-    final existing = await _walletStore.findFirst(db, finder: finder);
 
-    if (existing != null) {
-      await _walletStore.record(existing.key).update(db, wallet.toMap());
-    } else {
-      await _walletStore.add(db, wallet.toMap());
-    }
+    await db.transaction((txn) async {
+      final finder = Finder(filter: Filter.equals('id', wallet.id));
+      final existing = await _walletStore.findFirst(txn, finder: finder);
+
+      if (existing != null) {
+        await _walletStore.record(existing.key).update(txn, wallet.toMap());
+      } else {
+        await _walletStore.add(txn, wallet.toMap());
+      }
+      await _syncWalletStore.add(txn, wallet.toMap());
+    });
   }
 
   Future<List<WalletModel>> getAllWallets() async {
@@ -363,9 +452,13 @@ class LocalStorageService {
 
   Future<void> addTransaction(TransactionModel transaction) async {
     final db = await database;
-    await _transactionStore.add(db, transaction.toMap());
 
-    // Lưu ý: Logic incrementCategoryUsage cũng cần sửa để chỉ tính cho ví hiện tại nếu cần
+    await db.transaction((txn) async {
+      await _transactionStore.add(txn, transaction.toMap());
+
+      await _syncTransactionStore.add(txn, transaction.toMap());
+    });
+
     await incrementCategoryUsage(transaction.category);
   }
 
@@ -398,10 +491,7 @@ class LocalStorageService {
       filter: Filter.and([
         Filter.greaterThanOrEquals('date', start),
         Filter.lessThan('date', end),
-        Filter.equals(
-          'walletId',
-          walletId,
-        ), 
+        Filter.equals('walletId', walletId),
       ]),
       sortOrders: [SortOrder('date', false)],
     );
@@ -414,6 +504,12 @@ class LocalStorageService {
     }).toList();
   }
 
+  Future<void> deleteTransaction(String id) async {
+    final db = await database;
+    final finder = Finder(filter: Filter.equals('id', id));
+    await _transactionStore.delete(db, finder: finder);
+  }
+
   // ------------------------------------------------------------
   // BUDGETS
   // ------------------------------------------------------------
@@ -421,35 +517,43 @@ class LocalStorageService {
   Future<void> saveBudget(BudgetModel budget) async {
     final db = await database;
 
-    final finder = Finder(
-      filter: Filter.custom((record) {
-        final value = record.value as Map<String, dynamic>;
+    await db.transaction((txn) async {
+      final finder = Finder(
+        filter: Filter.custom((record) {
+          final value = record.value as Map<String, dynamic>;
+          if (value['walletId'] != budget.walletId) return false;
 
-        if (value['walletId'] != budget.walletId) return false; 
+          final categoryMap = value['category'] as Map<String, dynamic>;
+          if (categoryMap['iconKey'] != budget.category.iconKey) return false;
 
-        final categoryMap = value['category'] as Map<String, dynamic>;
-        if (categoryMap['iconKey'] != budget.category.iconKey) return false;
-
-        if (value['date'] == null) return false;
-        final storedDate = DateTime.parse(value['date']);
-
-        return storedDate.year == budget.date.year &&
-            storedDate.month == budget.date.month;
-      }),
-    );
-
-    final existingSnapshot = await _budgetStore.findFirst(db, finder: finder);
-
-    if (existingSnapshot != null) {
-      final updatedBudget = budget.copyWith(
-        id: existingSnapshot.value['id'] as String,
+          if (value['date'] == null) return false;
+          final storedDate = DateTime.parse(value['date']);
+          return storedDate.year == budget.date.year &&
+              storedDate.month == budget.date.month;
+        }),
       );
-      await _budgetStore
-          .record(existingSnapshot.key)
-          .update(db, updatedBudget.toMap());
-    } else {
-      await _budgetStore.add(db, budget.toMap());
-    }
+
+      final existingSnapshot = await _budgetStore.findFirst(
+        txn,
+        finder: finder,
+      );
+
+      BudgetModel finalBudgetToSync = budget;
+
+      if (existingSnapshot != null) {
+        final updatedBudget = budget.copyWith(
+          id: existingSnapshot.value['id'] as String,
+        );
+        await _budgetStore
+            .record(existingSnapshot.key)
+            .update(txn, updatedBudget.toMap());
+        finalBudgetToSync = updatedBudget;
+      } else {
+        await _budgetStore.add(txn, budget.toMap());
+      }
+
+      await _syncBudgetStore.add(txn, finalBudgetToSync.toMap());
+    });
   }
 
   Future<List<BudgetModel>> getBudgetsForMonth(
@@ -472,7 +576,7 @@ class LocalStorageService {
       filter: Filter.custom((record) {
         final value = record.value as Map<String, dynamic>;
 
-        if (value['walletId'] != walletId) return false; 
+        if (value['walletId'] != walletId) return false;
 
         if (value['date'] == null) return false;
         final storedDate = DateTime.parse(value['date']);
@@ -515,4 +619,10 @@ class LocalStorageService {
     final finder = Finder(filter: Filter.equals('id', budgetId));
     await _budgetStore.delete(db, finder: finder);
   }
+
+  // ------------------------------------------------------------
+  // SYNC TRANSACTIONS QUEUE
+  // ------------------------------------------------------------
+
+  
 }

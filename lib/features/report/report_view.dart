@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +12,7 @@ import 'package:spend_flow/core/widgets/skeleton/skeleton_report_view.dart';
 import 'package:spend_flow/core/widgets/verify_passcode/verify_passcode_sheet.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/features/report/report_viewmodel.dart';
+import 'package:spend_flow/features/transaction/view_transaction/transaction_detail_view.dart';
 
 class ReportPage extends StatefulWidget {
   const ReportPage({super.key});
@@ -20,7 +23,7 @@ class ReportPage extends StatefulWidget {
 
 class _ReportPageState extends State<ReportPage> {
   final ReportViewModel _viewModel = ReportViewModel();
-  bool get _isLoading => _viewModel.isLoading; 
+  bool get _isLoading => _viewModel.isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +38,7 @@ class _ReportPageState extends State<ReportPage> {
             if (_isLoading) {
               return const SkeletonReportView();
             }
-            
+
             if (_viewModel.isLocked) {
               return Center(
                 child: Column(
@@ -104,7 +107,11 @@ class _ReportPageState extends State<ReportPage> {
                                 Padding(
                                   padding: EdgeInsets.symmetric(vertical: 12.h),
                                   child: Text(
-                                    _viewModel.formatDateHeader(group.date, l10n, locale),
+                                    _viewModel.formatDateHeader(
+                                      group.date,
+                                      l10n,
+                                      locale,
+                                    ),
                                     style: TextStyle(
                                       fontSize: 18.sp,
                                       fontWeight: FontWeight.bold,
@@ -298,135 +305,157 @@ class _ReportPageState extends State<ReportPage> {
     final prefix = tx.isIncome ? "+" : "-";
     final symbol = _viewModel.currencySymbol;
     final iconData = AppIcons.getIcon(tx.category.iconKey);
+    final File? imageFile = _viewModel.getRealImageFile(tx.category.iconKey);
 
-    return Padding(
-      padding: EdgeInsets.only(bottom: 12.h),
-      child: Slidable(
-        key: ValueKey(tx.id),
-        endActionPane: ActionPane(
-          motion: const ScrollMotion(),
-          extentRatio: 0.30,
-          children: [
-            CustomSlidableAction(
-              onPressed: (context) => _onViewTransaction(tx),
-              backgroundColor: Colors.transparent,
-              foregroundColor: Colors.transparent,
-              padding: EdgeInsets.zero,
-              child: Container(
-                width: 40.w,
-                height: 40.w,
-                decoration: BoxDecoration(
-                  color: CupertinoColors.systemGrey.withValues(alpha: 0.2),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  CupertinoIcons.eye_solid,
-                  size: 20.sp,
-                  color: CupertinoTheme.of(context).textTheme.textStyle.color,
-                ),
-              ),
+    return Container(
+      margin: EdgeInsets.only(bottom: 12.h),
+      child: GestureDetector(
+        onTap: () => {
+          Navigator.push(
+            context,
+            CupertinoPageRoute(
+              builder: (context) => TransactionDetailView(transaction: tx),
             ),
-
-            CustomSlidableAction(
-              onPressed: (context) => _onEditTransaction(tx),
-              backgroundColor: Colors.transparent,
-              foregroundColor: Colors.transparent,
-              padding: EdgeInsets.zero,
-              child: Container(
-                width: 40.w,
-                height: 40.w,
-                decoration: BoxDecoration(
-                  color: CupertinoColors.systemGrey.withValues(alpha: 0.2),
-                  shape: BoxShape.circle,
-                ),
-                child: Center(
-                  child: Icon(
-                    CupertinoIcons.pencil,
-                    size: 20.sp,
-                    color: CupertinoTheme.of(context).textTheme.textStyle.color,
+          ),
+        },
+        child: Slidable(
+          key: ValueKey(tx.id),
+          endActionPane: ActionPane(
+            motion: const ScrollMotion(),
+            extentRatio: 0.15,
+            children: [
+              // CustomSlidableAction(
+              //   onPressed: (context) => _onEditTransaction(tx),
+              //   backgroundColor: Colors.transparent,
+              //   foregroundColor: Colors.transparent,
+              //   padding: EdgeInsets.zero,
+              //   child: Container(
+              //     width: 40.w,
+              //     height: 40.w,
+              //     decoration: BoxDecoration(
+              //       color: CupertinoColors.systemGrey.withValues(alpha: 0.2),
+              //       shape: BoxShape.circle,
+              //     ),
+              //     child: Center(
+              //       child: Icon(
+              //         CupertinoIcons.pencil,
+              //         size: 20.sp,
+              //         color: CupertinoTheme.of(context).textTheme.textStyle.color,
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              CustomSlidableAction(
+                onPressed: (context) => _onDeleteTransaction(tx),
+                backgroundColor: Colors.transparent,
+                foregroundColor: Colors.transparent,
+                padding: EdgeInsets.zero,
+                child: Container(
+                  width: 40.w,
+                  height: 40.w,
+                  decoration: BoxDecoration(
+                    color: AppColors.errorColor.withValues(alpha: 0.2),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
+                    child: Icon(
+                      CupertinoIcons.trash,
+                      size: 20.sp,
+                      color: AppColors.errorColor,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-          decoration: BoxDecoration(
-            color: CupertinoTheme.of(context).barBackgroundColor,
-            borderRadius: BorderRadius.circular(30.r),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.boxShadow,
-                blurRadius: 10,
-                offset: const Offset(0, 2),
-              ),
             ],
           ),
-          child: Row(
-            children: [
-              Container(
-                width: 48.w,
-                height: 48.w,
-                decoration: BoxDecoration(
-                  color: tx.category.color.withValues(alpha: 0.15),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(iconData, color: tx.category.color, size: 24.sp),
-              ),
-              SizedBox(width: 14.w),
 
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+            decoration: BoxDecoration(
+              color: CupertinoTheme.of(context).barBackgroundColor,
+              borderRadius: BorderRadius.circular(30.r),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.boxShadow,
+                  blurRadius: 10,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 48.w,
+                  height: 48.w,
+                  decoration: BoxDecoration(
+                    color: tx.category.color.withValues(alpha: 0.15),
+                    shape: BoxShape.circle,
+                  ),
+                  child: imageFile != null
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(30.r),
+                          child: Image.file(
+                            imageFile,
+                            width: 24.w,
+                            height: 24.w,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : Icon(iconData, color: tx.category.color, size: 24.sp),
+                ),
+                SizedBox(width: 14.w),
+
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        tx.title,
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                          color: CupertinoTheme.of(
+                            context,
+                          ).textTheme.textStyle.color,
+                        ),
+                      ),
+                      SizedBox(height: 4.h),
+                      Text(
+                        tx.category.name,
+                        style: TextStyle(
+                          fontSize: 13.sp,
+                          color: CupertinoColors.systemGrey,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      tx.title,
+                      "$prefix$symbol ${_viewModel.formatCurrency(tx.amount)}",
                       style: TextStyle(
                         fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
-                        color: CupertinoTheme.of(
-                          context,
-                        ).textTheme.textStyle.color,
+                        fontWeight: FontWeight.bold,
+                        color: amountColor,
                       ),
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      tx.category.name,
+                      _viewModel.formatTime(tx.date),
                       style: TextStyle(
-                        fontSize: 13.sp,
-                        color: CupertinoColors.systemGrey,
+                        fontSize: 12.sp,
+                        color: CupertinoTheme.of(
+                          context,
+                        ).textTheme.textStyle.color?.withValues(alpha: 0.6),
                       ),
                     ),
                   ],
                 ),
-              ),
-
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    "$prefix$symbol ${_viewModel.formatCurrency(tx.amount)}",
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.bold,
-                      color: amountColor,
-                    ),
-                  ),
-                  SizedBox(height: 4.h),
-                  Text(
-                    _viewModel.formatTime(tx.date),
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      color: CupertinoTheme.of(
-                        context,
-                      ).textTheme.textStyle.color?.withValues(alpha: 0.6),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -455,12 +484,30 @@ class _ReportPageState extends State<ReportPage> {
     );
   }
 
-  void _onViewTransaction(TransactionModel tx) {
-    debugPrint("View transaction: ${tx.title}");
-  }
-
-  void _onEditTransaction(TransactionModel tx) {
-    debugPrint("Edit transaction: ${tx.title}");
+  void _onDeleteTransaction(TransactionModel tx) {
+    showCupertinoDialog(
+      context: context,
+      builder: (ctx) => CupertinoAlertDialog(
+        title: Text(AppLocalizations.of(ctx)!.delete_transaction),
+        content: Text(
+          AppLocalizations.of(ctx)!.delete_transaction_confirmation,
+        ),
+        actions: [
+          CupertinoDialogAction(
+            child: Text(AppLocalizations.of(ctx)!.cancel),
+            onPressed: () => Navigator.pop(ctx),
+          ),
+          CupertinoDialogAction(
+            isDestructiveAction: true,
+            onPressed: () async {
+              Navigator.pop(ctx);
+              await _viewModel.deleteTransaction(tx.id);
+            },
+            child: Text(AppLocalizations.of(ctx)!.delete),
+          ),
+        ],
+      ),
+    );
   }
 
   void _showDatePicker(BuildContext context, AppLocalizations l10n) {
@@ -484,7 +531,7 @@ class _ReportPageState extends State<ReportPage> {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    l10n.done, 
+                    l10n.done,
                     style: TextStyle(
                       color: CupertinoTheme.of(context).primaryColor,
                       fontSize: 16.sp,

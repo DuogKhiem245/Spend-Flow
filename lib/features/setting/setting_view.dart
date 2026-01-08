@@ -3,10 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/auth_service.dart';
+import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/features/setting/widget/account_widget.dart';
 import 'package:spend_flow/features/setting/widget/setting_data_widget.dart';
 import 'package:spend_flow/features/setting/widget/setting_general_widget.dart';
 import 'package:spend_flow/features/setting/widget/setting_security_widget.dart';
+import 'package:spend_flow/features/setting/widget/upgrade_premium_widget.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -18,7 +20,7 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   final authService = AuthService();
 
-   @override
+  @override
   void initState() {
     super.initState();
   }
@@ -35,7 +37,7 @@ class _SettingPageState extends State<SettingPage> {
           final bool isLoading =
               snapshot.connectionState == ConnectionState.waiting;
           final bool isLoggedIn = !isLoading && user != null;
-          
+
           return Padding(
             padding: EdgeInsets.only(
               top: MediaQuery.of(context).padding.top + 10.h,
@@ -56,8 +58,24 @@ class _SettingPageState extends State<SettingPage> {
                     padding: EdgeInsets.only(bottom: 20.h),
                     child: Column(
                       children: [
-                        // const UpgradePremiumWidget(),
-                        // SizedBox(height: 30.h),
+                        FutureBuilder<bool>(
+                          future: LocalStorageService().getPremiumStatus(),
+                          builder: (context, snapshot) {
+                            final isPremium = snapshot.data ?? false;
+
+                            if (isPremium) {
+                              return const SizedBox.shrink();
+                            }
+
+                            return Column(
+                              children: [
+                                const UpgradePremiumWidget(),
+                                SizedBox(height: 30.h),
+                              ],
+                            );
+                          },
+                        ),
+
                         const SettingGeneralWidget(),
                         SizedBox(height: 10.h),
 

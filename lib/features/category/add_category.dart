@@ -232,7 +232,7 @@ class _AddCategoryViewState extends State<AddCategoryView> {
         runSpacing: 14.h,
         alignment: WrapAlignment.start,
         children: _colors.map((color) {
-          final isSelected = _selectedColor.value == color.value;
+          final isSelected = _selectedColor == color;
           return GestureDetector(
             onTap: () => setState(() => _selectedColor = color),
             child: Container(

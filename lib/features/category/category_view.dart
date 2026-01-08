@@ -208,7 +208,7 @@ class _CategoryViewState extends State<CategoryView> {
               borderRadius: BorderRadius.circular(30.r),
               image: hasImage
                   ? DecorationImage(
-                      image: FileImage(File(item.iconKey)),
+                      image: FileImage(imageFile),
                       fit: BoxFit.cover,
                     )
                   : null,

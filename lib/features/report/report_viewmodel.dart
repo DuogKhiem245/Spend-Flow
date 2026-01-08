@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
@@ -14,23 +17,22 @@ class ReportViewModel extends ChangeNotifier {
   DateTime selectedMonth = DateTime.now();
   List<TransactionModel> _transactions = [];
 
+  String? _appDocumentsPath;
+
   bool _isLocked = true;
   bool _isFaceIdAvailable = false;
   bool _isLoading = true;
 
   bool get isLocked => _isLocked;
   bool get isFaceIdAvailable => _isFaceIdAvailable;
-  bool get isLoading => _isLoading; 
+  bool get isLoading => _isLoading;
 
   String _currencySymbol = '\$';
   String get currencySymbol => _currencySymbol;
 
   ReportViewModel() {
-    Future.wait([
-      _checkSecurity(),
-      _loadCurrency(),
-    ]);
-    _loadData();
+    Future.wait([_checkSecurity(), _loadCurrency()]);
+    _loadData(true);
   }
 
   Future<void> _checkSecurity() async {
@@ -54,7 +56,7 @@ class ReportViewModel extends ChangeNotifier {
 
   Future<void> authenticateBiometric() async {
     if (!_isFaceIdAvailable) return;
-    
+
     try {
       final bool didAuthenticate = await _auth.authenticate(
         localizedReason: 'Xác thực để xem báo cáo',
@@ -91,11 +93,17 @@ class ReportViewModel extends ChangeNotifier {
     return prefs.getString('current_wallet_id');
   }
 
-  Future<void> _loadData() async {
+  Future<void> _loadData(bool isDelay) async {
     _isLoading = true;
     notifyListeners();
 
-    await Future.delayed(const Duration(milliseconds: 300));
+    if (isDelay)
+    {
+      await Future.delayed(const Duration(milliseconds: 300));
+    }
+
+    final directory = await getApplicationDocumentsDirectory();
+    _appDocumentsPath = directory.path;
 
     final walletId = await _getCurrentWalletId();
 
@@ -112,6 +120,29 @@ class ReportViewModel extends ChangeNotifier {
 
     _isLoading = false;
     notifyListeners();
+  }
+
+  File? getRealImageFile(String iconKey) {
+    if (_appDocumentsPath == null || iconKey.isEmpty) return null;
+
+    if (!iconKey.contains('/')) {
+      final file = File('$_appDocumentsPath/$iconKey');
+      return file.existsSync() ? file : null;
+    }
+
+    final fileName = iconKey.split('/').last;
+    final fixedFile = File('$_appDocumentsPath/$fileName');
+
+    return fixedFile.existsSync() ? fixedFile : null;
+  }
+
+  Future<void> deleteTransaction(String id) async {
+    try {
+      await _storage.deleteTransaction(id);
+      _loadData(false);
+    } catch (e) {
+      debugPrint("Lỗi khi xóa transaction: $e");
+    }
   }
 
   List<DailyGroup> getGroupedTransactions() {
@@ -148,13 +179,13 @@ class ReportViewModel extends ChangeNotifier {
 
   void nextMonth() {
     selectedMonth = DateTime(selectedMonth.year, selectedMonth.month + 1);
-    _loadData(); 
+    _loadData(false);
     notifyListeners();
   }
 
   void previousMonth() {
     selectedMonth = DateTime(selectedMonth.year, selectedMonth.month - 1);
-    _loadData();
+    _loadData(false);
     notifyListeners();
   }
 
@@ -188,7 +219,7 @@ class ReportViewModel extends ChangeNotifier {
 
   void setMonth(DateTime date) {
     selectedMonth = DateTime(date.year, date.month, 1);
-    _loadData(); 
+    _loadData(false);
     notifyListeners();
   }
 

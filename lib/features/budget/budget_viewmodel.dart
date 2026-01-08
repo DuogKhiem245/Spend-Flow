@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/model/budget_model.dart';
@@ -10,6 +13,8 @@ class BudgetViewModel extends ChangeNotifier {
   List<BudgetModel> budgets = [];
 
   DateTime selectedMonth = DateTime.now();
+
+  String? _appDocumentsPath;
 
   String _currencySymbol = '\$';
   String get currencySymbol => _currencySymbol;
@@ -35,6 +40,9 @@ class BudgetViewModel extends ChangeNotifier {
   Future<void> _initData() async {
     _isLoading = true;
     notifyListeners();
+
+    final directory = await getApplicationDocumentsDirectory();
+    _appDocumentsPath = directory.path;
 
     await Future.delayed(const Duration(milliseconds: 300));
 
@@ -89,6 +97,22 @@ class BudgetViewModel extends ChangeNotifier {
 
     await _storageService.deleteBudget(budget.id);
     await _fetchBudgetsFromStorage();
+  }
+
+  File? getRealImageFile(String iconKey) {
+    if (_appDocumentsPath == null || iconKey.isEmpty) return null;
+
+     debugPrint("Getting real image file for iconKey: $iconKey");
+
+    if (!iconKey.contains('/')) {
+      final file = File('$_appDocumentsPath/$iconKey');
+      return file.existsSync() ? file : null;
+    }
+
+    final fileName = iconKey.split('/').last;
+    final fixedFile = File('$_appDocumentsPath/$fileName');
+
+    return fixedFile.existsSync() ? fixedFile : null;
   }
 
   double get totalBudget => budgets.fold(0, (sum, item) => sum + item.total);

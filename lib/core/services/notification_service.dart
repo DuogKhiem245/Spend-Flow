@@ -36,7 +36,6 @@ class NotificationService {
       }
 
       tz.setLocalLocation(tz.getLocation(timeZoneName));
-      debugPrint("Successfully set timezone: $timeZoneName");
     } catch (e) {
       debugPrint(
         "Error setting timezone '$timeZoneName'. Using fallback Asia/Ho_Chi_Minh.",

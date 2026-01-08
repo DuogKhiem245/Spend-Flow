@@ -558,6 +558,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get transaction => 'Transaction';
 
   @override
+  String get delete_transaction => 'Delete Transaction';
+
+  @override
+  String get delete_transaction_confirmation =>
+      'Are you sure you want to delete this transaction?';
+
+  @override
+  String get transaction_details => 'Transaction Details';
+
+  @override
+  String get spending_trend => 'Spending Trend';
+
+  @override
+  String get spending_last_7_days => 'Spending in the Last 7 Days';
+
+  @override
+  String get note_2 => 'Note';
+
+  @override
   String get scan_receipt => 'Scan Receipt';
 
   @override
@@ -730,6 +749,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get you_are_premium_description => 'Enjoy your enhanced experience.';
+
+  @override
+  String get import_export_data => 'Import/Export Data';
+
+  @override
+  String get sync_data => 'Sync Data';
+
+  @override
+  String continue_with(Object price) {
+    return 'Continue with $price / month';
+  }
 
   @override
   String get biometric_authentication => 'Biometric Authentication';
@@ -921,6 +951,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get data_management => 'Data Management';
 
   @override
+  String get select_format => 'Select Format';
+
+  @override
   String get export_data => 'Export Data';
 
   @override
@@ -928,11 +961,51 @@ class AppLocalizationsEn extends AppLocalizations {
       'Export your financial data for backup or analysis.';
 
   @override
+  String get confirm_export => 'Confirm Export';
+
+  @override
   String get import_data => 'Import Data';
 
   @override
   String get import_data_description =>
       'Import your financial data from a backup file.';
+
+  @override
+  String get confirm_import => 'Confirm Import';
+
+  @override
+  String get csv_format => 'CSV Format';
+
+  @override
+  String get csv_description =>
+      'Export data in CSV format, compatible with most spreadsheet applications.';
+
+  @override
+  String get json_format => 'JSON Format';
+
+  @override
+  String get json_description =>
+      'Export data in JSON format, suitable for developers and advanced users.';
+
+  @override
+  String get excel_format => 'Excel Format';
+
+  @override
+  String get excel_description =>
+      'Export data in Excel format, ideal for detailed financial analysis.';
+
+  @override
+  String get select_file => 'Select File';
+
+  @override
+  String get no_file_selected => 'No file selected.';
+
+  @override
+  String get import_successful => 'Import Successful';
+
+  @override
+  String get error_importing_data =>
+      'Error importing data. Please ensure the file format is correct.';
 
   @override
   String get card => 'Card';

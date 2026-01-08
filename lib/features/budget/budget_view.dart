@@ -52,7 +52,7 @@ class _BudgetPageState extends State<BudgetPage> {
                           _buildHeader(l10n),
                           SizedBox(height: 20.h),
                           _buildTotalBudgetCard(l10n),
-                          SizedBox(height: 24.h),
+                          SizedBox(height: 10.h),
                           Expanded(
                             child: SingleChildScrollView(
                               padding: EdgeInsets.symmetric(
@@ -252,6 +252,9 @@ class _BudgetPageState extends State<BudgetPage> {
 
   Widget _buildCategoryCard(BudgetModel budget) {
     final iconData = AppIcons.getIcon(budget.iconKey);
+    final File? imageFile = _viewModel.getRealImageFile(
+      budget.iconKey,
+    );
 
     return Padding(
       padding: EdgeInsets.only(bottom: 16.h),
@@ -331,7 +334,17 @@ class _BudgetPageState extends State<BudgetPage> {
                   color: budget.color.withValues(alpha: .15),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(iconData, color: budget.color, size: 24.sp),
+                child: imageFile != null
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(30.r),
+                        child: Image.file(
+                          imageFile,
+                          width: 24.w,
+                          height: 24.w,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : Icon(iconData, color: budget.color, size: 24.sp),
               ),
               SizedBox(width: 14.w),
               Expanded(
