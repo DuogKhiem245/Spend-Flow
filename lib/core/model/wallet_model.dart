@@ -7,25 +7,35 @@ class WalletModel {
   final String currency;
   final List<TransactionModel> transactions;
 
+  final int updatedAt;
+  final bool isDeleted;
+
   WalletModel({
     String? id,
     required this.name,
     this.currency = 'USD',
     List<TransactionModel>? transactions,
+    int? updatedAt,
+    this.isDeleted = false,
   }) : id = id ?? const Uuid().v4(),
-       transactions = transactions ?? [];
+       transactions = transactions ?? [],
+       updatedAt = updatedAt ?? DateTime.now().millisecondsSinceEpoch;
 
   WalletModel copyWith({
     String? id,
     String? name,
     String? currency,
     List<TransactionModel>? transactions,
+    int? updatedAt,
+    bool? isDeleted,
   }) {
     return WalletModel(
       id: id ?? this.id,
       name: name ?? this.name,
       currency: currency ?? this.currency,
       transactions: transactions ?? this.transactions,
+      updatedAt: updatedAt ?? DateTime.now().millisecondsSinceEpoch,
+      isDeleted: isDeleted ?? this.isDeleted,
     );
   }
 
@@ -35,6 +45,8 @@ class WalletModel {
       'name': name,
       'currency': currency,
       'transactions': transactions.map((x) => x.toMap()).toList(),
+      'updatedAt': updatedAt,
+      'isDeleted': isDeleted ? 1 : 0,
     };
   }
 
@@ -48,6 +60,8 @@ class WalletModel {
               map['transactions']?.map((x) => TransactionModel.fromMap(x)),
             )
           : [],
+      updatedAt: map['updatedAt'] ?? DateTime.now().millisecondsSinceEpoch,
+      isDeleted: map['isDeleted'] == 1 || map['isDeleted'] == true,
     );
   }
 }

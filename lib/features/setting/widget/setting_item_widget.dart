@@ -9,6 +9,7 @@ class SettingItem extends StatelessWidget {
   final Color iconBgColor;
   final Widget trailing;
   final VoidCallback? onTap;
+  final String? description;
 
   const SettingItem({
     super.key,
@@ -17,13 +18,14 @@ class SettingItem extends StatelessWidget {
     required this.iconBgColor,
     required this.trailing,
     this.onTap,
+    this.description,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 12.h),
-      height: 60.h,
+      constraints: BoxConstraints(minHeight: 60.h),
       decoration: BoxDecoration(
         color: CupertinoTheme.of(context).barBackgroundColor,
         borderRadius: BorderRadius.circular(30.r),
@@ -59,7 +61,7 @@ class SettingItem extends StatelessWidget {
                 SizedBox(width: 14.w),
 
                 Expanded(
-                  child: Text(
+                  child: description == null ?  Text(
                     title,
                     style: TextStyle(
                       fontSize: 17.sp,
@@ -68,6 +70,33 @@ class SettingItem extends StatelessWidget {
                         context,
                       ).textTheme.textStyle.color,
                     ),
+                  ) : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 17.sp,
+                          fontWeight: FontWeight.w500,
+                          color: CupertinoTheme.of(
+                            context,
+                          ).textTheme.textStyle.color,
+                        ),
+                      ),
+                      SizedBox(height: 2.h),
+                      Text(
+                        description!,
+                        style: TextStyle(
+                          fontSize: 13.sp,
+                          color: CupertinoTheme.of(
+                            context,
+                          ).textTheme.textStyle.color?.withValues(alpha: 0.6),
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
                 ),
 

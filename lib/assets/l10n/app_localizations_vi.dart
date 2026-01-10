@@ -1007,6 +1007,20 @@ class AppLocalizationsVi extends AppLocalizations {
   String get error_importing_data => 'Lỗi khi nhập dữ liệu.';
 
   @override
+  String get sync_data_now => 'Đồng bộ ngay';
+
+  @override
+  String last_synced(Object time) {
+    return 'Đồng bộ lần cuối: $time';
+  }
+
+  @override
+  String get syncing => 'Đang đồng bộ...';
+
+  @override
+  String get never_synced => 'Chưa đồng bộ';
+
+  @override
   String get card => 'Thẻ';
 
   @override

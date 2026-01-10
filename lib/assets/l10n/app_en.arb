@@ -335,6 +335,10 @@
   "no_file_selected": "No file selected.",
   "import_successful": "Import Successful",
   "error_importing_data": "Error importing data. Please ensure the file format is correct.",
+  "sync_data_now": "Sync Now",
+  "last_synced": "Last Synced: {time}",
+  "syncing": "Syncing...",
+  "never_synced": "Never Synced",
 
   "card": "Card",
 

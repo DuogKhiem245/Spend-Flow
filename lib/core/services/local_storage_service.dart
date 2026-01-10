@@ -215,9 +215,13 @@ class LocalStorageService {
   final _walletStore = intMapStoreFactory.store('wallets');
 
   final _syncCategoryStore = intMapStoreFactory.store('sync_categories_queue');
-  final _syncTransactionStore = intMapStoreFactory.store('sync_transactions_queue');
+  final _syncTransactionStore = intMapStoreFactory.store(
+    'sync_transactions_queue',
+  );
   final _syncWalletStore = intMapStoreFactory.store('sync_wallets_queue');
   final _syncBudgetStore = intMapStoreFactory.store('sync_budgets_queue');
+
+  final _configStore = StoreRef<String, dynamic>('app_config');
 
   Future<Database> get database async {
     if (_db != null) return _db!;
@@ -225,6 +229,19 @@ class LocalStorageService {
     final dbPath = join(dir.path, 'spend_flow.db');
     _db = await databaseFactoryIo.openDatabase(dbPath);
     return _db!;
+  }
+
+  Future<int> getGlobalSyncTime() async {
+    final db = await database;
+    final record = await _configStore.record('global_sync_time').get(db);
+    return (record as int?) ?? 0;
+  }
+
+  Future<void> saveGlobalSyncTime(int timestamp) async {
+    final db = await database;
+    await _configStore
+        .record('global_sync_time')
+        .put(db, timestamp);
   }
 
   // ------------------------------------------------------------
@@ -332,7 +349,7 @@ class LocalStorageService {
           iconKey: current.iconKey,
           color: current.color,
           count: current.count + 1,
-          isCustom: current.isCustom, 
+          isCustom: current.isCustom,
         );
         await _sampleStore.record(snapshot.key).update(txn, updated.toMap());
         categoryToSync = updated;
@@ -412,9 +429,7 @@ class LocalStorageService {
       final deletedCount = await _sampleStore.delete(txn, finder: finder);
 
       if (deletedCount > 0) {
-        final deletedCategory = category.copyWith(
-          isDeleted: true,
-        ); 
+        final deletedCategory = category.copyWith(isDeleted: true);
 
         await _syncCategoryStore.add(txn, deletedCategory.toMap());
       }
@@ -464,14 +479,13 @@ class LocalStorageService {
     final finder = Finder(filter: Filter.equals('id', categoryId));
 
     await _sampleStore.delete(db, finder: finder);
-
   }
 
   // ============================================================
   // WALLETS
   // ============================================================
 
- Future<void> saveWallet(WalletModel wallet) async {
+  Future<void> saveWallet(WalletModel wallet) async {
     final db = await database;
 
     await db.transaction((txn) async {
@@ -497,17 +511,65 @@ class LocalStorageService {
     }).toList();
   }
 
+  Future<List<WalletModel>> getPendingSyncWallets() async {
+    final db = await database;
+    final snapshots = await _syncWalletStore.find(db);
+    return snapshots
+        .map((s) => WalletModel.fromMap(s.value as Map<String, dynamic>))
+        .toList();
+  }
+
+  Future<void> removeSyncedWallets(List<String> walletIds) async {
+    final db = await database;
+    final finder = Finder(filter: Filter.inList('id', walletIds));
+    await _syncWalletStore.delete(db, finder: finder);
+  }
+
+  Future<void> saveWalletFromSync(WalletModel wallet) async {
+    final db = await database;
+    await db.transaction((txn) async {
+      final finder = Finder(filter: Filter.equals('id', wallet.id));
+      final existing = await _walletStore.findFirst(txn, finder: finder);
+
+      if (existing != null) {
+        await _walletStore.record(existing.key).update(txn, wallet.toMap());
+      } else {
+        await _walletStore.add(txn, wallet.toMap());
+      }
+    });
+  }
+
+  Future<void> deleteWalletFromSync(String walletId) async {
+    final db = await database;
+    await db.transaction((txn) async {
+      final walletFinder = Finder(filter: Filter.equals('id', walletId));
+      await _walletStore.delete(txn, finder: walletFinder);
+
+      final childFinder = Finder(filter: Filter.equals('walletId', walletId));
+      await _transactionStore.delete(txn, finder: childFinder);
+      await _budgetStore.delete(txn, finder: childFinder);
+    });
+  }
+
   Future<void> deleteWallet(String walletId) async {
     final db = await database;
-    final finder = Finder(filter: Filter.equals('id', walletId));
+    await db.transaction((txn) async {
+      final finder = Finder(filter: Filter.equals('id', walletId));
+      final snapshot = await _walletStore.findFirst(txn, finder: finder);
 
-    await _walletStore.delete(db, finder: finder);
+      await _walletStore.delete(txn, finder: finder);
+      final childFinder = Finder(filter: Filter.equals('walletId', walletId));
+      await _transactionStore.delete(txn, finder: childFinder);
+      await _budgetStore.delete(txn, finder: childFinder);
 
-    final txFinder = Finder(filter: Filter.equals('walletId', walletId));
-    await _transactionStore.delete(db, finder: txFinder);
+      if (snapshot != null) {
+        final walletData = Map<String, dynamic>.from(snapshot.value as Map);
+        walletData['isDeleted'] = 1;
+        walletData['updatedAt'] = DateTime.now().millisecondsSinceEpoch;
 
-    final bgFinder = Finder(filter: Filter.equals('walletId', walletId));
-    await _budgetStore.delete(db, finder: bgFinder);
+        await _syncWalletStore.add(txn, walletData);
+      }
+    });
   }
 
   // ------------------------------------------------------------
@@ -687,6 +749,4 @@ class LocalStorageService {
   // ------------------------------------------------------------
   // SYNC TRANSACTIONS QUEUE
   // ------------------------------------------------------------
-
-  
 }

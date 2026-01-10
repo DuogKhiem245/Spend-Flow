@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/core/model/category_model.dart';
+import 'package:spend_flow/core/model/wallet_model.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/services/sync_service/image_sync_service.dart';
 
@@ -53,15 +53,25 @@ class SyncService {
 
     try {
       debugPrint("Bắt đầu tiến trình Sync...");
+      final lastSyncTimestamp = await _localDb.getGlobalSyncTime();
       await _pushCategories();
-      await _pullCategories();
+      await _pushWallets();
+      await _pullCategories(lastSyncTimestamp);
+      await _pullWallets(lastSyncTimestamp);
       _lastRunTime = DateTime.now();
-      debugPrint("Sync hoàn tất.");
+      await _localDb.saveGlobalSyncTime(_lastRunTime!.millisecondsSinceEpoch);
+      debugPrint("Sync hoàn tất lúc: $_lastRunTime");
     } catch (e) {
       debugPrint("Lỗi Sync: $e");
     } finally {
       _isSyncing = false;
     }
+  }
+
+  Future<DateTime?> getLastSyncTime() async {
+    final timestamp = await _localDb.getGlobalSyncTime();
+    if (timestamp == 0) return null;
+    return DateTime.fromMillisecondsSinceEpoch(timestamp);
   }
 
   Future<void> _pushCategories() async {
@@ -100,11 +110,8 @@ class SyncService {
     }
   }
 
-  Future<void> _pullCategories() async {
+  Future<void> _pullCategories(int lastSyncTime) async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final lastSyncTime = prefs.getInt('last_sync_time_categories') ?? 0;
-
       Query query = _userRef.collection('categories');
 
       if (lastSyncTime > 0) {
@@ -112,22 +119,13 @@ class SyncService {
       }
 
       final snapshot = await query.get();
-
-      if (snapshot.docs.isEmpty) {
-        return;
-      }
+      if (snapshot.docs.isEmpty) return;
 
       debugPrint("⬇️ Kéo ${snapshot.docs.length} categories về máy...");
-
-      int maxUpdatedAt = lastSyncTime;
 
       for (var doc in snapshot.docs) {
         final data = doc.data() as Map<String, dynamic>;
         var cloudCat = CategoryModel.fromMap(data);
-
-        if (cloudCat.updatedAt > maxUpdatedAt) {
-          maxUpdatedAt = cloudCat.updatedAt;
-        }
 
         if (cloudCat.isDeleted) {
           await _localDb.deleteCategoryFromSync(cloudCat.id);
@@ -152,10 +150,58 @@ class SyncService {
 
         await _localDb.saveCategoryFromSync(cloudCat);
       }
-
-      await prefs.setInt('last_sync_time_categories', maxUpdatedAt);
     } catch (e) {
-      debugPrint("Lỗi Pull Categories: $e");
+      debugPrint("Error Pull Categories: $e");
+    }
+  }
+
+  Future<void> _pushWallets() async {
+    final pending = await _localDb.getPendingSyncWallets();
+    if (pending.isEmpty) return;
+
+    debugPrint("⬆️ Push ${pending.length} wallets to Cloud.");
+    List<String> syncedIds = [];
+    final batch = _firestore.batch();
+
+    for (var item in pending) {
+      final docRef = _userRef.collection('wallets').doc(item.id);
+      batch.set(docRef, item.toMap(), SetOptions(merge: true));
+      syncedIds.add(item.id);
+    }
+
+    try {
+      await batch.commit();
+      await _localDb.removeSyncedWallets(syncedIds);
+    } catch (e) {
+      debugPrint("Error push wallets: $e");
+    }
+  }
+
+  Future<void> _pullWallets(int lastSyncTime) async {
+    try {
+      Query query = _userRef.collection('wallets');
+
+      if (lastSyncTime > 0) {
+        query = query.where('updatedAt', isGreaterThan: lastSyncTime);
+      }
+
+      final snapshot = await query.get();
+      if (snapshot.docs.isEmpty) return;
+
+      debugPrint("⬇️ Kéo ${snapshot.docs.length} wallets về máy...");
+
+      for (var doc in snapshot.docs) {
+        final data = doc.data() as Map<String, dynamic>;
+        final cloudWallet = WalletModel.fromMap(data);
+
+        if (cloudWallet.isDeleted) {
+          await _localDb.deleteWalletFromSync(cloudWallet.id);
+        } else {
+          await _localDb.saveWalletFromSync(cloudWallet);
+        }
+      }
+    } catch (e) {
+      debugPrint("Error Pull Wallets: $e");
     }
   }
 }

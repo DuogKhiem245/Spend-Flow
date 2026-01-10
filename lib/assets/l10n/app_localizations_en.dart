@@ -1008,6 +1008,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'Error importing data. Please ensure the file format is correct.';
 
   @override
+  String get sync_data_now => 'Sync Now';
+
+  @override
+  String last_synced(Object time) {
+    return 'Last Synced: $time';
+  }
+
+  @override
+  String get syncing => 'Syncing...';
+
+  @override
+  String get never_synced => 'Never Synced';
+
+  @override
   String get card => 'Card';
 
   @override

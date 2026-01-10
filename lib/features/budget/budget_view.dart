@@ -50,7 +50,7 @@ class _BudgetPageState extends State<BudgetPage> {
                       Column(
                         children: [
                           _buildHeader(l10n),
-                          SizedBox(height: 20.h),
+                          SizedBox(height: 10.h),
                           _buildTotalBudgetCard(l10n),
                           SizedBox(height: 10.h),
                           Expanded(

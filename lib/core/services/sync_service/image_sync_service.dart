@@ -16,7 +16,7 @@ class ImageSyncService {
       final localFile = File('${directory.path}/$fileName');
 
       if (!localFile.existsSync()) {
-        debugPrint("Lỗi: Không tìm thấy file ảnh tại ${localFile.path}");
+        debugPrint("Error: File not found at ${localFile.path}");
         return null;
       }
 
@@ -27,11 +27,11 @@ class ImageSyncService {
       await storageRef.putFile(localFile);
 
       final downloadUrl = await storageRef.getDownloadURL();
-      debugPrint("Upload ảnh thành công: $downloadUrl");
+      debugPrint("Upload image success: $downloadUrl");
 
       return downloadUrl;
     } catch (e) {
-      debugPrint("Lỗi upload ảnh category: $e");
+      debugPrint("Error uploading category image: $e");
       return null;
     }
   }
@@ -50,13 +50,13 @@ class ImageSyncService {
         final file = File(localPath);
         await file.writeAsBytes(response.bodyBytes);
 
-        debugPrint("Đã tải ảnh về: $localPath");
+        debugPrint("Downloaded image to: $localPath");
         return fileName; 
       } else {
-        debugPrint("Lỗi tải ảnh HTTP: ${response.statusCode}");
+        debugPrint("HTTP error downloading image: ${response.statusCode}");
       }
     } catch (e) {
-      debugPrint("Lỗi download ảnh: $e");
+      debugPrint("Error downloading image: $e");
     }
     return null;
   }

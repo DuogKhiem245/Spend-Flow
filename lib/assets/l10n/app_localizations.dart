@@ -2000,6 +2000,30 @@ abstract class AppLocalizations {
   /// **'Lỗi khi nhập dữ liệu.'**
   String get error_importing_data;
 
+  /// No description provided for @sync_data_now.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đồng bộ ngay'**
+  String get sync_data_now;
+
+  /// No description provided for @last_synced.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đồng bộ lần cuối: {time}'**
+  String last_synced(Object time);
+
+  /// No description provided for @syncing.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đang đồng bộ...'**
+  String get syncing;
+
+  /// No description provided for @never_synced.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa đồng bộ'**
+  String get never_synced;
+
   /// No description provided for @card.
   ///
   /// In vi, this message translates to:

@@ -3,18 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/core/services/sync_service/sync_service.dart';
 import 'package:spend_flow/features/premium/premium_view.dart';
 import 'package:spend_flow/features/setting/data_management/export_view.dart';
 import 'package:spend_flow/features/setting/widget/setting_item_widget.dart';
 
 class SettingDataWidget extends StatefulWidget {
-  const SettingDataWidget({super.key});
+  final String lastSyncText;
+  const SettingDataWidget({super.key, required this.lastSyncText});
 
   @override
   State<SettingDataWidget> createState() => _SettingDataWidgetState();
 }
 
 class _SettingDataWidgetState extends State<SettingDataWidget> {
+  bool _isLoading = false;
+
   void _showPremiumModal(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -23,7 +27,34 @@ class _SettingDataWidgetState extends State<SettingDataWidget> {
       builder: (context) => const PremiumView(),
     );
   }
-  
+
+  Future<void> _onTap() async {
+    final bool isPremium = await LocalStorageService().getPremiumStatus();
+
+    if (!mounted) return;
+
+    if (!isPremium) {
+      _showPremiumModal(context);
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      await SyncService().syncData(force: true);
+    } catch (e) {
+      debugPrint("Sync Error: $e");
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -40,6 +71,24 @@ class _SettingDataWidgetState extends State<SettingDataWidget> {
               color: CupertinoTheme.of(
                 context,
               ).textTheme.textStyle.color?.withValues(alpha: .6),
+            ),
+          ),
+        ),
+        SettingItem(
+          title: l10n.sync_data,
+          description: l10n.last_synced(widget.lastSyncText),
+          icon: CupertinoIcons.arrow_2_circlepath,
+          iconBgColor: CupertinoColors.activeOrange,
+          onTap: () {},
+          trailing: GestureDetector(
+            onTap: _onTap,
+            child: Text(
+              _isLoading ? l10n.syncing : l10n.sync_data_now,
+              style: TextStyle(
+                fontSize: 14.sp,
+                color: CupertinoColors.systemBlue,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
         ),
@@ -68,19 +117,17 @@ class _SettingDataWidgetState extends State<SettingDataWidget> {
             color: CupertinoColors.systemGrey3,
           ),
         ),
-        // SettingItem(
-        //   title: l10n.import_data,
-        //   icon: CupertinoIcons.cloud_upload_fill,
-        //   iconBgColor: Color.fromRGBO(85, 181, 166, 1),
-        //   onTap: () {
-
-        //   },
-        //   trailing: Icon(
-        //     CupertinoIcons.chevron_right,
-        //     size: 18.sp,
-        //     color: CupertinoColors.systemGrey3,
-        //   ),
-        // ),
+        SettingItem(
+          title: l10n.import_data,
+          icon: CupertinoIcons.cloud_upload_fill,
+          iconBgColor: Color.fromRGBO(85, 181, 166, 1),
+          onTap: () {},
+          trailing: Icon(
+            CupertinoIcons.chevron_right,
+            size: 18.sp,
+            color: CupertinoColors.systemGrey3,
+          ),
+        ),
       ],
     );
   }

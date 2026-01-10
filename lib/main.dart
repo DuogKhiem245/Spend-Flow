@@ -10,7 +10,6 @@ import 'package:spend_flow/config/app_theme.dart';
 import 'package:spend_flow/core/services/language_service.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/services/notification_service.dart';
-import 'package:spend_flow/core/services/sync_service/sync_service.dart';
 import 'package:spend_flow/core/services/theme_service.dart';
 import 'package:spend_flow/firebase_options.dart';
 import 'config/app_routes.dart';

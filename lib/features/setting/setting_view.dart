@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/auth_service.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/core/services/sync_service/sync_service.dart';
 import 'package:spend_flow/features/setting/widget/account_widget.dart';
 import 'package:spend_flow/features/setting/widget/setting_data_widget.dart';
 import 'package:spend_flow/features/setting/widget/setting_general_widget.dart';
@@ -19,10 +21,27 @@ class SettingPage extends StatefulWidget {
 
 class _SettingPageState extends State<SettingPage> {
   final authService = AuthService();
+  String _lastSyncText = ""; 
 
   @override
   void initState() {
     super.initState();
+    _loadLastSyncTime();
+  }
+
+  Future<void> _loadLastSyncTime() async {
+    final lastTime = await SyncService().getLastSyncTime();
+
+    if (!mounted) return;
+
+    setState(() {
+      if (lastTime != null) {
+        final formatter = DateFormat('HH:mm dd/MM/yyyy');
+        _lastSyncText = formatter.format(lastTime);
+      } else {
+        _lastSyncText = AppLocalizations.of(context)!.never_synced; 
+      }
+    });
   }
 
   @override
@@ -79,10 +98,10 @@ class _SettingPageState extends State<SettingPage> {
                         const SettingGeneralWidget(),
                         SizedBox(height: 10.h),
 
-                        const SettingDataWidget(),
+                        const SettingSecurityWidget(),
                         SizedBox(height: 10.h),
 
-                        const SettingSecurityWidget(),
+                        SettingDataWidget(lastSyncText: _lastSyncText),
                         SizedBox(height: 40.h),
 
                         isLoggedIn

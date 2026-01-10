@@ -335,6 +335,10 @@
   "no_file_selected": "Chưa chọn tệp nào",
   "import_successful": "Nhập dữ liệu thành công!",
   "error_importing_data": "Lỗi khi nhập dữ liệu.",
+  "sync_data_now": "Đồng bộ ngay",
+  "last_synced": "Đồng bộ lần cuối: {time}",
+  "syncing": "Đang đồng bộ...",
+  "never_synced": "Chưa đồng bộ",
 
   "card": "Thẻ",
   
