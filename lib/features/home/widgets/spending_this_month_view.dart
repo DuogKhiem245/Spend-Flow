@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +35,7 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
   void initState() {
     super.initState();
     _loadData();
+    _viewModel.initializeImage();
   }
 
   Future<void> _loadData() async {
@@ -64,236 +67,244 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
 
     final totalSpent = _viewModel.calculateTotalSpent(_chartData);
 
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        border: null,
-        backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
-        leading: CupertinoNavigationBarBackButton(
-          color: CupertinoTheme.of(context).primaryColor,
-          onPressed: () => Navigator.pop(context),
+    return ListenableBuilder(
+      listenable: _viewModel,
+      builder: (context, child) => CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(
+          border: null,
+          backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
+          leading: CupertinoNavigationBarBackButton(
+            color: CupertinoTheme.of(context).primaryColor,
+            onPressed: () => Navigator.pop(context),
+          ),
+          middle: Text(
+            l10n.spending_this_month,
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18.sp),
+          ),
         ),
-        middle: Text(
-          l10n.spending_this_month,
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18.sp),
-        ),
-      ),
-      child: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(20.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(20.w),
-                  decoration: BoxDecoration(
-                    color: CupertinoTheme.of(context).barBackgroundColor,
-                    borderRadius: BorderRadius.circular(20.r),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.boxShadow,
-                        blurRadius: 10.r,
-                        offset: Offset(0, 4.h),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            l10n.total_spent,
-                            style: TextStyle(
-                              color: CupertinoTheme.of(context)
-                                  .textTheme
-                                  .textStyle
-                                  .color!
-                                  .withValues(alpha: .6),
-                              fontSize: 14.sp,
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(20.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(20.w),
+                    decoration: BoxDecoration(
+                      color: CupertinoTheme.of(context).barBackgroundColor,
+                      borderRadius: BorderRadius.circular(20.r),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.boxShadow,
+                          blurRadius: 10.r,
+                          offset: Offset(0, 4.h),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              l10n.total_spent,
+                              style: TextStyle(
+                                color: CupertinoTheme.of(context)
+                                    .textTheme
+                                    .textStyle
+                                    .color!
+                                    .withValues(alpha: .6),
+                                fontSize: 14.sp,
+                              ),
                             ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 10.w,
-                              vertical: 6.h,
-                            ),
-                            decoration: BoxDecoration(
-                              color: _percentChange > 0
-                                  ? AppColors.errorColor.withValues(alpha: .15)
-                                  : AppColors.primaryColor.withValues(
-                                      alpha: .15,
-                                    ),
-                              borderRadius: BorderRadius.circular(20.r),
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  _percentChange > 0
-                                      ? CupertinoIcons.arrow_up_right
-                                      : CupertinoIcons.arrow_down_right,
-                                  size: 14.sp,
-                                  color: _percentChange > 0
-                                      ? AppColors.errorColor
-                                      : AppColors.primaryColor,
-                                ),
-                                SizedBox(width: 4.w),
-                                Text(
-                                  "${_percentChange > 0 ? '+' : ''}${_percentChange.toStringAsFixed(1)}% ${l10n.vs_last_month}",
-                                  style: TextStyle(
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w600,
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 10.w,
+                                vertical: 6.h,
+                              ),
+                              decoration: BoxDecoration(
+                                color: _percentChange > 0
+                                    ? AppColors.errorColor.withValues(
+                                        alpha: .15,
+                                      )
+                                    : AppColors.primaryColor.withValues(
+                                        alpha: .15,
+                                      ),
+                                borderRadius: BorderRadius.circular(20.r),
+                              ),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    _percentChange > 0
+                                        ? CupertinoIcons.arrow_up_right
+                                        : CupertinoIcons.arrow_down_right,
+                                    size: 14.sp,
                                     color: _percentChange > 0
                                         ? AppColors.errorColor
                                         : AppColors.primaryColor,
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      Text(
-                        "\$${_viewModel.formatCurrency(totalSpent)}",
-                        style: TextStyle(
-                          fontSize: 28.sp,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1,
-                          color: CupertinoTheme.of(
-                            context,
-                          ).textTheme.textStyle.color,
-                        ),
-                      ),
-
-                      if (_isLoading)
-                        SizedBox(
-                          height: 250.h,
-                          child: Center(
-                            child: LoadingAnimationWidget.staggeredDotsWave(
-                              color: CupertinoTheme.of(context).primaryColor,
-                              size: 30.w,
-                            ),
-                          ),
-                        )
-                      else if (_chartData.isEmpty)
-                        SizedBox(
-                          height: 250.h,
-                          child: Center(child: Text(l10n.no_transactions)),
-                        )
-                      else
-                        SizedBox(
-                          height: 250.h,
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              PieChart(
-                                PieChartData(
-                                  pieTouchData: PieTouchData(
-                                    touchCallback:
-                                        (FlTouchEvent event, pieTouchResponse) {
-                                          setState(() {
-                                            if (!event
-                                                    .isInterestedForInteractions ||
-                                                pieTouchResponse == null ||
-                                                pieTouchResponse
-                                                        .touchedSection ==
-                                                    null) {
-                                              touchedIndex = -1;
-                                              return;
-                                            }
-                                            touchedIndex = pieTouchResponse
-                                                .touchedSection!
-                                                .touchedSectionIndex;
-                                          });
-                                        },
-                                  ),
-                                  sections: sections,
-                                  centerSpaceRadius: 80.w,
-                                  sectionsSpace: 0,
-                                  startDegreeOffset: -90,
-                                ),
-                              ),
-
-                              Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
+                                  SizedBox(width: 4.w),
                                   Text(
-                                    l10n.categories,
+                                    "${_percentChange > 0 ? '+' : ''}${_percentChange.toStringAsFixed(1)}% ${l10n.vs_last_month}",
                                     style: TextStyle(
-                                      color: CupertinoTheme.of(context)
-                                          .textTheme
-                                          .textStyle
-                                          .color!
-                                          .withValues(alpha: .6),
                                       fontSize: 12.sp,
-                                    ),
-                                  ),
-                                  Text(
-                                    "${_chartData.length}",
-                                    style: TextStyle(
-                                      fontSize: 24.sp,
-                                      fontWeight: FontWeight.bold,
-                                      color: CupertinoTheme.of(
-                                        context,
-                                      ).textTheme.textStyle.color,
+                                      fontWeight: FontWeight.w600,
+                                      color: _percentChange > 0
+                                          ? AppColors.errorColor
+                                          : AppColors.primaryColor,
                                     ),
                                   ),
                                 ],
                               ),
-                            ],
+                            ),
+                          ],
+                        ),
+
+                        Text(
+                          "\$${_viewModel.formatCurrency(totalSpent)}",
+                          style: TextStyle(
+                            fontSize: 28.sp,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1,
+                            color: CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.color,
                           ),
                         ),
 
-                      SizedBox(height: 20.h),
+                        if (_isLoading)
+                          SizedBox(
+                            height: 250.h,
+                            child: Center(
+                              child: LoadingAnimationWidget.staggeredDotsWave(
+                                color: CupertinoTheme.of(context).primaryColor,
+                                size: 30.w,
+                              ),
+                            ),
+                          )
+                        else if (_chartData.isEmpty)
+                          SizedBox(
+                            height: 250.h,
+                            child: Center(child: Text(l10n.no_transactions)),
+                          )
+                        else
+                          SizedBox(
+                            height: 250.h,
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                PieChart(
+                                  PieChartData(
+                                    pieTouchData: PieTouchData(
+                                      touchCallback:
+                                          (
+                                            FlTouchEvent event,
+                                            pieTouchResponse,
+                                          ) {
+                                            setState(() {
+                                              if (!event
+                                                      .isInterestedForInteractions ||
+                                                  pieTouchResponse == null ||
+                                                  pieTouchResponse
+                                                          .touchedSection ==
+                                                      null) {
+                                                touchedIndex = -1;
+                                                return;
+                                              }
+                                              touchedIndex = pieTouchResponse
+                                                  .touchedSection!
+                                                  .touchedSectionIndex;
+                                            });
+                                          },
+                                    ),
+                                    sections: sections,
+                                    centerSpaceRadius: 80.w,
+                                    sectionsSpace: 0,
+                                    startDegreeOffset: -90,
+                                  ),
+                                ),
 
-                      Wrap(
-                        spacing: 15.w,
-                        runSpacing: 10.h,
-                        alignment: WrapAlignment.center,
-                        children: _chartData.map((item) {
-                          return Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Container(
-                                width: 10.w,
-                                height: 10.w,
-                                decoration: BoxDecoration(
-                                  color: item.color,
-                                  shape: BoxShape.circle,
+                                Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      l10n.categories,
+                                      style: TextStyle(
+                                        color: CupertinoTheme.of(context)
+                                            .textTheme
+                                            .textStyle
+                                            .color!
+                                            .withValues(alpha: .6),
+                                        fontSize: 12.sp,
+                                      ),
+                                    ),
+                                    Text(
+                                      "${_chartData.length}",
+                                      style: TextStyle(
+                                        fontSize: 24.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: CupertinoTheme.of(
+                                          context,
+                                        ).textTheme.textStyle.color,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              SizedBox(width: 6.w),
-                              Text(
-                                item.category,
-                                style: TextStyle(
-                                  fontSize: 12.sp,
-                                  color: CupertinoColors.systemGrey,
+                              ],
+                            ),
+                          ),
+
+                        SizedBox(height: 20.h),
+
+                        Wrap(
+                          spacing: 15.w,
+                          runSpacing: 10.h,
+                          alignment: WrapAlignment.center,
+                          children: _chartData.map((item) {
+                            return Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  width: 10.w,
+                                  height: 10.w,
+                                  decoration: BoxDecoration(
+                                    color: item.color,
+                                    shape: BoxShape.circle,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                " (${(item.amount / totalSpent * 100).toStringAsFixed(0)}%)",
-                                style: TextStyle(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: CupertinoColors.systemGrey,
+                                SizedBox(width: 6.w),
+                                Text(
+                                  item.category,
+                                  style: TextStyle(
+                                    fontSize: 12.sp,
+                                    color: CupertinoColors.systemGrey,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          );
-                        }).toList(),
-                      ),
-                    ],
+                                Text(
+                                  " (${(item.amount / totalSpent * 100).toStringAsFixed(0)}%)",
+                                  style: TextStyle(
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: CupertinoColors.systemGrey,
+                                  ),
+                                ),
+                              ],
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
 
-                SizedBox(height: 20.h),
-                _buildFilterTabs(l10n),
-                SizedBox(height: 20.h),
-                _buildTransactionList(l10n, _viewModel),
-              ],
+                  SizedBox(height: 20.h),
+                  _buildFilterTabs(l10n),
+                  SizedBox(height: 20.h),
+                  _buildTransactionList(l10n, _viewModel),
+                ],
+              ),
             ),
           ),
         ),
@@ -372,7 +383,10 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
 
     filteredList.sort((a, b) => b.date.compareTo(a.date));
 
-    final groupedData = viewModel.groupTransactionsByDate(filteredList, context);
+    final groupedData = viewModel.groupTransactionsByDate(
+      filteredList,
+      context,
+    );
 
     if (groupedData.isEmpty) {
       return Padding(
@@ -438,6 +452,8 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
         ? AppColors.primaryColor
         : CupertinoTheme.of(context).textTheme.textStyle.color;
 
+    final File? imageFile = _viewModel.getRealImageFile(item.category.iconKey);
+
     return Container(
       margin: EdgeInsets.only(bottom: 12.h),
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
@@ -461,11 +477,21 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
               color: item.category.color.withValues(alpha: .15),
               borderRadius: BorderRadius.circular(30.r),
             ),
-            child: Icon(
-              AppIcons.getIcon(item.category.iconKey),
-              color: item.category.color,
-              size: 20.sp,
-            ),
+            child: imageFile != null
+                ? ClipRRect(
+                    borderRadius: BorderRadius.circular(30.r),
+                    child: Image.file(
+                      imageFile,
+                      width: 44.w,
+                      height: 44.w,
+                      fit: BoxFit.cover,
+                    ),
+                  )
+                : Icon(
+                    AppIcons.getIcon(item.category.iconKey),
+                    color: item.category.color,
+                    size: 20.sp,
+                  ),
           ),
           SizedBox(width: 14.w),
           Expanded(

@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
+import 'package:spend_flow/features/transaction/view_transaction/widget/view_only_map_widget.dart';
 import 'transaction_detail_viewmodel.dart'; // Nhớ import file ViewModel
 
 class TransactionDetailView extends StatefulWidget {
@@ -58,11 +58,20 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
                 children: [
                   _buildMainCard(context, _viewModel),
                   SizedBox(height: 20.h),
-                  if (_viewModel.hasNote) ...[
-                    _buildNoteSection(context, _viewModel),
-                    SizedBox(height: 20.h),
-                  ],
                   _buildSpendingTrendSection(context, _viewModel),
+                  if (_viewModel.hasLocation) ...[
+                    SizedBox(height: 20.h),
+                    ViewOnlyMapWidget(
+                      latitude: _viewModel.latitude,
+                      longitude: _viewModel.longitude,
+                      address: _viewModel.locationAddress,
+                    ),
+                  ],
+
+                  if (_viewModel.hasNote) ...[
+                    SizedBox(height: 20.h),
+                    _buildNoteSection(context, _viewModel),
+                  ],
                 ],
               ),
             ),

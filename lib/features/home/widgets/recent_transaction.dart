@@ -10,6 +10,7 @@ import 'package:spend_flow/config/app_icons.dart';
 import 'package:spend_flow/core/widgets/verify_passcode/verify_passcode_sheet.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/features/home/home_viewmodel.dart';
+import 'package:spend_flow/features/transaction/view_transaction/transaction_detail_view.dart';
 
 class RecentTransaction extends StatefulWidget {
   final List<TransactionModel> transactions;
@@ -170,83 +171,94 @@ class _RecentTransactionState extends State<RecentTransaction> {
     final File? imageFile = _viewModel.getRealImageFile(item.category.iconKey);
     final color = isExpense ? AppColors.errorColor : AppColors.secondaryColor;
 
-    return Padding(
-      padding: EdgeInsets.only(bottom: 12.h),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 50.w,
-                height: 50.w,
-                decoration: BoxDecoration(
-                  color: item.category.color.withValues(alpha: .15),
-                  borderRadius: BorderRadius.circular(30.r),
-                ),
-                child: imageFile != null 
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(30.r),
-                        child: Image.file(
-                          imageFile, 
-                          width: 24.w,
-                          height: 24.w,
-                          fit: BoxFit
-                              .cover, 
-                        ),
-                      )
-                    : Icon(
-                        AppIcons.getIcon(item.category.iconKey),
-                        size: 24.w,
-                        color: item.category.color,
-                      ),
-              ),
-              SizedBox(width: 12.w),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.title,
-                    style: CupertinoTheme.of(context).textTheme.textStyle
-                        .copyWith(fontSize: 16.sp, fontWeight: FontWeight.w600),
-                  ),
-                  SizedBox(height: 4.h),
-                  Text(
-                    item.category.name,
-                    style: CupertinoTheme.of(context).textTheme.textStyle
-                        .copyWith(
-                          fontSize: 14.sp,
-                          color: CupertinoColors.systemGrey,
-                        ),
-                  ),
-                ],
-              ),
-            ],
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      onPressed: () => {
+        Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => TransactionDetailView(transaction: item),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                isExpense
-                    ? "-$symbol ${_viewModel.formatCurrency(item.amount)}"
-                    : "+$symbol ${_viewModel.formatCurrency(item.amount)}",
-                style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w700,
-                  color: color,
+        ),
+      },
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 12.h),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 50.w,
+                  height: 50.w,
+                  decoration: BoxDecoration(
+                    color: item.category.color.withValues(alpha: .15),
+                    borderRadius: BorderRadius.circular(30.r),
+                  ),
+                  child: imageFile != null 
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(30.r),
+                          child: Image.file(
+                            imageFile, 
+                            width: 24.w,
+                            height: 24.w,
+                            fit: BoxFit
+                                .cover, 
+                          ),
+                        )
+                      : Icon(
+                          AppIcons.getIcon(item.category.iconKey),
+                          size: 24.w,
+                          color: item.category.color,
+                        ),
                 ),
-              ),
-              SizedBox(height: 4.h),
-              Text(
-                DateFormat('dd/MM/yyyy').format(item.date),
-                style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                  fontSize: 12.sp,
-                  color: CupertinoColors.systemGrey,
+                SizedBox(width: 12.w),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.title,
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(fontSize: 16.sp, fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(height: 4.h),
+                    Text(
+                      item.category.name,
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            fontSize: 14.sp,
+                            color: CupertinoColors.systemGrey,
+                          ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  isExpense
+                      ? "-$symbol ${_viewModel.formatCurrency(item.amount)}"
+                      : "+$symbol ${_viewModel.formatCurrency(item.amount)}",
+                  style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w700,
+                    color: color,
+                  ),
+                ),
+                SizedBox(height: 4.h),
+                Text(
+                  DateFormat('dd/MM/yyyy').format(item.date),
+                  style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+                    fontSize: 12.sp,
+                    color: CupertinoColors.systemGrey,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

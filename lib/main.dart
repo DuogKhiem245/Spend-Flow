@@ -2,14 +2,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart' hide Size;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_theme.dart';
 import 'package:spend_flow/core/services/language_service.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
-import 'package:spend_flow/core/services/notification_service.dart';
 import 'package:spend_flow/core/services/theme_service.dart';
 import 'package:spend_flow/firebase_options.dart';
 import 'config/app_routes.dart';
@@ -29,10 +30,6 @@ void main() async {
   final bool onboardDone = prefs.getBool('onboard_done') ?? false;
   final bool createFirstWallet = prefs.getBool('create_first_wallet') ?? false;
 
-  final notificationService = NotificationService();
-  await notificationService.init();
-  await notificationService.requestPermissions();
-
   User? user = FirebaseAuth.instance.currentUser;
   try {
     await user?.reload();
@@ -45,6 +42,12 @@ void main() async {
   } catch (e) {
     await FirebaseAuth.instance.signOut();
   }
+
+  await dotenv.load(fileName: ".env");
+
+  String publicToken = dotenv.env['MAPBOX_PUBLIC_TOKEN'] ?? '';
+
+  MapboxOptions.setAccessToken(publicToken);
 
   runApp(MyApp(onboardDone: onboardDone, createFirstWallet: createFirstWallet));
 }

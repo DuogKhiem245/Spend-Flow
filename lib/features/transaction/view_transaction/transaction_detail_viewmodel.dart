@@ -43,6 +43,15 @@ class TransactionDetailViewModel extends ChangeNotifier {
   String get note => _transaction.note;
   bool get hasNote => _transaction.note.isNotEmpty;
 
+  bool get hasLocation =>
+      _transaction.location.address != null &&
+      _transaction.location.address!.isNotEmpty;
+
+  String get locationAddress => _transaction.location.address ?? '';
+
+  double get latitude => _transaction.location.latitude ?? 0.0;
+  double get longitude => _transaction.location.longitude ?? 0.0;
+
   String get amountString {
     final format = NumberFormat("#,##0.00", "en_US");
     final formattedAmount = format.format(_transaction.amount);

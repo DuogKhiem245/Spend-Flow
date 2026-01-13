@@ -28,7 +28,8 @@ class AppCupertinoTheme {
     ),
   );
 
-  static CupertinoThemeData getTheme(Brightness brightness) {
+  static CupertinoThemeData getTheme() {
+    final brightness = WidgetsBinding.instance.window.platformBrightness;
     return brightness == Brightness.dark ? dark : light;
   }
 }

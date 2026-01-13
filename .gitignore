@@ -30,3 +30,12 @@ doc/api/
 functions/node_modules/
 functions/lib/
 functions/.firebase/
+
+# iOS files
+**/ios/**/Runner/GoogleService-Info.plist
+**/ios/**/Pods/
+
+# Android files
+**/android/**/local.properties
+**/android/**/app/google-services.json
+**/android/**/gradle.properties

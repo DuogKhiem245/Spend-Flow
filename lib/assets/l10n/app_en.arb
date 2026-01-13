@@ -346,5 +346,16 @@
   "reminder_body": "Have you logged your expenses for today? 💸",
 
   "defaultTransactionTitle": "New Transaction",
-  "invoice_analysis": "Analyzing invoices..."
+  "invoice_analysis": "Analyzing invoices...",
+
+  "mapbox_error": "Map loading error. Please check your Mapbox token configuration.",
+  "location": "Location",
+  "current_location": "Current Location",
+  "select_location": "Select Location",
+  "no_location_selected": "No location selected",
+  "search_location": "Search location...",
+  "tap_to_change_location": "Tap to change location",
+  "search_results": "Search Results",
+  "no_location_found": "No location found",
+  "recent_locations": "Recent Locations"
 }

@@ -8,6 +8,7 @@ import 'package:sembast/sembast_io.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/core/data/category_data.dart';
 import 'package:spend_flow/core/data/currency_data.dart';
+import 'package:spend_flow/core/model/location_model.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/core/model/category_model.dart';
 import 'package:spend_flow/core/model/budget_model.dart';
@@ -209,6 +210,8 @@ class LocalStorageService {
 
   final _sampleStore = intMapStoreFactory.store('sample_categories');
   final _suggestStore = intMapStoreFactory.store('suggest_categories');
+
+  final _recentLocationStore = intMapStoreFactory.store('recent_locations');
 
   final _transactionStore = intMapStoreFactory.store('transactions');
   final _budgetStore = intMapStoreFactory.store('budgets');
@@ -479,6 +482,45 @@ class LocalStorageService {
     final finder = Finder(filter: Filter.equals('id', categoryId));
 
     await _sampleStore.delete(db, finder: finder);
+  }
+
+  // ============================================================
+  // RECENT LOCATIONS
+  // ============================================================
+
+  Future<void> saveRecentLocation(RecentLocationModel location) async {
+    final db = await database;
+
+    final finder = Finder(
+      filter: Filter.and([
+        Filter.equals('lat', location.lat),
+        Filter.equals('lng', location.lng),
+      ]),
+    );
+    await _recentLocationStore.delete(db, finder: finder);
+
+    await _recentLocationStore.add(db, location.toMap());
+
+    final count = await _recentLocationStore.count(db);
+    if (count > 10) {
+      final oldRecordsFinder = Finder(
+        sortOrders: [SortOrder('timestamp', true)], 
+        limit: count - 10, 
+      );
+      await _recentLocationStore.delete(db, finder: oldRecordsFinder);
+    }
+  }
+
+  Future<List<RecentLocationModel>> getRecentLocations() async {
+    final db = await database;
+
+    final finder = Finder(sortOrders: [SortOrder('timestamp', false)]);
+
+    final snapshots = await _recentLocationStore.find(db, finder: finder);
+
+    return snapshots.map((snapshot) {
+      return RecentLocationModel.fromMap(snapshot.value);
+    }).toList();
   }
 
   // ============================================================

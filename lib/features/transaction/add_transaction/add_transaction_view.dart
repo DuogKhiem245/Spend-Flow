@@ -1,12 +1,14 @@
 import 'package:cupertino_native/components/segmented_control.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/core/widgets/loading_overlay.dart';
 import 'package:spend_flow/features/transaction/add_transaction/add_transaction_viewmodel.dart';
 import 'package:spend_flow/core/model/category_model.dart';
 import 'package:spend_flow/features/transaction/add_transaction/widgets/amount_widget.dart';
+import 'package:spend_flow/features/transaction/add_transaction/widgets/my_map_widget.dart';
 import 'package:spend_flow/features/transaction/add_transaction/widgets/name_stransaction_widget.dart';
 import 'package:spend_flow/features/transaction/add_transaction/widgets/note_widget.dart';
 import 'package:spend_flow/features/transaction/add_transaction/widgets/suggest_category_widget.dart';
@@ -38,11 +40,21 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
 
     if (widget.transactionData != null) {
       final t = widget.transactionData!;
-      _amountController.text = t.amount.toString(); 
+      _amountController.text = t.amount.toString();
       _nameController.text = t.title;
       _noteController.text = t.note;
       _selectedCategory = t.category;
       _transactionDate = t.date;
+
+      if (t.location.latitude != null && t.location.longitude != null) {
+        final position = Position(t.location.longitude!, t.location.latitude!);
+
+        _viewModel.updateLocation(position, t.location.address ?? '');
+      } else {
+        _viewModel.getCurrentLocation();
+      }
+    } else {
+      _viewModel.getCurrentLocation();
     }
   }
 
@@ -142,6 +154,8 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                               });
                             },
                           ),
+                          SizedBox(height: 20.h),
+                          MyMapWidget(viewModel: _viewModel),
                           SizedBox(height: 20.h),
                           NoteWidget(
                             baseColor: baseColor,

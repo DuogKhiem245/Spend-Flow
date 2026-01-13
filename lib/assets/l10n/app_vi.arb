@@ -346,5 +346,16 @@
   "reminder_body": "Bạn đã ghi chép chi tiêu hôm nay chưa? 💸",
 
   "defaultTransactionTitle": "Giao dịch mới",
-  "invoice_analysis": "Đang phân tích hóa đơn ..."
+  "invoice_analysis": "Đang phân tích hóa đơn ...",
+
+  "mapbox_error": "Lỗi tải bản đồ. Vui lòng kiểm tra cấu hình token Mapbox của bạn.",
+  "location": "Vị trí",
+  "current_location": "Vị trí hiện tại",
+  "select_location": "Chọn vị trí",
+  "no_location_selected": "Chưa chọn vị trí",
+  "search_location": "Tìm kiếm vị trí...",
+  "tap_to_change_location": "Chạm để thay đổi vị trí",
+  "search_results": "Kết quả tìm kiếm",
+  "no_location_found": "Không tìm thấy vị trí",
+  "recent_locations": "Vị trí gần đây"
 }

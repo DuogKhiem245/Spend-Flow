@@ -1034,4 +1034,35 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get invoice_analysis => 'Đang phân tích hóa đơn ...';
+
+  @override
+  String get mapbox_error =>
+      'Lỗi tải bản đồ. Vui lòng kiểm tra cấu hình token Mapbox của bạn.';
+
+  @override
+  String get location => 'Vị trí';
+
+  @override
+  String get current_location => 'Vị trí hiện tại';
+
+  @override
+  String get select_location => 'Chọn vị trí';
+
+  @override
+  String get no_location_selected => 'Chưa chọn vị trí';
+
+  @override
+  String get search_location => 'Tìm kiếm vị trí...';
+
+  @override
+  String get tap_to_change_location => 'Chạm để thay đổi vị trí';
+
+  @override
+  String get search_results => 'Kết quả tìm kiếm';
+
+  @override
+  String get no_location_found => 'Không tìm thấy vị trí';
+
+  @override
+  String get recent_locations => 'Vị trí gần đây';
 }

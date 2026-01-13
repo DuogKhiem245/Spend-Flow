@@ -141,7 +141,7 @@ class _SpendingChartState extends State<SpendingChart>
                     CupertinoPageRoute(
                       builder: (context) => SpendingDetailView(),
                     ),
-                  );
+                  ); 
                 },
                 child: Text(
                   l10n.view_all,

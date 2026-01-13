@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
@@ -34,27 +35,45 @@ class _AddCategoryViewState extends State<AddCategoryView> {
   @override
   void initState() {
     super.initState();
+    // Gọi hàm async để init dữ liệu
+    _initData();
 
+    _nameController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  Future<void> _initData() async {
     if (widget.categoryToEdit != null) {
       final item = widget.categoryToEdit!;
       _nameController.text = item.name;
       _selectedColor = item.color;
 
-      final isFile =
-          item.iconKey.contains('/') && File(item.iconKey).existsSync();
+      if (item.isCustom) {
+        final directory = await getApplicationDocumentsDirectory();
 
-      if (isFile) {
-        _pickedImage = File(item.iconKey);
-        _selectedIconKey = '';
+        final fileName = item.iconKey.split('/').last;
+        final fullPath = '${directory.path}/$fileName';
+        final file = File(fullPath);
+
+        if (await file.exists()) {
+          setState(() {
+            _pickedImage = file;
+            _selectedIconKey = ''; 
+          });
+        } else {
+          setState(() {
+            _selectedIconKey = item.iconKey;
+            _pickedImage = null;
+          });
+        }
       } else {
-        _selectedIconKey = item.iconKey;
-        _pickedImage = null;
+        setState(() {
+          _selectedIconKey = item.iconKey;
+          _pickedImage = null;
+        });
       }
     }
-
-    _nameController.addListener(() {
-      setState(() {});
-    });
   }
 
   Future<void> _pickImage() async {

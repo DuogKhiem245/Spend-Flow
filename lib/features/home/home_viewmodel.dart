@@ -12,12 +12,16 @@ import 'package:spend_flow/core/model/wallet_model.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/model/category_model.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
+import 'package:spend_flow/core/services/location_service.dart';
+import 'package:spend_flow/core/services/notification_service.dart';
 import 'package:spend_flow/core/services/sync_service/sync_service.dart';
 import 'package:spend_flow/features/home/home_model.dart';
 
 class HomeViewModel extends ChangeNotifier {
   final LocalStorageService _storage = LocalStorageService();
   final LocalAuthentication _auth = LocalAuthentication();
+  final LocationService _locationService = LocationService();
+  final NotificationService notificationService = NotificationService();
 
   User? get currentUser => FirebaseAuth.instance.currentUser;
 
@@ -59,8 +63,12 @@ class HomeViewModel extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    final directory = await getApplicationDocumentsDirectory();
-    _appDocumentsPath = directory.path;
+    await notificationService.init();
+    await notificationService.requestPermissions();
+
+    await _locationService.requestPermission();
+
+    initializeImage();
 
     final prefs = await SharedPreferences.getInstance();
     _currentWalletId = prefs.getString('current_wallet_id');
@@ -68,6 +76,11 @@ class HomeViewModel extends ChangeNotifier {
     await Future.wait([_checkSecurity(), _loadCurrency(), _loadWallets()]);
 
     await reloadData();
+  }
+
+  Future<void> initializeImage() async {
+    final directory = await getApplicationDocumentsDirectory();
+    _appDocumentsPath = directory.path;
   }
 
   Future<void> reloadData() async {

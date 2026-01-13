@@ -102,8 +102,6 @@ class BudgetViewModel extends ChangeNotifier {
   File? getRealImageFile(String iconKey) {
     if (_appDocumentsPath == null || iconKey.isEmpty) return null;
 
-     debugPrint("Getting real image file for iconKey: $iconKey");
-
     if (!iconKey.contains('/')) {
       final file = File('$_appDocumentsPath/$iconKey');
       return file.existsSync() ? file : null;

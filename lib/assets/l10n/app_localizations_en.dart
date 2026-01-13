@@ -1035,4 +1035,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoice_analysis => 'Analyzing invoices...';
+
+  @override
+  String get mapbox_error =>
+      'Map loading error. Please check your Mapbox token configuration.';
+
+  @override
+  String get location => 'Location';
+
+  @override
+  String get current_location => 'Current Location';
+
+  @override
+  String get select_location => 'Select Location';
+
+  @override
+  String get no_location_selected => 'No location selected';
+
+  @override
+  String get search_location => 'Search location...';
+
+  @override
+  String get tap_to_change_location => 'Tap to change location';
+
+  @override
+  String get search_results => 'Search Results';
+
+  @override
+  String get no_location_found => 'No location found';
+
+  @override
+  String get recent_locations => 'Recent Locations';
 }

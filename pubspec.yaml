@@ -52,6 +52,9 @@ dependencies:
   excel: ^4.0.6
   in_app_purchase: ^3.2.3
   http: ^1.6.0
+  mapbox_maps_flutter: ^2.17.0
+  flutter_dotenv: ^6.0.0
+  geolocator: ^14.0.2
   # google_maps_flutter: ^2.14.0
   # geolocator: ^14.0.2
   
@@ -64,6 +67,7 @@ dev_dependencies:
 flutter:
   assets:
     - lib/assets/images/
+    - .env
 
   uses-material-design: true
   generate: true

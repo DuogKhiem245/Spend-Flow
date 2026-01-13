@@ -2053,6 +2053,66 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Đang phân tích hóa đơn ...'**
   String get invoice_analysis;
+
+  /// No description provided for @mapbox_error.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lỗi tải bản đồ. Vui lòng kiểm tra cấu hình token Mapbox của bạn.'**
+  String get mapbox_error;
+
+  /// No description provided for @location.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vị trí'**
+  String get location;
+
+  /// No description provided for @current_location.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vị trí hiện tại'**
+  String get current_location;
+
+  /// No description provided for @select_location.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn vị trí'**
+  String get select_location;
+
+  /// No description provided for @no_location_selected.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa chọn vị trí'**
+  String get no_location_selected;
+
+  /// No description provided for @search_location.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tìm kiếm vị trí...'**
+  String get search_location;
+
+  /// No description provided for @tap_to_change_location.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chạm để thay đổi vị trí'**
+  String get tap_to_change_location;
+
+  /// No description provided for @search_results.
+  ///
+  /// In vi, this message translates to:
+  /// **'Kết quả tìm kiếm'**
+  String get search_results;
+
+  /// No description provided for @no_location_found.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không tìm thấy vị trí'**
+  String get no_location_found;
+
+  /// No description provided for @recent_locations.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vị trí gần đây'**
+  String get recent_locations;
 }
 
 class _AppLocalizationsDelegate

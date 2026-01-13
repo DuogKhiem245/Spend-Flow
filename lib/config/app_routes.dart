@@ -28,6 +28,7 @@ class AppRoutes {
       wallet: (context) => const WalletView(),
       main: (context) => const BottomNavbar(),
       login: (context) => const LoginPage(),
+      home: (context) => const BottomNavbar(),
       // register: (context) => const RegisterPage(),
       // forgotPassword: (context) => const ForgotPasswordPage(),
       // profile: (context) => const ProfilePage(),

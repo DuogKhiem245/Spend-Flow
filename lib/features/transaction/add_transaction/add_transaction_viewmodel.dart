@@ -1,14 +1,26 @@
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:spend_flow/core/model/location_model.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
+import 'package:spend_flow/core/services/location_service.dart';
 import '../../../core/model/category_model.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 
 class AddTransactionViewmodel extends ChangeNotifier {
   final LocalStorageService _storageService = LocalStorageService();
+  final LocationService _locationService = LocationService();
 
   String _currencySymbol = '\$';
   String get currencySymbol => _currencySymbol;
+
+  Position? _currentPosition;
+  String? _selectedAddress;
+  bool _isLoadingLocation = true;
+
+  Position? get currentPosition => _currentPosition;
+  String? get selectedAddress => _selectedAddress;
+  bool get isLoadingLocation => _isLoadingLocation;
 
   AddTransactionViewmodel() {
     _loadCurrency();
@@ -44,8 +56,7 @@ class AddTransactionViewmodel extends ChangeNotifier {
       return;
     }
 
-    debugPrint('Adding expense transaction with amount: $value');
-    debugPrint('Wallet ID: $walletId');
+    final locationData = _getLocationFromState();
 
     final transaction = TransactionModel(
       walletId: walletId, 
@@ -55,7 +66,10 @@ class AddTransactionViewmodel extends ChangeNotifier {
       date: transactionDate ?? DateTime.now(),
       note: note,
       isIncome: false,
+      location: locationData,
     );
+
+    debugPrint('Adding expense transaction: ${transaction.toMap()}');
 
     await _storageService.addTransaction(transaction);
   }
@@ -78,6 +92,8 @@ class AddTransactionViewmodel extends ChangeNotifier {
       return;
     }
 
+    final locationData = _getLocationFromState();
+
     final transaction = TransactionModel(
       walletId: walletId, 
       amount: value.abs(),
@@ -86,9 +102,51 @@ class AddTransactionViewmodel extends ChangeNotifier {
       date: transactionDate ?? DateTime.now(),
       note: note,
       isIncome: true,
+      location: locationData,
     );
 
+    debugPrint('Adding income transaction: ${transaction.toMap()}');
+
     await _storageService.addTransaction(transaction);
+  }
+
+  Future<void> getCurrentLocation() async {
+    _isLoadingLocation = true;
+    notifyListeners();
+
+    try {
+      final geoPos = await _locationService.getCurrentPosition();
+
+      if (geoPos != null) {
+        _currentPosition = Position(geoPos.longitude, geoPos.latitude);
+      } else {
+        _currentPosition = null;
+      }
+          
+    } catch (e) {
+      _currentPosition = null;
+    } finally {
+      _isLoadingLocation = false;
+      notifyListeners();
+    }
+  }
+
+  void updateLocation(Position position, String addressName) {
+    _currentPosition = position;
+    _selectedAddress = addressName;
+    _isLoadingLocation = false;
+    notifyListeners();
+  }
+
+  LocationModel _getLocationFromState() {
+    if (_currentPosition == null) {
+      return const LocationModel(); 
+    }
+    return LocationModel(
+      latitude: _currentPosition!.lat.toDouble(),
+      longitude: _currentPosition!.lng.toDouble(),
+      address: _selectedAddress ?? '', 
+    );
   }
 
   double _parseAmount(String input) {
