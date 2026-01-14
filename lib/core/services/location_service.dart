@@ -21,7 +21,6 @@ class LocationService {
       try {
         permission = await Geolocator.requestPermission();
       } catch (e) {
-        debugPrint("Lỗi xin quyền (đang có yêu cầu khác chạy): $e");
         return false;
       }
       

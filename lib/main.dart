@@ -49,6 +49,10 @@ void main() async {
 
   MapboxOptions.setAccessToken(publicToken);
 
+  storage.purgeAllData().catchError((e) {
+    debugPrint("Error purging data: $e");
+  });
+
   runApp(MyApp(onboardDone: onboardDone, createFirstWallet: createFirstWallet));
 }
 
@@ -56,7 +60,11 @@ class MyApp extends StatelessWidget {
   final bool onboardDone;
   final bool createFirstWallet;
 
-  const MyApp({super.key, required this.onboardDone, required this.createFirstWallet});
+  const MyApp({
+    super.key,
+    required this.onboardDone,
+    required this.createFirstWallet,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +115,12 @@ class MyApp extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
               ],
               supportedLocales: [Locale('en'), Locale('vi')],
-              initialRoute: onboardDone ? (createFirstWallet ? AppRoutes.home : AppRoutes.wallet) : AppRoutes.onboarding,
+              initialRoute: onboardDone
+                  ? (createFirstWallet ||
+                            FirebaseAuth.instance.currentUser != null
+                        ? AppRoutes.home
+                        : AppRoutes.wallet)
+                  : AppRoutes.onboarding,
               routes: AppRoutes.getRoutes(),
             );
           },

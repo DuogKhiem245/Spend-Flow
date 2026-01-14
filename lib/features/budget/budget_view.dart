@@ -423,20 +423,21 @@ class _BudgetPageState extends State<BudgetPage> {
     _viewModel.refreshData();
   }
 
-  Future<void> _onDeleteBudget(BudgetModel budget) async {
+  void _onDeleteBudget(BudgetModel budget) async {
     final l10n = AppLocalizations.of(context)!;
 
     showCupertinoDialog(
       context: context,
       builder: (ctx) => CupertinoAlertDialog(
-        title: Text(l10n.delete),
+        title: Text(l10n.delete_budget),
         content: Text(
           l10n.are_you_sure_delete_budget(
-            CategoryHelper.getTranslatedName(context, budget.category),
+            budget.category.name
           ),
         ),
         actions: [
           CupertinoDialogAction(
+            isDefaultAction: true,
             child: Text(l10n.cancel),
             onPressed: () => Navigator.pop(ctx),
           ),

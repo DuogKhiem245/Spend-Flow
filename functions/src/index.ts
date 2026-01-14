@@ -109,3 +109,4 @@ export const analyzeTransactionText = onCall(async (request) => {
         throw new HttpsError("internal", "Lỗi xử lý văn bản: " + e);
     }
 });
+

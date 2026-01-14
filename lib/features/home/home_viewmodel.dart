@@ -249,10 +249,24 @@ class HomeViewModel extends ChangeNotifier {
   Future<void> _loadWallets() async {
     try {
       _wallets = await _storage.getAllWallets();
-      if (_currentWalletId == null && _wallets.isNotEmpty) {
-        _currentWalletId = _wallets.first.id;
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('current_wallet_id', _currentWalletId!);
+
+      if (_wallets.isEmpty) {
+        return;
+      }
+
+      final prefs = await SharedPreferences.getInstance();
+
+      final bool isCurrentWalletValid = _wallets.any(
+        (w) => w.id == _currentWalletId,
+      );
+
+      if (_currentWalletId == null || !isCurrentWalletValid) {
+        final newWalletId = _wallets.first.id;
+        _currentWalletId = newWalletId;
+
+        await prefs.setString('current_wallet_id', newWalletId);
+
+        notifyListeners();
       }
     } catch (e) {
       debugPrint("Error loading wallets: $e");
@@ -369,6 +383,9 @@ class HomeViewModel extends ChangeNotifier {
 
   Future<String?> deleteWallet(String walletId, BuildContext context) async {
     final l10n = AppLocalizations.of(context)!;
+
+    if (_wallets.isEmpty) return null;
+
     if (_wallets.length <= 1) {
       return l10n.cannot_delete_last_wallet;
     }
@@ -376,6 +393,7 @@ class HomeViewModel extends ChangeNotifier {
     try {
       if (_currentWalletId == walletId) {
         final otherWallet = _wallets.firstWhere((w) => w.id != walletId);
+
         await switchWallet(otherWallet.id);
       }
 
@@ -383,10 +401,11 @@ class HomeViewModel extends ChangeNotifier {
 
       await refreshWallets();
 
-      return null;
+      return null; 
     } catch (e) {
-      return "Lỗi khi xoá: $e";
+      debugPrint("Lỗi xóa ví: $e");
     }
+    return null;
   }
 
   Future<Map<String, double>> getCurrentMonthStats() async {

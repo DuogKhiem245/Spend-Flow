@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/model/category_model.dart';
+import 'package:spend_flow/core/widgets/check_valid/check_valid_widget.dart';
 import 'package:spend_flow/features/transaction/add_transaction/widgets/amount_widget.dart';
 import 'package:spend_flow/features/transaction/add_transaction/widgets/suggest_category_widget.dart';
 import 'package:spend_flow/features/budget/add_budget/add_budget_viewmodel.dart';
@@ -112,6 +113,26 @@ class _AddBudgetViewState extends State<AddBudgetView> {
                   width: double.infinity,
                   child: CupertinoButton.filled(
                     onPressed: () async {
+                      List<String> missingFields = [];
+
+                      if (_amountController.text.trim().isEmpty ||
+                          _amountController.text == "0") {
+                        missingFields.add(l10n.amount);
+                      }
+                      if (_selectedCategory == null) {
+                        missingFields.add(l10n.category);
+                      }
+                      if (missingFields.isNotEmpty) {
+                        CheckValidWidget.showIncompleteDetailsSheet(
+                          context: context,
+                          title: l10n.incomplete_details,
+                          description: l10n.please_fill_required_fields,
+                          missingFields: missingFields,
+                          buttonText: "OK",
+                        );
+                        return;
+                      }
+
                       if (_selectedCategory == null ||
                           _amountController.text.isEmpty) {
                         return;

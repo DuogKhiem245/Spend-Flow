@@ -34,8 +34,12 @@ class RecentLocationModel {
     required this.timestamp,
   });
 
+  String get id =>
+      "${lat.toString().replaceAll('.', '_')}_${lng.toString().replaceAll('.', '_')}";
+
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'name': name,
       'address': address,
       'lat': lat,

@@ -172,6 +172,13 @@ class AppLocalizationsVi extends AppLocalizations {
   String get in_use => 'Đang sử dụng';
 
   @override
+  String get incomplete_details => 'Thiếu dữ liệu';
+
+  @override
+  String get please_fill_required_fields =>
+      'Vui lòng điền vào các trường bắt buộc sau:';
+
+  @override
   String get login => 'Đăng nhập';
 
   @override
@@ -636,8 +643,11 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String are_you_sure_delete_budget(Object budgetName) {
-    return 'Bạn có chắc muốn xóa ngân sách $budgetName? \n';
+    return 'Bạn có chắc muốn xóa ngân sách \n $budgetName? \n';
   }
+
+  @override
+  String get delete_budget => 'Xóa ngân sách';
 
   @override
   String get settings => 'Cài đặt';
@@ -968,7 +978,16 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get import_data_description =>
-      'Nhập dữ liệu tài chính của bạn từ tệp sao lưu.';
+      'Nhập dữ liệu tài chính từ các nguồn bên ngoài để đồng bộ hóa với ứng dụng.';
+
+  @override
+  String get import_data_title => 'Nhập ';
+
+  @override
+  String get data => 'dữ liệu';
+
+  @override
+  String get import_data_title_2 => ' của bạn.';
 
   @override
   String get confirm_import => 'Xác nhận nhập';
@@ -1011,7 +1030,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String last_synced(Object time) {
-    return 'Đồng bộ lần cuối: $time';
+    return 'Đồng bộ lần cuối: \n$time';
   }
 
   @override
@@ -1019,6 +1038,47 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get never_synced => 'Chưa đồng bộ';
+
+  @override
+  String get accepted_formats => 'Chấp nhận các định dạng';
+
+  @override
+  String get select_file_to_import => 'Chọn tệp để nhập';
+
+  @override
+  String get tap_to_browse =>
+      'Chạm để duyệt thiết bị hoặc lưu trữ đám mây của bạn cho các tệp.';
+
+  @override
+  String get protected => 'Được bảo vệ';
+
+  @override
+  String get protected_description =>
+      'Dữ liệu của bạn không bao giờ rời khỏi thiết bị và được xử lý cục bộ.';
+
+  @override
+  String get recent_imports => 'Nhập gần đây';
+
+  @override
+  String get no_recent_imports => 'Chưa có nhập dữ liệu gần đây';
+
+  @override
+  String get invalid_format => 'Định dạng tệp không hợp lệ.';
+
+  @override
+  String get import_success => 'Nhập thành công!';
+
+  @override
+  String get import_success_description =>
+      'Dữ liệu của bạn đã được nhập thành công.';
+
+  @override
+  String get file_format_template => 'Mẫu định dạng tệp';
+
+  @override
+  String download_sample_file(Object format) {
+    return 'Tải xuống tệp mẫu $format';
+  }
 
   @override
   String get card => 'Thẻ';

@@ -69,8 +69,6 @@ class AddTransactionViewmodel extends ChangeNotifier {
       location: locationData,
     );
 
-    debugPrint('Adding expense transaction: ${transaction.toMap()}');
-
     await _storageService.addTransaction(transaction);
   }
 
@@ -104,8 +102,6 @@ class AddTransactionViewmodel extends ChangeNotifier {
       isIncome: true,
       location: locationData,
     );
-
-    debugPrint('Adding income transaction: ${transaction.toMap()}');
 
     await _storageService.addTransaction(transaction);
   }

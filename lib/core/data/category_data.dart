@@ -9,7 +9,7 @@ class CategoryData {
   static final List<CategoryModel> suggestedCategories = [
     CategoryModel(
       id: '1',
-      name: 'Ăn uống',
+      name: 'Food & Drinks',
       l10nKey: 'category_food',
       iconKey: 'food',
       color: Colors.orange,
@@ -17,7 +17,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '2',
-      name: 'Di chuyển',
+      name: 'Transport',
       l10nKey: 'category_transport',
       iconKey: 'transport',
       color: Colors.blue,
@@ -25,7 +25,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '3',
-      name: 'Mua sắm',
+      name: 'Shopping',
       l10nKey: 'category_shopping',
       iconKey: 'shopping',
       color: Colors.purple,
@@ -36,7 +36,7 @@ class CategoryData {
   static final List<CategoryModel> sampleCategories = [
     CategoryModel(
       id: '1',
-      name: 'Ăn uống',
+      name: 'Food & Drinks',
       l10nKey: 'category_food',
       iconKey: 'food',
       color: Colors.orange,
@@ -44,7 +44,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '2',
-      name: 'Di chuyển',
+      name: 'Transport',
       l10nKey: 'category_transport',
       iconKey: 'transport',
       color: Colors.blue,
@@ -52,7 +52,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '3',
-      name: 'Mua sắm',
+      name: 'Shopping',
       l10nKey: 'category_shopping',
       iconKey: 'shopping',
       color: Colors.purple,
@@ -60,7 +60,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '4',
-      name: 'Lương',
+      name: 'Salary',
       l10nKey: 'category_salary',
       iconKey: 'salary',
       color: Colors.green,
@@ -68,7 +68,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '5',
-      name: 'Giải trí',
+      name: 'Entertainment',
       l10nKey: 'category_entertainment',
       iconKey: 'entertainment',
       color: Colors.pink,
@@ -76,7 +76,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '6',
-      name: 'Nhà cửa',
+      name: 'Housing',
       l10nKey: 'category_house',
       iconKey: 'house',
       color: Colors.brown,
@@ -84,7 +84,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '7',
-      name: 'Hóa đơn',
+      name: 'Bills',
       l10nKey: 'category_bill',
       iconKey: 'bill',
       color: Colors.blueGrey,
@@ -92,7 +92,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '8',
-      name: 'Điện',
+      name: 'Electricity',
       l10nKey: 'category_electricity',
       iconKey: 'electricity',
       color: Colors.amber,
@@ -100,7 +100,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '9',
-      name: 'Nước',
+      name: 'Water',
       l10nKey: 'category_water',
       iconKey: 'water',
       color: Colors.lightBlue,
@@ -124,7 +124,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '12',
-      name: 'Sửa chữa',
+      name: 'Repairs',
       l10nKey: 'category_repair',
       iconKey: 'repair',
       color: Colors.grey,
@@ -132,7 +132,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '13',
-      name: 'Vệ sinh',
+      name: 'Cleaning',
       l10nKey: 'category_cleaning',
       iconKey: 'cleaning',
       color: Colors.teal,
@@ -140,7 +140,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '14',
-      name: 'Điện thoại',
+      name: 'Phone',
       l10nKey: 'category_phone',
       iconKey: 'phone',
       color: Colors.indigo,
@@ -148,7 +148,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '15',
-      name: 'Sức khỏe',
+      name: 'Health',
       l10nKey: 'category_health',
       iconKey: 'health',
       color: Colors.redAccent,
@@ -156,7 +156,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '16',
-      name: 'Bảo hiểm',
+      name: 'Insurance',
       l10nKey: 'category_insurance',
       iconKey: 'insurance',
       color: Colors.cyan,
@@ -164,7 +164,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '17',
-      name: 'Thể thao',
+      name: 'Sports',
       l10nKey: 'category_sport',
       iconKey: 'sport',
       color: Colors.lightGreen,
@@ -172,7 +172,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '18',
-      name: 'Làm đẹp',
+      name: 'Beauty',
       l10nKey: 'category_beauty',
       iconKey: 'beauty',
       color: Colors.pinkAccent,
@@ -180,7 +180,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '19',
-      name: 'Giáo dục',
+      name: 'Education',
       l10nKey: 'category_education',
       iconKey: 'education',
       color: Colors.deepPurpleAccent,
@@ -188,7 +188,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '20',
-      name: 'Em bé',
+      name: 'Baby',
       l10nKey: 'category_baby',
       iconKey: 'baby',
       color: Colors.lime,
@@ -196,7 +196,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '21',
-      name: 'Thú cưng',
+      name: 'Pets',
       l10nKey: 'category_pet',
       iconKey: 'pet',
       color: Colors.orangeAccent,
@@ -204,7 +204,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '22',
-      name: 'Trò chơi',
+      name: 'Games',
       l10nKey: 'category_game',
       iconKey: 'game',
       color: Colors.deepPurple,
@@ -212,7 +212,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '23',
-      name: 'Âm nhạc',
+      name: 'Music',
       l10nKey: 'category_music',
       iconKey: 'music',
       color: Colors.purpleAccent,
@@ -220,7 +220,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '24',
-      name: 'Du lịch',
+      name: 'Travel',
       l10nKey: 'category_travel',
       iconKey: 'travel',
       color: Colors.lightBlueAccent,
@@ -228,7 +228,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '25',
-      name: 'Quà tặng',
+      name: 'Gifts',
       l10nKey: 'category_gift',
       iconKey: 'gift',
       color: Colors.red,
@@ -236,7 +236,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '26',
-      name: 'Tiết kiệm',
+      name: 'Savings',
       l10nKey: 'category_savings',
       iconKey: 'savings',
       color: Colors.greenAccent,
@@ -244,7 +244,7 @@ class CategoryData {
     ),
     CategoryModel(
       id: '27',
-      name: 'Thuế',
+      name: 'Tax',
       l10nKey: 'category_tax',
       iconKey: 'tax',
       color: Colors.blueGrey,

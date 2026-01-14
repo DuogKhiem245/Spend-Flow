@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
+import 'package:spend_flow/core/widgets/check_valid/check_valid_widget.dart';
 import 'package:spend_flow/core/widgets/loading_overlay.dart';
 import 'package:spend_flow/features/transaction/add_transaction/add_transaction_viewmodel.dart';
 import 'package:spend_flow/core/model/category_model.dart';
@@ -168,6 +169,31 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                               onPressed: _isLoading
                                   ? null
                                   : () async {
+                                      List<String> missingFields = [];
+
+                                      if (_amountController.text
+                                              .trim()
+                                              .isEmpty ||
+                                          _amountController.text == "0") {
+                                        missingFields.add(l10n.amount);
+                                      }
+                                      if (_nameController.text.trim().isEmpty) {
+                                        missingFields.add(l10n.name);
+                                      }
+                                      if (_selectedCategory == null) {
+                                        missingFields.add(l10n.category);
+                                      }
+                                      if (missingFields.isNotEmpty) {
+                                        CheckValidWidget.showIncompleteDetailsSheet(
+                                          context: context,
+                                          title: l10n.incomplete_details,
+                                          description:
+                                              l10n.please_fill_required_fields,
+                                          missingFields: missingFields,
+                                          buttonText: "OK",
+                                        );
+                                        return;
+                                      }
                                       setState(() {
                                         _isLoading = true;
                                       });

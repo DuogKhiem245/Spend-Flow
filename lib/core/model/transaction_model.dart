@@ -10,13 +10,14 @@ class TransactionModel {
   final DateTime date;
   final String note;
   final bool isIncome;
-
+  final String walletId;
   final LocationModel location;
 
   final String currency;
   final double exchangeRate;
 
-  final String walletId;
+  final int updatedAt;
+  final bool isDeleted;
 
   TransactionModel({
     String? id,
@@ -30,9 +31,44 @@ class TransactionModel {
     this.currency = 'USD',
     this.exchangeRate = 1.0,
     this.location = const LocationModel(),
-  }) : id = id ?? const Uuid().v4();
+    int? updatedAt,
+    this.isDeleted = false,
+  }) : id = id ?? const Uuid().v4(),
+       updatedAt = updatedAt ?? DateTime.now().millisecondsSinceEpoch;
 
   double get valueInBaseCurrency => amount * exchangeRate;
+
+  TransactionModel copyWith({
+    String? id,
+    double? amount,
+    String? title,
+    CategoryModel? category,
+    DateTime? date,
+    String? note,
+    bool? isIncome,
+    LocationModel? location,
+    String? currency,
+    double? exchangeRate,
+    String? walletId,
+    int? updatedAt,
+    bool? isDeleted,
+  }) {
+    return TransactionModel(
+      id: id ?? this.id,
+      amount: amount ?? this.amount,
+      title: title ?? this.title,
+      category: category ?? this.category,
+      date: date ?? this.date,
+      note: note ?? this.note,
+      isIncome: isIncome ?? this.isIncome,
+      location: location ?? this.location,
+      currency: currency ?? this.currency,
+      exchangeRate: exchangeRate ?? this.exchangeRate,
+      walletId: walletId ?? this.walletId,
+      updatedAt: updatedAt ?? DateTime.now().millisecondsSinceEpoch,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -47,6 +83,8 @@ class TransactionModel {
       'exchangeRate': exchangeRate,
       'walletId': walletId,
       'location': location.toMap(),
+      'updatedAt': updatedAt,
+      'isDeleted': isDeleted ? 1 : 0,
     };
   }
 
@@ -63,6 +101,8 @@ class TransactionModel {
       exchangeRate: map['exchangeRate'],
       walletId: map['walletId'],
       location: LocationModel.fromMap(map['location']),
+      updatedAt: map['updatedAt'] ?? 0,
+      isDeleted: map['isDeleted'] == 1 || map['isDeleted'] == true,
     );
   }
 

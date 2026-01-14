@@ -485,16 +485,17 @@ class _ReportPageState extends State<ReportPage> {
   }
 
   void _onDeleteTransaction(TransactionModel tx) {
+    final l10n = AppLocalizations.of(context)!;
     showCupertinoDialog(
       context: context,
       builder: (ctx) => CupertinoAlertDialog(
-        title: Text(AppLocalizations.of(ctx)!.delete_transaction),
+        title: Text(l10n.delete_transaction),
         content: Text(
-          AppLocalizations.of(ctx)!.delete_transaction_confirmation,
+          l10n.delete_transaction_confirmation,
         ),
         actions: [
           CupertinoDialogAction(
-            child: Text(AppLocalizations.of(ctx)!.cancel),
+            child: Text(l10n.cancel),
             onPressed: () => Navigator.pop(ctx),
           ),
           CupertinoDialogAction(
@@ -503,7 +504,7 @@ class _ReportPageState extends State<ReportPage> {
               Navigator.pop(ctx);
               await _viewModel.deleteTransaction(tx.id);
             },
-            child: Text(AppLocalizations.of(ctx)!.delete),
+            child: Text(l10n.delete),
           ),
         ],
       ),

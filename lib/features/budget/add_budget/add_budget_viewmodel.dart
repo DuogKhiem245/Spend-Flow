@@ -33,7 +33,6 @@ class AddBudgetViewModel extends ChangeNotifier {
         id: idToUpdate, 
         category: category,
         total: parsedAmount,
-        spent: 0, 
         date: date,
       );
       
@@ -42,11 +41,9 @@ class AddBudgetViewModel extends ChangeNotifier {
     } else {
 
       final newBudget = BudgetModel(
-        id: UniqueKey().toString(), 
         walletId: walletId,
         category: category,
         total: parsedAmount,
-        spent: 0,
         date: date,
       );
       

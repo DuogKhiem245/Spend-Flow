@@ -10,6 +10,7 @@ import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
 import 'package:spend_flow/core/data/category_data.dart';
 import 'package:spend_flow/core/model/category_model.dart';
+import 'package:spend_flow/core/widgets/check_valid/check_valid_widget.dart';
 
 class AddCategoryView extends StatefulWidget {
   final CategoryModel? categoryToEdit;
@@ -125,7 +126,21 @@ class _AddCategoryViewState extends State<AddCategoryView> {
             ),
           ),
           onPressed: () {
-            if (_nameController.text.isEmpty) return;
+            List<String> missingFields = [];
+
+            if (_nameController.text.isEmpty ) {
+              missingFields.add(l10n.category_name);
+            }
+            if (missingFields.isNotEmpty) {
+              CheckValidWidget.showIncompleteDetailsSheet(
+                context: context,
+                title: l10n.incomplete_details,
+                description: l10n.please_fill_required_fields,
+                missingFields: missingFields,
+                buttonText: "OK",
+              );
+              return;
+            }
 
             final newCategory = CategoryModel(
               id: widget.categoryToEdit?.id ?? UniqueKey().toString(),

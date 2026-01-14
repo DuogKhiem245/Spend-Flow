@@ -172,6 +172,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get in_use => 'In Use';
 
   @override
+  String get incomplete_details => 'Incomplete Details';
+
+  @override
+  String get please_fill_required_fields =>
+      'Please fill out the following required fields to proceed:';
+
+  @override
   String get login => 'Login';
 
   @override
@@ -637,8 +644,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String are_you_sure_delete_budget(Object budgetName) {
-    return 'Are you sure you want to delete $budgetName?';
+    return 'Are you sure you want to delete \n $budgetName?';
   }
+
+  @override
+  String get delete_budget => 'Delete Budget';
 
   @override
   String get settings => 'Settings';
@@ -968,7 +978,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get import_data_description =>
-      'Import your financial data from a backup file.';
+      'Import financial data from external sources to synchronize with the application.';
+
+  @override
+  String get import_data_title => 'Let\'s get your ';
+
+  @override
+  String get data => 'data';
+
+  @override
+  String get import_data_title_2 => ' in.';
 
   @override
   String get confirm_import => 'Confirm Import';
@@ -1012,7 +1031,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String last_synced(Object time) {
-    return 'Last Synced: $time';
+    return 'Last Synced: \n$time';
   }
 
   @override
@@ -1020,6 +1039,47 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get never_synced => 'Never Synced';
+
+  @override
+  String get accepted_formats => 'Accepted Formats';
+
+  @override
+  String get select_file_to_import => 'Select a file to import';
+
+  @override
+  String get tap_to_browse =>
+      'Tap to browse your device or cloud\nstorage for files.';
+
+  @override
+  String get protected => 'Protected';
+
+  @override
+  String get protected_description =>
+      'Your data never leaves your device and is processed locally.';
+
+  @override
+  String get recent_imports => 'Recent Imports';
+
+  @override
+  String get no_recent_imports => 'No recent data imports';
+
+  @override
+  String get invalid_format => 'Invalid file format.';
+
+  @override
+  String get import_success => 'Imported successfully!';
+
+  @override
+  String get import_success_description =>
+      'Your data has been imported successfully.';
+
+  @override
+  String get file_format_template => 'File Format Template';
+
+  @override
+  String download_sample_file(Object format) {
+    return 'Download Sample File $format';
+  }
 
   @override
   String get card => 'Card';

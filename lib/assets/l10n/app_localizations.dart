@@ -410,6 +410,18 @@ abstract class AppLocalizations {
   /// **'Đang sử dụng'**
   String get in_use;
 
+  /// No description provided for @incomplete_details.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thiếu dữ liệu'**
+  String get incomplete_details;
+
+  /// No description provided for @please_fill_required_fields.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng điền vào các trường bắt buộc sau:'**
+  String get please_fill_required_fields;
+
   /// No description provided for @login.
   ///
   /// In vi, this message translates to:
@@ -1301,8 +1313,14 @@ abstract class AppLocalizations {
   /// No description provided for @are_you_sure_delete_budget.
   ///
   /// In vi, this message translates to:
-  /// **'Bạn có chắc muốn xóa ngân sách {budgetName}? \n'**
+  /// **'Bạn có chắc muốn xóa ngân sách \n {budgetName}? \n'**
   String are_you_sure_delete_budget(Object budgetName);
+
+  /// No description provided for @delete_budget.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xóa ngân sách'**
+  String get delete_budget;
 
   /// No description provided for @settings.
   ///
@@ -1931,8 +1949,26 @@ abstract class AppLocalizations {
   /// No description provided for @import_data_description.
   ///
   /// In vi, this message translates to:
-  /// **'Nhập dữ liệu tài chính của bạn từ tệp sao lưu.'**
+  /// **'Nhập dữ liệu tài chính từ các nguồn bên ngoài để đồng bộ hóa với ứng dụng.'**
   String get import_data_description;
+
+  /// No description provided for @import_data_title.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập '**
+  String get import_data_title;
+
+  /// No description provided for @data.
+  ///
+  /// In vi, this message translates to:
+  /// **'dữ liệu'**
+  String get data;
+
+  /// No description provided for @import_data_title_2.
+  ///
+  /// In vi, this message translates to:
+  /// **' của bạn.'**
+  String get import_data_title_2;
 
   /// No description provided for @confirm_import.
   ///
@@ -2009,7 +2045,7 @@ abstract class AppLocalizations {
   /// No description provided for @last_synced.
   ///
   /// In vi, this message translates to:
-  /// **'Đồng bộ lần cuối: {time}'**
+  /// **'Đồng bộ lần cuối: \n{time}'**
   String last_synced(Object time);
 
   /// No description provided for @syncing.
@@ -2023,6 +2059,78 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Chưa đồng bộ'**
   String get never_synced;
+
+  /// No description provided for @accepted_formats.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chấp nhận các định dạng'**
+  String get accepted_formats;
+
+  /// No description provided for @select_file_to_import.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn tệp để nhập'**
+  String get select_file_to_import;
+
+  /// No description provided for @tap_to_browse.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chạm để duyệt thiết bị hoặc lưu trữ đám mây của bạn cho các tệp.'**
+  String get tap_to_browse;
+
+  /// No description provided for @protected.
+  ///
+  /// In vi, this message translates to:
+  /// **'Được bảo vệ'**
+  String get protected;
+
+  /// No description provided for @protected_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Dữ liệu của bạn không bao giờ rời khỏi thiết bị và được xử lý cục bộ.'**
+  String get protected_description;
+
+  /// No description provided for @recent_imports.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập gần đây'**
+  String get recent_imports;
+
+  /// No description provided for @no_recent_imports.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa có nhập dữ liệu gần đây'**
+  String get no_recent_imports;
+
+  /// No description provided for @invalid_format.
+  ///
+  /// In vi, this message translates to:
+  /// **'Định dạng tệp không hợp lệ.'**
+  String get invalid_format;
+
+  /// No description provided for @import_success.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập thành công!'**
+  String get import_success;
+
+  /// No description provided for @import_success_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Dữ liệu của bạn đã được nhập thành công.'**
+  String get import_success_description;
+
+  /// No description provided for @file_format_template.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mẫu định dạng tệp'**
+  String get file_format_template;
+
+  /// No description provided for @download_sample_file.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tải xuống tệp mẫu {format}'**
+  String download_sample_file(Object format);
 
   /// No description provided for @card.
   ///

@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:spend_flow/core/model/category_model.dart';
-import 'package:uuid/uuid.dart'; 
+import 'package:uuid/uuid.dart';
 
 class BudgetModel {
-  final String id; 
+  final String id;
   final CategoryModel category;
-  final double total; 
-  final double spent; 
+  final double total;
+  final double spent;
   final DateTime date;
   final String walletId;
+
+  final int updatedAt;
+  final bool isDeleted;
 
   BudgetModel({
     String? id,
     required this.category,
     required this.total,
-    this.spent = 0.0, 
+    this.spent = 0.0,
     required this.date,
     required this.walletId,
-  }) : id = id ?? const Uuid().v4(); 
+    int? updatedAt,
+    this.isDeleted = false,
+  }) : id = id ?? const Uuid().v4(),
+       updatedAt = updatedAt ?? DateTime.now().millisecondsSinceEpoch;
 
   String get name => category.name;
   Color get color => category.color;
@@ -34,6 +40,8 @@ class BudgetModel {
       'total': total,
       'date': date.toIso8601String(),
       'walletId': walletId,
+      'updatedAt': updatedAt,
+      'isDeleted': isDeleted ? 1 : 0,
     };
   }
 
@@ -45,15 +53,19 @@ class BudgetModel {
       spent: 0.0,
       date: map['date'] != null ? DateTime.parse(map['date']) : DateTime.now(),
       walletId: map['walletId'],
+      updatedAt: map['updatedAt'] ?? 0,
+      isDeleted: map['isDeleted'] == 1 || map['isDeleted'] == true,
     );
   }
-
+  
   BudgetModel copyWith({
     String? id,
     CategoryModel? category,
     double? total,
     double? spent,
     DateTime? date,
+    int? updatedAt,
+    bool? isDeleted,
   }) {
     return BudgetModel(
       id: id ?? this.id,
@@ -62,6 +74,8 @@ class BudgetModel {
       spent: spent ?? this.spent,
       date: date ?? this.date,
       walletId: walletId,
+      updatedAt: updatedAt ?? DateTime.now().millisecondsSinceEpoch,
+      isDeleted: isDeleted ?? this.isDeleted,
     );
   }
 }

@@ -5,7 +5,8 @@ import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/services/sync_service/sync_service.dart';
 import 'package:spend_flow/features/premium/premium_view.dart';
-import 'package:spend_flow/features/setting/data_management/export_view.dart';
+import 'package:spend_flow/features/setting/data_management/export/export_view.dart';
+import 'package:spend_flow/features/setting/data_management/import/import_view.dart';
 import 'package:spend_flow/features/setting/widget/setting_item_widget.dart';
 
 class SettingDataWidget extends StatefulWidget {
@@ -121,7 +122,21 @@ class _SettingDataWidgetState extends State<SettingDataWidget> {
           title: l10n.import_data,
           icon: CupertinoIcons.cloud_upload_fill,
           iconBgColor: Color.fromRGBO(85, 181, 166, 1),
-          onTap: () {},
+          onTap: () async {
+            final bool isPremium = await LocalStorageService()
+                .getPremiumStatus();
+
+            if (!context.mounted) return;
+
+            if (isPremium) {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(builder: (context) => const ImportView()),
+              );
+            } else {
+              _showPremiumModal(context);
+            }
+          },
           trailing: Icon(
             CupertinoIcons.chevron_right,
             size: 18.sp,

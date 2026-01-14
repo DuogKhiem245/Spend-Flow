@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
-import 'package:spend_flow/features/setting/data_management/backup_viewmodel.dart'; // Đảm bảo bạn có file màu
+import 'package:spend_flow/features/setting/data_management/export/export_viewmodel.dart';
 
 enum ExportFormat { csv, excel, json }
 
@@ -15,7 +15,7 @@ class ExportView extends StatefulWidget {
 }
 
 class _ExportViewState extends State<ExportView> {
-  final BackupViewModel _viewModel = BackupViewModel();
+  final ExportViewModel _viewModel = ExportViewModel();
 
   ExportFormat _selectedFormat = ExportFormat.csv;
 

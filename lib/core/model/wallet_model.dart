@@ -44,7 +44,7 @@ class WalletModel {
       'id': id,
       'name': name,
       'currency': currency,
-      'transactions': transactions.map((x) => x.toMap()).toList(),
+      'transactions': [],
       'updatedAt': updatedAt,
       'isDeleted': isDeleted ? 1 : 0,
     };
