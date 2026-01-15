@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:spend_flow/core/model/category_model.dart';
 import 'package:uuid/uuid.dart';
@@ -53,7 +54,7 @@ class BudgetModel {
       spent: 0.0,
       date: map['date'] != null ? DateTime.parse(map['date']) : DateTime.now(),
       walletId: map['walletId'],
-      updatedAt: map['updatedAt'] ?? 0,
+      updatedAt: _parseTime(map['updatedAt']),
       isDeleted: map['isDeleted'] == 1 || map['isDeleted'] == true,
     );
   }
@@ -77,5 +78,13 @@ class BudgetModel {
       updatedAt: updatedAt ?? DateTime.now().millisecondsSinceEpoch,
       isDeleted: isDeleted ?? this.isDeleted,
     );
+  }
+
+  static int _parseTime(dynamic value) {
+    if (value is int) return value;
+    if (value is Timestamp) {
+      return value.millisecondsSinceEpoch;
+    }
+    return DateTime.now().millisecondsSinceEpoch;
   }
 }

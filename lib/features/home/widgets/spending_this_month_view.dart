@@ -11,6 +11,7 @@ import 'package:spend_flow/config/app_icons.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/features/home/home_model.dart';
 import 'package:spend_flow/features/home/home_viewmodel.dart';
+import 'package:spend_flow/features/transaction/view_transaction/transaction_detail_view.dart';
 
 class SpendingDetailView extends StatefulWidget {
   const SpendingDetailView({super.key});
@@ -454,78 +455,88 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
 
     final File? imageFile = _viewModel.getRealImageFile(item.category.iconKey);
 
-    return Container(
-      margin: EdgeInsets.only(bottom: 12.h),
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-      decoration: BoxDecoration(
-        color: CupertinoTheme.of(context).barBackgroundColor,
-        borderRadius: BorderRadius.circular(30.r),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.boxShadow.withValues(alpha: .05),
-            blurRadius: 5.r,
-            offset: Offset(0, 2.h),
+    return GestureDetector(
+      onTap: () => {
+        Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => TransactionDetailView(transaction: item),
           ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 44.w,
-            height: 44.w,
-            decoration: BoxDecoration(
-              color: item.category.color.withValues(alpha: .15),
-              borderRadius: BorderRadius.circular(30.r),
+        ),
+      },
+      child: Container(
+        margin: EdgeInsets.only(bottom: 12.h),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+        decoration: BoxDecoration(
+          color: CupertinoTheme.of(context).barBackgroundColor,
+          borderRadius: BorderRadius.circular(30.r),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.boxShadow.withValues(alpha: .05),
+              blurRadius: 5.r,
+              offset: Offset(0, 2.h),
             ),
-            child: imageFile != null
-                ? ClipRRect(
-                    borderRadius: BorderRadius.circular(30.r),
-                    child: Image.file(
-                      imageFile,
-                      width: 44.w,
-                      height: 44.w,
-                      fit: BoxFit.cover,
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 44.w,
+              height: 44.w,
+              decoration: BoxDecoration(
+                color: item.category.color.withValues(alpha: .15),
+                borderRadius: BorderRadius.circular(30.r),
+              ),
+              child: imageFile != null
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(30.r),
+                      child: Image.file(
+                        imageFile,
+                        width: 44.w,
+                        height: 44.w,
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : Icon(
+                      AppIcons.getIcon(item.category.iconKey),
+                      color: item.category.color,
+                      size: 20.sp,
                     ),
-                  )
-                : Icon(
-                    AppIcons.getIcon(item.category.iconKey),
-                    color: item.category.color,
-                    size: 20.sp,
-                  ),
-          ),
-          SizedBox(width: 14.w),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  item.title,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16.sp,
-                    color: CupertinoTheme.of(context).textTheme.textStyle.color,
-                  ),
-                ),
-                SizedBox(height: 4.h),
-                Text(
-                  "${item.category.name} • ${_viewModel.formatHours(item.date)}",
-                  style: TextStyle(
-                    color: CupertinoColors.systemGrey,
-                    fontSize: 13.sp,
-                  ),
-                ),
-              ],
             ),
-          ),
-          Text(
-            "\$${_viewModel.formatCurrency(item.amount)}",
-            style: TextStyle(
-              color: amountColor,
-              fontSize: 16.sp,
-              fontWeight: FontWeight.bold,
+            SizedBox(width: 14.w),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item.title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16.sp,
+                      color: CupertinoTheme.of(context).textTheme.textStyle.color,
+                    ),
+                  ),
+                  SizedBox(height: 4.h),
+                  Text(
+                    "${item.category.name} • ${_viewModel.formatHours(item.date)}",
+                    style: TextStyle(
+                      color: CupertinoColors.systemGrey,
+                      fontSize: 13.sp,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+            Text(
+              "\$${_viewModel.formatCurrency(item.amount)}",
+              style: TextStyle(
+                color: amountColor,
+                fontSize: 16.sp,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

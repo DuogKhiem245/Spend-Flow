@@ -6,13 +6,20 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/core/services/sync_service/sync_service.dart';
+import 'package:spend_flow/core/widgets/check_valid/check_valid_widget.dart';
 import 'package:spend_flow/core/widgets/nav.dart';
 import 'package:spend_flow/features/auth/auth_viewmodel.dart';
 import 'package:spend_flow/features/auth/view/forgot_password_view.dart';
 import 'package:spend_flow/features/auth/view/register/register_view.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final bool fromCreateWallet;
+  final bool haveBack;
+  const LoginPage({
+    super.key,
+    this.fromCreateWallet = false,
+    this.haveBack = false,
+  });
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -33,8 +40,22 @@ class _LoginPageState extends State<LoginPage> {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
 
-    if (email.isEmpty || password.isEmpty) {
-      _showErrorDialog(l10n.please_enter_email_and_password);
+    List<String> missingFields = [];
+
+    if (email.isEmpty) {
+      missingFields.add(l10n.email);
+    }
+    if (password.isEmpty) {
+      missingFields.add(l10n.password);
+    }
+    if (missingFields.isNotEmpty) {
+      CheckValidWidget.showIncompleteDetailsSheet(
+        context: context,
+        title: l10n.incomplete_details,
+        description: l10n.please_fill_required_fields,
+        missingFields: missingFields,
+        buttonText: "OK",
+      );
       return;
     }
 
@@ -45,7 +66,36 @@ class _LoginPageState extends State<LoginPage> {
         if (user.emailVerified) {
           _navigateToHome();
         } else {
-          if (mounted) _showVerificationDialog(user);
+          if (mounted) {
+            CheckValidWidget.showIncompleteDetailsSheet(
+              context: context,
+              title: l10n.email_not_verified,
+              description: l10n.please_verify_your_email_to_continue,
+              haveAction: true,
+              subtitle_1: l10n.email_not_received,
+              subtitle_2: l10n.resend,
+              onButtonPressed: () async {
+                await _viewModel.resendVerificationEmail(user);
+                if (mounted) {
+                  showCupertinoDialog(
+                    context: context,
+                    builder: (context) => CupertinoAlertDialog(
+                      title: Text(l10n.success),
+                      content: Text(
+                        l10n.verification_email_sent,
+                      ), 
+                      actions: [
+                        CupertinoDialogAction(
+                          child: const Text("OK"),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+              },
+            );
+          }
         }
       }
     } on FirebaseAuthException catch (e) {
@@ -68,9 +118,23 @@ class _LoginPageState extends State<LoginPage> {
         default:
           message = e.message ?? message;
       }
-      if (mounted) _showErrorDialog(message);
+      if (mounted) {
+        CheckValidWidget.showIncompleteDetailsSheet(
+          context: context,
+          title: l10n.error,
+          description: message,
+          buttonText: "OK",
+        );
+      }
     } catch (e) {
-      if (mounted) _showErrorDialog(l10n.login_error);
+      if (mounted) {
+        CheckValidWidget.showIncompleteDetailsSheet(
+          context: context,
+          title: l10n.error,
+          description: l10n.login_error,
+          buttonText: "OK",
+        );
+      }
     }
   }
 
@@ -85,7 +149,14 @@ class _LoginPageState extends State<LoginPage> {
         _navigateToHome();
       }
     } catch (e) {
-      if (mounted) _showErrorDialog(l10n.have_error_occurred);
+      if (mounted) {
+        CheckValidWidget.showIncompleteDetailsSheet(
+          context: context,
+          title: l10n.error,
+          description: l10n.have_error_occurred,
+          buttonText: "OK",
+        );
+      }
     }
   }
 
@@ -97,59 +168,6 @@ class _LoginPageState extends State<LoginPage> {
         (route) => false,
       );
     }
-  }
-
-  void _showErrorDialog(String message) {
-    final l10n = AppLocalizations.of(context)!;
-    showCupertinoDialog(
-      context: context,
-      builder: (ctx) => CupertinoAlertDialog(
-        title: Text(l10n.error),
-        content: Text(message),
-        actions: [
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            child: Text(l10n.ok),
-            onPressed: () => Navigator.pop(ctx),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showVerificationDialog(User user) {
-    final l10n = AppLocalizations.of(context)!;
-    showCupertinoDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (ctx) => CupertinoAlertDialog(
-        title: Text(l10n.email_not_verified),
-        content: Text(l10n.please_verify_your_email_to_continue),
-        actions: [
-          CupertinoDialogAction(
-            child: Text(l10n.resend),
-            onPressed: () async {
-              try {
-                await user.sendEmailVerification();
-                if (!context.mounted) return;
-                Navigator.pop(ctx);
-                await _viewModel.signOut();
-              } catch (e) {
-                debugPrint(e.toString());
-              }
-            },
-          ),
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            child: Text(l10n.ok),
-            onPressed: () async {
-              Navigator.pop(ctx);
-              await _viewModel.signOut();
-            },
-          ),
-        ],
-      ),
-    );
   }
 
   @override
@@ -164,13 +182,13 @@ class _LoginPageState extends State<LoginPage> {
         return CupertinoPageScaffold(
           navigationBar: CupertinoNavigationBar(
             backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
-            leading: CupertinoNavigationBarBackButton(
-              color: CupertinoTheme.of(context).primaryColor,
-              onPressed: () => Navigator.pushReplacement(
-                context,
-                CupertinoPageRoute(builder: (context) => BottomNavbar(currentIndex: 3)),
-              ),
-            ),
+            padding: EdgeInsetsDirectional.only(end: 10.w),
+            leading: widget.haveBack
+                ? CupertinoNavigationBarBackButton(
+                    color: CupertinoTheme.of(context).primaryColor,
+                    onPressed: () => Navigator.pop(context),
+                  )
+                : null,
           ),
           child: SafeArea(
             top: true,
@@ -206,7 +224,7 @@ class _LoginPageState extends State<LoginPage> {
                         l10n.login,
                         style: CupertinoTheme.of(context).textTheme.textStyle
                             .copyWith(
-                              fontSize: 28.sp,
+                              fontSize: 24.sp,
                               fontWeight: FontWeight.bold,
                             ),
                       ),
@@ -217,9 +235,9 @@ class _LoginPageState extends State<LoginPage> {
                         margin: EdgeInsets.symmetric(horizontal: 20.w),
                         decoration: BoxDecoration(
                           color: CupertinoTheme.of(context).barBackgroundColor,
-                          borderRadius: BorderRadius.circular(20.r),
+                          borderRadius: BorderRadius.circular(30.r),
                           border: Border.all(
-                            color: AppColors.borderColor,
+                            color: AppColors.borderColor.withValues(alpha: .5),
                             width: 0.5.w,
                           ),
                         ),
@@ -234,8 +252,8 @@ class _LoginPageState extends State<LoginPage> {
                                   .textTheme
                                   .textStyle
                                   .copyWith(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w500,
                                   ),
                             ),
                             SizedBox(height: 8.h),
@@ -246,17 +264,19 @@ class _LoginPageState extends State<LoginPage> {
                                 ).scaffoldBackgroundColor,
                                 borderRadius: BorderRadius.circular(30.r),
                                 border: Border.all(
-                                  color: AppColors.borderColor,
+                                  color: AppColors.borderColor.withValues(
+                                    alpha: .5,
+                                  ),
                                   width: 0.5.w,
                                 ),
                               ),
                               child: Row(
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.only(left: 16.w),
+                                    padding: EdgeInsets.only(left: 14.w),
                                     child: Icon(
                                       CupertinoIcons.mail_solid,
-                                      size: 20.w,
+                                      size: 16.w,
                                       color: CupertinoColors.systemGrey,
                                     ),
                                   ),
@@ -265,9 +285,12 @@ class _LoginPageState extends State<LoginPage> {
                                       controller: _emailController,
                                       placeholder: l10n.enter_email,
                                       keyboardType: TextInputType.emailAddress,
-                                      padding: EdgeInsets.all(16.w),
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 8.w,
+                                        vertical: 14.h,
+                                      ),
                                       decoration: null,
-                                      style: TextStyle(fontSize: 16.sp),
+                                      style: TextStyle(fontSize: 14.sp),
                                     ),
                                   ),
                                 ],
@@ -280,8 +303,8 @@ class _LoginPageState extends State<LoginPage> {
                                   .textTheme
                                   .textStyle
                                   .copyWith(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w500,
                                   ),
                             ),
                             SizedBox(height: 8.h),
@@ -292,14 +315,16 @@ class _LoginPageState extends State<LoginPage> {
                                 ).scaffoldBackgroundColor,
                                 borderRadius: BorderRadius.circular(30.r),
                                 border: Border.all(
-                                  color: AppColors.borderColor,
+                                  color: AppColors.borderColor.withValues(
+                                    alpha: .5,
+                                  ),
                                   width: 0.5.w,
                                 ),
                               ),
                               child: Row(
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.only(left: 16.w),
+                                    padding: EdgeInsets.only(left: 14.w),
                                     child: Icon(
                                       CupertinoIcons.lock_fill,
                                       size: 20.w,
@@ -311,8 +336,12 @@ class _LoginPageState extends State<LoginPage> {
                                       controller: _passwordController,
                                       placeholder: l10n.enter_your_password,
                                       obscureText: _obscurePassword,
-                                      padding: EdgeInsets.all(16.h),
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 8.w,
+                                        vertical: 14.h,
+                                      ),
                                       decoration: null,
+                                      style: TextStyle(fontSize: 14.sp),
                                     ),
                                   ),
                                   GestureDetector(
@@ -336,12 +365,12 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
 
-                            SizedBox(height: 8.h), 
+                            SizedBox(height: 8.h),
                             Align(
                               alignment: Alignment.centerRight,
                               child: CupertinoButton(
                                 padding: EdgeInsets.zero,
-                                minimumSize: Size(0, 0), 
+                                minimumSize: Size(0, 0),
                                 onPressed: () {
                                   Navigator.push(
                                     context,
@@ -352,12 +381,13 @@ class _LoginPageState extends State<LoginPage> {
                                   );
                                 },
                                 child: Text(
-                                  l10n.forgot_password, 
+                                  l10n.forgot_password,
                                   style: TextStyle(
-                                    fontSize: 14.sp,
+                                    fontSize: 13.sp,
                                     fontWeight: FontWeight.w500,
-                                    color: CupertinoTheme.of(context)
-                                        .primaryColor,
+                                    color: CupertinoTheme.of(
+                                      context,
+                                    ).primaryColor,
                                   ),
                                 ),
                               ),
@@ -377,7 +407,7 @@ class _LoginPageState extends State<LoginPage> {
                                   : Text(
                                       l10n.login,
                                       style: TextStyle(
-                                        fontSize: 18.sp,
+                                        fontSize: 16.sp,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),

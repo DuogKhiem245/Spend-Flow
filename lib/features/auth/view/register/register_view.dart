@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/core/services/auth_service.dart';
+import 'package:spend_flow/core/widgets/check_valid/check_valid_widget.dart';
 import 'package:spend_flow/core/widgets/password_strength/password_strength.dart';
 import 'package:spend_flow/features/auth/view/register/check_mail_view.dart';
 
@@ -28,25 +30,6 @@ class _RegisterPageState extends State<RegisterPage> {
   String password = '';
   String confirmPassword = '';
 
-  void _showErrorDialog(String message) {
-    final l10n = AppLocalizations.of(context)!;
-
-    showCupertinoDialog(
-      context: context,
-      builder: (ctx) => CupertinoAlertDialog(
-        title: Text(l10n.error),
-        content: Text(message),
-        actions: [
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            child: Text(l10n.ok),
-            onPressed: () => Navigator.pop(ctx),
-          ),
-        ],
-      ),
-    );
-  }
-
   Future<void> _handleRegister() async {
     FocusScope.of(context).unfocus();
 
@@ -56,18 +39,34 @@ class _RegisterPageState extends State<RegisterPage> {
     final password = _passwordController.text.trim();
     final confirmPass = _confirmPasswordController.text.trim();
 
-    if (email.isEmpty || password.isEmpty || confirmPass.isEmpty) {
-      _showErrorDialog(l10n.please_fill_all_fields);
-      return;
+    List<String> missingFields = [];
+    String title = l10n.incomplete_details;
+    String description = l10n.please_fill_required_fields;
+
+    if (email.isEmpty) missingFields.add(l10n.email);
+    if (password.isEmpty) missingFields.add(l10n.password);
+    if (confirmPass.isEmpty) missingFields.add(l10n.confirm_password);
+
+    if (missingFields.isEmpty) {
+      if (password != confirmPass) {
+        title = l10n.passwords_mismatch;
+        description = l10n.please_edit_fields;
+        missingFields.addAll([l10n.password, l10n.confirm_password]);
+      } else if (!PasswordStrength.isValid(password)) {
+        title = l10n.password_weak_password;
+        description = l10n.please_edit_fields;
+        missingFields.add(l10n.password);
+      }
     }
 
-    if (password != confirmPass) {
-      _showErrorDialog(l10n.passwords_mismatch);
-      return;
-    }
-
-    if (!PasswordStrength.isValid(password)) {
-      _showErrorDialog(l10n.weak_pass);
+    if (missingFields.isNotEmpty) {
+      CheckValidWidget.showIncompleteDetailsSheet(
+        context: context,
+        title: title,
+        description: description,
+        missingFields: missingFields,
+        buttonText: "OK",
+      );
       return;
     }
 
@@ -93,10 +92,48 @@ class _RegisterPageState extends State<RegisterPage> {
           );
         }
       }
+    } on FirebaseAuthException catch (e) {
+      String errorMessage = _getFirebaseErrorMessage(e, l10n);
+      if (mounted) {
+        CheckValidWidget.showIncompleteDetailsSheet(
+          context: context,
+          title: l10n.error,
+          description: errorMessage,
+          buttonText: "OK",
+        );
+      }
+      return;
     } catch (e) {
-      _showErrorDialog(e.toString());
+      if (mounted) {
+        CheckValidWidget.showIncompleteDetailsSheet(
+          context: context,
+          title: l10n.error,
+          description: l10n.something_went_wrong,
+          buttonText: "OK",
+        );
+      }
     } finally {
       if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  String _getFirebaseErrorMessage(
+    FirebaseAuthException e,
+    AppLocalizations l10n,
+  ) {
+    switch (e.code) {
+      case 'email-already-in-use':
+        return l10n.email_already_in_use;
+      case 'invalid-email':
+        return l10n.invalid_email;
+      case 'operation-not-allowed':
+        return l10n.operation_not_allowed;
+      case 'weak-password':
+        return l10n.password_weak_password;
+      case 'network-request-failed':
+        return l10n.network_error;
+      default:
+        return e.message ?? l10n.something_went_wrong;
     }
   }
 
@@ -105,6 +142,14 @@ class _RegisterPageState extends State<RegisterPage> {
     final l10n = AppLocalizations.of(context)!;
 
     return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
+        padding: EdgeInsetsDirectional.only(end: 10.w),
+        leading: CupertinoNavigationBarBackButton(
+          color: CupertinoTheme.of(context).primaryColor,
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
       child: SafeArea(
         top: true,
         child: GestureDetector(
@@ -135,7 +180,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   Text(
                     l10n.create_account,
                     style: CupertinoTheme.of(context).textTheme.textStyle
-                        .copyWith(fontSize: 28.sp, fontWeight: FontWeight.bold),
+                        .copyWith(fontSize: 24.sp, fontWeight: FontWeight.bold),
                   ),
 
                   SizedBox(height: 30.h),
@@ -145,9 +190,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     margin: EdgeInsets.symmetric(horizontal: 20.w),
                     decoration: BoxDecoration(
                       color: CupertinoTheme.of(context).barBackgroundColor,
-                      borderRadius: BorderRadius.circular(20.r),
+                      borderRadius: BorderRadius.circular(30.r),
                       border: Border.all(
-                        color: AppColors.borderColor,
+                        color: AppColors.borderColor.withValues(alpha: .5),
                         width: 0.5.w,
                       ),
                     ),
@@ -224,7 +269,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               : Text(
                                   l10n.register,
                                   style: TextStyle(
-                                    fontSize: 18.sp,
+                                    fontSize: 16.sp,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
@@ -273,8 +318,8 @@ class _RegisterPageState extends State<RegisterPage> {
     return Text(
       text,
       style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-        fontSize: 18.sp,
-        fontWeight: FontWeight.w600,
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w500,
       ),
     );
   }
@@ -290,21 +335,25 @@ class _RegisterPageState extends State<RegisterPage> {
       decoration: BoxDecoration(
         color: CupertinoTheme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(30.r),
-        border: Border.all(color: AppColors.borderColor, width: 0.5.w),
+        border: Border.all(
+          color: AppColors.borderColor.withValues(alpha: .5),
+          width: 0.5.w,
+        ),
       ),
       child: Row(
         children: [
           Padding(
             padding: EdgeInsets.only(left: 16.w),
-            child: Icon(icon, size: 20.w, color: CupertinoColors.systemGrey),
+            child: Icon(icon, size: 16.w, color: CupertinoColors.systemGrey),
           ),
           Expanded(
             child: CupertinoTextField(
               controller: controller,
               placeholder: placeholder,
               keyboardType: inputType,
-              padding: EdgeInsets.all(16.w),
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 14.h),
               decoration: null,
+              style: TextStyle(fontSize: 14.sp),
             ),
           ),
         ],
@@ -324,7 +373,10 @@ class _RegisterPageState extends State<RegisterPage> {
       decoration: BoxDecoration(
         color: CupertinoTheme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(30.r),
-        border: Border.all(color: AppColors.borderColor, width: 0.5.w),
+        border: Border.all(
+          color: AppColors.borderColor.withValues(alpha: .5),
+          width: 0.5.w,
+        ),
       ),
       child: Row(
         children: [
@@ -332,7 +384,7 @@ class _RegisterPageState extends State<RegisterPage> {
             padding: EdgeInsets.only(left: 16.w),
             child: Icon(
               CupertinoIcons.lock_fill,
-              size: 20.w,
+              size: 16.w,
               color: CupertinoColors.systemGrey,
             ),
           ),
@@ -341,8 +393,9 @@ class _RegisterPageState extends State<RegisterPage> {
               controller: controller,
               placeholder: placeholder,
               obscureText: obscureText,
-              padding: EdgeInsets.all(16.w),
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 14.h),
               decoration: null,
+              style: TextStyle(fontSize: 14.sp),
               onChanged: (value) {
                 setState(() {
                   onChanged(value);
@@ -358,7 +411,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 obscureText
                     ? CupertinoIcons.eye_slash_fill
                     : CupertinoIcons.eye_fill,
-                size: 20.w,
+                size: 18.w,
                 color: CupertinoColors.systemGrey,
               ),
             ),

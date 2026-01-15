@@ -23,6 +23,8 @@ class SyncService {
   final LocalStorageService _localStorage = LocalStorageService();
   final ImageSyncService _imageService = ImageSyncService();
 
+  final ValueNotifier<DateTime?> lastSyncNotifier = ValueNotifier(null);
+
   bool _isSyncing = false;
   DateTime? _lastRunTime;
   static const Duration _syncCooldown = Duration(minutes: 10);
@@ -57,22 +59,28 @@ class SyncService {
 
     try {
       final lastSyncTimestamp = await _localStorage.getGlobalSyncTime();
+
+      final queryTimestamp = lastSyncTimestamp > 30000
+          ? lastSyncTimestamp - 30000
+          : 0;
+
       await _pushCategories();
       await _pushWallets();
       await _pushLocationChanges();
       await _pushTransactions();
       await _pushBudgets();
 
-      await _pullCategories(lastSyncTimestamp);
-      await _pullWallets(lastSyncTimestamp);
-      await _pullLocationChanges(lastSyncTimestamp);
-      await _pullTransactions(lastSyncTimestamp);
-      await _pullBudgets(lastSyncTimestamp);
+      await _pullCategories(queryTimestamp);
+      await _pullWallets(queryTimestamp);
+      await _pullLocationChanges(queryTimestamp);
+      await _pullTransactions(queryTimestamp);
+      await _pullBudgets(queryTimestamp);
 
       _lastRunTime = DateTime.now();
       await _localStorage.saveGlobalSyncTime(
-        _lastRunTime!.millisecondsSinceEpoch,
+        DateTime.now().millisecondsSinceEpoch,
       );
+      lastSyncNotifier.value = _lastRunTime;
     } catch (e) {
       debugPrint("Error Sync: $e");
     } finally {
@@ -108,7 +116,9 @@ class SyncService {
 
       try {
         final docRef = _userRef.collection('categories').doc(cat.id);
-        await docRef.set(catToSync.toMap(), SetOptions(merge: true));
+        Map<String, dynamic> data = catToSync.toMap();
+        data['updatedAt'] = FieldValue.serverTimestamp();
+        await docRef.set(data, SetOptions(merge: true));
         syncedIds.add(cat.id);
       } catch (e) {
         debugPrint("Error push category ${cat.name}: $e");
@@ -124,9 +134,9 @@ class SyncService {
     try {
       Query query = _userRef.collection('categories');
 
-      if (lastSyncTime > 0) {
-        query = query.where('updatedAt', isGreaterThan: lastSyncTime);
-      }
+     // if (lastSyncTime > 0) {
+      //   query = query.where('updatedAt', isGreaterThan: lastSyncTime);
+      // }
 
       final snapshot = await query.get();
       if (snapshot.docs.isEmpty) return;
@@ -173,14 +183,13 @@ class SyncService {
 
     for (var item in pending) {
       final int key = item['key'];
-      final walletData = Map<String, dynamic>.from(item);
-      walletData.remove('key');
-
-      final wallet = WalletModel.fromMap(walletData);
-
+      final data = Map<String, dynamic>.from(item)..remove('key');
+      final wallet = WalletModel.fromMap(data);
       final docRef = _userRef.collection('wallets').doc(wallet.id);
-      batch.set(docRef, wallet.toMap(), SetOptions(merge: true));
 
+      Map<String, dynamic> walletData = wallet.toMap();
+      walletData['updatedAt'] = FieldValue.serverTimestamp();
+      batch.set(docRef, walletData, SetOptions(merge: true));
       processedKeys.add(key);
     }
 
@@ -198,9 +207,9 @@ class SyncService {
     try {
       Query query = _userRef.collection('wallets');
 
-      if (lastSyncTime > 0) {
-        query = query.where('updatedAt', isGreaterThan: lastSyncTime);
-      }
+     // if (lastSyncTime > 0) {
+      //   query = query.where('updatedAt', isGreaterThan: lastSyncTime);
+      // }
 
       final snapshot = await query.get();
       if (snapshot.docs.isEmpty) return;
@@ -296,14 +305,15 @@ class SyncService {
 
     for (var item in pending) {
       final int key = item['key'];
-      final data = Map<String, dynamic>.from(item);
-      data.remove('key');
-
+      final data = Map<String, dynamic>.from(item)..remove('key');
       final tx = TransactionModel.fromMap(data);
 
       final docRef = _userRef.collection('transactions').doc(tx.id);
 
-      batch.set(docRef, tx.toMap(), SetOptions(merge: true));
+      Map<String, dynamic> txData = tx.toMap();
+      txData['updatedAt'] = FieldValue.serverTimestamp();
+
+      batch.set(docRef, txData, SetOptions(merge: true));
       processedKeys.add(key);
     }
 
@@ -321,9 +331,9 @@ class SyncService {
     try {
       Query query = _userRef.collection('transactions');
 
-      if (lastSyncTime > 0) {
-        query = query.where('updatedAt', isGreaterThan: lastSyncTime);
-      }
+      // if (lastSyncTime > 0) {
+      //   query = query.where('updatedAt', isGreaterThan: lastSyncTime);
+      // }
 
       final snapshot = await query.get();
       if (snapshot.docs.isEmpty) return;
@@ -353,10 +363,14 @@ class SyncService {
     for (var item in pending) {
       final int key = item['key'];
       final data = Map<String, dynamic>.from(item)..remove('key');
-      final budget = BudgetModel.fromMap(data);
 
+      final budget = BudgetModel.fromMap(data);
       final docRef = _userRef.collection('budgets').doc(budget.id);
-      batch.set(docRef, budget.toMap(), SetOptions(merge: true));
+
+      Map<String, dynamic> budgetData = budget.toMap();
+
+      budgetData['updatedAt'] = FieldValue.serverTimestamp();
+      batch.set(docRef, budgetData, SetOptions(merge: true));
       processedKeys.add(key);
     }
 
@@ -371,9 +385,10 @@ class SyncService {
   Future<void> _pullBudgets(int lastSyncTime) async {
     try {
       Query query = _userRef.collection('budgets');
-      if (lastSyncTime > 0) {
-        query = query.where('updatedAt', isGreaterThan: lastSyncTime);
-      }
+
+     // if (lastSyncTime > 0) {
+      //   query = query.where('updatedAt', isGreaterThan: lastSyncTime);
+      // }
 
       final snapshot = await query.get();
       if (snapshot.docs.isEmpty) return;

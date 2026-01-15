@@ -115,13 +115,11 @@ class MyApp extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
               ],
               supportedLocales: [Locale('en'), Locale('vi')],
-              initialRoute: onboardDone
-                  ? (createFirstWallet ||
-                            FirebaseAuth.instance.currentUser != null
-                        ? AppRoutes.home
-                        : AppRoutes.wallet)
-                  : AppRoutes.onboarding,
-              routes: AppRoutes.getRoutes(),
+              initialRoute: AppRoutes.main, 
+              routes: AppRoutes.getRoutes(
+                onboardDone: onboardDone,
+                createFirstWallet: createFirstWallet,
+              ),
             );
           },
         );

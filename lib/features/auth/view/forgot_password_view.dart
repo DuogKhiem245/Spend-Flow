@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
+import 'package:spend_flow/core/widgets/check_valid/check_valid_widget.dart';
 import 'package:spend_flow/features/auth/auth_viewmodel.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
@@ -21,7 +22,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     final email = _emailController.text.trim();
 
     if (email.isEmpty) {
-      _showDialog(l10n.error, l10n.please_enter_email_and_password);
+      CheckValidWidget.showIncompleteDetailsSheet(
+        context: context,
+        title: l10n.incomplete_details,
+        description: l10n.please_fill_required_fields,
+        missingFields: [l10n.email],
+        buttonText: "OK",
+      );
       return;
     }
 
@@ -51,28 +58,16 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       }
     } catch (e) {
       if (mounted) {
-        _showDialog(l10n.error, e.toString());
+        CheckValidWidget.showIncompleteDetailsSheet(
+          context: context,
+          title: l10n.error,
+          description: e.toString(),
+          buttonText: "OK",
+        );
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
-  }
-
-  void _showDialog(String title, String content) {
-    showCupertinoDialog(
-      context: context,
-      builder: (ctx) => CupertinoAlertDialog(
-        title: Text(title),
-        content: Text(content),
-        actions: [
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            child: Text(AppLocalizations.of(context)!.ok),
-            onPressed: () => Navigator.pop(ctx),
-          ),
-        ],
-      ),
-    );
   }
 
   @override
@@ -82,7 +77,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text(
-          l10n.forgot_password,
+          l10n.reset_password,
           style: CupertinoTheme.of(context).textTheme.navTitleTextStyle
               .copyWith(fontWeight: FontWeight.w600, fontSize: 18.sp),
         ),
@@ -107,10 +102,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
               Text(
                 l10n.email,
-                style: TextStyle(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w600,
-                  color: CupertinoTheme.of(context).textTheme.textStyle.color,
+                style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+                  fontSize: 15.sp,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
               SizedBox(height: 8.h),
@@ -119,7 +113,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   color: CupertinoTheme.of(context).scaffoldBackgroundColor,
                   borderRadius: BorderRadius.circular(30.r),
                   border: Border.all(
-                    color: AppColors.borderColor,
+                    color: AppColors.borderColor.withValues(alpha: .5),
                     width: 0.5.w,
                   ),
                 ),
@@ -127,20 +121,24 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   controller: _emailController,
                   placeholder: l10n.enter_email,
                   keyboardType: TextInputType.emailAddress,
-                  padding: EdgeInsets.all(16.w),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 8.w,
+                    vertical: 14.h,
+                  ),
                   decoration: null,
+                  style: TextStyle(fontSize: 14.sp),
                   prefix: Padding(
                     padding: EdgeInsets.only(left: 16.w),
                     child: Icon(
                       CupertinoIcons.mail_solid,
-                      size: 20.w,
+                      size: 16.w,
                       color: CupertinoColors.systemGrey,
                     ),
                   ),
                 ),
               ),
 
-              SizedBox(height: 30.h),
+              const Spacer(),
 
               CupertinoButton.filled(
                 onPressed: _isLoading ? null : _handleResetPassword,
@@ -152,7 +150,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     : Text(
                         l10n.send_email_reset,
                         style: TextStyle(
-                          fontSize: 18.sp,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
                         ),
                       ),

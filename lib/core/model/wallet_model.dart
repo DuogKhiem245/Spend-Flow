@@ -1,5 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
-import 'package:spend_flow/core/model/transaction_model.dart'; 
+import 'package:spend_flow/core/model/transaction_model.dart';
 
 class WalletModel {
   final String id;
@@ -60,8 +61,16 @@ class WalletModel {
               map['transactions']?.map((x) => TransactionModel.fromMap(x)),
             )
           : [],
-      updatedAt: map['updatedAt'] ?? DateTime.now().millisecondsSinceEpoch,
+      updatedAt: _parseTime(map['updatedAt']),
       isDeleted: map['isDeleted'] == 1 || map['isDeleted'] == true,
     );
+  }
+
+  static int _parseTime(dynamic value) {
+    if (value is int) return value;
+    if (value is Timestamp) {
+      return value.millisecondsSinceEpoch;
+    }
+    return DateTime.now().millisecondsSinceEpoch;
   }
 }

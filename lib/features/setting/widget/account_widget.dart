@@ -198,7 +198,7 @@ class AccountWidget extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          CupertinoPageRoute(builder: (context) => const LoginPage()),
+          CupertinoPageRoute(builder: (context) => const LoginPage(haveBack: true,)),
         );
       },
       child: Row(

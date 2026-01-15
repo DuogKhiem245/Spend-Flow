@@ -7,8 +7,12 @@ class CheckValidWidget {
     required BuildContext context,
     required String title,
     required String description,
-    required List<String> missingFields,
+    List<String>? missingFields,
     String buttonText = "OK",
+    bool haveAction = false,
+    VoidCallback? onButtonPressed,
+    String? subtitle_1,
+    String? subtitle_2,
   }) {
     showCupertinoModalPopup(
       context: context,
@@ -55,6 +59,7 @@ class CheckValidWidget {
                   ),
                 ],
               ),
+
               SizedBox(height: 16.h),
 
               Text(
@@ -65,23 +70,55 @@ class CheckValidWidget {
                   color: CupertinoColors.secondaryLabel.resolveFrom(context),
                 ),
               ),
+              
               SizedBox(height: 10.h),
 
-              ...missingFields
-                  .map((field) => _buildMissingFieldItem(context, field)),
+              if (missingFields != null && missingFields.isNotEmpty) ...[
+                ...missingFields.map(
+                  (field) => _buildMissingFieldItem(context, field),
+                ),
+              ],
 
-              SizedBox(height: 26.h),
+              if (haveAction && subtitle_1 != null && subtitle_2 != null) ...[
+                Row(
+                  children: [
+                    Text(
+                      subtitle_1,
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: CupertinoTheme.of(
+                          context,
+                        ).textTheme.textStyle.color,
+                      ),
+                    ),
+                    CupertinoButton(
+                      padding: EdgeInsets.symmetric(horizontal: 4.w),
+                      onPressed: onButtonPressed,
+                      child: Text(
+                        subtitle_2,
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                          color: CupertinoTheme.of(context).primaryColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+
+              SizedBox(height: 16.h),
 
               SizedBox(
                 width: double.infinity,
                 child: CupertinoButton(
-                  color: CupertinoColors.label.resolveFrom(context),
+                  color: CupertinoTheme.of(context).primaryColor,
                   borderRadius: BorderRadius.circular(30.r),
                   onPressed: () => Navigator.pop(context),
                   child: Text(
                     buttonText,
                     style: TextStyle(
-                      color: CupertinoTheme.of(context).scaffoldBackgroundColor,
+                      color: CupertinoColors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 18.sp,
                     ),

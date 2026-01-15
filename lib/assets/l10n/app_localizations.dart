@@ -422,6 +422,30 @@ abstract class AppLocalizations {
   /// **'Vui lòng điền vào các trường bắt buộc sau:'**
   String get please_fill_required_fields;
 
+  /// No description provided for @select_wallet.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn ví'**
+  String get select_wallet;
+
+  /// No description provided for @please_create_wallet_first.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng tạo ví trước khi thêm giao dịch.'**
+  String get please_create_wallet_first;
+
+  /// No description provided for @create_now.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tạo ngay'**
+  String get create_now;
+
+  /// No description provided for @no_wallets_yet.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa có ví nào'**
+  String get no_wallets_yet;
+
   /// No description provided for @login.
   ///
   /// In vi, this message translates to:
@@ -775,6 +799,66 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Gửi email đặt lại'**
   String get send_email_reset;
+
+  /// No description provided for @password_weak_password.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mật khẩu quá yếu.'**
+  String get password_weak_password;
+
+  /// No description provided for @please_edit_fields.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng chỉnh sửa các trường sau để tiếp tục:'**
+  String get please_edit_fields;
+
+  /// No description provided for @something_went_wrong.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã xảy ra lỗi. Vui lòng thử lại.'**
+  String get something_went_wrong;
+
+  /// No description provided for @network_error.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lỗi kết nối mạng, vui lòng kiểm tra lại.'**
+  String get network_error;
+
+  /// No description provided for @email_already_in_use.
+  ///
+  /// In vi, this message translates to:
+  /// **'Địa chỉ email đã được sử dụng bởi tài khoản khác.'**
+  String get email_already_in_use;
+
+  /// No description provided for @invalid_email.
+  ///
+  /// In vi, this message translates to:
+  /// **'Địa chỉ email không hợp lệ.'**
+  String get invalid_email;
+
+  /// No description provided for @operation_not_allowed.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không cho phép thực hiện. Vui lòng liên hệ hỗ trợ.'**
+  String get operation_not_allowed;
+
+  /// No description provided for @reset_password.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đặt lại mật khẩu'**
+  String get reset_password;
+
+  /// No description provided for @email_not_received.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không nhận được email?'**
+  String get email_not_received;
+
+  /// No description provided for @verification_email_sent.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã gửi email xác thực'**
+  String get verification_email_sent;
 
   /// No description provided for @good_morning.
   ///

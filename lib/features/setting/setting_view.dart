@@ -101,7 +101,10 @@ class _SettingPageState extends State<SettingPage> {
                         const SettingSecurityWidget(),
                         SizedBox(height: 10.h),
 
-                        SettingDataWidget(lastSyncText: _lastSyncText),
+                        SettingDataWidget(
+                          lastSyncText: _lastSyncText,
+                          onSyncSuccess: _loadLastSyncTime,
+                        ),
                         SizedBox(height: 40.h),
 
                         isLoggedIn

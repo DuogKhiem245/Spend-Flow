@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
@@ -83,7 +84,15 @@ class CategoryModel {
       remoteIconUrl: map['remoteIconUrl'],
 
       isDeleted: map['isDeleted'] == 1 || map['isDeleted'] == true,
-      updatedAt: map['updatedAt'] ?? DateTime.now().millisecondsSinceEpoch,
+      updatedAt: _parseTime(map['updatedAt']),
     );
+  }
+
+  static int _parseTime(dynamic value) {
+    if (value is int) return value;
+    if (value is Timestamp) {
+      return value.millisecondsSinceEpoch;
+    }
+    return DateTime.now().millisecondsSinceEpoch;
   }
 }

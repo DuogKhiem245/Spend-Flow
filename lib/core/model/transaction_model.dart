@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:spend_flow/core/model/category_model.dart';
 import 'package:spend_flow/core/model/location_model.dart';
 import 'package:uuid/uuid.dart';
@@ -101,7 +102,7 @@ class TransactionModel {
       exchangeRate: map['exchangeRate'],
       walletId: map['walletId'],
       location: LocationModel.fromMap(map['location']),
-      updatedAt: map['updatedAt'] ?? 0,
+      updatedAt: _parseTime(map['updatedAt']),
       isDeleted: map['isDeleted'] == 1 || map['isDeleted'] == true,
     );
   }
@@ -149,5 +150,13 @@ class TransactionModel {
       exchangeRate: 1.0,
       location: locationFromAI,
     );
+  }
+
+  static int _parseTime(dynamic value) {
+    if (value is int) return value;
+    if (value is Timestamp) {
+      return value.millisecondsSinceEpoch;
+    }
+    return DateTime.now().millisecondsSinceEpoch;
   }
 }

@@ -179,6 +179,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'Please fill out the following required fields to proceed:';
 
   @override
+  String get select_wallet => 'Select Wallet';
+
+  @override
+  String get please_create_wallet_first =>
+      'You need to create a wallet before adding a transaction.';
+
+  @override
+  String get create_now => 'Create Now';
+
+  @override
+  String get no_wallets_yet => 'No wallets yet';
+
+  @override
   String get login => 'Login';
 
   @override
@@ -368,6 +381,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get send_email_reset => 'Send Email Reset';
+
+  @override
+  String get password_weak_password => 'The password provided is too weak.';
+
+  @override
+  String get please_edit_fields =>
+      'Please edit the following fields to proceed:';
+
+  @override
+  String get something_went_wrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get network_error =>
+      'Network error. Please check your connection and try again.';
+
+  @override
+  String get email_already_in_use =>
+      'The email address is already in use by another account.';
+
+  @override
+  String get invalid_email => 'The email address is not valid.';
+
+  @override
+  String get operation_not_allowed =>
+      'Operation not allowed. Please contact support.';
+
+  @override
+  String get reset_password => 'Reset Password';
+
+  @override
+  String get email_not_received => 'Email not received?';
+
+  @override
+  String get verification_email_sent => 'Verification Email Sent';
 
   @override
   String get good_morning => 'Good Morning';

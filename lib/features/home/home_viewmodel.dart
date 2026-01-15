@@ -301,15 +301,14 @@ class HomeViewModel extends ChangeNotifier {
     }
   }
 
-  String get currentWalletName {
-    if (_wallets.isEmpty) return "Loading...";
-    if (_currentWalletId == null) return "Wallet";
+  String currentWalletName (AppLocalizations l10n) {
+    if (_wallets.isEmpty ||_currentWalletId == null) return l10n.select_wallet;
 
     try {
       final wallet = _wallets.firstWhere((w) => w.id == _currentWalletId);
       return wallet.name;
     } catch (e) {
-      return "Wallet";
+      return l10n.select_wallet;
     }
   }
 

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
+import 'package:spend_flow/core/widgets/check_valid/check_valid_widget.dart';
 import 'package:spend_flow/core/widgets/nav.dart';
+import 'package:spend_flow/features/auth/view/login_view.dart';
 import 'package:spend_flow/features/setting/currency/currency_view.dart';
 import 'package:spend_flow/features/setting/setting_viewmodel.dart';
 import 'package:spend_flow/features/wallet/wallet_viewmodel.dart';
@@ -35,19 +37,14 @@ class _WalletViewState extends State<WalletView> {
   }
 
   void _onConfirm() async {
+    final l10n = AppLocalizations.of(context)!;
     if (_nameController.text.trim().isEmpty) {
-      showCupertinoDialog(
+      CheckValidWidget.showIncompleteDetailsSheet(
         context: context,
-        builder: (ctx) => CupertinoAlertDialog(
-          title: Text(AppLocalizations.of(context)!.notifications),
-          content: Text(AppLocalizations.of(context)!.please_enter_wallet_name),
-          actions: [
-            CupertinoDialogAction(
-              child: const Text("OK"),
-              onPressed: () => Navigator.pop(ctx),
-            ),
-          ],
-        ),
+        title: l10n.incomplete_details,
+        description: l10n.please_fill_required_fields,
+        missingFields: [l10n.wallet_name],
+        buttonText: "OK",
       );
       return;
     }
@@ -92,8 +89,9 @@ class _WalletViewState extends State<WalletView> {
                 ? null
                 : CupertinoNavigationBarBackButton(
                     color: CupertinoTheme.of(context).primaryColor,
-                    onPressed:
-                        _viewModel.isLoading ? null : () => Navigator.pop(context),
+                    onPressed: _viewModel.isLoading
+                        ? null
+                        : () => Navigator.pop(context),
                   ),
             middle: Text(
               widget.firstWallet ? l10n.create_first_wallet : l10n.add_wallet,
@@ -149,7 +147,9 @@ class _WalletViewState extends State<WalletView> {
 
                           Center(
                             child: Text(
-                              widget.firstWallet ? l10n.welcome_create_wallet : l10n.add_wallet_description,
+                              widget.firstWallet
+                                  ? l10n.welcome_create_wallet
+                                  : l10n.add_wallet_description,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 14.sp,
@@ -234,10 +234,9 @@ class _WalletViewState extends State<WalletView> {
                                   vertical: 14.h,
                                 ),
                                 decoration: BoxDecoration(
-                                  color:
-                                      CupertinoTheme.of(
-                                        context,
-                                      ).barBackgroundColor,
+                                  color: CupertinoTheme.of(
+                                    context,
+                                  ).barBackgroundColor,
                                   borderRadius: BorderRadius.circular(30.r),
                                 ),
 
@@ -253,10 +252,9 @@ class _WalletViewState extends State<WalletView> {
                                       l10n.currency,
                                       style: TextStyle(
                                         fontSize: 16.sp,
-                                        color:
-                                            CupertinoTheme.of(
-                                              context,
-                                            ).textTheme.textStyle.color,
+                                        color: CupertinoTheme.of(
+                                          context,
+                                        ).textTheme.textStyle.color,
                                       ),
                                     ),
 
@@ -308,6 +306,53 @@ class _WalletViewState extends State<WalletView> {
                                     ),
                             ),
                           ),
+                          if (widget.firstWallet) ...[
+                            SizedBox(height: 10.h),
+                            Center(
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    l10n.have_account,
+                                    style: TextStyle(
+                                      fontSize: 14.sp,
+                                      color: CupertinoTheme.of(context)
+                                          .textTheme
+                                          .textStyle
+                                          .color!
+                                          .withValues(alpha: 0.7),
+                                    ),
+                                  ),
+
+                                  CupertinoButton(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 8.h,
+                                      horizontal: 4.w,
+                                    ),
+                                    onPressed: _viewModel.isLoading
+                                        ? null
+                                        : () {
+                                            Navigator.push(
+                                              context,
+                                              CupertinoPageRoute(
+                                                builder: (context) =>
+                                                    const LoginPage(haveBack: true,),
+                                              ),
+                                            );
+                                          },
+                                    child: Text(
+                                      l10n.login,
+                                      style: TextStyle(
+                                        fontSize: 14.sp,
+                                        color: AppColors.primaryColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ],
                       ),
                     ),

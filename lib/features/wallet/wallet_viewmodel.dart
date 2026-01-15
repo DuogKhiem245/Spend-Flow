@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/core/model/wallet_model.dart';
@@ -41,6 +43,35 @@ class WalletViewModel extends ChangeNotifier {
     } finally {
       _isLoading = false;
       notifyListeners();
+    }
+  }
+
+  Future<bool> checkUserHasWallet() async {
+    try {
+      final localWallets = await _localStorageService.getAllWallets();
+      if (localWallets.isNotEmpty) {
+        return true;
+      }
+
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) return false;
+
+      final snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .collection('wallets')
+          .where('isDeleted', isEqualTo: 0) 
+          .limit(1)
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        return true;
+      }
+
+      return false;
+    } catch (e) {
+      debugPrint("Error checking wallet (Local & Firebase): $e");
+      return false;
     }
   }
 }

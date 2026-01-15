@@ -21,10 +21,11 @@ class CheckMailPage extends StatelessWidget {
             children: [
               Icon(
                 CupertinoIcons.mail_solid,
-                size: 80.w,
+                size: 100.w,
                 color: CupertinoTheme.of(context).primaryColor,
               ),
-              SizedBox(height: 24.h),
+
+              SizedBox(height: 20.h),
 
               Text(
                 l10n.check_your_mail,
@@ -78,8 +79,8 @@ class CheckMailPage extends StatelessWidget {
                 child: Text(
                   l10n.back_login,
                   style: TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w600,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),

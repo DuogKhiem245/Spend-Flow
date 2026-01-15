@@ -7,10 +7,12 @@ import 'package:spend_flow/features/transaction/add_transaction/widgets/amount_w
 import 'package:spend_flow/features/transaction/add_transaction/widgets/suggest_category_widget.dart';
 import 'package:spend_flow/features/budget/add_budget/add_budget_viewmodel.dart';
 import 'package:spend_flow/core/model/budget_model.dart';
+import 'package:spend_flow/features/wallet/wallet_view.dart';
+import 'package:spend_flow/features/wallet/wallet_viewmodel.dart';
 
 class AddBudgetView extends StatefulWidget {
   final BudgetModel? budgetToEdit;
-  
+
   const AddBudgetView({super.key, this.budgetToEdit});
 
   @override
@@ -40,6 +42,35 @@ class _AddBudgetViewState extends State<AddBudgetView> {
   void dispose() {
     _amountController.dispose();
     super.dispose();
+  }
+
+  void _showNoWalletAlert(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    showCupertinoDialog(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: Text(l10n.no_wallets_yet),
+        content: Text(l10n.please_create_wallet_first),
+        actions: [
+          CupertinoDialogAction(
+            child: Text(l10n.cancel),
+            onPressed: () => Navigator.pop(context),
+          ),
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            child: Text(l10n.create_now),
+            onPressed: () {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => const WalletView(firstWallet: false),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -133,16 +164,20 @@ class _AddBudgetViewState extends State<AddBudgetView> {
                         return;
                       }
 
-                      if (_selectedCategory == null ||
-                          _amountController.text.isEmpty) {
+                      final hasWallet = await WalletViewModel().checkUserHasWallet();
+
+                      if (!hasWallet) {
+                        if (!context.mounted) return;
+                        _showNoWalletAlert(context);
                         return;
                       }
+                      if (!mounted) return;
 
                       await _viewModel.saveBudget(
                         idToUpdate: widget.budgetToEdit?.id,
                         amount: _amountController.text,
                         category: _selectedCategory!,
-                        date: _selectedDate, 
+                        date: _selectedDate,
                       );
 
                       if (!context.mounted) return;

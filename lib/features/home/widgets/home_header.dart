@@ -173,7 +173,7 @@ class HomeHeader extends StatelessWidget {
                           SizedBox(width: 8.w),
                           Flexible(
                             child: Text(
-                              viewModel.currentWalletName,
+                              viewModel.currentWalletName(l10n),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(

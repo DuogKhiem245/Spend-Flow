@@ -58,7 +58,9 @@ class OnboardingViewModel {
 
     Navigator.pushAndRemoveUntil(
       context,
-      CupertinoPageRoute(builder: (context) => const WalletView(firstWallet: true,)),
+      CupertinoPageRoute(
+        builder: (context) => const WalletView(firstWallet: true),
+      ),
       (route) => false,
     );
   }

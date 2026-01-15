@@ -13,6 +13,8 @@ import 'package:spend_flow/features/transaction/add_transaction/widgets/my_map_w
 import 'package:spend_flow/features/transaction/add_transaction/widgets/name_stransaction_widget.dart';
 import 'package:spend_flow/features/transaction/add_transaction/widgets/note_widget.dart';
 import 'package:spend_flow/features/transaction/add_transaction/widgets/suggest_category_widget.dart';
+import 'package:spend_flow/features/wallet/wallet_view.dart';
+import 'package:spend_flow/features/wallet/wallet_viewmodel.dart';
 
 class AddTransactionPage extends StatefulWidget {
   final TransactionModel? transactionData;
@@ -34,6 +36,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
   int _index = 0;
 
   bool _isLoading = false;
+  bool _hasWallet = false;
 
   @override
   void initState() {
@@ -82,6 +85,36 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
     _noteController.clear();
     _transactionDate = null;
     _selectedCategory = null;
+  }
+
+  void _showNoWalletAlert(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    showCupertinoDialog(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: Text(l10n.no_wallets_yet),
+        content: Text(
+          l10n.please_create_wallet_first
+        ),
+        actions: [
+          CupertinoDialogAction(
+            child: Text(l10n.cancel),
+            onPressed: () => Navigator.pop(context),
+          ),
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            child: Text(l10n.create_now),
+            onPressed: () {
+              Navigator.push(context, 
+                CupertinoPageRoute(
+                  builder: (context) => const WalletView(firstWallet: false,),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -194,9 +227,19 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                                         );
                                         return;
                                       }
+                                      
                                       setState(() {
                                         _isLoading = true;
                                       });
+
+                                      _hasWallet = await WalletViewModel().checkUserHasWallet();
+
+                                      if (!_hasWallet) {
+                                        setState(() => _isLoading = false);
+                                        if (!context.mounted) return;
+                                        _showNoWalletAlert(context);
+                                        return;
+                                      }
 
                                       try {
                                         if (_index == 0) {

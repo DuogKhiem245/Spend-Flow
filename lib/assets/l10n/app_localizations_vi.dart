@@ -179,6 +179,19 @@ class AppLocalizationsVi extends AppLocalizations {
       'Vui lòng điền vào các trường bắt buộc sau:';
 
   @override
+  String get select_wallet => 'Chọn ví';
+
+  @override
+  String get please_create_wallet_first =>
+      'Vui lòng tạo ví trước khi thêm giao dịch.';
+
+  @override
+  String get create_now => 'Tạo ngay';
+
+  @override
+  String get no_wallets_yet => 'Chưa có ví nào';
+
+  @override
   String get login => 'Đăng nhập';
 
   @override
@@ -367,6 +380,39 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get send_email_reset => 'Gửi email đặt lại';
+
+  @override
+  String get password_weak_password => 'Mật khẩu quá yếu.';
+
+  @override
+  String get please_edit_fields =>
+      'Vui lòng chỉnh sửa các trường sau để tiếp tục:';
+
+  @override
+  String get something_went_wrong => 'Đã xảy ra lỗi. Vui lòng thử lại.';
+
+  @override
+  String get network_error => 'Lỗi kết nối mạng, vui lòng kiểm tra lại.';
+
+  @override
+  String get email_already_in_use =>
+      'Địa chỉ email đã được sử dụng bởi tài khoản khác.';
+
+  @override
+  String get invalid_email => 'Địa chỉ email không hợp lệ.';
+
+  @override
+  String get operation_not_allowed =>
+      'Không cho phép thực hiện. Vui lòng liên hệ hỗ trợ.';
+
+  @override
+  String get reset_password => 'Đặt lại mật khẩu';
+
+  @override
+  String get email_not_received => 'Không nhận được email?';
+
+  @override
+  String get verification_email_sent => 'Đã gửi email xác thực';
 
   @override
   String get good_morning => 'Chào buổi sáng';

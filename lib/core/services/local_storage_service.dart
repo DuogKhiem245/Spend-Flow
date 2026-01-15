@@ -676,15 +676,14 @@ class LocalStorageService {
 
   Future<void> saveWallet(WalletModel wallet) async {
     final db = await database;
-
     final updatedWallet = wallet.copyWith(
       updatedAt: DateTime.now().millisecondsSinceEpoch,
     );
 
     await db.transaction((txn) async {
       final finder = Finder(filter: Filter.equals('id', updatedWallet.id));
-      final existing = await _walletStore.findFirst(txn, finder: finder);
 
+      final existing = await _walletStore.findFirst(txn, finder: finder);
       if (existing != null) {
         await _walletStore
             .record(existing.key)
@@ -693,7 +692,17 @@ class LocalStorageService {
         await _walletStore.add(txn, updatedWallet.toMap());
       }
 
-      await _syncWalletStore.add(txn, updatedWallet.toMap());
+      final existingSync = await _syncWalletStore.findFirst(
+        txn,
+        finder: finder,
+      );
+      if (existingSync != null) {
+        await _syncWalletStore
+            .record(existingSync.key)
+            .update(txn, updatedWallet.toMap());
+      } else {
+        await _syncWalletStore.add(txn, updatedWallet.toMap());
+      }
     });
   }
 

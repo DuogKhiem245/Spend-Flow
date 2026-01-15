@@ -59,6 +59,18 @@ class AuthViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> resendVerificationEmail(User user) async {
+    try {
+      if (!user.emailVerified) {
+        await user.sendEmailVerification();
+      } else {
+        throw Exception("User is null or already verified");
+      }
+    } catch (e) {
+      rethrow;
+    } 
+  }
+
   Future<UserCredential?> signInWithGoogle() =>
       loginWithSocial(() => _authService.signInWithGoogle());
 

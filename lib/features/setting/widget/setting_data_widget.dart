@@ -11,7 +11,8 @@ import 'package:spend_flow/features/setting/widget/setting_item_widget.dart';
 
 class SettingDataWidget extends StatefulWidget {
   final String lastSyncText;
-  const SettingDataWidget({super.key, required this.lastSyncText});
+  final VoidCallback onSyncSuccess;
+  const SettingDataWidget({super.key, required this.lastSyncText, required this.onSyncSuccess});
 
   @override
   State<SettingDataWidget> createState() => _SettingDataWidgetState();
@@ -45,6 +46,7 @@ class _SettingDataWidgetState extends State<SettingDataWidget> {
 
     try {
       await SyncService().syncData(force: true);
+      widget.onSyncSuccess();
     } catch (e) {
       debugPrint("Sync Error: $e");
     } finally {
