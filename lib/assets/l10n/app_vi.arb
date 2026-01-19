@@ -389,5 +389,10 @@
   "tap_to_change_location": "Chạm để thay đổi vị trí",
   "search_results": "Kết quả tìm kiếm",
   "no_location_found": "Không tìm thấy vị trí",
-  "recent_locations": "Vị trí gần đây"
+  "recent_locations": "Vị trí gần đây",
+
+  "voice_input_error": "Lỗi nhập giọng nói. Vui lòng thử lại.",
+  "voice_input_not_recognized": "Không nhận diện được giọng nói. Vui lòng thử lại.",
+  "voice_input_permission_denied": "Quyền nhập giọng nói bị từ chối. Vui lòng bật quyền truy cập micro trong cài đặt.",
+  "error_ai_request": "AI không thể nhận dạng yêu cầu này. Hãy thử nói rõ hơn."
 }

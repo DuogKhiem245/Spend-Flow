@@ -110,45 +110,31 @@ class TransactionModel {
   factory TransactionModel.fromAIResponse({
     required Map<String, dynamic> aiData,
     required List<CategoryModel> availableCategories,
+    required String currentWalletId,
   }) {
-    final String? aiCategoryId = aiData['categoryId'];
+    final String aiCategoryId = aiData['categoryId']?.toString() ?? '';
 
-    CategoryModel selectedCategory;
-
-    try {
-      selectedCategory = availableCategories.firstWhere(
-        (cat) => cat.id == aiCategoryId,
+    CategoryModel selectedCategory = availableCategories.firstWhere(
+      (cat) => cat.id == aiCategoryId,
+      orElse: () => availableCategories.firstWhere(
+        (cat) => cat.name.toLowerCase().contains('khác'),
         orElse: () => availableCategories.first,
-      );
-    } catch (e) {
-      selectedCategory = availableCategories.isNotEmpty
-          ? availableCategories.first
-          : throw Exception("List categories is empty");
-    }
-
-    LocationModel locationFromAI = const LocationModel();
-    if (aiData['location'] != null) {
-      if (aiData['location'] is Map<String, dynamic>) {
-        locationFromAI = LocationModel.fromMap(aiData['location']);
-      } else if (aiData['location'] is String) {
-        locationFromAI = LocationModel(address: aiData['location']);
-      }
-    }
+      ),
+    );
 
     return TransactionModel(
       id: const Uuid().v4(),
       amount: (aiData['amount'] as num?)?.toDouble() ?? 0.0,
-      title: aiData['title'],
+      title: aiData['title'] ?? 'Giao dịch mới',
       category: selectedCategory,
       date: aiData['date'] != null
-          ? DateTime.parse(aiData['date'])
+          ? DateTime.parse(aiData['date']).toLocal()
           : DateTime.now(),
       note: aiData['note'] ?? '',
       isIncome: aiData['isIncome'] ?? false,
-      walletId: aiData['walletId'] ?? '',
-      currency: 'USD',
+      walletId: currentWalletId,
+      currency: 'VND', 
       exchangeRate: 1.0,
-      location: locationFromAI,
     );
   }
 

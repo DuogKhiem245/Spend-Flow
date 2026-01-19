@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
@@ -346,7 +347,10 @@ class _ReportPageState extends State<ReportPage> {
               //   ),
               // ),
               CustomSlidableAction(
-                onPressed: (context) => _onDeleteTransaction(tx),
+                onPressed: (context) => {
+                  HapticFeedback.heavyImpact(),
+                  _onDeleteTransaction(tx),
+                },
                 backgroundColor: Colors.transparent,
                 foregroundColor: Colors.transparent,
                 padding: EdgeInsets.zero,
@@ -490,9 +494,7 @@ class _ReportPageState extends State<ReportPage> {
       context: context,
       builder: (ctx) => CupertinoAlertDialog(
         title: Text(l10n.delete_transaction),
-        content: Text(
-          l10n.delete_transaction_confirmation,
-        ),
+        content: Text(l10n.delete_transaction_confirmation),
         actions: [
           CupertinoDialogAction(
             child: Text(l10n.cancel),

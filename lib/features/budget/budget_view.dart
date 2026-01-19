@@ -4,6 +4,7 @@ import 'package:cupertino_native/style/sf_symbol.dart';
 import 'package:cupertino_native/components/button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
@@ -27,6 +28,8 @@ class _BudgetPageState extends State<BudgetPage> {
   final BudgetViewModel _viewModel = BudgetViewModel();
 
   Future<void> _navigateToAddBudget() async {
+    HapticFeedback.heavyImpact();
+
     await Navigator.push(
       context,
       CupertinoPageRoute(builder: (context) => const AddBudgetView()),
@@ -252,9 +255,7 @@ class _BudgetPageState extends State<BudgetPage> {
 
   Widget _buildCategoryCard(BudgetModel budget) {
     final iconData = AppIcons.getIcon(budget.iconKey);
-    final File? imageFile = _viewModel.getRealImageFile(
-      budget.iconKey,
-    );
+    final File? imageFile = _viewModel.getRealImageFile(budget.iconKey);
 
     return Padding(
       padding: EdgeInsets.only(bottom: 16.h),
@@ -288,7 +289,10 @@ class _BudgetPageState extends State<BudgetPage> {
             ),
 
             CustomSlidableAction(
-              onPressed: (context) => _onDeleteBudget(budget),
+              onPressed: (context) => {
+                HapticFeedback.heavyImpact(),
+                _onDeleteBudget(budget),
+              },
               backgroundColor: Colors.transparent,
               foregroundColor: Colors.transparent,
               padding: EdgeInsets.zero,
@@ -430,11 +434,7 @@ class _BudgetPageState extends State<BudgetPage> {
       context: context,
       builder: (ctx) => CupertinoAlertDialog(
         title: Text(l10n.delete_budget),
-        content: Text(
-          l10n.are_you_sure_delete_budget(
-            budget.category.name
-          ),
-        ),
+        content: Text(l10n.are_you_sure_delete_budget(budget.category.name)),
         actions: [
           CupertinoDialogAction(
             isDefaultAction: true,

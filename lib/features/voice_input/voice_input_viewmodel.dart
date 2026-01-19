@@ -4,14 +4,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/core/model/budget_model.dart';
 import 'package:spend_flow/core/services/ai_service.dart';
 import 'package:spend_flow/core/data/category_data.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
+import 'package:spend_flow/core/services/language_service.dart';
+import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/features/budget/add_budget/add_budget_view.dart';
 import 'package:spend_flow/features/transaction/add_transaction/add_transaction_view.dart';
 
 class VoiceInputViewModel extends ChangeNotifier {
   final SpeechToText _speechToText = SpeechToText();
   final AIService _aiService = AIService();
+  final LocalStorageService _localStorageService = LocalStorageService();
 
   bool _isListening = false;
   bool _isSpeechEnabled = false;
@@ -43,7 +48,7 @@ class VoiceInputViewModel extends ChangeNotifier {
           debugPrint('Speech Error: $errorNotification');
           _isListening = false;
           _stopWaveAnimation();
-          notifyListeners();
+          notifyListeners(); 
         },
       );
       notifyListeners();
@@ -96,6 +101,7 @@ class VoiceInputViewModel extends ChangeNotifier {
 
   Future<void> processVoiceInput(BuildContext context) async {
     if (_lastWords.isEmpty) return;
+    final l10n = AppLocalizations.of(context)!;
 
     try {
       _isProcessing = true;
@@ -103,39 +109,61 @@ class VoiceInputViewModel extends ChangeNotifier {
 
       final categories = CategoryData.getAll();
 
-      final aiResult = await _aiService.analyzeText(_lastWords, categories);
+      final currentLanguage = LanguageService().locale.languageCode;
 
-      debugPrint("🔍 === KẾT QUẢ AI TRẢ VỀ ===");
-      debugPrint("Raw Data: $aiResult");
-      aiResult.forEach((key, value) {
-        debugPrint(
-          " 👉 Key: $key | Value: $value | Type: ${value?.runtimeType}",
+      final aiResult = await _aiService.analyzeText(_lastWords, categories, currentLanguage);
+
+      if (aiResult['actionType'] == null ||
+          aiResult['data'] == null) {
+        throw Exception(
+          l10n.error_ai_request,
         );
-      });
-      debugPrint("============================");
+      }
+
+      final currentWalletId = await _localStorageService.getCurrentWalletId();
+
+      final actionType = aiResult['actionType']?.toString();
+      final data = Map<String, dynamic>.from(aiResult['data']);
 
       if (!context.mounted) return;
 
-      final transaction = TransactionModel.fromAIResponse(
-        aiData: aiResult,
-        availableCategories: categories,
-      );
+      if (actionType == "TRANSACTION") {
+        final transaction = TransactionModel.fromAIResponse(
+          aiData: data,
+          availableCategories: categories,
+          currentWalletId: currentWalletId,
+        );
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>
-              AddTransactionPage(transactionData: transaction),
-        ),
-      );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                AddTransactionPage(transactionData: transaction),
+          ),
+        );
+      } else if (actionType == "BUDGET") {
+        final budgetData = BudgetModel.fromAIResponse(
+          aiData: data,
+          availableCategories: categories,
+          currentWalletId: currentWalletId,
+        );
+        
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AddBudgetView(
+              budgetToEdit: budgetData,
+            ),
+          ),
+        );
+      }
     } catch (e) {
-      debugPrint("Lỗi xử lý voice: $e");
       if (context.mounted) {
         showCupertinoDialog(
           context: context,
           builder: (ctx) => CupertinoAlertDialog(
             title: Text(AppLocalizations.of(context)!.error),
-            content: Text("Không thể xử lý giọng nói: $e"),
+            content: Text("${l10n.voice_input_error}: $e"),
             actions: [
               CupertinoDialogAction(
                 child: Text(AppLocalizations.of(context)!.close),

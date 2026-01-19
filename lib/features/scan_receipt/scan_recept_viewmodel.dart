@@ -2,12 +2,15 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:spend_flow/core/data/category_data.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/core/services/ai_service.dart';
 import 'package:spend_flow/core/model/category_model.dart';
+import 'package:spend_flow/core/services/language_service.dart';
+import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/features/transaction/add_transaction/add_transaction_view.dart';
 
 class ScanReceiptViewModel extends ChangeNotifier {
@@ -16,7 +19,7 @@ class ScanReceiptViewModel extends ChangeNotifier {
 
   final AIService _aiService = AIService();
 
-  List<CategoryModel> _categories = [];
+  List<CategoryModel> categories = [];
 
   bool _isFlashOn = false;
   bool get isFlashOn => _isFlashOn;
@@ -28,7 +31,7 @@ class ScanReceiptViewModel extends ChangeNotifier {
   bool get isScanning => _isScanning;
 
   void setCategories(List<CategoryModel> categories) {
-    _categories = categories;
+    this.categories = categories;
   }
 
   @override
@@ -105,7 +108,7 @@ class ScanReceiptViewModel extends ChangeNotifier {
   ) async {
     try {
       _isScanning = true;
-      notifyListeners(); 
+      notifyListeners();
 
       final Uint8List? compressedBytes =
           await FlutterImageCompress.compressWithFile(
@@ -116,41 +119,52 @@ class ScanReceiptViewModel extends ChangeNotifier {
             format: CompressFormat.jpeg,
           );
 
-      if (compressedBytes == null) {
-        throw Exception("Image compression failed");
-      }
+      if (compressedBytes == null) throw Exception("Image compression failed");
 
       String base64Image = base64Encode(compressedBytes);
-
       List<CategoryModel> currentCategories = CategoryData.getAll();
+      final currentLanguage = LanguageService().locale.languageCode;
 
-      final aiResult = await _aiService.analyzeImage(
+      final aiResponse = await _aiService.analyzeImage(
         base64Image,
         currentCategories,
+        currentLanguage,
       );
+
+      if (aiResponse.isEmpty || aiResponse['data'] == null) {
+        throw Exception("AI không nhận diện được hóa đơn này.");
+      }
+
+      final data = Map<String, dynamic>.from(aiResponse['data']);
+      final currentWalletId =
+          await LocalStorageService().getCurrentWalletId();
 
       if (!context.mounted) return;
 
       final transactionData = TransactionModel.fromAIResponse(
-        aiData: aiResult,
+        aiData: data,
         availableCategories: currentCategories,
+        currentWalletId: currentWalletId,
       );
+
+      HapticFeedback.mediumImpact();
+
+      if (!context.mounted) return;
 
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => AddTransactionPage(
-            transactionData: transactionData,
-          ),
+          builder: (context) =>
+              AddTransactionPage(transactionData: transactionData),
         ),
       );
     } catch (e) {
       debugPrint("Error during scanning/analysis: $e");
-
+      HapticFeedback.vibrate(); 
       if (context.mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text("Lỗi xử lý: ${e.toString()}")));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Lỗi xử lý hóa đơn: ${e.toString()}")),
+        );
       }
     } finally {
       _isScanning = false;

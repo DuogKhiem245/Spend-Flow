@@ -7,6 +7,7 @@ class AIService {
   Future<Map<String, dynamic>> analyzeImage(
     String base64Image,
     List<CategoryModel> categories,
+    String language,
   ) async {
     try {
       final simpleCategories = categories
@@ -14,7 +15,7 @@ class AIService {
           .toList();
 
       final result = await _functions.httpsCallable('analyzeReceiptImage').call(
-        {'imageBase64': base64Image, 'categories': simpleCategories},
+        {'imageBase64': base64Image, 'categories': simpleCategories, 'language': language},
       );
 
       return Map<String, dynamic>.from(result.data);
@@ -26,6 +27,7 @@ class AIService {
   Future<Map<String, dynamic>> analyzeText(
     String text,
     List<CategoryModel> categories,
+    String language,
   ) async {
     try {
       final simpleCategories = categories
@@ -34,9 +36,9 @@ class AIService {
 
       final result = await _functions
           .httpsCallable('analyzeTransactionText')
-          .call({'text': text, 'categories': simpleCategories});
+          .call({'text': text, 'categories': simpleCategories, 'language': language});
 
-      return Map<String, dynamic>.from(result.data);
+      return Map<String, dynamic>.from(result.data['result']);
     } catch (e) {
       rethrow;
     }

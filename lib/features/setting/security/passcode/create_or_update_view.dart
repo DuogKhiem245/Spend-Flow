@@ -26,6 +26,10 @@ class _CreateOrUpdateViewState extends State<CreateOrUpdateView> {
   final TextEditingController _newController = TextEditingController();
   final TextEditingController _confirmController = TextEditingController();
 
+  final FocusNode _currentFocus = FocusNode();
+  final FocusNode _newFocus = FocusNode();
+  final FocusNode _confirmFocus = FocusNode();
+
   @override
   void initState() {
     super.initState();
@@ -33,6 +37,7 @@ class _CreateOrUpdateViewState extends State<CreateOrUpdateView> {
       isChangeMode: widget.isChangeMode,
       isRemoveMode: widget.isRemoveMode,
     );
+
   }
 
   @override
@@ -41,6 +46,9 @@ class _CreateOrUpdateViewState extends State<CreateOrUpdateView> {
     _currentController.dispose();
     _newController.dispose();
     _confirmController.dispose();
+    _currentFocus.dispose();
+    _newFocus.dispose();
+    _confirmFocus.dispose();
     super.dispose();
   }
 
@@ -114,6 +122,7 @@ class _CreateOrUpdateViewState extends State<CreateOrUpdateView> {
               color: CupertinoTheme.of(context).textTheme.textStyle.color,
             ),
           ),
+          backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
         ),
         child: SafeArea(
           child: Column(
@@ -144,7 +153,9 @@ class _CreateOrUpdateViewState extends State<CreateOrUpdateView> {
                         SizedBox(height: 12.h),
                         _buildPinCodeInput(
                           controller: _currentController,
+                          focusNode: _currentFocus,
                           isAutoFocus: true,
+                          nextFocus: _newFocus,
                         ),
                         SizedBox(height: 30.h),
                       ],
@@ -154,7 +165,13 @@ class _CreateOrUpdateViewState extends State<CreateOrUpdateView> {
                         SizedBox(height: 12.h),
                         _buildPinCodeInput(
                           controller: _newController,
+                          focusNode: _newFocus,
                           isAutoFocus: !widget.isChangeMode,
+                          prevFocus:
+                              (widget.isChangeMode || widget.isRemoveMode)
+                              ? _currentFocus
+                              : null,
+                          nextFocus: _confirmFocus,
                         ),
 
                         SizedBox(height: 24.h),
@@ -163,7 +180,9 @@ class _CreateOrUpdateViewState extends State<CreateOrUpdateView> {
                         SizedBox(height: 12.h),
                         _buildPinCodeInput(
                           controller: _confirmController,
+                          focusNode: _confirmFocus,
                           isAutoFocus: false,
+                          prevFocus: _newFocus,
                         ),
                       ],
 
@@ -212,10 +231,13 @@ class _CreateOrUpdateViewState extends State<CreateOrUpdateView> {
 
   Widget _buildPinCodeInput({
     required TextEditingController controller,
+    required FocusNode focusNode,
     required bool isAutoFocus,
+    FocusNode? prevFocus, 
+    FocusNode? nextFocus,
   }) {
     return AnimatedBuilder(
-      animation: controller,
+      animation: Listenable.merge([controller, focusNode]), 
       builder: (context, child) {
         return SizedBox(
           height: 60.h, 
@@ -224,14 +246,23 @@ class _CreateOrUpdateViewState extends State<CreateOrUpdateView> {
               Positioned.fill(
                 child: CupertinoTextField(
                   controller: controller,
+                  focusNode: focusNode,
                   autofocus: isAutoFocus,
                   keyboardType: TextInputType.number,
                   maxLength: 6, 
                   style: const TextStyle(color: Colors.transparent),
                   cursorColor: Colors.transparent,
                   decoration: const BoxDecoration(color: Colors.transparent),
-
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  onChanged: (value) {
+                    HapticFeedback.lightImpact();
+                    if (value.length == 6 && nextFocus != null) {
+                      nextFocus.requestFocus();
+                    }
+                    if (value.isEmpty && prevFocus != null) {
+                      prevFocus.requestFocus();
+                    }
+                  },
                 ),
               ),
 
@@ -240,7 +271,8 @@ class _CreateOrUpdateViewState extends State<CreateOrUpdateView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: List.generate(6, (index) {
                     final isFilled = index < controller.text.length;
-                    final isFocused = index == controller.text.length;
+                    final isFocused =
+                        focusNode.hasFocus && index == controller.text.length;
 
                     return _buildSingleDigitBox(
                       isFilled: isFilled,
@@ -270,9 +302,7 @@ class _CreateOrUpdateViewState extends State<CreateOrUpdateView> {
         color: isDarkMode
             ? const Color(0xFF2C2C2E) 
             : CupertinoColors.white,
-
-        borderRadius: BorderRadius.circular(15.r),
-
+        borderRadius: BorderRadius.circular(30.r),
         border: Border.all(
           color: isFocused
               ? theme.primaryColor

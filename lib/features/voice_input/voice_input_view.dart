@@ -18,7 +18,7 @@ class _VoiceInputViewState extends State<VoiceInputView> {
   final VoiceInputViewModel _viewModel = VoiceInputViewModel();
 
   @override
-  void initState() {
+  void initState() { 
     super.initState();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {

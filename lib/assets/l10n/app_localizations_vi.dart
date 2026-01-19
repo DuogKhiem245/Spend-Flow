@@ -1171,4 +1171,19 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get recent_locations => 'Vị trí gần đây';
+
+  @override
+  String get voice_input_error => 'Lỗi nhập giọng nói. Vui lòng thử lại.';
+
+  @override
+  String get voice_input_not_recognized =>
+      'Không nhận diện được giọng nói. Vui lòng thử lại.';
+
+  @override
+  String get voice_input_permission_denied =>
+      'Quyền nhập giọng nói bị từ chối. Vui lòng bật quyền truy cập micro trong cài đặt.';
+
+  @override
+  String get error_ai_request =>
+      'AI không thể nhận dạng yêu cầu này. Hãy thử nói rõ hơn.';
 }

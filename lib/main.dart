@@ -49,10 +49,6 @@ void main() async {
 
   MapboxOptions.setAccessToken(publicToken);
 
-  storage.purgeAllData().catchError((e) {
-    debugPrint("Error purging data: $e");
-  });
-
   runApp(MyApp(onboardDone: onboardDone, createFirstWallet: createFirstWallet));
 }
 

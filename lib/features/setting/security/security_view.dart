@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:cupertino_native/components/switch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
@@ -69,7 +72,6 @@ class _SecurityViewState extends State<SecurityView> {
                 children: [
                   _buildSectionHeader(l10n.passcode.toUpperCase()),
                   SizedBox(height: 10.h),
-
                   Container(
                     padding: EdgeInsets.all(16.w),
                     decoration: BoxDecoration(
@@ -108,24 +110,51 @@ class _SecurityViewState extends State<SecurityView> {
                                 ),
                               ],
                             ),
-                            CNSwitch(
-                              value: _viewModel.isPasscodeEnabled,
-                              onChanged: (bool newValue) async {
-                                if (_isInteracting) return;
+                            Platform.isIOS
+                                ? CNSwitch(
+                                    value: _viewModel.isPasscodeEnabled,
+                                    onChanged: (bool newValue) async {
+                                      if (_isInteracting) return;
 
-                                setState(() => _isInteracting = true);
+                                      setState(() => _isInteracting = true);
 
-                                await _showPasscodeModal(
-                                  context,
-                                  isChangeMode: false,
-                                  isRemoveMode: !newValue,
-                                );
+                                      await _showPasscodeModal(
+                                        context,
+                                        isChangeMode: false,
+                                        isRemoveMode: !newValue,
+                                      );
 
-                                if (mounted) {
-                                  setState(() => _isInteracting = false);
-                                }
-                              },
-                            ),
+                                      if (mounted) {
+                                        setState(() => _isInteracting = false);
+                                      }
+                                    },
+                                  )
+                                : CupertinoSwitch(
+                                    value: _viewModel.isPasscodeEnabled,
+                                    activeTrackColor: CupertinoTheme.of(
+                                      context,
+                                    ).primaryColor,
+                                    inactiveTrackColor: CupertinoColors
+                                        .systemGrey
+                                        .withValues(alpha: .3),
+                                    onChanged: (bool newValue) async {
+                                      if (_isInteracting) return;
+
+                                      HapticFeedback.lightImpact();
+
+                                      setState(() => _isInteracting = true);
+
+                                      await _showPasscodeModal(
+                                        context,
+                                        isChangeMode: false,
+                                        isRemoveMode: !newValue,
+                                      );
+
+                                      if (mounted) {
+                                        setState(() => _isInteracting = false);
+                                      }
+                                    },
+                                  ),
                           ],
                         ),
                         SizedBox(height: 12.h),
@@ -207,33 +236,66 @@ class _SecurityViewState extends State<SecurityView> {
                                 ),
                               ],
                             ),
-                            CNSwitch(
-                              value: _viewModel.isBiometricEnabled,
-                              onChanged: (bool value) async {
-                                final errorMsg = await _viewModel.toggleBiometric(
-                                  value,
-                                );
+                            Platform.isIOS
+                                ? CNSwitch(
+                                    value: _viewModel.isBiometricEnabled,
+                                    onChanged: (bool value) async {
+                                      final errorMsg = await _viewModel
+                                          .toggleBiometric(value);
 
-                                debugPrint("Error Msg: $errorMsg");
+                                      if (errorMsg != null && context.mounted) {
+                                        showCupertinoDialog(
+                                          context: context,
+                                          builder: (ctx) =>
+                                              CupertinoAlertDialog(
+                                                title: Text(l10n.error),
+                                                content: Text(errorMsg),
+                                                actions: [
+                                                  CupertinoDialogAction(
+                                                    child: Text(l10n.ok),
+                                                    onPressed: () =>
+                                                        Navigator.pop(ctx),
+                                                  ),
+                                                ],
+                                              ),
+                                        );
+                                        setState(() {});
+                                      }
+                                    },
+                                  )
+                                : CupertinoSwitch(
+                                    value: _viewModel.isBiometricEnabled,
+                                    activeTrackColor: CupertinoTheme.of(
+                                      context,
+                                    ).primaryColor,
+                                    onChanged: (bool value) async {
+                                      HapticFeedback.lightImpact();
 
-                                if (errorMsg != null && context.mounted) {
-                                  showCupertinoDialog(
-                                    context: context,
-                                    builder: (ctx) => CupertinoAlertDialog(
-                                      title: Text(l10n.error),
-                                      content: Text(errorMsg),
-                                      actions: [
-                                        CupertinoDialogAction(
-                                          child: Text(l10n.ok),
-                                          onPressed: () => Navigator.pop(ctx),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                  setState(() {});
-                                }
-                              },
-                            ),
+                                      final errorMsg = await _viewModel
+                                          .toggleBiometric(value);
+
+                                      if (errorMsg != null && context.mounted) {
+                                        HapticFeedback.vibrate();
+
+                                        showCupertinoDialog(
+                                          context: context,
+                                          builder: (ctx) =>
+                                              CupertinoAlertDialog(
+                                                title: Text(l10n.error),
+                                                content: Text(errorMsg),
+                                                actions: [
+                                                  CupertinoDialogAction(
+                                                    child: Text(l10n.ok),
+                                                    onPressed: () =>
+                                                        Navigator.pop(ctx),
+                                                  ),
+                                                ],
+                                              ),
+                                        );
+                                        setState(() {});
+                                      }
+                                    },
+                                  ),
                           ],
                         ),
                         SizedBox(height: 12.h),
@@ -321,7 +383,6 @@ class _SecurityViewState extends State<SecurityView> {
     );
   }
 
-
   Future<void> _showPasscodeModal(
     BuildContext context, {
     required bool isChangeMode,
@@ -330,7 +391,6 @@ class _SecurityViewState extends State<SecurityView> {
     final result = await showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
       builder: (context) {
         return Container(
           height: MediaQuery.of(context).size.height * 0.9,
@@ -346,7 +406,7 @@ class _SecurityViewState extends State<SecurityView> {
                   height: 5.h,
                   margin: EdgeInsets.symmetric(vertical: 10.h),
                   decoration: BoxDecoration(
-                    color: CupertinoColors.systemGrey3,
+                    color: CupertinoTheme.of(context).scaffoldBackgroundColor,
                     borderRadius: BorderRadius.circular(30.r),
                   ),
                 ),
@@ -369,7 +429,6 @@ class _SecurityViewState extends State<SecurityView> {
     );
 
     if (result == true) {
-
       await _viewModel.reload();
 
       await Future.delayed(const Duration(milliseconds: 300));

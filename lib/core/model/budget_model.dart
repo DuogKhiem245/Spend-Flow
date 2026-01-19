@@ -80,6 +80,41 @@ class BudgetModel {
     );
   }
 
+  factory BudgetModel.fromAIResponse({
+    required Map<String, dynamic> aiData,
+    required List<CategoryModel> availableCategories,
+    required String currentWalletId,
+  }) {
+    final String? aiCategoryId = aiData['categoryId'];
+    final category = availableCategories.firstWhere(
+      (c) => c.id == aiCategoryId,
+      orElse: () => availableCategories.firstWhere(
+        (c) => c.name.toLowerCase().contains('orders') || c.id == 'others',
+        orElse: () => availableCategories.first, 
+      ),
+    );
+
+    DateTime parsedDate;
+    try {
+      parsedDate = aiData['date'] != null
+          ? DateTime.parse(aiData['date'])
+          : DateTime.now();
+    } catch (e) {
+      parsedDate = DateTime.now();
+    }
+
+    return BudgetModel(
+      id: const Uuid().v4(), 
+      category: category,
+      total: (aiData['amount'] as num?)?.toDouble() ?? 0.0,
+      spent: 0.0,
+      date: parsedDate,
+      walletId: currentWalletId, 
+      updatedAt: DateTime.now().millisecondsSinceEpoch,
+      isDeleted: false,
+    );
+  }
+
   static int _parseTime(dynamic value) {
     if (value is int) return value;
     if (value is Timestamp) {

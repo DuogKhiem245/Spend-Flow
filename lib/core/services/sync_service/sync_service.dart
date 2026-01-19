@@ -64,17 +64,17 @@ class SyncService {
           ? lastSyncTimestamp - 30000
           : 0;
 
-      await _pushCategories();
-      await _pushWallets();
-      await _pushLocationChanges();
-      await _pushTransactions();
-      await _pushBudgets();
-
       await _pullCategories(queryTimestamp);
       await _pullWallets(queryTimestamp);
       await _pullLocationChanges(queryTimestamp);
       await _pullTransactions(queryTimestamp);
       await _pullBudgets(queryTimestamp);
+
+      await _pushCategories();
+      await _pushWallets();
+      await _pushLocationChanges();
+      await _pushTransactions();
+      await _pushBudgets();
 
       _lastRunTime = DateTime.now();
       await _localStorage.saveGlobalSyncTime(
@@ -134,9 +134,12 @@ class SyncService {
     try {
       Query query = _userRef.collection('categories');
 
-     // if (lastSyncTime > 0) {
-      //   query = query.where('updatedAt', isGreaterThan: lastSyncTime);
-      // }
+      if (lastSyncTime > 0) {
+        final queryTimestamp = Timestamp.fromMillisecondsSinceEpoch(
+          lastSyncTime,
+        );
+        query = query.where('updatedAt', isGreaterThan: queryTimestamp);
+      }
 
       final snapshot = await query.get();
       if (snapshot.docs.isEmpty) return;
@@ -207,14 +210,15 @@ class SyncService {
     try {
       Query query = _userRef.collection('wallets');
 
-     // if (lastSyncTime > 0) {
-      //   query = query.where('updatedAt', isGreaterThan: lastSyncTime);
-      // }
+      if (lastSyncTime > 0) {
+        final queryTimestamp = Timestamp.fromMillisecondsSinceEpoch(
+          lastSyncTime,
+        );
+        query = query.where('updatedAt', isGreaterThan: queryTimestamp);
+      }
 
       final snapshot = await query.get();
       if (snapshot.docs.isEmpty) return;
-
-      debugPrint("Kéo ${snapshot.docs.length} wallets về máy...");
 
       for (var doc in snapshot.docs) {
         final data = doc.data() as Map<String, dynamic>;
@@ -276,7 +280,10 @@ class SyncService {
       Query query = _userRef.collection('recent_locations');
 
       if (lastSyncTime > 0) {
-        query = query.where('timestamp', isGreaterThan: lastSyncTime);
+         final queryTimestamp = Timestamp.fromMillisecondsSinceEpoch(
+          lastSyncTime,
+        );
+        query = query.where('timestamp', isGreaterThan: queryTimestamp);
       }
 
       query = query.orderBy('timestamp', descending: true).limit(20);
@@ -331,9 +338,12 @@ class SyncService {
     try {
       Query query = _userRef.collection('transactions');
 
-      // if (lastSyncTime > 0) {
-      //   query = query.where('updatedAt', isGreaterThan: lastSyncTime);
-      // }
+      if (lastSyncTime > 0) {
+        final queryTimestamp = Timestamp.fromMillisecondsSinceEpoch(
+          lastSyncTime,
+        );
+        query = query.where('updatedAt', isGreaterThan: queryTimestamp);
+      }
 
       final snapshot = await query.get();
       if (snapshot.docs.isEmpty) return;
@@ -386,9 +396,12 @@ class SyncService {
     try {
       Query query = _userRef.collection('budgets');
 
-     // if (lastSyncTime > 0) {
-      //   query = query.where('updatedAt', isGreaterThan: lastSyncTime);
-      // }
+      if (lastSyncTime > 0) {
+        final queryTimestamp = Timestamp.fromMillisecondsSinceEpoch(
+          lastSyncTime,
+        );
+        query = query.where('updatedAt', isGreaterThan: queryTimestamp);
+      }
 
       final snapshot = await query.get();
       if (snapshot.docs.isEmpty) return;

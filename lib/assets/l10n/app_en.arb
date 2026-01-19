@@ -389,5 +389,10 @@
   "tap_to_change_location": "Tap to change location",
   "search_results": "Search Results",
   "no_location_found": "No location found",
-  "recent_locations": "Recent Locations"
+  "recent_locations": "Recent Locations",
+
+  "voice_input_error": "Voice input error. Please try again.",
+  "voice_input_not_recognized": "Voice input not recognized. Please try again.",
+  "voice_input_permission_denied": "Voice input permission denied. Please enable microphone access in settings.",
+  "error_ai_request": "The AI ​​cannot recognize this request. Please try to be more specific."
 }

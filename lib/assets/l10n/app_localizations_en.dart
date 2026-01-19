@@ -1173,4 +1173,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get recent_locations => 'Recent Locations';
+
+  @override
+  String get voice_input_error => 'Voice input error. Please try again.';
+
+  @override
+  String get voice_input_not_recognized =>
+      'Voice input not recognized. Please try again.';
+
+  @override
+  String get voice_input_permission_denied =>
+      'Voice input permission denied. Please enable microphone access in settings.';
+
+  @override
+  String get error_ai_request =>
+      'The AI ​​cannot recognize this request. Please try to be more specific.';
 }

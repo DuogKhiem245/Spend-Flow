@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cupertino_native/components/segmented_control.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
@@ -50,6 +53,8 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
       _selectedCategory = t.category;
       _transactionDate = t.date;
 
+      _index = t.isIncome ? 1 : 0;
+
       if (t.location.latitude != null && t.location.longitude != null) {
         final position = Position(t.location.longitude!, t.location.latitude!);
 
@@ -75,6 +80,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
       setState(() {
         _index = index;
         _clearData();
+        HapticFeedback.lightImpact();
       });
     }
   }
@@ -93,9 +99,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
       context: context,
       builder: (context) => CupertinoAlertDialog(
         title: Text(l10n.no_wallets_yet),
-        content: Text(
-          l10n.please_create_wallet_first
-        ),
+        content: Text(l10n.please_create_wallet_first),
         actions: [
           CupertinoDialogAction(
             child: Text(l10n.cancel),
@@ -105,9 +109,10 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
             isDefaultAction: true,
             child: Text(l10n.create_now),
             onPressed: () {
-              Navigator.push(context, 
+              Navigator.push(
+                context,
                 CupertinoPageRoute(
-                  builder: (context) => const WalletView(firstWallet: false,),
+                  builder: (context) => const WalletView(firstWallet: false),
                 ),
               );
             },
@@ -142,15 +147,35 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
           padding: EdgeInsets.all(10.w),
           child: Column(
             children: [
-              CNSegmentedControl(
-                labels: [l10n.expenses, l10n.income],
-                height: 50.h,
-                selectedIndex: _index,
-                onValueChanged: _isLoading
-                    ? (i) {}
-                    : (i) => setState(() => _onTabChanged(i)),
-                color: CupertinoTheme.of(context).primaryColor,
-              ),
+              Platform.isIOS
+                  ? CNSegmentedControl(
+                      labels: [l10n.expenses, l10n.income],
+                      height: 50.h,
+                      selectedIndex: _index,
+                      onValueChanged: _isLoading
+                          ? (i) {}
+                          : (i) => setState(() => _onTabChanged(i)),
+                      color: CupertinoTheme.of(context).primaryColor,
+                    )
+                  : SizedBox(
+                      width: double.infinity,
+                      child: CupertinoSlidingSegmentedControl<int>(
+                        groupValue: _index,
+                        backgroundColor: CupertinoTheme.of(
+                          context,
+                        ).barBackgroundColor,
+                        thumbColor: CupertinoTheme.of(context).primaryColor,
+                        children: {
+                          0: _buildSegmentItem(l10n.expenses, _index == 0),
+                          1: _buildSegmentItem(l10n.income, _index == 1),
+                        },
+                        onValueChanged: (int? i) {
+                          if (!_isLoading && i != null) {
+                            setState(() => _onTabChanged(i));
+                          }
+                        },
+                      ),
+                    ),
               Expanded(
                 child: GestureDetector(
                   onTap: () => FocusScope.of(context).unfocus(),
@@ -227,12 +252,13 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                                         );
                                         return;
                                       }
-                                      
+
                                       setState(() {
                                         _isLoading = true;
                                       });
 
-                                      _hasWallet = await WalletViewModel().checkUserHasWallet();
+                                      _hasWallet = await WalletViewModel()
+                                          .checkUserHasWallet();
 
                                       if (!_hasWallet) {
                                         setState(() => _isLoading = false);
@@ -295,6 +321,22 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSegmentItem(String text, bool isSelected) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 12.h),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: 16.sp,
+          fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+          color: isSelected
+              ? CupertinoColors.white
+              : CupertinoTheme.of(context).textTheme.textStyle.color,
         ),
       ),
     );

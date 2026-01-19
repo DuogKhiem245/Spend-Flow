@@ -92,10 +92,10 @@ class PremiumViewModel extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    await Future.delayed(const Duration(seconds: 2));
-    await _storage.setPremiumStatus(true);
+    // await Future.delayed(const Duration(seconds: 2));
+    await _storage.setPremiumStatus(true, DateTime.now().add(const Duration(days: 30)),
+    );
     _isPremium = true;
-
     _isLoading = false;
     notifyListeners();
   }

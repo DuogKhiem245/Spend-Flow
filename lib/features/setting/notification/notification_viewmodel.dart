@@ -3,36 +3,45 @@ import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/services/notification_service.dart';
 
 class NotificationViewModel extends ChangeNotifier {
-  bool _isNotificationsEnabled = false;
+  final LocalStorageService _storage = LocalStorageService();
+  final NotificationService _notificationService = NotificationService();
 
+  bool _isNotificationsEnabled = false;
   bool get isNotificationsEnabled => _isNotificationsEnabled;
 
+  Future<void> init(BuildContext context) async {
+    await loadNotificationState();
+    if (_isNotificationsEnabled) {
+      if (context.mounted) {
+        await _notificationService.scheduleDailyNotification(context);
+      }
+    }
+  }
+
   Future<void> loadNotificationState() async {
-    final savedState = await LocalStorageService().getNotificationStatus();
-    _isNotificationsEnabled = savedState;
+    _isNotificationsEnabled = await _storage.getNotificationStatus();
     notifyListeners();
   }
 
   Future<void> toggleNotification(bool value, BuildContext context) async {
-    final service = NotificationService();
-
     _isNotificationsEnabled = value;
     notifyListeners();
 
-    await LocalStorageService().saveNotificationStatus(value);
-
     if (value) {
-      final granted = await service.requestPermissions();
+      final granted = await _notificationService.requestPermissions();
       if (granted) {
-        if (!context.mounted) return;
-        await service.scheduleDailyNotification(context);
+        if (context.mounted) {
+          await _notificationService.scheduleDailyNotification(context);
+          await _storage.saveNotificationStatus(true);
+        }
       } else {
         _isNotificationsEnabled = false;
+        await _storage.saveNotificationStatus(false);
         notifyListeners();
-        await LocalStorageService().saveNotificationStatus(false);
       }
     } else {
-      await service.cancelNotifications();
+      await _notificationService.cancelNotifications();
+      await _storage.saveNotificationStatus(false);
     }
   }
 }

@@ -4,6 +4,7 @@ import 'package:cupertino_native/style/button_style.dart';
 import 'package:cupertino_native/style/sf_symbol.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
@@ -49,21 +50,35 @@ class _HomePageState extends State<HomePage> {
       context: context,
       isScrollControlled: true,
       backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
-      builder: (context) => PremiumView(isMaximized:limitReached),
+      builder: (context) => PremiumView(isMaximized: limitReached),
     );
   }
 
   Future<void> _checkPermissionStatus() async {
-    final isUserEnabled = await LocalStorageService().getNotificationStatus();
+    final storage = LocalStorageService();
+    final isUserEnabled = await storage.getNotificationStatus();
+
     if (isUserEnabled) {
-      await notificationService.requestPermissions();
-      if (!mounted) return;
-      await notificationService.scheduleDailyNotification(context);
+      final isGranted = await notificationService.requestPermissions();
+
+      if (isGranted) {
+        if (!mounted) return;
+        await notificationService.scheduleDailyNotification(context);
+        await storage.saveNotificationStatus(true);
+      } else {
+        await storage.saveNotificationStatus(false);
+      }
     }
   }
 
   Future<void> _handleMenuSelection(int index) async {
-    if (index == 1) {
+    HapticFeedback.heavyImpact();
+    if (index == 2) {
+      await Navigator.push(
+        context,
+        CupertinoPageRoute(builder: (context) => const AddTransactionPage()),
+      );
+    } else if (index == 1) {
       final canUse = await _limitService.canUseVoice();
       if (canUse) {
         if (!mounted) return;
@@ -75,11 +90,6 @@ class _HomePageState extends State<HomePage> {
         if (!mounted) return;
         _showPremiumModal(context, true);
       }
-    } else if (index == 2) {
-      await Navigator.push(
-        context,
-        CupertinoPageRoute(builder: (context) => const AddTransactionPage()),
-      );
     } else if (index == 0) {
       final bool isPremium = await LocalStorageService().getPremiumStatus();
 
@@ -212,23 +222,23 @@ class _HomePageState extends State<HomePage> {
       position: PullDownMenuPosition.automatic,
       itemBuilder: (context) => [
         PullDownMenuItem(
-          title: l10n!.add_via_voice,
+          title: l10n!.add_manually,
+          icon: CupertinoIcons.pencil_ellipsis_rectangle,
+          iconColor: CupertinoColors.activeBlue,
+          onTap: () => _handleMenuSelection(2),
+        ),
+        const PullDownMenuDivider.large(),
+        PullDownMenuItem(
+          title: l10n.add_via_voice,
           icon: CupertinoIcons.mic_fill,
           iconColor: CupertinoColors.activeBlue,
-          onTap: () => _handleMenuSelection(0),
+          onTap: () => _handleMenuSelection(1),
         ),
         PullDownMenuItem(
           title: l10n.scan_receipt,
           icon: CupertinoIcons.doc_text_viewfinder,
           iconColor: CupertinoColors.activeBlue,
-          onTap: () => _handleMenuSelection(1),
-        ),
-        const PullDownMenuDivider.large(),
-        PullDownMenuItem(
-          title: l10n.add_manually,
-          icon: CupertinoIcons.pencil_ellipsis_rectangle,
-          iconColor: CupertinoColors.activeBlue,
-          onTap: () => _handleMenuSelection(2),
+          onTap: () => _handleMenuSelection(0),
         ),
       ],
       buttonBuilder: (context, showMenu) => GestureDetector(

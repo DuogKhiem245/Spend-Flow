@@ -2305,6 +2305,30 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Vị trí gần đây'**
   String get recent_locations;
+
+  /// No description provided for @voice_input_error.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lỗi nhập giọng nói. Vui lòng thử lại.'**
+  String get voice_input_error;
+
+  /// No description provided for @voice_input_not_recognized.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không nhận diện được giọng nói. Vui lòng thử lại.'**
+  String get voice_input_not_recognized;
+
+  /// No description provided for @voice_input_permission_denied.
+  ///
+  /// In vi, this message translates to:
+  /// **'Quyền nhập giọng nói bị từ chối. Vui lòng bật quyền truy cập micro trong cài đặt.'**
+  String get voice_input_permission_denied;
+
+  /// No description provided for @error_ai_request.
+  ///
+  /// In vi, this message translates to:
+  /// **'AI không thể nhận dạng yêu cầu này. Hãy thử nói rõ hơn.'**
+  String get error_ai_request;
 }
 
 class _AppLocalizationsDelegate
