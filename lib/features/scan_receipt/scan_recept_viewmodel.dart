@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:camera/camera.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/data/category_data.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/core/services/ai_service.dart';
@@ -125,19 +127,27 @@ class ScanReceiptViewModel extends ChangeNotifier {
       List<CategoryModel> currentCategories = CategoryData.getAll();
       final currentLanguage = LanguageService().locale.languageCode;
 
-      final aiResponse = await _aiService.analyzeImage(
+      final dynamic rawResponse = await _aiService.analyzeImage(
         base64Image,
         currentCategories,
         currentLanguage,
       );
 
-      if (aiResponse.isEmpty || aiResponse['data'] == null) {
-        throw Exception("AI không nhận diện được hóa đơn này.");
+      final fullMap = Map<String, dynamic>.from(rawResponse);
+      Map<String, dynamic>? resultPart;
+
+      if (fullMap.containsKey('result')) {
+        resultPart = Map<String, dynamic>.from(fullMap['result']);
+      } else {
+        resultPart = fullMap;
       }
 
-      final data = Map<String, dynamic>.from(aiResponse['data']);
-      final currentWalletId =
-          await LocalStorageService().getCurrentWalletId();
+      if (resultPart['data'] == null) {
+        throw Exception("No data found in AI response");
+      }
+
+      final data = Map<String, dynamic>.from(resultPart['data']);
+      final currentWalletId = await LocalStorageService().getCurrentWalletId();
 
       if (!context.mounted) return;
 
@@ -146,6 +156,22 @@ class ScanReceiptViewModel extends ChangeNotifier {
         availableCategories: currentCategories,
         currentWalletId: currentWalletId,
       );
+
+      debugPrint("Transaction Data: $transactionData");
+
+      final DateTime now = DateTime.now();
+      final DateTime today = DateTime(now.year, now.month, now.day);
+      final DateTime transactionDay = DateTime(
+        transactionData.date.year,
+        transactionData.date.month,
+        transactionData.date.day,
+      );
+
+      if (transactionDay.isAfter(today)) {
+        throw Exception(
+          "The invoice date (${transactionData.date.day}/${transactionData.date.month}) is invalid because it is greater than the current date.",
+        );
+      }
 
       HapticFeedback.mediumImpact();
 
@@ -159,11 +185,21 @@ class ScanReceiptViewModel extends ChangeNotifier {
         ),
       );
     } catch (e) {
-      debugPrint("Error during scanning/analysis: $e");
-      HapticFeedback.vibrate(); 
+      HapticFeedback.vibrate();
+      final l10n = AppLocalizations.of(context)!;
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Lỗi xử lý hóa đơn: ${e.toString()}")),
+        showCupertinoDialog(
+          context: context,
+          builder: (context) => CupertinoAlertDialog(
+            title: Text(l10n.error),
+            content: Text(e.toString().replaceAll("Exception: ", "")),
+            actions: [
+              CupertinoDialogAction(
+                child: Text(l10n.close),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          ),
         );
       }
     } finally {

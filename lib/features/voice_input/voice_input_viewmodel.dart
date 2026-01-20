@@ -37,7 +37,6 @@ class VoiceInputViewModel extends ChangeNotifier {
     try {
       _isSpeechEnabled = await _speechToText.initialize(
         onStatus: (status) {
-          debugPrint('Speech Status: $status');
           if (status == 'done' || status == 'notListening') {
             _isListening = false;
             _stopWaveAnimation();
@@ -45,7 +44,6 @@ class VoiceInputViewModel extends ChangeNotifier {
           }
         },
         onError: (errorNotification) {
-          debugPrint('Speech Error: $errorNotification');
           _isListening = false;
           _stopWaveAnimation();
           notifyListeners(); 

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
@@ -84,90 +85,117 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
   Widget _buildMainCard(BuildContext context, TransactionDetailViewModel vm) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
+      padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
         color: CupertinoTheme.of(context).barBackgroundColor,
         borderRadius: BorderRadius.circular(30.r),
       ),
-      child: Column(
-        children: [
-          Container(
-            width: 80.w,
-            height: 80.w,
-            decoration: BoxDecoration(
-              color: vm.categoryColor.withValues(alpha: 0.1),
-              shape: BoxShape.circle,
-            ),
-            child: vm.isCustomImage
-                ? ClipOval(
-                    child: Image.file(
-                      vm.customImageFile!,
-                      fit: BoxFit.cover,
-                      width: 80.w,
-                      height: 80.w,
-                    ),
-                  )
-                : Center(
-                    child: Icon(
-                      AppIcons.getIcon(vm.iconKey),
-                      size: 40.sp,
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch, 
+          children: [
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 70.w,
+                  height: 70.w,
+                  decoration: BoxDecoration(
+                    color: vm.categoryColor.withValues(alpha: 0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: vm.isCustomImage
+                      ? ClipOval(
+                          child: Image.file(
+                            vm.customImageFile!,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : Center(
+                          child: Icon(
+                            AppIcons.getIcon(vm.iconKey),
+                            size: 32.sp,
+                            color: vm.categoryColor,
+                          ),
+                        ),
+                ),
+                SizedBox(height: 12.h),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
+                    vertical: 4.h,
+                  ),
+                  decoration: BoxDecoration(
+                    color: vm.categoryColor.withValues(alpha: .1),
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  child: Text(
+                    vm.categoryName,
+                    style: TextStyle(
+                      fontSize: 11.sp,
+                      fontWeight: FontWeight.bold,
                       color: vm.categoryColor,
                     ),
                   ),
-          ),
-
-          SizedBox(height: 12.h),
-
-          Text(
-            vm.name,
-            style: TextStyle(
-              fontSize: 20.sp,
-              fontWeight: FontWeight.bold,
-              color: CupertinoTheme.of(context).textTheme.textStyle.color,
+                ),
+              ],
             ),
-            textAlign: TextAlign.center,
-          ),
 
-          SizedBox(height: 8.h),
+            SizedBox(width: 20.w),
 
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
-            decoration: BoxDecoration(
-              color: vm.categoryColor.withValues(alpha: .15),
-              borderRadius: BorderRadius.circular(20.r),
-            ),
-            child: Text(
-              vm.categoryName,
-              style: TextStyle(
-                fontSize: 13.sp,
-                fontWeight: FontWeight.w600,
-                color: vm.categoryColor,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        vm.name,
+                        style: TextStyle(
+                          fontSize: 22.sp,
+                          fontWeight: FontWeight.w600,
+                          color: CupertinoTheme.of(
+                            context,
+                          ).textTheme.textStyle.color,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      SizedBox(height: 6.h),
+                      Text(
+                        vm.getDateString(context),
+                        style: TextStyle(
+                          fontSize: 13.sp,
+                          color: CupertinoTheme.of(
+                            context,
+                          ).textTheme.textStyle.color?.withValues(alpha: .5),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      vm.amountString,
+                      style: TextStyle(
+                        fontSize: 34.sp,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: -1,
+                        color: CupertinoTheme.of(
+                          context,
+                        ).textTheme.textStyle.color,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-
-          SizedBox(height: 10.h),
-          Text(
-            vm.amountString,
-            style: TextStyle(
-              fontSize: 36.sp,
-              fontWeight: FontWeight.w700,
-              color: CupertinoTheme.of(context).textTheme.textStyle.color,
-            ),
-          ),
-
-          SizedBox(height: 8.h),
-
-          Text(
-            vm.getDateString(context),
-            style: TextStyle(
-              fontSize: 14.sp,
-              color: CupertinoTheme.of(
-                context,
-              ).textTheme.textStyle.color?.withValues(alpha: .5),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

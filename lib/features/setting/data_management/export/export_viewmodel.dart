@@ -20,9 +20,17 @@ class ExportViewModel extends ChangeNotifier {
       final dbData = await _storage.exportDataToJson();
       final Map<String, dynamic> data = jsonDecode(dbData);
 
-      final List<dynamic> transactions = data['transactions'] ?? [];
-      final List<dynamic> wallets = data['wallets'] ?? [];
-      final List<dynamic> budgets = data['budgets'] ?? [];
+      final List<dynamic> transactions = (data['transactions'] ?? [])
+          .where((tx) => tx['isDeleted'] != true && tx['isDeleted'] != 1)
+          .toList();
+
+      final List<dynamic> wallets = (data['wallets'] ?? [])
+          .where((w) => w['isDeleted'] != true && w['isDeleted'] != 1)
+          .toList();
+
+      final List<dynamic> budgets = (data['budgets'] ?? [])
+          .where((b) => b['isDeleted'] != true && b['isDeleted'] != 1)
+          .toList();
 
       final allCategories = (await _storage.getAllCategories())
           .where((cat) => !cat.isDeleted)

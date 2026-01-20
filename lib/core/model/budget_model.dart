@@ -10,6 +10,7 @@ class BudgetModel {
   final double spent;
   final DateTime date;
   final String walletId;
+  final String note;
 
   final int updatedAt;
   final bool isDeleted;
@@ -23,6 +24,7 @@ class BudgetModel {
     required this.walletId,
     int? updatedAt,
     this.isDeleted = false,
+    this.note = '',
   }) : id = id ?? const Uuid().v4(),
        updatedAt = updatedAt ?? DateTime.now().millisecondsSinceEpoch;
 
@@ -41,6 +43,7 @@ class BudgetModel {
       'total': total,
       'date': date.toIso8601String(),
       'walletId': walletId,
+      'note': note,
       'updatedAt': updatedAt,
       'isDeleted': isDeleted ? 1 : 0,
     };
@@ -54,6 +57,7 @@ class BudgetModel {
       spent: 0.0,
       date: map['date'] != null ? DateTime.parse(map['date']) : DateTime.now(),
       walletId: map['walletId'],
+      note: map['note'] ?? '',
       updatedAt: _parseTime(map['updatedAt']),
       isDeleted: map['isDeleted'] == 1 || map['isDeleted'] == true,
     );
@@ -65,6 +69,7 @@ class BudgetModel {
     double? total,
     double? spent,
     DateTime? date,
+    String? note,
     int? updatedAt,
     bool? isDeleted,
   }) {
@@ -75,6 +80,7 @@ class BudgetModel {
       spent: spent ?? this.spent,
       date: date ?? this.date,
       walletId: walletId,
+      note: note ?? this.note,
       updatedAt: updatedAt ?? DateTime.now().millisecondsSinceEpoch,
       isDeleted: isDeleted ?? this.isDeleted,
     );
@@ -109,7 +115,8 @@ class BudgetModel {
       total: (aiData['amount'] as num?)?.toDouble() ?? 0.0,
       spent: 0.0,
       date: parsedDate,
-      walletId: currentWalletId, 
+      walletId: currentWalletId,
+      note: aiData['note'] ?? '', 
       updatedAt: DateTime.now().millisecondsSinceEpoch,
       isDeleted: false,
     );

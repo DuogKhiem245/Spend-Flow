@@ -123,7 +123,7 @@ class TransactionModel {
     );
 
     return TransactionModel(
-      id: const Uuid().v4(),
+      id: aiData['categoryId'] ?? const Uuid().v4(),
       amount: (aiData['amount'] as num?)?.toDouble() ?? 0.0,
       title: aiData['title'] ?? 'Giao dịch mới',
       category: selectedCategory,

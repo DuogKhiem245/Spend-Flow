@@ -8,6 +8,11 @@ import 'package:file_picker/file_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/core/data/category_data.dart';
+import 'package:spend_flow/core/model/category_model.dart';
+import 'package:spend_flow/core/model/transaction_model.dart';
+import 'package:spend_flow/core/services/ai_service.dart';
+import 'package:spend_flow/core/services/language_service.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/widgets/check_valid/check_valid_widget.dart';
 
@@ -15,6 +20,7 @@ enum ImportStatus { initial, loading, success, error }
 
 class ImportViewModel extends ChangeNotifier {
   final LocalStorageService _storage = LocalStorageService();
+  final AIService _aiService = AIService();
 
   ImportStatus _status = ImportStatus.initial;
   ImportStatus get status => _status;
@@ -201,32 +207,23 @@ class ImportViewModel extends ChangeNotifier {
       final file = File(result.files.first.path!);
       final extension = result.files.first.extension?.toLowerCase();
 
-      bool success = await _processFileContent(file, extension);
+      bool success = await _processFileContent(file, extension!);
 
       if (success) {
-        final now = DateTime.now();
-        final newItem = {
-          'id': now.millisecondsSinceEpoch.toString(),
-          'name': result.files.first.name,
-          'time':
-              "${now.day}/${now.month} ${now.hour}:${now.minute.toString().padLeft(2, '0')}",
-          'format': extension?.toUpperCase() ?? 'FILE',
-        };
-
-        _recentImports.insert(0, newItem);
-        await _saveHistory();
+        await _recordImportHistory(result.files.first.name, extension);
         _status = ImportStatus.success;
 
         if (context.mounted) {
+          final l10n = AppLocalizations.of(context)!;
           showCupertinoModalPopup(
             context: context,
-            builder: (context) => CupertinoActionSheet(
+            builder: (context) => CupertinoAlertDialog(
               title: Text(l10n.import_success),
-              message: Text(l10n.import_success_description),
+              content: Text(l10n.import_success_description),
               actions: [
-                CupertinoActionSheetAction(
+                CupertinoDialogAction(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text("Done"),
+                  child: Text(l10n.ok),
                 ),
               ],
             ),
@@ -246,41 +243,138 @@ class ImportViewModel extends ChangeNotifier {
     }
   }
 
-  Future<bool> _processFileContent(File file, String? extension) async {
+  Future<bool> _processFileContent(File file, String extension) async {
     try {
-      if (extension == 'csv') {
-        try {
-          final bytes = await file.readAsBytes();
-          String content;
-          try {
-            content = utf8.decode(bytes);
-          } catch (_) {
-            content = latin1.decode(bytes);
-          }
+      List<String> rawLines = []; 
 
-          final fields = const CsvToListConverter().convert(content);
-          debugPrint("Đã đọc ${fields.length} dòng từ CSV");
-          return true;
-        } catch (e) {
-          return false;
+      List<CategoryModel> categories = CategoryData.getAll();
+      String language = LanguageService().locale.languageCode;
+
+      if (extension == 'csv') {
+        final bytes = await file.readAsBytes();
+        String content;
+        try {
+          content = utf8.decode(bytes);
+        } catch (_) {
+          content = latin1.decode(
+            bytes,
+          ); 
         }
-      } else if (extension == 'xlsx') {
+
+        final fields = const CsvToListConverter().convert(content);
+        for (var row in fields) {
+          if (row.isNotEmpty) {
+            rawLines.add(row.join(" "));
+          }
+        }
+      } else if (extension == 'xlsx' || extension == 'xls') {
         var bytes = file.readAsBytesSync();
         var excel = Excel.decodeBytes(bytes);
         for (var table in excel.tables.keys) {
-          debugPrint("Sheet: $table, Rows: ${excel.tables[table]?.maxRows}");
+          var sheet = excel.tables[table];
+          if (sheet == null) continue;
+
+          for (var row in sheet.rows.skip(1)) {
+            final lineData = row
+                .map((cell) => cell?.value?.toString() ?? "")
+                .join(" ");
+            if (lineData.trim().isNotEmpty) {
+              rawLines.add(lineData);
+            }
+          }
         }
-        return true;
       } else if (extension == 'json') {
         String content = await file.readAsString();
-        jsonDecode(content);
-        return true;
+        final decoded = jsonDecode(content);
+
+        if (decoded is List) {
+          for (var item in decoded) {
+            rawLines.add(item.toString());
+          }
+        }
       }
-      return false;
+
+      if (rawLines.isEmpty) return false;
+
+      await _sendToAI(rawLines, categories, language, extension);
+
+      return true;
     } catch (e) {
       debugPrint("Lỗi xử lý file: $e");
       return false;
     }
+  }
+
+  Future<void> _sendToAI(
+    List<String> lines,
+    List<CategoryModel> categories,
+    String language,
+    String type,
+  ) async {
+    List<TransactionModel> transactionsToSave = [];
+
+    final listWallets = await _storage.getAllWallets();
+    final walletIds = listWallets.map((w) => w.id).toList();
+    final defaultWalletId = await _storage.getCurrentWalletId();
+
+    for (String line in lines) {
+      try {
+        Map<String, dynamic>? result;
+
+        if (type == 'csv') {
+          result = await _aiService.analyzeTextCSVImport(
+            line,
+            categories,
+            language,
+            walletIds,
+          );
+        } else if (type == 'xlsx' || type == 'xls') {
+        } else if (type == 'json') {
+        }
+
+        if (result != null && result['data'] != null) {
+          final data = Map<String, dynamic>.from(result['data']);
+
+          final tx = TransactionModel.fromAIResponse(
+            aiData: data,
+            availableCategories: categories,
+            currentWalletId: defaultWalletId,
+          );
+
+          transactionsToSave.add(tx);
+          debugPrint("Đã phân tích xong: ${tx.title}");
+        }
+      } catch (e) {
+        debugPrint("Lỗi phân tích dòng [$line]: $e");
+      }
+    }
+
+    if (transactionsToSave.isNotEmpty) {
+      debugPrint(
+        "Bắt đầu lưu ${transactionsToSave.length} giao dịch vào máy...",
+      );
+
+      for (var tx in transactionsToSave) {
+        await _storage.addTransaction(tx);
+      }
+
+      debugPrint("Hoàn tất nhập liệu!");
+    } else {
+      debugPrint("Không có giao dịch hợp lệ nào để lưu.");
+    }
+  }
+
+  Future<void> _recordImportHistory(String fileName, String? extension) async {
+    final now = DateTime.now();
+    final newItem = {
+      'id': now.millisecondsSinceEpoch.toString(),
+      'name': fileName,
+      'time':
+          "${now.day}/${now.month} ${now.hour}:${now.minute.toString().padLeft(2, '0')}",
+      'format': extension?.toUpperCase() ?? 'FILE',
+    };
+    _recentImports.insert(0, newItem);
+    await _saveHistory();
   }
 
   void _showErrorAlert(

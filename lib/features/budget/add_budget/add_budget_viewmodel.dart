@@ -17,6 +17,7 @@ class AddBudgetViewModel extends ChangeNotifier {
     required CategoryModel category,
     required DateTime date,
     String? idToUpdate, 
+    String? note,
   }) async {
     final double parsedAmount = _parseAmount(amount);
 
@@ -34,6 +35,7 @@ class AddBudgetViewModel extends ChangeNotifier {
         category: category,
         total: parsedAmount,
         date: date,
+        note: note ?? '',
       );
       
       await _storage.updateBudget(updatedBudget);
@@ -45,6 +47,7 @@ class AddBudgetViewModel extends ChangeNotifier {
         category: category,
         total: parsedAmount,
         date: date,
+        note: note ?? '',
       );
       
       await _storage.saveBudget(newBudget);

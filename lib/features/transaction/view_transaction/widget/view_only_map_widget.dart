@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
-import 'package:spend_flow/assets/l10n/app_localizations.dart';
 
 class ViewOnlyMapWidget extends StatefulWidget {
   final double latitude;
@@ -30,7 +29,6 @@ class _ViewOnlyMapWidgetState extends State<ViewOnlyMapWidget> {
   @override
   Widget build(BuildContext context) {
     final isDark = CupertinoTheme.of(context).brightness == Brightness.dark;
-    final l10n = AppLocalizations.of(context)!;
     final position = Position(widget.longitude, widget.latitude);
 
     return Column(

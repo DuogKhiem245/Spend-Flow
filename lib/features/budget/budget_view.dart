@@ -259,158 +259,142 @@ class _BudgetPageState extends State<BudgetPage> {
 
     return Padding(
       padding: EdgeInsets.only(bottom: 16.h),
-      child: Slidable(
-        key: ValueKey(budget.id),
-        enabled: _viewModel.canEdit,
-        endActionPane: ActionPane(
-          motion: const ScrollMotion(),
-          extentRatio: 0.30,
-          children: [
-            CustomSlidableAction(
-              onPressed: (context) => _onEditBudget(budget),
-              backgroundColor: Colors.transparent,
-              foregroundColor: Colors.transparent,
-              padding: EdgeInsets.zero,
-              child: Container(
-                width: 40.w,
-                height: 40.w,
-                decoration: BoxDecoration(
-                  color: CupertinoColors.systemGrey.withValues(alpha: 0.2),
-                  shape: BoxShape.circle,
-                ),
-                child: Center(
-                  child: Icon(
-                    CupertinoIcons.pencil,
-                    size: 20.sp,
-                    color: CupertinoTheme.of(context).textTheme.textStyle.color,
+      child: GestureDetector(
+        onTap: () => {
+          HapticFeedback.selectionClick(),
+          _onEditBudget(budget),
+        },
+        child: Slidable(
+          key: ValueKey(budget.id),
+          enabled: _viewModel.canEdit,
+          endActionPane: ActionPane(
+            motion: const ScrollMotion(),
+            extentRatio: 0.15,
+            children: [
+              CustomSlidableAction(
+                onPressed: (context) => {
+                  HapticFeedback.heavyImpact(),
+                  _onDeleteBudget(budget),
+                },
+                backgroundColor: Colors.transparent,
+                foregroundColor: Colors.transparent,
+                padding: EdgeInsets.zero,
+                child: Container(
+                  width: 40.w,
+                  height: 40.w,
+                  decoration: BoxDecoration(
+                    color: AppColors.errorColor.withValues(alpha: 0.2),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
+                    child: Icon(
+                      CupertinoIcons.trash,
+                      size: 20.sp,
+                      color: AppColors.errorColor,
+                    ),
                   ),
                 ),
-              ),
-            ),
-
-            CustomSlidableAction(
-              onPressed: (context) => {
-                HapticFeedback.heavyImpact(),
-                _onDeleteBudget(budget),
-              },
-              backgroundColor: Colors.transparent,
-              foregroundColor: Colors.transparent,
-              padding: EdgeInsets.zero,
-              child: Container(
-                width: 40.w,
-                height: 40.w,
-                decoration: BoxDecoration(
-                  color: AppColors.errorColor.withValues(alpha: 0.2),
-                  shape: BoxShape.circle,
-                ),
-                child: Center(
-                  child: Icon(
-                    CupertinoIcons.trash,
-                    size: 20.sp,
-                    color: AppColors.errorColor,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-          decoration: BoxDecoration(
-            color: CupertinoTheme.of(context).barBackgroundColor,
-            borderRadius: BorderRadius.circular(30.r),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.boxShadow,
-                blurRadius: 10,
-                offset: const Offset(0, 2),
               ),
             ],
           ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: 48.w,
-                height: 48.w,
-                decoration: BoxDecoration(
-                  color: budget.color.withValues(alpha: .15),
-                  shape: BoxShape.circle,
+        
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+            decoration: BoxDecoration(
+              color: CupertinoTheme.of(context).barBackgroundColor,
+              borderRadius: BorderRadius.circular(30.r),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.boxShadow,
+                  blurRadius: 10,
+                  offset: const Offset(0, 2),
                 ),
-                child: imageFile != null
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(30.r),
-                        child: Image.file(
-                          imageFile,
-                          width: 24.w,
-                          height: 24.w,
-                          fit: BoxFit.cover,
-                        ),
-                      )
-                    : Icon(iconData, color: budget.color, size: 24.sp),
-              ),
-              SizedBox(width: 14.w),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          CategoryHelper.getTranslatedName(
-                            context,
-                            budget.category,
+              ],
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 48.w,
+                  height: 48.w,
+                  decoration: BoxDecoration(
+                    color: budget.color.withValues(alpha: .15),
+                    shape: BoxShape.circle,
+                  ),
+                  child: imageFile != null
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(30.r),
+                          child: Image.file(
+                            imageFile,
+                            width: 24.w,
+                            height: 24.w,
+                            fit: BoxFit.cover,
                           ),
-                          style: TextStyle(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w600,
-                            color: CupertinoTheme.of(
-                              context,
-                            ).textTheme.textStyle.color,
-                          ),
-                        ),
-                        SizedBox(height: 4.h),
-                        Text(
-                          "${_viewModel.formatCurrency(budget.remaining)} left",
-                          style: TextStyle(
-                            fontSize: 13.sp,
-                            color: CupertinoTheme.of(
-                              context,
-                            ).textTheme.textStyle.color!.withValues(alpha: .6),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          "${_viewModel.formatCurrency(budget.spent)} / ${_viewModel.formatCurrency(budget.total)}",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: CupertinoTheme.of(
-                              context,
-                            ).textTheme.textStyle.color!.withValues(alpha: .6),
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        SizedBox(height: 6.h),
-                        SizedBox(
-                          width: 100.w,
-                          child: _buildProgressBar(
-                            progress: budget.progress,
-                            height: 6.h,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        )
+                      : Icon(iconData, color: budget.color, size: 24.sp),
                 ),
-              ),
-            ],
+                SizedBox(width: 14.w),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            CategoryHelper.getTranslatedName(
+                              context,
+                              budget.category,
+                            ),
+                            style: TextStyle(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                              color: CupertinoTheme.of(
+                                context,
+                              ).textTheme.textStyle.color,
+                            ),
+                          ),
+                          SizedBox(height: 4.h),
+                          Text(
+                            "${_viewModel.formatCurrency(budget.remaining)} left",
+                            style: TextStyle(
+                              fontSize: 13.sp,
+                              color: CupertinoTheme.of(
+                                context,
+                              ).textTheme.textStyle.color!.withValues(alpha: .6),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            "${_viewModel.formatCurrency(budget.spent)} / ${_viewModel.formatCurrency(budget.total)}",
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: CupertinoTheme.of(
+                                context,
+                              ).textTheme.textStyle.color!.withValues(alpha: .6),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(height: 6.h),
+                          SizedBox(
+                            width: 100.w,
+                            child: _buildProgressBar(
+                              progress: budget.progress,
+                              height: 6.h,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

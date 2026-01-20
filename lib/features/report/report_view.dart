@@ -98,7 +98,7 @@ class _ReportPageState extends State<ReportPage> {
                   child: groupedData.isEmpty
                       ? _buildNoDataView(l10n)
                       : ListView.builder(
-                          padding: EdgeInsets.symmetric(horizontal: 16.w),
+                          padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 50.h),
                           itemCount: groupedData.length,
                           itemBuilder: (context, index) {
                             final group = groupedData[index];
