@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -306,7 +307,7 @@ class _WalletViewState extends State<WalletView> {
                                     ),
                             ),
                           ),
-                          if (widget.firstWallet) ...[
+                          if (widget.firstWallet && FirebaseAuth.instance.currentUser == null) ...[
                             SizedBox(height: 10.h),
                             Center(
                               child: Row(
@@ -336,7 +337,9 @@ class _WalletViewState extends State<WalletView> {
                                               context,
                                               CupertinoPageRoute(
                                                 builder: (context) =>
-                                                    const LoginPage(haveBack: true,),
+                                                    const LoginPage(
+                                                      haveBack: true,
+                                                    ),
                                               ),
                                             );
                                           },

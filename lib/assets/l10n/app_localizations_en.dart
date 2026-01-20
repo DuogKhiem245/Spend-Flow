@@ -720,6 +720,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get security => 'Security';
 
   @override
+  String get privacy_and_security => 'Privacy & Security';
+
+  @override
   String get support => 'Support';
 
   @override

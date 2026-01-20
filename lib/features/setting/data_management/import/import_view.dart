@@ -49,14 +49,14 @@ class _ImportViewState extends State<ImportView>
             },
             child: Text(l10n.download_sample_file('CSV')),
           ),
-          CupertinoActionSheetAction(
-            onPressed: () async {
-              await _viewModel.exportExcelTemplate(context);
-              if (!context.mounted) return;
-              Navigator.pop(context);
-            },
-            child: Text(l10n.download_sample_file('Excel')),
-          ),
+          // CupertinoActionSheetAction(
+          //   onPressed: () async {
+          //     await _viewModel.exportExcelTemplate(context);
+          //     if (!context.mounted) return;
+          //     Navigator.pop(context);
+          //   },
+          //   child: Text(l10n.download_sample_file('Excel')),
+          // ),
           CupertinoActionSheetAction(
             onPressed: () async {
               await _viewModel.exportJsonTemplate();
@@ -153,7 +153,10 @@ class _ImportViewState extends State<ImportView>
 
                               return ListView.builder(
                                 padding: EdgeInsets.only(bottom: 20.h),
-                                itemCount: _viewModel.recentImports.length,
+                                itemCount: min(
+                                  _viewModel.recentImports.length,
+                                  4,
+                                ),
                                 itemBuilder: (context, index) {
                                   return _historyItem(
                                     _viewModel.recentImports[index],
@@ -321,7 +324,7 @@ class _ImportViewState extends State<ImportView>
           spacing: 10.w,
           children: [
             _formatChip("CSV", CupertinoIcons.doc_text_fill, Colors.green),
-            _formatChip("Excel", CupertinoIcons.table_fill, Colors.blue),
+            // _formatChip("Excel", CupertinoIcons.table_fill, Colors.blue),
             _formatChip(
               "JSON",
               CupertinoIcons.chevron_left_slash_chevron_right,

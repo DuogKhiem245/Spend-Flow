@@ -23,7 +23,14 @@ class AddTransactionViewmodel extends ChangeNotifier {
   bool get isLoadingLocation => _isLoadingLocation;
 
   AddTransactionViewmodel() {
-    _loadCurrency();
+    _initialize();
+  }
+
+  Future<void> _initialize() async {
+    await _loadCurrency();
+    await _locationService.requestPermission();
+    await getCurrentLocation();
+    notifyListeners();
   }
 
   Future<void> _loadCurrency() async {

@@ -1448,6 +1448,12 @@ abstract class AppLocalizations {
   /// **'Bảo mật'**
   String get security;
 
+  /// No description provided for @privacy_and_security.
+  ///
+  /// In vi, this message translates to:
+  /// **'Quyền riêng tư & Bảo mật'**
+  String get privacy_and_security;
+
   /// No description provided for @support.
   ///
   /// In vi, this message translates to:

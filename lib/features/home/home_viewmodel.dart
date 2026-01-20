@@ -65,9 +65,7 @@ class HomeViewModel extends ChangeNotifier {
 
     await notificationService.init();
     await notificationService.requestPermissions();
-
-    await _locationService.requestPermission();
-
+    
     initializeImage();
 
     final prefs = await SharedPreferences.getInstance();

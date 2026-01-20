@@ -19,29 +19,21 @@ class NotificationViewModel extends ChangeNotifier {
   }
 
   Future<void> loadNotificationState() async {
-    _isNotificationsEnabled = await _storage.getNotificationStatus();
+    final savedStatus = await _storage.getNotificationStatus();
+    _isNotificationsEnabled = savedStatus!;
     notifyListeners();
   }
 
   Future<void> toggleNotification(bool value, BuildContext context) async {
+    await _storage.saveNotificationStatus(value);
     _isNotificationsEnabled = value;
-    notifyListeners();
-
     if (value) {
-      final granted = await _notificationService.requestPermissions();
-      if (granted) {
-        if (context.mounted) {
-          await _notificationService.scheduleDailyNotification(context);
-          await _storage.saveNotificationStatus(true);
-        }
-      } else {
-        _isNotificationsEnabled = false;
-        await _storage.saveNotificationStatus(false);
-        notifyListeners();
+      if (context.mounted) {
+        await _notificationService.scheduleDailyNotification(context);
       }
     } else {
       await _notificationService.cancelNotifications();
-      await _storage.saveNotificationStatus(false);
     }
+    notifyListeners();
   }
 }

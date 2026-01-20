@@ -127,4 +127,19 @@ class AIService {
       return null;
     }
   }
+
+  Future<Map<String, dynamic>?> analyzeTextJSONImport(
+    String text,
+    List<CategoryModel> categories,
+    String language,
+    List<String> availableWalletIds,
+  ) async {
+    try {
+      
+
+    } catch (e) {
+      debugPrint("Lỗi khi phân tích dòng JSON: $e");
+      return null;
+    }
+  }
 }

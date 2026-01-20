@@ -40,7 +40,7 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
   @override
   void initState() {
     super.initState();
-    _viewModel.loadNotificationState();
+    Future.microtask(() => _viewModel.loadNotificationState());
   }
 
   @override

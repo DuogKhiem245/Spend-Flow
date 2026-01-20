@@ -301,7 +301,7 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                 ),
                 SizedBox(height: 5.h),
 
-                Divider(color: AppColors.borderColor, thickness: 0.5.h),
+                Divider(color: AppColors.borderColor, thickness: 0.2.h),
                 SizedBox(height: 5.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

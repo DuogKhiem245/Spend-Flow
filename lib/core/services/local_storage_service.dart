@@ -59,14 +59,14 @@ class LocalStorageService {
   static const String _isPremiumKey = 'is_premium_user';
   static const String _premiumExpiryKey = 'premium_expiry_date';
 
-  Future<bool> getNotificationStatus() async {
+  Future<bool?> getNotificationStatus() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_kNotificationKey) ?? false;
+    return prefs.getBool(_kNotificationKey);
   }
 
-  Future<void> saveNotificationStatus(bool isEnabled) async {
+  Future<void> saveNotificationStatus(bool value) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_kNotificationKey, isEnabled);
+    await prefs.setBool(_kNotificationKey, value);
   }
 
   Future<void> saveCurrencyCode(String code) async {

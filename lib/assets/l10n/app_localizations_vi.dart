@@ -718,6 +718,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get security => 'Bảo mật';
 
   @override
+  String get privacy_and_security => 'Quyền riêng tư & Bảo mật';
+
+  @override
   String get support => 'Hỗ trợ';
 
   @override

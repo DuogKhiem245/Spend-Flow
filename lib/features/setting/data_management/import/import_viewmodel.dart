@@ -9,8 +9,10 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/data/category_data.dart';
+import 'package:spend_flow/core/model/budget_model.dart';
 import 'package:spend_flow/core/model/category_model.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
+import 'package:spend_flow/core/model/wallet_model.dart';
 import 'package:spend_flow/core/services/ai_service.dart';
 import 'package:spend_flow/core/services/language_service.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
@@ -122,7 +124,8 @@ class ImportViewModel extends ChangeNotifier {
     final directory = await getTemporaryDirectory();
     final file = File('${directory.path}/SpendFlow_Template.xlsx');
     await file.writeAsBytes(fileBytes!);
-    await Share.shareXFiles([XFile(file.path)]);
+    await SharePlus.instance.share(XFile(file.path) as ShareParams);
+    //await Share.shareXFiles([XFile(file.path)]);
   }
 
   Future<void> exportCsvTemplate() async {
@@ -153,7 +156,8 @@ class ImportViewModel extends ChangeNotifier {
     final directory = await getTemporaryDirectory();
     final file = File('${directory.path}/sample_transactions.csv');
     await file.writeAsString(csv);
-    await Share.shareXFiles([XFile(file.path)]);
+    await SharePlus.instance.share(XFile(file.path) as ShareParams);
+    // await Share.shareXFiles([XFile(file.path)]);
   }
 
   Future<void> exportJsonTemplate() async {
@@ -186,7 +190,8 @@ class ImportViewModel extends ChangeNotifier {
     final directory = await getTemporaryDirectory();
     final file = File('${directory.path}/sample_backup.json');
     await file.writeAsString(jsonEncode(template));
-    await Share.shareXFiles([XFile(file.path)]);
+    await SharePlus.instance.share(XFile(file.path) as ShareParams);
+    // await Share.shareXFiles([XFile(file.path)]);
   }
 
   Future<void> pickAndImportFile(
@@ -196,7 +201,7 @@ class ImportViewModel extends ChangeNotifier {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
-        allowedExtensions: ['csv', 'xlsx', 'json'],
+        allowedExtensions: ['csv', 'json'],
       );
 
       if (result == null) return;
@@ -245,7 +250,7 @@ class ImportViewModel extends ChangeNotifier {
 
   Future<bool> _processFileContent(File file, String extension) async {
     try {
-      List<String> rawLines = []; 
+      List<String> rawLines = [];
 
       List<CategoryModel> categories = CategoryData.getAll();
       String language = LanguageService().locale.languageCode;
@@ -256,48 +261,80 @@ class ImportViewModel extends ChangeNotifier {
         try {
           content = utf8.decode(bytes);
         } catch (_) {
-          content = latin1.decode(
-            bytes,
-          ); 
+          content = latin1.decode(bytes);
         }
 
         final fields = const CsvToListConverter().convert(content);
-        for (var row in fields) {
+        for (var row in fields.skip(1)) {
           if (row.isNotEmpty) {
             rawLines.add(row.join(" "));
           }
         }
-      } else if (extension == 'xlsx' || extension == 'xls') {
-        var bytes = file.readAsBytesSync();
-        var excel = Excel.decodeBytes(bytes);
-        for (var table in excel.tables.keys) {
-          var sheet = excel.tables[table];
-          if (sheet == null) continue;
 
-          for (var row in sheet.rows.skip(1)) {
-            final lineData = row
-                .map((cell) => cell?.value?.toString() ?? "")
-                .join(" ");
-            if (lineData.trim().isNotEmpty) {
-              rawLines.add(lineData);
-            }
-          }
-        }
+        if (rawLines.isEmpty) return false;
+
+        await _sendToAI(rawLines, categories, language);
       } else if (extension == 'json') {
-        String content = await file.readAsString();
-        final decoded = jsonDecode(content);
+        final String content = await file.readAsString();
+        final Map<String, dynamic> data = jsonDecode(content);
 
-        if (decoded is List) {
-          for (var item in decoded) {
-            rawLines.add(item.toString());
+        if (data.containsKey('wallets')) {
+          final List<dynamic> walletsRaw = data['wallets'];
+          for (var w in walletsRaw) {
+            final wallet = WalletModel.fromMap(
+              Map<String, dynamic>.from(w),
+            ); 
+            await _storage.saveWallet(wallet);
           }
         }
+
+        if (data.containsKey('categories')) {
+          final List<dynamic> categoriesRaw = data['categories'];
+          for (var cat in categoriesRaw) {
+            final category = CategoryModel.fromMap(
+              Map<String, dynamic>.from(cat),
+            );
+            await _storage.addCategory(category);
+          }
+        }
+
+        if (data.containsKey('budgets')) {
+          final List<dynamic> budgetsRaw = data['budgets'];
+          for (var b in budgetsRaw) {
+            final budget = BudgetModel.fromMap(Map<String, dynamic>.from(b));
+            await _storage.saveBudget(budget);
+          }
+        }
+
+        if (data.containsKey('transactions')) {
+          final List<dynamic> transactionsRaw = data['transactions'];
+          for (var tx in transactionsRaw) {
+            final transaction = TransactionModel.fromMap(
+              Map<String, dynamic>.from(tx),
+            );
+            await _storage.addTransaction(transaction);
+          }
+        }
+
+        return true;
       }
+      // else if (extension == 'xlsx' || extension == 'xls') {
+      //   var bytes = file.readAsBytesSync();
+      //   var excel = Excel.decodeBytes(bytes);
+      //   for (var table in excel.tables.keys) {
+      //     var sheet = excel.tables[table];
+      //     if (sheet == null) continue;
 
-      if (rawLines.isEmpty) return false;
-
-      await _sendToAI(rawLines, categories, language, extension);
-
+      //     for (var row in sheet.rows.skip(1)) {
+      //       final lineData = row
+      //           .map((cell) => cell?.value?.toString() ?? "")
+      //           .join(" ");
+      //       if (lineData.trim().isNotEmpty) {
+      //         rawLines.add(lineData);
+      //       }
+      //     }
+      //   }
+      // }
       return true;
     } catch (e) {
       debugPrint("Lỗi xử lý file: $e");
@@ -309,7 +346,6 @@ class ImportViewModel extends ChangeNotifier {
     List<String> lines,
     List<CategoryModel> categories,
     String language,
-    String type,
   ) async {
     List<TransactionModel> transactionsToSave = [];
 
@@ -317,20 +353,16 @@ class ImportViewModel extends ChangeNotifier {
     final walletIds = listWallets.map((w) => w.id).toList();
     final defaultWalletId = await _storage.getCurrentWalletId();
 
+    Map<String, dynamic>? result;
+
     for (String line in lines) {
       try {
-        Map<String, dynamic>? result;
-
-        if (type == 'csv') {
-          result = await _aiService.analyzeTextCSVImport(
-            line,
-            categories,
-            language,
-            walletIds,
-          );
-        } else if (type == 'xlsx' || type == 'xls') {
-        } else if (type == 'json') {
-        }
+        result = await _aiService.analyzeTextCSVImport(
+          line,
+          categories,
+          language,
+          walletIds,
+        );
 
         if (result != null && result['data'] != null) {
           final data = Map<String, dynamic>.from(result['data']);
@@ -342,7 +374,6 @@ class ImportViewModel extends ChangeNotifier {
           );
 
           transactionsToSave.add(tx);
-          debugPrint("Đã phân tích xong: ${tx.title}");
         }
       } catch (e) {
         debugPrint("Lỗi phân tích dòng [$line]: $e");
@@ -350,15 +381,9 @@ class ImportViewModel extends ChangeNotifier {
     }
 
     if (transactionsToSave.isNotEmpty) {
-      debugPrint(
-        "Bắt đầu lưu ${transactionsToSave.length} giao dịch vào máy...",
-      );
-
       for (var tx in transactionsToSave) {
         await _storage.addTransaction(tx);
       }
-
-      debugPrint("Hoàn tất nhập liệu!");
     } else {
       debugPrint("Không có giao dịch hợp lệ nào để lưu.");
     }

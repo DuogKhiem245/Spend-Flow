@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:timezone/data/latest_10y.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -19,11 +20,13 @@ class NotificationService {
     String timeZoneName;
     try {
       final timezoneInfo = await FlutterTimezone.getLocalTimezone();
-      final String rawTimezone = timezoneInfo.identifier;      
+      final String rawTimezone = timezoneInfo.identifier;
 
       timeZoneName = rawTimezone;
     } catch (e) {
-      debugPrint("Error getting local timezone: $e, using fallback America/New_York.");
+      debugPrint(
+        "Error getting local timezone: $e, using fallback America/New_York.",
+      );
       timeZoneName = 'America/New_York';
     }
 
@@ -32,7 +35,7 @@ class NotificationService {
       final match = regex.firstMatch(timeZoneName);
 
       if (match != null) {
-        timeZoneName = match.group(0)!; 
+        timeZoneName = match.group(0)!;
       }
 
       tz.setLocalLocation(tz.getLocation(timeZoneName));
@@ -94,10 +97,25 @@ class NotificationService {
       );
     }
 
+    final storage = LocalStorageService();
+
+    if (await storage.getNotificationStatus() == null) {
+      await storage.saveNotificationStatus(
+        (isAndroidGranted ?? false) || (isIOSGranted ?? false),
+      );
+    }
+
     return (isAndroidGranted ?? false) || (isIOSGranted ?? false);
   }
 
- Future<void> scheduleDailyNotification(BuildContext context) async {
+  Future<void> scheduleDailyNotification(BuildContext context) async {
+    final storage = LocalStorageService();
+    final bool? isEnabled = await storage.getNotificationStatus();
+
+    if (isEnabled != true) {
+      return;
+    }
+
     final l10n = AppLocalizations.of(context)!;
     await flutterLocalNotificationsPlugin.zonedSchedule(
       0,
@@ -116,7 +134,6 @@ class NotificationService {
       ),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       matchDateTimeComponents: DateTimeComponents.time,
-      
     );
   }
 

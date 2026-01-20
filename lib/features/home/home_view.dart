@@ -40,9 +40,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _viewModel.initData();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _checkPermissionStatus();
-    });
   }
 
   void _showPremiumModal(BuildContext context, bool limitReached) {
@@ -52,23 +49,6 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
       builder: (context) => PremiumView(isMaximized: limitReached),
     );
-  }
-
-  Future<void> _checkPermissionStatus() async {
-    final storage = LocalStorageService();
-    final isUserEnabled = await storage.getNotificationStatus();
-
-    if (isUserEnabled) {
-      final isGranted = await notificationService.requestPermissions();
-
-      if (isGranted) {
-        if (!mounted) return;
-        await notificationService.scheduleDailyNotification(context);
-        await storage.saveNotificationStatus(true);
-      } else {
-        await storage.saveNotificationStatus(false);
-      }
-    }
   }
 
   Future<void> _handleMenuSelection(int index) async {

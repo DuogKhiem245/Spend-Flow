@@ -1,3 +1,4 @@
+import 'package:cupertino_native/components/switch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,7 +38,7 @@ class _SettingSecurityWidgetState extends State<SettingSecurityWidget> {
         Padding(
           padding: EdgeInsets.only(left: 4.w, bottom: 8.h),
           child: Text(
-            l10n.security,
+            l10n.privacy_and_security,
             style: TextStyle(
               fontSize: 16.sp,
               fontWeight: FontWeight.w600,
@@ -46,6 +47,14 @@ class _SettingSecurityWidgetState extends State<SettingSecurityWidget> {
               ).textTheme.textStyle.color?.withValues(alpha: .6),
             ),
           ),
+        ),
+
+        SettingItem(
+          title: l10n.location,
+          icon: CupertinoIcons.location_north_fill,
+          iconBgColor: const Color(0xFFEF4444),
+          onTap: () => {},
+          trailing: CNSwitch(value: true, onChanged: (v) => {}),
         ),
 
         FutureBuilder<String>(
