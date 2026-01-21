@@ -12,7 +12,6 @@ import 'package:spend_flow/core/model/wallet_model.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/model/category_model.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
-import 'package:spend_flow/core/services/location_service.dart';
 import 'package:spend_flow/core/services/notification_service.dart';
 import 'package:spend_flow/core/services/sync_service/sync_service.dart';
 import 'package:spend_flow/features/home/home_model.dart';
@@ -20,7 +19,6 @@ import 'package:spend_flow/features/home/home_model.dart';
 class HomeViewModel extends ChangeNotifier {
   final LocalStorageService _storage = LocalStorageService();
   final LocalAuthentication _auth = LocalAuthentication();
-  final LocationService _locationService = LocationService();
   final NotificationService notificationService = NotificationService();
 
   User? get currentUser => FirebaseAuth.instance.currentUser;
@@ -63,7 +61,6 @@ class HomeViewModel extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    await notificationService.init();
     await notificationService.requestPermissions();
     
     initializeImage();

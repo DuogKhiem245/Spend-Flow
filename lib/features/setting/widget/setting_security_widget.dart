@@ -52,9 +52,16 @@ class _SettingSecurityWidgetState extends State<SettingSecurityWidget> {
         SettingItem(
           title: l10n.location,
           icon: CupertinoIcons.location_north_fill,
-          iconBgColor: const Color(0xFFEF4444),
-          onTap: () => {},
-          trailing: CNSwitch(value: true, onChanged: (v) => {}),
+          iconBgColor: const Color.fromARGB(255, 255, 78, 78),
+          trailing: ListenableBuilder(
+            listenable: _viewModel,
+            builder: (context, child) {
+              return CNSwitch(
+                value: _viewModel.isLocationEnabled, 
+                onChanged: (v) => _viewModel.toggleLocation(v, context),
+              );
+            },
+          ),
         ),
 
         FutureBuilder<String>(

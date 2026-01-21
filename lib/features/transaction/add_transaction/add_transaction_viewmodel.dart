@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:geolocator/geolocator.dart' show Geolocator, LocationPermission;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/core/model/location_model.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
@@ -16,11 +17,11 @@ class AddTransactionViewmodel extends ChangeNotifier {
 
   Position? _currentPosition;
   String? _selectedAddress;
-  bool _isLoadingLocation = true;
+  bool? _isLocationEnabled;
 
   Position? get currentPosition => _currentPosition;
   String? get selectedAddress => _selectedAddress;
-  bool get isLoadingLocation => _isLoadingLocation;
+  bool? get isLocationEnabled => _isLocationEnabled;
 
   AddTransactionViewmodel() {
     _initialize();
@@ -28,7 +29,10 @@ class AddTransactionViewmodel extends ChangeNotifier {
 
   Future<void> _initialize() async {
     await _loadCurrency();
-    await _locationService.requestPermission();
+    _isLocationEnabled = await _storageService.getLocationStatus();
+    if (_isLocationEnabled == null) {
+      await _locationService.requestPermission();
+    }
     await getCurrentLocation();
     notifyListeners();
   }
@@ -50,7 +54,7 @@ class AddTransactionViewmodel extends ChangeNotifier {
     String name,
     CategoryModel? selectedCategory,
     DateTime? transactionDate,
-    String note,  
+    String note,
   ) async {
     if (selectedCategory == null) return;
 
@@ -66,7 +70,7 @@ class AddTransactionViewmodel extends ChangeNotifier {
     final locationData = _getLocationFromState();
 
     final transaction = TransactionModel(
-      walletId: walletId, 
+      walletId: walletId,
       amount: value.abs(),
       title: name.isEmpty ? selectedCategory.name : name,
       category: selectedCategory,
@@ -100,7 +104,7 @@ class AddTransactionViewmodel extends ChangeNotifier {
     final locationData = _getLocationFromState();
 
     final transaction = TransactionModel(
-      walletId: walletId, 
+      walletId: walletId,
       amount: value.abs(),
       title: name.isEmpty ? selectedCategory.name : name,
       category: selectedCategory,
@@ -113,42 +117,39 @@ class AddTransactionViewmodel extends ChangeNotifier {
     await _storageService.addTransaction(transaction);
   }
 
-  Future<void> getCurrentLocation() async {
-    _isLoadingLocation = true;
-    notifyListeners();
-
-    try {
-      final geoPos = await _locationService.getCurrentPosition();
-
-      if (geoPos != null) {
-        _currentPosition = Position(geoPos.longitude, geoPos.latitude);
-      } else {
-        _currentPosition = null;
-      }
-          
-    } catch (e) {
-      _currentPosition = null;
-    } finally {
-      _isLoadingLocation = false;
-      notifyListeners();
+  Future<Position?> getCurrentLocation() async {
+    if (isLocationEnabled == false) {
+      return null;
     }
+    final geoPos = await _locationService.getCurrentPosition();
+    if (geoPos != null) {
+      return _currentPosition = Position(geoPos.longitude, geoPos.latitude);
+    } else {
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        await _storageService.saveLocationStatus(false);
+        _isLocationEnabled = false;
+        notifyListeners();
+      }
+    }
+    return null;
   }
 
   void updateLocation(Position position, String addressName) {
     _currentPosition = position;
     _selectedAddress = addressName;
-    _isLoadingLocation = false;
     notifyListeners();
   }
 
   LocationModel _getLocationFromState() {
     if (_currentPosition == null) {
-      return const LocationModel(); 
+      return const LocationModel();
     }
     return LocationModel(
       latitude: _currentPosition!.lat.toDouble(),
       longitude: _currentPosition!.lng.toDouble(),
-      address: _selectedAddress ?? '', 
+      address: _selectedAddress ?? '',
     );
   }
 

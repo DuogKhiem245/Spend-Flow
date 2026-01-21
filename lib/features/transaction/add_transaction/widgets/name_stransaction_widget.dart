@@ -51,7 +51,7 @@ class _NameTransactionWidgetState extends State<NameTransactionWidget> {
               ),
             ],
           ),
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 18.h),
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
           child: CupertinoTextField(
             controller: widget.nameController,
             decoration: null,
@@ -59,10 +59,10 @@ class _NameTransactionWidgetState extends State<NameTransactionWidget> {
             keyboardType: TextInputType.text,
             placeholder: l10n.enter_transaction_name,
             placeholderStyle: TextStyle(
-              fontSize: 18.sp,
+              fontSize: 16.sp,
               color: widget.baseColor?.withAlpha((0.7 * 255).toInt()),
             ),
-            style: TextStyle(fontSize: 18.sp, color: widget.baseColor),
+            style: TextStyle(fontSize: 16.sp, color: widget.baseColor),
           ),
         ),
       ],

@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:spend_flow/core/services/local_storage_service.dart';
 
 class LocationService {
   static final LocationService _instance = LocationService._internal();
@@ -12,18 +12,13 @@ class LocationService {
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      debugPrint('Location services are disabled.');
       return false;
     }
 
     permission = await Geolocator.checkPermission();
+
     if (permission == LocationPermission.denied) {
-      try {
-        permission = await Geolocator.requestPermission();
-      } catch (e) {
-        return false;
-      }
-      
+      permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
         return false;
       }
@@ -33,29 +28,33 @@ class LocationService {
       return false;
     }
 
+    LocalStorageService().saveLocationStatus(true);
     return true;
   }
 
   Future<Position?> getCurrentPosition() async {
     try {
-      final permission = await Geolocator.checkPermission();
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) return null;
 
+      LocationPermission permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied ||
           permission == LocationPermission.deniedForever) {
         return null;
       }
 
-      const LocationSettings locationSettings = LocationSettings(
-        accuracy: LocationAccuracy.medium,
-        distanceFilter: 100,
-      );
-
       return await Geolocator.getCurrentPosition(
-        locationSettings: locationSettings,
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.high,
+          timeLimit: Duration(seconds: 10), 
+        ),
       );
     } catch (e) {
-      debugPrint("Error getting location: $e");
       return null;
     }
+  }
+
+  Future<void> openAppSettings() async {
+    await Geolocator.openAppSettings();
   }
 }

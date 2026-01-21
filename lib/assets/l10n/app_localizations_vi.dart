@@ -1176,6 +1176,23 @@ class AppLocalizationsVi extends AppLocalizations {
   String get recent_locations => 'Vị trí gần đây';
 
   @override
+  String get location_access_error => 'Lỗi truy cập vị trí';
+
+  @override
+  String get location_permission_denied => 'Quyền truy cập vị trí bị từ chối.';
+
+  @override
+  String get location_permission_denied_description =>
+      'Vui lòng bật quyền truy cập vị trí trong cài đặt.';
+
+  @override
+  String get notification_permission_denied => 'Nhận thông báo bị từ chối.';
+
+  @override
+  String get notification_permission_denied_description =>
+      'Vui lòng bật thông báo trong cài đặt để nhận nhắc nhở.';
+
+  @override
   String get voice_input_error => 'Lỗi nhập giọng nói. Vui lòng thử lại.';
 
   @override

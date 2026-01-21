@@ -1,20 +1,25 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart'; 
+import 'package:geolocator/geolocator.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
-import 'package:spend_flow/core/services/local_storage_service.dart'; 
+import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/core/services/location_service.dart';
 
 enum BiometricDisplayType { faceId, touchId, none }
 
 class SettingViewModel extends ChangeNotifier {
+  final _localStorage = LocalStorageService();
+  final LocationService _locationService = LocationService();
+
   static final SettingViewModel _instance = SettingViewModel._internal();
   factory SettingViewModel() => _instance;
+
+  bool _isLocationEnabled = false;
+  bool get isLocationEnabled => _isLocationEnabled;
 
   SettingViewModel._internal() {
     loadSettings();
   }
-
-  final _localStorage = LocalStorageService();
 
   String _currentCurrencyCode = 'USD';
   String get currentCurrencyCode => _currentCurrencyCode;
@@ -32,6 +37,47 @@ class SettingViewModel extends ChangeNotifier {
     notifyListeners();
 
     await _localStorage.saveCurrencyCode(code);
+  }
+
+  Future<void> initLocationState() async {
+    final status = await _locationService.requestPermission();
+    _localStorage.saveLocationStatus(status);
+    _isLocationEnabled = status;
+    notifyListeners();
+  }
+
+  Future<void> toggleLocation(bool value, BuildContext context) async {
+    LocationPermission permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.deniedForever && value == true) {
+      if (!context.mounted) return;
+      _showOpenSettingsDialog(context);
+      notifyListeners();
+      return;
+    }
+
+    if (value) {
+      final granted = await _locationService.requestPermission();
+      if (granted) {
+        _isLocationEnabled = true;
+        await _localStorage.saveLocationStatus(true);
+      } else {
+        _isLocationEnabled = false;
+        await _localStorage.saveLocationStatus(false);
+      }
+    } else {
+      _isLocationEnabled = false;
+      await _localStorage.saveLocationStatus(false);
+    }
+
+    notifyListeners();
+  }
+
+  Future<void> loadLocationState() async {
+    if (await _localStorage.getLocationStatus() == null) {
+      await _locationService.requestPermission();
+    }
+    notifyListeners();
   }
 
   Future<String> checkBiometricSupport(AppLocalizations l10n) async {
@@ -75,5 +121,29 @@ class SettingViewModel extends ChangeNotifier {
     } else {
       return l10n.hello;
     }
+  }
+
+  void _showOpenSettingsDialog(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    showCupertinoDialog(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: Text(l10n.location_permission_denied),
+        content: Text(l10n.settings),
+        actions: [
+          CupertinoDialogAction(
+            child: Text(l10n.cancel),
+            onPressed: () => Navigator.pop(context),
+          ),
+          CupertinoDialogAction(
+            child: Text(l10n.settings),
+            onPressed: () {
+              Navigator.pop(context);
+              _locationService.openAppSettings();
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

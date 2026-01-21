@@ -8,6 +8,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/model/location_model.dart';
+import 'package:spend_flow/core/services/language_service.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 
 class SearchLocationModal extends StatefulWidget {
@@ -77,9 +78,11 @@ class _SearchLocationModalState extends State<SearchLocationModal> {
       return;
     }
 
+    final langCode = LanguageService().currentLanguageCode;
+
     final token = dotenv.env['MAPBOX_PUBLIC_TOKEN'] ?? '';
     final url = Uri.parse(
-      "https://api.mapbox.com/geocoding/v5/mapbox.places/$query.json?access_token=$token&limit=5&language=vi",
+      "https://api.mapbox.com/geocoding/v5/mapbox.places/$query.json?access_token=$token&limit=5&language=$langCode",
     );
 
     setState(() => _isSearching = true);
@@ -99,19 +102,19 @@ class _SearchLocationModalState extends State<SearchLocationModal> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!; 
+    final l10n = AppLocalizations.of(context)!;
 
     return Container(
       height: 0.9.sh,
       decoration: BoxDecoration(
-        color: CupertinoTheme.of(context).scaffoldBackgroundColor, 
+        color: CupertinoTheme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.vertical(top: Radius.circular(30.r)),
       ),
-      
+
       child: Column(
         children: [
           Container(
-            color: CupertinoTheme.of(context).scaffoldBackgroundColor, 
+            color: CupertinoTheme.of(context).scaffoldBackgroundColor,
             padding: EdgeInsets.only(bottom: 10.h),
             child: Column(
               children: [
@@ -129,9 +132,8 @@ class _SearchLocationModalState extends State<SearchLocationModal> {
                   context: context,
                   removeTop: true,
                   child: CupertinoNavigationBar(
-                    backgroundColor: Colors
-                        .transparent,
-                    border: null, 
+                    backgroundColor: Colors.transparent,
+                    border: null,
                     padding: EdgeInsetsDirectional.only(end: 10.w),
                     leading: CupertinoNavigationBarBackButton(
                       color: CupertinoTheme.of(context).primaryColor,
@@ -148,31 +150,50 @@ class _SearchLocationModalState extends State<SearchLocationModal> {
                 ),
 
                 Container(
-                  margin: EdgeInsets.only(top: 10.h),
-                  padding: EdgeInsets.symmetric(horizontal: 12.w),
-                  child: CupertinoSearchTextField(
-                    padding: EdgeInsetsGeometry.symmetric(
-                      vertical: 10.h,
-                      horizontal: 6.w,
-                    ),
-                    decoration: BoxDecoration(
-                      color: CupertinoTheme.of(context).barBackgroundColor,
-                      borderRadius: BorderRadius.circular(30.r),
-                    ),
-                    controller: _searchController,
-                    placeholder: l10n.search_location,
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      color: CupertinoTheme.of(context).textTheme.textStyle.color,
-                    ),
-                    onChanged: (value) {
-                      if (_debounce?.isActive ?? false) {
-                        _debounce!.cancel();
-                      }
-                      _debounce = Timer(const Duration(milliseconds: 500), () {
-                        _searchLocation(value);
-                      });
-                    },
+                  margin: EdgeInsets.only(top: 10.h, left: 16.w, right: 16.w),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 4.h,
+                  ),
+                  decoration: BoxDecoration(
+                    color: CupertinoTheme.of(context).barBackgroundColor,
+                    borderRadius: BorderRadius.circular(30.r),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        CupertinoIcons.search,
+                        size: 20.sp,
+                        color: CupertinoTheme.of(
+                          context,
+                        ).textTheme.textStyle.color?.withValues(alpha: .7),
+                      ),
+                      SizedBox(width: 10.w),
+                      Expanded(
+                        child: CupertinoTextField(
+                          decoration: BoxDecoration(color: Colors.transparent),
+                          controller: _searchController,
+                          placeholder: l10n.search_location,
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            color: CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.color,
+                          ),
+                          onChanged: (value) {
+                            if (_debounce?.isActive ?? false) {
+                              _debounce!.cancel();
+                            }
+                            _debounce = Timer(
+                              const Duration(milliseconds: 500),
+                              () {
+                                _searchLocation(value);
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -221,8 +242,7 @@ class _SearchLocationModalState extends State<SearchLocationModal> {
                           );
                         }).toList(),
                       ),
-                  ]
-                  else if (_recentLocations.isNotEmpty) ...[
+                  ] else if (_recentLocations.isNotEmpty) ...[
                     _buildSection(
                       context,
                       title: l10n.recent_locations,
@@ -304,12 +324,16 @@ class _SearchLocationModalState extends State<SearchLocationModal> {
                 Container(
                   padding: EdgeInsets.all(8.w),
                   decoration: BoxDecoration(
-                    color: CupertinoTheme.of(context)
-                        .primaryColor
-                        .withValues(alpha: .15),
+                    color: CupertinoTheme.of(
+                      context,
+                    ).primaryColor.withValues(alpha: .15),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(icon, size: 20.sp, color: CupertinoTheme.of(context).primaryColor),
+                  child: Icon(
+                    icon,
+                    size: 20.sp,
+                    color: CupertinoTheme.of(context).primaryColor,
+                  ),
                 ),
                 SizedBox(width: 14.w),
                 Expanded(
@@ -349,7 +373,9 @@ class _SearchLocationModalState extends State<SearchLocationModal> {
           if (!isLast)
             Container(
               height: 0.5,
-              color: CupertinoTheme.of(context).textTheme.textStyle.color?.withValues(alpha: .2),
+              color: CupertinoTheme.of(
+                context,
+              ).textTheme.textStyle.color?.withValues(alpha: .2),
             ),
         ],
       ),

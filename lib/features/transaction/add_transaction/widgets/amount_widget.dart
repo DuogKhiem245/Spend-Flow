@@ -53,7 +53,7 @@ class _AmountWidgetState extends State<AmountWidget> {
             SizedBox(height: 10.h),
             Container(
               width: double.infinity,
-              height: 100.h,
+              height: 90.h,
               margin: EdgeInsets.symmetric(horizontal: 6.w),
               decoration: BoxDecoration(
                 color: CupertinoTheme.of(context).barBackgroundColor,

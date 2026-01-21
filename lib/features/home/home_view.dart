@@ -11,7 +11,6 @@ import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/core/services/daily_limit_service.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
-import 'package:spend_flow/core/services/notification_service.dart';
 import 'package:spend_flow/features/premium/premium_view.dart';
 import 'package:spend_flow/features/scan_receipt/scran_receipt_view.dart';
 import 'package:spend_flow/features/transaction/add_transaction/add_transaction_view.dart';
@@ -33,7 +32,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final HomeViewModel _viewModel = HomeViewModel();
 
-  final notificationService = NotificationService();
   final DailyLimitService _limitService = DailyLimitService();
 
   @override

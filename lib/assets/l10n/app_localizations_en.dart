@@ -1178,6 +1178,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recent_locations => 'Recent Locations';
 
   @override
+  String get location_access_error => 'Location access error';
+
+  @override
+  String get location_permission_denied => 'Location permission denied.';
+
+  @override
+  String get location_permission_denied_description =>
+      'Please enable location access in settings.';
+
+  @override
+  String get notification_permission_denied =>
+      'Notification permission denied.';
+
+  @override
+  String get notification_permission_denied_description =>
+      'Please enable notification access in settings to receive reminders.';
+
+  @override
   String get voice_input_error => 'Voice input error. Please try again.';
 
   @override

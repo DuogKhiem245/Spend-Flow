@@ -40,7 +40,7 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => _viewModel.loadNotificationState());
+    _viewModel.loadNotificationState();
   }
 
   @override
@@ -65,19 +65,19 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
           ),
         ),
 
-        ListenableBuilder(
-          listenable: _viewModel,
-          builder: (context, child) {
-            return SettingItem(
-              title: l10n.notifications,
-              icon: CupertinoIcons.bell_fill,
-              iconBgColor: const Color.fromARGB(255, 255, 98, 0),
-              trailing: CNSwitch(
+        SettingItem(
+          title: l10n.notifications,
+          icon: CupertinoIcons.bell_fill,
+          iconBgColor: const Color.fromARGB(255, 255, 98, 0),
+          trailing: ListenableBuilder(
+            listenable: _viewModel,
+            builder: (context, child) {
+              return CNSwitch(
                 value: _viewModel.isNotificationsEnabled,
                 onChanged: (v) => _viewModel.toggleNotification(v, context),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
 
         SettingItem(
@@ -102,7 +102,7 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
           },
           trailing: _buildTextTrailing(
             context,
-            getNameByCode(LanguageService().currentLanguageName),
+            getNameByCode(LanguageService().currentLanguageCode),
           ),
         ),
 
@@ -128,22 +128,6 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
             );
           },
         ),
-
-        // _SettingItem(
-        //   title: l10n.card,
-        //   icon: CupertinoIcons.creditcard,
-        //   iconBgColor: Color(0xFFF59E0B),
-        //   onTap: () {
-        //     Navigator.push(
-        //       context,
-        //       CupertinoPageRoute(builder: (context) => const PaymentView()),
-        //     );
-        //   },
-        //   trailing: _buildTextTrailing(
-        //     context,
-        //     ''
-        //   ),
-        // ),
       ],
     );
   }
@@ -170,4 +154,3 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
     );
   }
 }
-

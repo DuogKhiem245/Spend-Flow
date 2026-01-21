@@ -55,6 +55,7 @@ class LocalStorageService {
   }
 
   static const String _kNotificationKey = 'is_notification_enabled';
+  static const String _kLocationKey = 'is_location_enabled';
   static const String _kCurrencyCodeKey = 'selected_currency_code';
   static const String _isPremiumKey = 'is_premium_user';
   static const String _premiumExpiryKey = 'premium_expiry_date';
@@ -67,6 +68,16 @@ class LocalStorageService {
   Future<void> saveNotificationStatus(bool value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_kNotificationKey, value);
+  }
+
+  Future<bool?> getLocationStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_kLocationKey);
+  }
+
+  Future<void> saveLocationStatus(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_kLocationKey, value);
   }
 
   Future<void> saveCurrencyCode(String code) async {

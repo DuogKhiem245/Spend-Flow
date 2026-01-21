@@ -391,6 +391,11 @@
   "search_results": "Search Results",
   "no_location_found": "No location found",
   "recent_locations": "Recent Locations",
+  "location_access_error": "Location access error",
+  "location_permission_denied": "Location permission denied.",
+  "location_permission_denied_description": "Please enable location access in settings.",
+  "notification_permission_denied": "Notification permission denied.",
+  "notification_permission_denied_description": "Please enable notification access in settings to receive reminders.",
 
   "voice_input_error": "Voice input error. Please try again.",
   "voice_input_not_recognized": "Voice input not recognized. Please try again.",

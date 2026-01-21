@@ -2312,6 +2312,36 @@ abstract class AppLocalizations {
   /// **'Vị trí gần đây'**
   String get recent_locations;
 
+  /// No description provided for @location_access_error.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lỗi truy cập vị trí'**
+  String get location_access_error;
+
+  /// No description provided for @location_permission_denied.
+  ///
+  /// In vi, this message translates to:
+  /// **'Quyền truy cập vị trí bị từ chối.'**
+  String get location_permission_denied;
+
+  /// No description provided for @location_permission_denied_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng bật quyền truy cập vị trí trong cài đặt.'**
+  String get location_permission_denied_description;
+
+  /// No description provided for @notification_permission_denied.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhận thông báo bị từ chối.'**
+  String get notification_permission_denied;
+
+  /// No description provided for @notification_permission_denied_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng bật thông báo trong cài đặt để nhận nhắc nhở.'**
+  String get notification_permission_denied_description;
+
   /// No description provided for @voice_input_error.
   ///
   /// In vi, this message translates to:

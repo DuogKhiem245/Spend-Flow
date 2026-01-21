@@ -149,10 +149,6 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
             ),
           ),
           SizedBox(height: 10.h),
-          // _displayCategories.isEmpty ? LoadingAnimationWidget.staggeredDotsWave(
-          //   color: CupertinoTheme.of(context).primaryColor,
-          //   size: 30.w,
-          // ) :
           Wrap(
             spacing: 10.w,
             runSpacing: 10.h,
@@ -200,7 +196,7 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
               }),
             ],
           ),
-          SizedBox(height: 20.h),
+          SizedBox(height: 16.h),
           Container(
             width: double.infinity,
             decoration: BoxDecoration(
@@ -214,7 +210,7 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                 ),
               ],
             ),
-            padding: EdgeInsets.symmetric(vertical: 16.h),
+            padding: EdgeInsets.symmetric(vertical: 14.h),
             child: Column(
               children: [
                 Row(

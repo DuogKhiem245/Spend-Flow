@@ -20,7 +20,7 @@ class LanguageService extends ChangeNotifier {
 
   Locale get locale => _locale;
 
-  String get currentLanguageName {
+  String get currentLanguageCode {
     return _locale.languageCode;
   }
 

@@ -6,6 +6,8 @@ import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/auth_service.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/services/sync_service/sync_service.dart';
+import 'package:spend_flow/features/setting/notification/notification_viewmodel.dart';
+import 'package:spend_flow/features/setting/setting_viewmodel.dart';
 import 'package:spend_flow/features/setting/widget/account_widget.dart';
 import 'package:spend_flow/features/setting/widget/setting_data_widget.dart';
 import 'package:spend_flow/features/setting/widget/setting_general_widget.dart';
@@ -19,7 +21,7 @@ class SettingPage extends StatefulWidget {
   State<SettingPage> createState() => _SettingPageState();
 }
 
-class _SettingPageState extends State<SettingPage> {
+class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
   final authService = AuthService();
   String _lastSyncText = ""; 
 
@@ -27,6 +29,23 @@ class _SettingPageState extends State<SettingPage> {
   void initState() {
     super.initState();
     _loadLastSyncTime();
+    SettingViewModel().initLocationState();
+    NotificationViewModel().init(context);
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this); 
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      SettingViewModel().initLocationState();
+      NotificationViewModel().init(context);
+    }
   }
 
   Future<void> _loadLastSyncTime() async {
@@ -68,9 +87,7 @@ class _SettingPageState extends State<SettingPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 AccountWidget(currentUser: user, isLoading: isLoading),
-
-                SizedBox(height: 20.h),
-
+                SizedBox(height: 10.h),
                 Expanded(
                   child: SingleChildScrollView(
                     physics: const AlwaysScrollableScrollPhysics(),
@@ -89,7 +106,7 @@ class _SettingPageState extends State<SettingPage> {
                             return Column(
                               children: [
                                 const UpgradePremiumWidget(),
-                                SizedBox(height: 30.h),
+                                SizedBox(height: 20.h),
                               ],
                             );
                           },

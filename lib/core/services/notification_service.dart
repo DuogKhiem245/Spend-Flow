@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
@@ -14,41 +16,18 @@ class NotificationService {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
+  final _storage = LocalStorageService();
+
   Future<void> init() async {
     tz.initializeTimeZones();
 
     String timeZoneName;
     try {
       final timezoneInfo = await FlutterTimezone.getLocalTimezone();
-      final String rawTimezone = timezoneInfo.identifier;
-
-      timeZoneName = rawTimezone;
-    } catch (e) {
-      debugPrint(
-        "Error getting local timezone: $e, using fallback America/New_York.",
-      );
-      timeZoneName = 'America/New_York';
-    }
-
-    try {
-      final regex = RegExp(r'([A-Za-z]+/[A-Za-z_]+)');
-      final match = regex.firstMatch(timeZoneName);
-
-      if (match != null) {
-        timeZoneName = match.group(0)!;
-      }
-
+      timeZoneName = timezoneInfo.identifier;
       tz.setLocalLocation(tz.getLocation(timeZoneName));
     } catch (e) {
-      debugPrint(
-        "Error setting timezone '$timeZoneName'. Using fallback Asia/Ho_Chi_Minh.",
-      );
-
-      try {
-        tz.setLocalLocation(tz.getLocation('Asia/Ho_Chi_Minh'));
-      } catch (_) {
-        tz.setLocalLocation(tz.getLocation('UTC'));
-      }
+      tz.setLocalLocation(tz.getLocation('Asia/Ho_Chi_Minh'));
     }
 
     const AndroidInitializationSettings initializationSettingsAndroid =
@@ -97,22 +76,27 @@ class NotificationService {
       );
     }
 
-    final storage = LocalStorageService();
-
-    if (await storage.getNotificationStatus() == null) {
-      await storage.saveNotificationStatus(
-        (isAndroidGranted ?? false) || (isIOSGranted ?? false),
-      );
+    if (Platform.isAndroid) {
+      if (await _storage.getNotificationStatus() == null) {
+        await _storage.saveNotificationStatus((isAndroidGranted ?? false));
+      }
+      return isAndroidGranted ?? false;
     }
 
-    return (isAndroidGranted ?? false) || (isIOSGranted ?? false);
+    if (await _storage.getNotificationStatus() == null) {
+      await _storage.saveNotificationStatus((isIOSGranted ?? false));
+    }
+    return isIOSGranted ?? false;
   }
 
   Future<void> scheduleDailyNotification(BuildContext context) async {
-    final storage = LocalStorageService();
-    final bool? isEnabled = await storage.getNotificationStatus();
+    final bool? isEnabled = await _storage.getNotificationStatus();
 
     if (isEnabled != true) {
+      return;
+    }
+
+    if (!context.mounted) {
       return;
     }
 
