@@ -34,9 +34,16 @@ class _HomePageState extends State<HomePage> {
 
   final DailyLimitService _limitService = DailyLimitService();
 
+  bool _isPremium = false;
+
   @override
-  void initState() {
+  void initState()  {
     super.initState();
+    LocalStorageService().getPremiumStatus().then((value) {
+      setState(() {
+        _isPremium = value;
+      });
+    });
     _viewModel.initData();
   }
 
@@ -160,7 +167,7 @@ class _HomePageState extends State<HomePage> {
               ),
               Positioned(
                 right: 20.w,
-                bottom: 100.h,
+                bottom: _isPremium ? 100.h : 140.h,
                 child: Platform.isIOS
                     ? _buildIOSFloatingButton(l10n)
                     : _buildAndroidFloatingButton(l10n),

@@ -33,12 +33,12 @@
   "success": "Success",
   "loading": "Loading...",
   
-  "onboard_step1_title": "Simplify Your Finances",
-  "onboard_step1_message": "All your accounts in one place. See where your money goes and achieve your financial goals effortlessly.",
-  "onboard_step2_title": "Take Control of Your Spending",
-  "onboard_step2_message": "Set spending limits, track categories, and stay on top of your financial goals with personal budgeting.",
-  "onboard_step3_title": "Watch Your Savings Grow",
-  "onboard_step3_message": "Set automated saving goals, round up transactions, and discover smart ways to save money with ease.",
+  "onboard_step1_title": "Record in a Snap",
+  "onboard_step1_message": "Automatically detect spending locations for faster logging. Never wonder where your money went again.",
+  "onboard_step2_title": "Master Your Wallet",
+  "onboard_step2_message": "Set spending limits for each category. We’ll keep you on track with your financial goals",
+  "onboard_step3_title": "Build Healthy Habits",
+  "onboard_step3_message": "Get daily reminders so you never miss a transaction. Consistency is the key to financial freedom.",
 
   "create_first_wallet": "Create Your First Wallet",
   "welcome_create_wallet": "Welcome to SpendFlow!\nLet's create your first wallet to get started.",

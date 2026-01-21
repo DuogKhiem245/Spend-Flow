@@ -293,37 +293,37 @@ abstract class AppLocalizations {
   /// No description provided for @onboard_step1_title.
   ///
   /// In vi, this message translates to:
-  /// **'Đơn giản hóa tài chính'**
+  /// **'Ghi chép trong nháy mắt'**
   String get onboard_step1_title;
 
   /// No description provided for @onboard_step1_message.
   ///
   /// In vi, this message translates to:
-  /// **'Tất cả tài khoản của bạn trong một nơi. Xem tiền của bạn đi đâu và đạt mục tiêu tài chính dễ dàng.'**
+  /// **'Tự động xác định địa điểm chi tiêu giúp bạn ghi chép nhanh hơn bao giờ hết. Không còn phải nhớ mình đã tiêu gì ở đâu.'**
   String get onboard_step1_message;
 
   /// No description provided for @onboard_step2_title.
   ///
   /// In vi, this message translates to:
-  /// **'Kiểm soát chi tiêu của bạn'**
+  /// **'Làm chủ ví tiền của bạn'**
   String get onboard_step2_title;
 
   /// No description provided for @onboard_step2_message.
   ///
   /// In vi, this message translates to:
-  /// **'Đặt hạn mức chi tiêu, theo dõi các danh mục và luôn nắm vững mục tiêu tài chính bằng cách tạo ngân sách cá nhân.'**
+  /// **'Thiết lập hạn mức chi tiêu cho từng danh mục. Chúng tôi sẽ giúp bạn luôn đi đúng lộ trình tài chính.'**
   String get onboard_step2_message;
 
   /// No description provided for @onboard_step3_title.
   ///
   /// In vi, this message translates to:
-  /// **'Xem khoản tiết kiệm tăng trưởng'**
+  /// **'Xây dựng thói quen tốt'**
   String get onboard_step3_title;
 
   /// No description provided for @onboard_step3_message.
   ///
   /// In vi, this message translates to:
-  /// **'Thiết lập mục tiêu tiết kiệm tự động, làm tròn các giao dịch và khám phá cách thông minh để tiết kiệm tiền dễ dàng.'**
+  /// **'Nhận thông báo nhắc nhở vào cuối ngày để không bỏ lỡ bất kỳ giao dịch nào. Kỷ luật là chìa khóa của sự thịnh vượng.'**
   String get onboard_step3_message;
 
   /// No description provided for @create_first_wallet.

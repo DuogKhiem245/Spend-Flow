@@ -105,25 +105,25 @@ class AppLocalizationsVi extends AppLocalizations {
   String get loading => 'Đang tải...';
 
   @override
-  String get onboard_step1_title => 'Đơn giản hóa tài chính';
+  String get onboard_step1_title => 'Ghi chép trong nháy mắt';
 
   @override
   String get onboard_step1_message =>
-      'Tất cả tài khoản của bạn trong một nơi. Xem tiền của bạn đi đâu và đạt mục tiêu tài chính dễ dàng.';
+      'Tự động xác định địa điểm chi tiêu giúp bạn ghi chép nhanh hơn bao giờ hết. Không còn phải nhớ mình đã tiêu gì ở đâu.';
 
   @override
-  String get onboard_step2_title => 'Kiểm soát chi tiêu của bạn';
+  String get onboard_step2_title => 'Làm chủ ví tiền của bạn';
 
   @override
   String get onboard_step2_message =>
-      'Đặt hạn mức chi tiêu, theo dõi các danh mục và luôn nắm vững mục tiêu tài chính bằng cách tạo ngân sách cá nhân.';
+      'Thiết lập hạn mức chi tiêu cho từng danh mục. Chúng tôi sẽ giúp bạn luôn đi đúng lộ trình tài chính.';
 
   @override
-  String get onboard_step3_title => 'Xem khoản tiết kiệm tăng trưởng';
+  String get onboard_step3_title => 'Xây dựng thói quen tốt';
 
   @override
   String get onboard_step3_message =>
-      'Thiết lập mục tiêu tiết kiệm tự động, làm tròn các giao dịch và khám phá cách thông minh để tiết kiệm tiền dễ dàng.';
+      'Nhận thông báo nhắc nhở vào cuối ngày để không bỏ lỡ bất kỳ giao dịch nào. Kỷ luật là chìa khóa của sự thịnh vượng.';
 
   @override
   String get create_first_wallet => 'Tạo ví đầu tiên của bạn';

@@ -105,25 +105,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loading => 'Loading...';
 
   @override
-  String get onboard_step1_title => 'Simplify Your Finances';
+  String get onboard_step1_title => 'Record in a Snap';
 
   @override
   String get onboard_step1_message =>
-      'All your accounts in one place. See where your money goes and achieve your financial goals effortlessly.';
+      'Automatically detect spending locations for faster logging. Never wonder where your money went again.';
 
   @override
-  String get onboard_step2_title => 'Take Control of Your Spending';
+  String get onboard_step2_title => 'Master Your Wallet';
 
   @override
   String get onboard_step2_message =>
-      'Set spending limits, track categories, and stay on top of your financial goals with personal budgeting.';
+      'Set spending limits for each category. We’ll keep you on track with your financial goals';
 
   @override
-  String get onboard_step3_title => 'Watch Your Savings Grow';
+  String get onboard_step3_title => 'Build Healthy Habits';
 
   @override
   String get onboard_step3_message =>
-      'Set automated saving goals, round up transactions, and discover smart ways to save money with ease.';
+      'Get daily reminders so you never miss a transaction. Consistency is the key to financial freedom.';
 
   @override
   String get create_first_wallet => 'Create Your First Wallet';

@@ -23,7 +23,7 @@ class SettingPage extends StatefulWidget {
 
 class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
   final authService = AuthService();
-  String _lastSyncText = ""; 
+  String _lastSyncText = "";
 
   @override
   void initState() {
@@ -36,7 +36,7 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this); 
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -58,7 +58,7 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
         final formatter = DateFormat('HH:mm dd/MM/yyyy');
         _lastSyncText = formatter.format(lastTime);
       } else {
-        _lastSyncText = AppLocalizations.of(context)!.never_synced; 
+        _lastSyncText = AppLocalizations.of(context)!.never_synced;
       }
     });
   }
@@ -98,11 +98,11 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
                           future: LocalStorageService().getPremiumStatus(),
                           builder: (context, snapshot) {
                             final isPremium = snapshot.data ?? false;
-
+          
                             if (isPremium) {
                               return const SizedBox.shrink();
                             }
-
+          
                             return Column(
                               children: [
                                 const UpgradePremiumWidget(),
@@ -111,30 +111,33 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
                             );
                           },
                         ),
-
+          
                         const SettingGeneralWidget(),
                         SizedBox(height: 10.h),
-
+          
                         const SettingSecurityWidget(),
                         SizedBox(height: 10.h),
-
+          
                         SettingDataWidget(
                           lastSyncText: _lastSyncText,
                           onSyncSuccess: _loadLastSyncTime,
                         ),
                         SizedBox(height: 40.h),
-
+          
                         isLoggedIn
                             ? CupertinoButton(
                                 onPressed: () => _showLogoutDialog(context),
                                 borderRadius: BorderRadius.circular(30.r),
-                                padding: EdgeInsets.symmetric(vertical: 12.h),
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 12.h,
+                                ),
                                 minimumSize: Size(double.infinity, 60.h),
                                 color: CupertinoTheme.of(
                                   context,
                                 ).barBackgroundColor,
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.center,
                                   children: [
                                     Icon(
                                       CupertinoIcons.square_arrow_right,

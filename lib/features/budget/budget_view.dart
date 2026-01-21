@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
+import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/utils/category_helper.dart';
 import 'package:spend_flow/core/widgets/skeleton/skeleton_budget_view.dart';
 import 'package:spend_flow/features/budget/add_budget/add_budget_view.dart';
@@ -26,6 +27,18 @@ class BudgetPage extends StatefulWidget {
 
 class _BudgetPageState extends State<BudgetPage> {
   final BudgetViewModel _viewModel = BudgetViewModel();
+
+  bool _isPremium = false;
+
+  @override
+  void initState() {
+    super.initState();
+    LocalStorageService().getPremiumStatus().then((value) {
+      setState(() {
+        _isPremium = value;
+      });
+    });
+  }
 
   Future<void> _navigateToAddBudget() async {
     HapticFeedback.heavyImpact();
@@ -102,7 +115,7 @@ class _BudgetPageState extends State<BudgetPage> {
 
                       Positioned(
                         right: 20.w,
-                        bottom: 75.h,
+                        bottom: _isPremium ? 75.h : 105.h,
                         child: Platform.isIOS
                             ? _buildIOSAddButton()
                             : _buildAndroidAddButton(),
@@ -260,10 +273,7 @@ class _BudgetPageState extends State<BudgetPage> {
     return Padding(
       padding: EdgeInsets.only(bottom: 16.h),
       child: GestureDetector(
-        onTap: () => {
-          HapticFeedback.selectionClick(),
-          _onEditBudget(budget),
-        },
+        onTap: () => {HapticFeedback.selectionClick(), _onEditBudget(budget)},
         child: Slidable(
           key: ValueKey(budget.id),
           enabled: _viewModel.canEdit,
@@ -297,7 +307,7 @@ class _BudgetPageState extends State<BudgetPage> {
               ),
             ],
           ),
-        
+
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
             decoration: BoxDecoration(
@@ -360,9 +370,11 @@ class _BudgetPageState extends State<BudgetPage> {
                             "${_viewModel.formatCurrency(budget.remaining)} left",
                             style: TextStyle(
                               fontSize: 13.sp,
-                              color: CupertinoTheme.of(
-                                context,
-                              ).textTheme.textStyle.color!.withValues(alpha: .6),
+                              color: CupertinoTheme.of(context)
+                                  .textTheme
+                                  .textStyle
+                                  .color!
+                                  .withValues(alpha: .6),
                             ),
                           ),
                         ],
@@ -374,9 +386,11 @@ class _BudgetPageState extends State<BudgetPage> {
                             "${_viewModel.formatCurrency(budget.spent)} / ${_viewModel.formatCurrency(budget.total)}",
                             style: TextStyle(
                               fontSize: 14.sp,
-                              color: CupertinoTheme.of(
-                                context,
-                              ).textTheme.textStyle.color!.withValues(alpha: .6),
+                              color: CupertinoTheme.of(context)
+                                  .textTheme
+                                  .textStyle
+                                  .color!
+                                  .withValues(alpha: .6),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
