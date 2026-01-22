@@ -137,6 +137,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       horizontal: 20.w,
                       vertical: 5.h,
                     ),
+                    borderRadius: BorderRadius.circular(30.r),
                     child: Text(
                       _vm.currentPage == pages.length - 1
                           ? l10n.start

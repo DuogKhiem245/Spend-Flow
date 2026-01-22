@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/auth_service.dart';
-import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/services/sync_service/sync_service.dart';
 import 'package:spend_flow/features/setting/notification/notification_viewmodel.dart';
 import 'package:spend_flow/features/setting/setting_viewmodel.dart';
@@ -13,6 +12,7 @@ import 'package:spend_flow/features/setting/widget/setting_data_widget.dart';
 import 'package:spend_flow/features/setting/widget/setting_general_widget.dart';
 import 'package:spend_flow/features/setting/widget/setting_security_widget.dart';
 import 'package:spend_flow/features/setting/widget/upgrade_premium_widget.dart';
+import 'package:spend_flow/main.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -22,6 +22,8 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
+  final _premiumViewModel = premiumViewModel;
+
   final authService = AuthService();
   String _lastSyncText = "";
 
@@ -94,50 +96,67 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
                     padding: EdgeInsets.only(bottom: 20.h),
                     child: Column(
                       children: [
-                        FutureBuilder<bool>(
-                          future: LocalStorageService().getPremiumStatus(),
-                          builder: (context, snapshot) {
-                            final isPremium = snapshot.data ?? false;
-          
-                            if (isPremium) {
-                              return const SizedBox.shrink();
-                            }
-          
-                            return Column(
-                              children: [
-                                const UpgradePremiumWidget(),
-                                SizedBox(height: 20.h),
-                              ],
+                        ListenableBuilder(
+                          listenable: _premiumViewModel,
+                          builder: (context, child) {
+                            return AnimatedSize(
+                              duration: const Duration(milliseconds: 400),
+                              curve: Curves.easeInOut,
+                              child: AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 300),
+                                transitionBuilder:
+                                    (
+                                      Widget child,
+                                      Animation<double> animation,
+                                    ) {
+                                      return FadeTransition(
+                                        opacity: animation,
+                                        child: SizeTransition(
+                                          sizeFactor: animation,
+                                          axisAlignment: -1.0,
+                                          child: child,
+                                        ),
+                                      );
+                                    },
+                                child: _premiumViewModel.isPremium
+                                    ? const SizedBox.shrink()
+                                    : KeyedSubtree(
+                                        key: const ValueKey('upgrade_widget'),
+                                        child: Column(
+                                          children: [
+                                            const UpgradePremiumWidget(),
+                                            SizedBox(height: 20.h),
+                                          ],
+                                        ),
+                                      ),
+                              ),
                             );
                           },
                         ),
-          
+
                         const SettingGeneralWidget(),
                         SizedBox(height: 10.h),
-          
+
                         const SettingSecurityWidget(),
                         SizedBox(height: 10.h),
-          
+
                         SettingDataWidget(
                           lastSyncText: _lastSyncText,
                           onSyncSuccess: _loadLastSyncTime,
                         ),
                         SizedBox(height: 40.h),
-          
+
                         isLoggedIn
                             ? CupertinoButton(
                                 onPressed: () => _showLogoutDialog(context),
                                 borderRadius: BorderRadius.circular(30.r),
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 12.h,
-                                ),
+                                padding: EdgeInsets.symmetric(vertical: 12.h),
                                 minimumSize: Size(double.infinity, 60.h),
                                 color: CupertinoTheme.of(
                                   context,
                                 ).barBackgroundColor,
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(
                                       CupertinoIcons.square_arrow_right,

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/model/category_model.dart';
+import 'package:spend_flow/core/services/ads_service.dart';
 import 'package:spend_flow/core/widgets/check_valid/check_valid_widget.dart';
 import 'package:spend_flow/features/transaction/add_transaction/widgets/amount_widget.dart';
 import 'package:spend_flow/features/transaction/add_transaction/widgets/note_widget.dart';
@@ -10,6 +11,7 @@ import 'package:spend_flow/features/budget/add_budget/add_budget_viewmodel.dart'
 import 'package:spend_flow/core/model/budget_model.dart';
 import 'package:spend_flow/features/wallet/wallet_view.dart';
 import 'package:spend_flow/features/wallet/wallet_viewmodel.dart';
+import 'package:spend_flow/main.dart';
 
 class AddBudgetView extends StatefulWidget {
   final BudgetModel? budgetToEdit;
@@ -30,9 +32,14 @@ class _AddBudgetViewState extends State<AddBudgetView> {
   DateTime _selectedDate = DateTime.now();
   CategoryModel? _selectedCategory;
 
+  final AdsService _adsService = AdsService();
+  final _premiumViewModel = premiumViewModel;
+
   @override
   void initState() {
     super.initState();
+
+    _checkPremiumAndLoadAd();
 
     if (widget.budgetToEdit != null) {
       final item = widget.budgetToEdit!;
@@ -48,6 +55,12 @@ class _AddBudgetViewState extends State<AddBudgetView> {
     _amountController.dispose();
     _noteController.dispose();
     super.dispose();
+  }
+
+  Future<void> _checkPremiumAndLoadAd() async {
+    if (!_premiumViewModel.isPremium) {
+      _adsService.loadInterstitialAd();
+    }
   }
 
   void _showNoWalletAlert(BuildContext context) {
@@ -177,7 +190,8 @@ class _AddBudgetViewState extends State<AddBudgetView> {
                         return;
                       }
 
-                      final hasWallet = await WalletViewModel().checkUserHasWallet();
+                      final hasWallet = await WalletViewModel()
+                          .checkUserHasWallet();
 
                       if (!hasWallet) {
                         if (!context.mounted) return;
@@ -195,7 +209,18 @@ class _AddBudgetViewState extends State<AddBudgetView> {
                       );
 
                       if (!context.mounted) return;
-                      Navigator.pop(context);
+                      if (_premiumViewModel.isPremium) {
+                        Navigator.pop(context, true);
+                        return;
+                      } else {
+                        await _adsService.showInterstitialWithFrequency(
+                          () {},
+                          isPremium: _premiumViewModel.isPremium,
+                          onAdClosed: () {
+                            Navigator.pop(context, true);
+                          },
+                        );
+                      }
                     },
                     borderRadius: BorderRadius.circular(30.r),
                     padding: EdgeInsets.symmetric(vertical: 16.h),

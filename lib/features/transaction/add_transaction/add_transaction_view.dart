@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
+import 'package:spend_flow/core/services/ads_service.dart';
 import 'package:spend_flow/core/widgets/check_valid/check_valid_widget.dart';
 import 'package:spend_flow/core/widgets/loading_overlay.dart';
 import 'package:spend_flow/features/transaction/add_transaction/add_transaction_viewmodel.dart';
@@ -18,6 +19,7 @@ import 'package:spend_flow/features/transaction/add_transaction/widgets/note_wid
 import 'package:spend_flow/features/transaction/add_transaction/widgets/suggest_category_widget.dart';
 import 'package:spend_flow/features/wallet/wallet_view.dart';
 import 'package:spend_flow/features/wallet/wallet_viewmodel.dart';
+import 'package:spend_flow/main.dart';
 
 class AddTransactionPage extends StatefulWidget {
   final TransactionModel? transactionData;
@@ -39,6 +41,9 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
 
+  final AdsService _adsService = AdsService();
+  final _premiumViewModel = premiumViewModel;
+
   DateTime? _transactionDate;
   CategoryModel? _selectedCategory;
   int _index = 0;
@@ -49,6 +54,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
   @override
   void initState() {
     super.initState();
+    _checkPremiumAndLoadAd();
 
     if (widget.transactionData != null) {
       final t = widget.transactionData!;
@@ -78,6 +84,12 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
     _nameController.dispose();
     _noteController.dispose();
     super.dispose();
+  }
+
+  Future<void> _checkPremiumAndLoadAd() async {
+    if (!_premiumViewModel.isPremium) {
+      _adsService.loadInterstitialAd();
+    }
   }
 
   void _onTabChanged(int index) {
@@ -317,7 +329,20 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                                         }
 
                                         if (!context.mounted) return;
-                                        Navigator.pop(context);
+
+                                        if (_premiumViewModel.isPremium) {
+                                          Navigator.pop(context, true);
+                                          return;
+                                        } else {
+                                          await _adsService
+                                              .showInterstitialWithFrequency(
+                                                () {},
+                                                isPremium: _premiumViewModel.isPremium,
+                                                onAdClosed: () {
+                                                  Navigator.pop(context, true);
+                                                },
+                                              );
+                                        }
                                       } catch (e) {
                                         debugPrint("Error add transaction: $e");
                                       } finally {

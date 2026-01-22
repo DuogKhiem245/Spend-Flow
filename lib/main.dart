@@ -14,11 +14,13 @@ import 'package:spend_flow/core/services/language_service.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/services/notification_service.dart';
 import 'package:spend_flow/core/services/theme_service.dart';
+import 'package:spend_flow/features/premium/premium_viewmodel.dart';
 import 'package:spend_flow/firebase_options.dart';
 import 'config/app_routes.dart';
 
 final languageService = LanguageService();
 final themeService = ThemeService();
+final premiumViewModel = PremiumViewModel();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -76,7 +78,7 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) {
         return ListenableBuilder(
-          listenable: Listenable.merge([themeService, languageService]),
+          listenable: Listenable.merge([themeService, languageService, premiumViewModel]),
           builder: (context, child) {
             return CupertinoApp(
               title: 'Spend Flow',

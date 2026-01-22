@@ -4,13 +4,13 @@ import 'package:cupertino_native/style/sf_symbol.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
-import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/core/widgets/banner_ads_widget.dart';
 import 'package:spend_flow/features/budget/budget_view.dart';
 import 'package:spend_flow/features/home/home_view.dart';
 import 'package:spend_flow/features/report/report_view.dart';
 import 'package:spend_flow/features/setting/setting_view.dart';
+import 'package:spend_flow/main.dart';
 
 class BottomNavbar extends StatefulWidget {
   final int currentIndex;
@@ -23,8 +23,8 @@ class BottomNavbar extends StatefulWidget {
 
 class _BottomNavbarState extends State<BottomNavbar> {
   late int _currentIndex = widget.currentIndex;
-  BannerAd? _bannerAd;
-  bool _isPremium = false;
+
+  final viewModel = premiumViewModel;
 
   final List<Widget> _pages = const [
     HomePage(),
@@ -32,44 +32,6 @@ class _BottomNavbarState extends State<BottomNavbar> {
     BudgetPage(),
     SettingPage(),
   ];
-
-  @override
-  void initState() {
-    super.initState();
-    _checkPremiumAndLoadAd();
-  }
-
-  Future<void> _checkPremiumAndLoadAd() async {
-    _isPremium = await LocalStorageService().getPremiumStatus();
-    if (!_isPremium) {
-      _loadBannerAd();
-    }
-  }
-
-  void _loadBannerAd() async {
-    final adUnitId = Platform.isAndroid
-        ? 'ca-app-pub-3940256099942544/6300978111'
-        : 'ca-app-pub-3940256099942544/2934735716';
-
-    _bannerAd = BannerAd(
-      adUnitId: adUnitId,
-      request: const AdRequest(),
-      size: AdSize.banner,
-      listener: BannerAdListener(
-        onAdLoaded: (ad) => setState(() {}),
-        onAdFailedToLoad: (ad, error) {
-          ad.dispose();
-          _bannerAd = null;
-        },
-      ),
-    )..load();
-  }
-
-  @override
-  void dispose() {
-    _bannerAd?.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,19 +47,20 @@ class _BottomNavbarState extends State<BottomNavbar> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                if (_bannerAd != null && !_isPremium)
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 5.h),
-                    child: ClipRRect(
-                      borderRadius: Platform.isIOS ? BorderRadius.circular(30.r) : BorderRadius.zero,
-                      child: Container(
-                        width: _bannerAd!.size.width.toDouble(),
-                        height: _bannerAd!.size.height.toDouble(),
-                        alignment: Alignment.center,
-                        child: AdWidget(ad: _bannerAd!),
-                      ),
-                    ),
-                  ),
+                ListenableBuilder(
+                  listenable: viewModel,
+                  builder: (context, child) {
+                    if (viewModel.isPremium) {
+                      return const SizedBox.shrink();
+                    }
+
+                    return BannerAdWidget(
+                      adUnitId: Platform.isAndroid
+                          ? 'ca-app-pub-3940256099942544/6300978111'
+                          : 'ca-app-pub-3940256099942544/2934735716',
+                    );
+                  },
+                ),
 
                 Platform.isIOS
                     ? _buildIOSTabBar(context)

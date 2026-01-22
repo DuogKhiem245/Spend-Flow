@@ -36,7 +36,7 @@ class _UpgradePremiumWidgetState extends State<UpgradePremiumWidget>
       context: context,
       isScrollControlled: true, 
       backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
-      transitionAnimationController: _animationController, 
+      // transitionAnimationController: _animationController, 
       builder: (context) => const PremiumView(),
     );
   }
