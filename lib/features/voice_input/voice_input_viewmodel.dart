@@ -1,16 +1,14 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
-import 'package:spend_flow/core/model/budget_model.dart';
 import 'package:spend_flow/core/services/ai_service.dart';
 import 'package:spend_flow/core/data/category_data.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/core/services/language_service.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
-import 'package:spend_flow/features/budget/add_budget/add_budget_view.dart';
+import 'package:spend_flow/features/ai_preview/ai_preview_overview_view.dart';
 import 'package:spend_flow/features/transaction/add_transaction/add_transaction_view.dart';
 
 class VoiceInputViewModel extends ChangeNotifier {
@@ -31,7 +29,7 @@ class VoiceInputViewModel extends ChangeNotifier {
   bool get isListening => _isListening;
   String get lastWords => _lastWords;
   bool get isSpeechEnabled => _isSpeechEnabled;
-  bool get isProcessing => _isProcessing; 
+  bool get isProcessing => _isProcessing;
 
   Future<void> initSpeech() async {
     try {
@@ -46,7 +44,7 @@ class VoiceInputViewModel extends ChangeNotifier {
         onError: (errorNotification) {
           _isListening = false;
           _stopWaveAnimation();
-          notifyListeners(); 
+          notifyListeners();
         },
       );
       notifyListeners();
@@ -103,78 +101,92 @@ class VoiceInputViewModel extends ChangeNotifier {
 
     try {
       _isProcessing = true;
-      notifyListeners(); 
+      notifyListeners();
 
       final categories = CategoryData.getAll();
-
       final currentLanguage = LanguageService().locale.languageCode;
-
-      final aiResult = await _aiService.analyzeText(_lastWords, categories, currentLanguage);
-
-      if (aiResult['actionType'] == null ||
-          aiResult['data'] == null) {
-        throw Exception(
-          l10n.error_ai_request,
-        );
-      }
-
       final currentWalletId = await _localStorageService.getCurrentWalletId();
 
-      final actionType = aiResult['actionType']?.toString();
-      final data = Map<String, dynamic>.from(aiResult['data']);
+      final aiResult = await _aiService.analyzeText(
+        _lastWords,
+        categories,
+        currentLanguage,
+      );
+
+      final List results = aiResult['results'] ?? [];
+
+      if (results.isEmpty) {
+        throw Exception(l10n.error_ai_request);
+      }
+
+      final List<TransactionModel> parsedTransactions = [];
+
+      for (var item in results) {
+        final String actionType = item['actionType']?.toString() ?? "";
+        final data = Map<String, dynamic>.from(item['data'] ?? {});
+
+        if (actionType == "TRANSACTION") {
+          parsedTransactions.add(
+            TransactionModel.fromAIResponse(
+              aiData: data,
+              availableCategories: categories,
+              currentWalletId: currentWalletId,
+            ),
+          );
+        }
+      }
 
       if (!context.mounted) return;
 
-      if (actionType == "TRANSACTION") {
-        final transaction = TransactionModel.fromAIResponse(
-          aiData: data,
-          availableCategories: categories,
-          currentWalletId: currentWalletId,
-        );
+      if (parsedTransactions.isEmpty) {
+        throw Exception(l10n.error_ai_request);
+      }
 
+      if (parsedTransactions.length == 1) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
+          CupertinoPageRoute(
             builder: (context) =>
-                AddTransactionPage(transactionData: transaction),
+                AddTransactionPage(transactionData: parsedTransactions.first),
           ),
         );
-      } else if (actionType == "BUDGET") {
-        final budgetData = BudgetModel.fromAIResponse(
-          aiData: data,
-          availableCategories: categories,
-          currentWalletId: currentWalletId,
-        );
-        
+      } else {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-            builder: (context) => AddBudgetView(
-              budgetToEdit: budgetData,
-            ),
+          CupertinoPageRoute(
+            builder: (context) =>
+                AIPreviewOverviewView(transactions: parsedTransactions),
           ),
         );
       }
     } catch (e) {
       if (context.mounted) {
-        showCupertinoDialog(
-          context: context,
-          builder: (ctx) => CupertinoAlertDialog(
-            title: Text(AppLocalizations.of(context)!.error),
-            content: Text("${l10n.voice_input_error}: $e"),
-            actions: [
-              CupertinoDialogAction(
-                child: Text(AppLocalizations.of(context)!.close),
-                onPressed: () => Navigator.pop(ctx),
-              ),
-            ],
-          ),
-        );
+        _showErrorDialog(context, l10n, e.toString());
       }
     } finally {
       _isProcessing = false;
       notifyListeners();
     }
+  }
+
+  void _showErrorDialog(
+    BuildContext context,
+    AppLocalizations l10n,
+    String error,
+  ) {
+    showCupertinoDialog(
+      context: context,
+      builder: (ctx) => CupertinoAlertDialog(
+        title: Text(l10n.error),
+        content: Text("${l10n.voice_input_error}: $error"),
+        actions: [
+          CupertinoDialogAction(
+            child: Text(l10n.close),
+            onPressed: () => Navigator.pop(ctx),
+          ),
+        ],
+      ),
+    );
   }
 
   void _startWaveAnimation() {

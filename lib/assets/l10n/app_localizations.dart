@@ -2207,8 +2207,8 @@ abstract class AppLocalizations {
   /// No description provided for @import_success_description.
   ///
   /// In vi, this message translates to:
-  /// **'Dữ liệu của bạn đã được nhập thành công.'**
-  String get import_success_description;
+  /// **'Đã nhập thành công {count} giao dịch từ tệp.'**
+  String import_success_description(Object count);
 
   /// No description provided for @file_format_template.
   ///
@@ -2365,6 +2365,48 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'AI không thể nhận dạng yêu cầu này. Hãy thử nói rõ hơn.'**
   String get error_ai_request;
+
+  /// No description provided for @ai_powered.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hỗ trợ bởi AI'**
+  String get ai_powered;
+
+  /// No description provided for @entries_pending.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mục đang chờ xử lý'**
+  String get entries_pending;
+
+  /// No description provided for @confirm_selected_entries.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xác nhận các mục đã chọn'**
+  String get confirm_selected_entries;
+
+  /// No description provided for @preview_results.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xem trước kết quả'**
+  String get preview_results;
+
+  /// No description provided for @clear_all.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xóa tất cả'**
+  String get clear_all;
+
+  /// No description provided for @select_all.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn tất cả'**
+  String get select_all;
+
+  /// No description provided for @fail_to_save_transactions.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lưu giao dịch thất bại. Vui lòng thử lại.'**
+  String get fail_to_save_transactions;
 }
 
 class _AppLocalizationsDelegate

@@ -21,7 +21,12 @@ import 'package:spend_flow/features/wallet/wallet_viewmodel.dart';
 
 class AddTransactionPage extends StatefulWidget {
   final TransactionModel? transactionData;
-  const AddTransactionPage({super.key, this.transactionData});
+  final bool isFromAI;
+  const AddTransactionPage({
+    super.key,
+    this.transactionData,
+    this.isFromAI = false,
+  });
 
   @override
   State<AddTransactionPage> createState() => _AddTransactionPageState();
@@ -253,13 +258,37 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                                         return;
                                       }
 
-                                      setState(() {
-                                        _isLoading = true;
-                                      });
+                                      if (widget.isFromAI) {
+                                        String rawAmount = _amountController
+                                            .text
+                                            .replaceAll(RegExp(r'[^0-9]'), '');
+
+                                        double finalAmount =
+                                            double.tryParse(rawAmount) ?? 0;
+                                        final updatedTransaction = widget
+                                            .transactionData
+                                            ?.copyWith(
+                                              amount: finalAmount,
+                                              title: _nameController.text
+                                                  .trim(),
+                                              category: _selectedCategory,
+                                              date: _transactionDate,
+                                              note: _noteController.text.trim(),
+                                              isIncome: _index == 1,
+                                            );
+
+                                        if (!context.mounted) return;
+                                        Navigator.pop(
+                                          context,
+                                          updatedTransaction,
+                                        );
+                                        return;
+                                      }
+
+                                      setState(() => _isLoading = true);
 
                                       _hasWallet = await WalletViewModel()
                                           .checkUserHasWallet();
-
                                       if (!_hasWallet) {
                                         setState(() => _isLoading = false);
                                         if (!context.mounted) return;
@@ -293,9 +322,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                                         debugPrint("Error add transaction: $e");
                                       } finally {
                                         if (mounted) {
-                                          setState(() {
-                                            _isLoading = false;
-                                          });
+                                          setState(() => _isLoading = false);
                                         }
                                       }
                                     },

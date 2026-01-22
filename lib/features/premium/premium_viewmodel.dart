@@ -41,9 +41,9 @@ class PremiumViewModel extends ChangeNotifier {
         return;
       }
 
-      const Set<String> _kIds = {_kProductId};
+      const Set<String> kIds = {_kProductId};
       final ProductDetailsResponse response = await _iap.queryProductDetails(
-        _kIds,
+        kIds,
       );
 
       // Trường hợp 1: ID bị sai hoặc chưa Active trên Store

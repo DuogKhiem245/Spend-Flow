@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
+import 'package:spend_flow/core/utils/category_helper.dart';
 import 'package:spend_flow/core/widgets/verify_passcode/verify_passcode_sheet.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/features/home/home_viewmodel.dart';
@@ -223,7 +224,10 @@ class _RecentTransactionState extends State<RecentTransaction> {
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      item.category.name,
+                      CategoryHelper.getTranslatedName(
+                        context,
+                        item.category,
+                      ),
                       style: CupertinoTheme.of(context).textTheme.textStyle
                           .copyWith(
                             fontSize: 14.sp,

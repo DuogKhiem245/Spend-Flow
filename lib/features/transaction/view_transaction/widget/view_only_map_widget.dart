@@ -59,6 +59,19 @@ class _ViewOnlyMapWidgetState extends State<ViewOnlyMapWidget> {
                           zoom: 15.0,
                         ),
                         styleUri: isDark ? _darkStyle : _lightStyle,
+                        onMapCreated: (mapboxMap) {
+                          mapboxMap.gestures.updateSettings(
+                            GesturesSettings(
+                              scrollEnabled: false,
+                              rotateEnabled: false,
+                              pitchEnabled: false,
+                              doubleTapToZoomInEnabled: false,
+                              doubleTouchToZoomOutEnabled: false,
+                              pinchToZoomEnabled: false,
+                              scrollDecelerationEnabled: false,
+                            ),
+                          );
+                        },
                       ),
 
                       Center(

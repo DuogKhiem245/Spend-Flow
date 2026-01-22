@@ -706,7 +706,7 @@ class LocalStorageService {
     }).toList();
   }
 
-   Future<String> getCurrentWalletId() async {
+  Future<String> getCurrentWalletId() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('current_wallet_id')!;
   }
@@ -819,29 +819,35 @@ class LocalStorageService {
   // TRANSACTIONS
   // ------------------------------------------------------------
 
-  Future<void> addTransaction(TransactionModel transaction) async {
-    final db = await database;
+  Future<bool> addTransaction(TransactionModel transaction) async {
+    try {
+      final db = await database;
 
-    final itemToSave = transaction.copyWith(
-      updatedAt: DateTime.now().millisecondsSinceEpoch,
-    );
+      final itemToSave = transaction.copyWith(
+        updatedAt: DateTime.now().millisecondsSinceEpoch,
+      );
 
-    await db.transaction((txn) async {
-      final finder = Finder(filter: Filter.equals('id', itemToSave.id));
-      final existing = await _transactionStore.findFirst(txn, finder: finder);
+      await db.transaction((txn) async {
+        final finder = Finder(filter: Filter.equals('id', itemToSave.id));
+        final existing = await _transactionStore.findFirst(txn, finder: finder);
 
-      if (existing != null) {
-        await _transactionStore
-            .record(existing.key)
-            .update(txn, itemToSave.toMap());
-      } else {
-        await _transactionStore.add(txn, itemToSave.toMap());
-      }
+        if (existing != null) {
+          await _transactionStore
+              .record(existing.key)
+              .update(txn, itemToSave.toMap());
+        } else {
+          await _transactionStore.add(txn, itemToSave.toMap());
+        }
 
-      await _syncTransactionStore.add(txn, itemToSave.toMap());
-    });
+        await _syncTransactionStore.add(txn, itemToSave.toMap());
+      });
 
-    await incrementCategoryUsage(transaction.category);
+      await incrementCategoryUsage(transaction.category);
+
+      return true; 
+    } catch (e) {
+      return false; 
+    }
   }
 
   Future<List<TransactionModel>> getAllTransactions(String walletId) async {
@@ -1191,7 +1197,7 @@ class LocalStorageService {
         }
       } catch (e) {
         debugPrint("Error deleting data from Firebase: $e");
-        return; 
+        return;
       }
     }
     await db.transaction((txn) async {
@@ -1204,7 +1210,6 @@ class LocalStorageService {
       await _syncWalletStore.delete(txn, finder: finder);
       await _syncBudgetStore.delete(txn, finder: finder);
       await _syncCategoryStore.delete(txn, finder: finder);
-
     });
   }
 }

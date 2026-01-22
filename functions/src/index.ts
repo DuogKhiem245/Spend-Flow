@@ -24,9 +24,7 @@ const getAIModel = (apiKey: string | undefined) => {
 }
 
 export const analyzeReceiptImage = onCall(
-    {
-        secrets: ["GEMINI_API_KEY"],
-    },
+    { secrets: ["GEMINI_API_KEY"] },
     async (request) => {
         if (!request.data || !request.data.imageBase64) {
             throw new HttpsError("invalid-argument", "Missing imageBase64 data");
@@ -42,30 +40,37 @@ export const analyzeReceiptImage = onCall(
             const prompt = `
         You are an AI financial expert. Analyze the receipt image.
         
-        IMPORTANT: All text fields ("title", "note") in the output MUST be in ${targetLang}.
-        If you cannot identify the language, default to English.
-
+        IMPORTANT: All text fields in the output MUST be in ${targetLang}.
         User categories: ${categoriesJson}
         Today: ${new Date().toISOString()}
 
+        STRICT RULES TO AVOID DOUBLE COUNTING:
+        1. If you can identify individual items with their specific prices, list ONLY those items. 
+           DO NOT include the "Total" or "Grand Total" as a separate transaction in this case.
+        2. If the receipt is too blurry or complex to list individual items, provide ONLY one single transaction representing the Grand Total.
+        3. NEVER include both the individual items and the total amount in the same response.
+
         REQUIREMENTS:
-            1. amount: Find the FINAL total amount (Grand Total).
-            2. categoryId: Map to the most relevant ID from the list provided based on the overall purchase.
-            3. title: Summarize the MAIN content of the transaction (e.g., "Grocery shopping", "Dinner at Restaurant", "Electronics purchase"). Do NOT just use the Store name.
-            4. note: Provide details including: Store name, a brief list of key items purchased (e.g., "Starbucks. Items: 2 Lattes, 1 Croissant").
-            5. actionType: Always "TRANSACTION".
+        - Map each transaction to the most relevant categoryId.
+        - title: Concise summary (e.g., "Starbucks Coffee", "Chicken Breast").
+        - note: Include store name and details.
+        - isIncome: false (default for receipts).
 
         Output plain JSON (No Markdown):
         {
-            "actionType": "TRANSACTION",
-            "data": {
-            "amount": number,
-            "title": string,
-            "categoryId": string,
-            "date": string (ISO 8601),
-            "note": string (optional),
-            "isIncome": false
-            }
+            "results": [
+                {
+                    "actionType": "TRANSACTION",
+                    "data": {
+                        "amount": number,
+                        "title": string,
+                        "categoryId": string,
+                        "date": string (ISO 8601),
+                        "note": string,
+                        "isIncome": boolean
+                    }
+                }
+            ]
         }
         `;
 
@@ -75,7 +80,7 @@ export const analyzeReceiptImage = onCall(
 
             const result = await model.generateContent([prompt, imagePart]);
             const response = result.response.text();
-            const jsonMatch = response.match(/\{[\s\S]*\}/); 
+            const jsonMatch = response.match(/\{[\s\S]*\}/);
             const cleanJson = jsonMatch ? jsonMatch[0] : response;
 
             return { success: true, result: JSON.parse(cleanJson) };
@@ -87,11 +92,8 @@ export const analyzeReceiptImage = onCall(
 );
 
 export const analyzeTransactionText = onCall(
-    {
-        secrets: ["GEMINI_API_KEY"],
-    },
+    { secrets: ["GEMINI_API_KEY"] },
     async (request) => {
-
         if (!request.data || !request.data.text) {
             throw new HttpsError("invalid-argument", "Please provide text content.");
         }
@@ -106,36 +108,38 @@ export const analyzeTransactionText = onCall(
             const prompt = `
         You are an intelligent financial assistant. Analyze this text: "${text}"
         
-        IMPORTANT: All text fields ("title", "note") in the output MUST be in ${targetLang}.
-        If the requested language is not clear, default to English.
-
+        IMPORTANT: All text fields MUST be in ${targetLang}.
         Categories: ${categoriesJson}
         Today: ${new Date().toISOString()}
 
         TASKS:
-        1. Determine "actionType": TRANSACTION or BUDGET.
-        2. Extract data:
-           - amount: The value.
-           - title: Brief summary (e.g., "Salary", "Coffee").
-           - note: Extract any additional context from the text such as people involved, or payment methods (e.g., "Paid via Momo", "Lunch with Team"). If no extra info, summarize the intent.
+        1. Identify ALL individual transactions mentioned in the text.
+        2. amount: Extract the numerical value.
+        3. title: Brief summary (e.g., "Lunch", "Salary").
+        4. isIncome: Set true for income (salary, gift) and false for expenses (shopping, food).
+        5. note: Add context like payment method or people involved.
 
-        Output plain JSON (No Markdown):
+        Output plain JSON with an array of results (No Markdown):
         {
-            "actionType": "TRANSACTION" | "BUDGET",
-            "data": {
-            "amount": number,
-            "title": string,
-            "categoryId": string,
-            "isIncome": boolean,
-            "date": string (ISO 8601),
-            "note": string (optional)
-            }
+            "results": [
+                {
+                    "actionType": "TRANSACTION",
+                    "data": {
+                        "amount": number,
+                        "title": string,
+                        "categoryId": string,
+                        "isIncome": boolean,
+                        "date": string (ISO 8601),
+                        "note": string
+                    }
+                }
+            ]
         }
         `;
 
             const result = await model.generateContent(prompt);
             const response = result.response.text();
-            const jsonMatch = response.match(/\{[\s\S]*\}/); 
+            const jsonMatch = response.match(/\{[\s\S]*\}/);
             const cleanJson = jsonMatch ? jsonMatch[0] : response;
 
             return { success: true, result: JSON.parse(cleanJson) };

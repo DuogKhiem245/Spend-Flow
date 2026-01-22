@@ -13,8 +13,9 @@ import 'package:spend_flow/features/wallet/wallet_viewmodel.dart';
 
 class AddBudgetView extends StatefulWidget {
   final BudgetModel? budgetToEdit;
+  final bool isFromAI;
 
-  const AddBudgetView({super.key, this.budgetToEdit});
+  const AddBudgetView({super.key, this.budgetToEdit, this.isFromAI = false});
 
   @override
   State<AddBudgetView> createState() => _AddBudgetViewState();

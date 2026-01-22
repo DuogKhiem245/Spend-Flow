@@ -369,7 +369,7 @@
   "no_recent_imports": "Chưa có nhập dữ liệu gần đây",
   "invalid_format": "Định dạng tệp không hợp lệ.",
   "import_success": "Nhập thành công!",
-  "import_success_description": "Dữ liệu của bạn đã được nhập thành công.",
+  "import_success_description": "Đã nhập thành công {count} giao dịch từ tệp.",
   "file_format_template": "Mẫu định dạng tệp",
   "download_sample_file": "Tải xuống tệp mẫu {format}",
 
@@ -400,5 +400,13 @@
   "voice_input_error": "Lỗi nhập giọng nói. Vui lòng thử lại.",
   "voice_input_not_recognized": "Không nhận diện được giọng nói. Vui lòng thử lại.",
   "voice_input_permission_denied": "Quyền nhập giọng nói bị từ chối. Vui lòng bật quyền truy cập micro trong cài đặt.",
-  "error_ai_request": "AI không thể nhận dạng yêu cầu này. Hãy thử nói rõ hơn."
+  "error_ai_request": "AI không thể nhận dạng yêu cầu này. Hãy thử nói rõ hơn.",
+
+  "ai_powered": "Hỗ trợ bởi AI",
+  "entries_pending": "Mục đang chờ xử lý",
+  "confirm_selected_entries": "Xác nhận các mục đã chọn",
+  "preview_results": "Xem trước kết quả",
+  "clear_all": "Xóa tất cả",
+  "select_all": "Chọn tất cả",
+  "fail_to_save_transactions": "Lưu giao dịch thất bại. Vui lòng thử lại."
 }

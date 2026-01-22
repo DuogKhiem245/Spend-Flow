@@ -78,7 +78,6 @@ class _BottomNavbarState extends State<BottomNavbar> {
       child: Stack(
         children: [
           _pages[_currentIndex],
-
           Positioned(
             left: 0,
             right: 0,

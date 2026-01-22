@@ -12,8 +12,8 @@ class CategoryModel {
   final bool isCustom;
   final String? remoteIconUrl;
 
-  final bool isDeleted; 
-  final int updatedAt; 
+  final bool isDeleted;
+  final int updatedAt;
 
   CategoryModel({
     String? id,
@@ -65,7 +65,6 @@ class CategoryModel {
       'count': count,
       'isCustom': isCustom ? 1 : 0,
       'remoteIconUrl': remoteIconUrl,
-
       'isDeleted': isDeleted ? 1 : 0,
       'updatedAt': updatedAt,
     };
@@ -94,5 +93,19 @@ class CategoryModel {
       return value.millisecondsSinceEpoch;
     }
     return DateTime.now().millisecondsSinceEpoch;
+  }
+
+  static CategoryModel? getCategoryById(
+    String id,
+    List<CategoryModel> availableCategories,
+  ) {
+    try {
+      return availableCategories.firstWhere(
+        (cat) => cat.id == id,
+        orElse: () => availableCategories.first,
+      );
+    } catch (e) {
+      return null;
+    }
   }
 }

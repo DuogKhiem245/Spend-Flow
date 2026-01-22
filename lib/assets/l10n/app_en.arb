@@ -369,7 +369,7 @@
   "no_recent_imports": "No recent data imports",
   "invalid_format": "Invalid file format.",
   "import_success": "Imported successfully!",
-  "import_success_description": "Your data has been imported successfully.",
+  "import_success_description": "Imported successfully {count} transactions from the file.",
   "file_format_template": "File Format Template",
   "download_sample_file": "Download Sample File {format}",
 
@@ -400,6 +400,13 @@
   "voice_input_error": "Voice input error. Please try again.",
   "voice_input_not_recognized": "Voice input not recognized. Please try again.",
   "voice_input_permission_denied": "Voice input permission denied. Please enable microphone access in settings.",
-  "error_ai_request": "The AI ​​cannot recognize this request. Please try to be more specific."
+  "error_ai_request": "The AI ​​cannot recognize this request. Please try to be more specific.",
 
+  "ai_powered": "AI Powered",
+  "entries_pending": "Entries Pending",
+  "confirm_selected_entries": "Confirm Selected Entries",
+  "preview_results": "Preview Results",
+  "clear_all": "Clear all",
+  "select_all": "Select all",
+  "fail_to_save_transactions": "Failed to save transactions. Please try again."
 }

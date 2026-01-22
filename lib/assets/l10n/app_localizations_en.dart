@@ -1120,8 +1120,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get import_success => 'Imported successfully!';
 
   @override
-  String get import_success_description =>
-      'Your data has been imported successfully.';
+  String import_success_description(Object count) {
+    return 'Imported successfully $count transactions from the file.';
+  }
 
   @override
   String get file_format_template => 'File Format Template';
@@ -1209,4 +1210,26 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get error_ai_request =>
       'The AI ​​cannot recognize this request. Please try to be more specific.';
+
+  @override
+  String get ai_powered => 'AI Powered';
+
+  @override
+  String get entries_pending => 'Entries Pending';
+
+  @override
+  String get confirm_selected_entries => 'Confirm Selected Entries';
+
+  @override
+  String get preview_results => 'Preview Results';
+
+  @override
+  String get clear_all => 'Clear all';
+
+  @override
+  String get select_all => 'Select all';
+
+  @override
+  String get fail_to_save_transactions =>
+      'Failed to save transactions. Please try again.';
 }

@@ -1,8 +1,6 @@
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,6 +11,7 @@ import 'package:spend_flow/core/services/ai_service.dart';
 import 'package:spend_flow/core/model/category_model.dart';
 import 'package:spend_flow/core/services/language_service.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/features/ai_preview/ai_preview_overview_view.dart';
 import 'package:spend_flow/features/transaction/add_transaction/add_transaction_view.dart';
 
 class ScanReceiptViewModel extends ChangeNotifier {
@@ -126,6 +125,7 @@ class ScanReceiptViewModel extends ChangeNotifier {
       String base64Image = base64Encode(compressedBytes);
       List<CategoryModel> currentCategories = CategoryData.getAll();
       final currentLanguage = LanguageService().locale.languageCode;
+      final currentWalletId = await LocalStorageService().getCurrentWalletId();
 
       final dynamic rawResponse = await _aiService.analyzeImage(
         base64Image,
@@ -134,78 +134,87 @@ class ScanReceiptViewModel extends ChangeNotifier {
       );
 
       final fullMap = Map<String, dynamic>.from(rawResponse);
-      Map<String, dynamic>? resultPart;
+      final List results = fullMap['results'] ?? [];
 
-      if (fullMap.containsKey('result')) {
-        resultPart = Map<String, dynamic>.from(fullMap['result']);
-      } else {
-        resultPart = fullMap;
-      }
-
-      if (resultPart['data'] == null) {
+      if (results.isEmpty) {
         throw Exception("No data found in AI response");
       }
 
-      final data = Map<String, dynamic>.from(resultPart['data']);
-      final currentWalletId = await LocalStorageService().getCurrentWalletId();
-
-      if (!context.mounted) return;
-
-      final transactionData = TransactionModel.fromAIResponse(
-        aiData: data,
-        availableCategories: currentCategories,
-        currentWalletId: currentWalletId,
+      final List<TransactionModel> parsedTransactions = [];
+      final DateTime today = DateTime.now().copyWith(
+        hour: 23,
+        minute: 59,
+        second: 59,
       );
 
-      debugPrint("Transaction Data: $transactionData");
+      for (var item in results) {
+        final String actionType = item['actionType']?.toString() ?? "";
+        final data = Map<String, dynamic>.from(item['data'] ?? {});
 
-      final DateTime now = DateTime.now();
-      final DateTime today = DateTime(now.year, now.month, now.day);
-      final DateTime transactionDay = DateTime(
-        transactionData.date.year,
-        transactionData.date.month,
-        transactionData.date.day,
-      );
+        if (actionType == "TRANSACTION") {
+          final transaction = TransactionModel.fromAIResponse(
+            aiData: data,
+            availableCategories: currentCategories,
+            currentWalletId: currentWalletId,
+          );
 
-      if (transactionDay.isAfter(today)) {
-        throw Exception(
-          "The invoice date (${transactionData.date.day}/${transactionData.date.month}) is invalid because it is greater than the current date.",
-        );
+          if (transaction.date.isAfter(today)) {
+            continue;
+          }
+          parsedTransactions.add(transaction);
+        }
+      }
+
+      if (parsedTransactions.isEmpty) {
+        throw Exception("No valid transactions found in receipt");
       }
 
       HapticFeedback.mediumImpact();
-
       if (!context.mounted) return;
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>
-              AddTransactionPage(transactionData: transactionData),
-        ),
-      );
-    } catch (e) {
-      HapticFeedback.vibrate();
-      final l10n = AppLocalizations.of(context)!;
-      if (context.mounted) {
-        showCupertinoDialog(
-          context: context,
-          builder: (context) => CupertinoAlertDialog(
-            title: Text(l10n.error),
-            content: Text(e.toString().replaceAll("Exception: ", "")),
-            actions: [
-              CupertinoDialogAction(
-                child: Text(l10n.close),
-                onPressed: () => Navigator.pop(context),
-              ),
-            ],
+      if (parsedTransactions.length == 1) {
+        Navigator.pushReplacement(
+          context,
+          CupertinoPageRoute(
+            builder: (context) =>
+                AddTransactionPage(transactionData: parsedTransactions.first),
           ),
         );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          CupertinoPageRoute(
+            builder: (context) =>
+                AIPreviewOverviewView(transactions: parsedTransactions),
+          ),
+        );
+      }
+    } catch (e) {
+      HapticFeedback.vibrate();
+      if (context.mounted) {
+        _showErrorDialog(context, e.toString().replaceAll("Exception: ", ""));
       }
     } finally {
       _isScanning = false;
       notifyListeners();
     }
+  }
+
+  void _showErrorDialog(BuildContext context, String message) {
+    final l10n = AppLocalizations.of(context)!;
+    showCupertinoDialog(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: Text(l10n.error),
+        content: Text(message),
+        actions: [
+          CupertinoDialogAction(
+            child: Text(l10n.close),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> toggleFlash() async {

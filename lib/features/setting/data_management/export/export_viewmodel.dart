@@ -157,7 +157,9 @@ class ExportViewModel extends ChangeNotifier {
 
       await Share.shareXFiles([XFile(file.path)], subject: 'Excel Report');
     } catch (e) {
-      _showError(context, "Lỗi xuất Excel: $e");
+      if (context.mounted) {
+        _showError(context, "Lỗi xuất Excel: $e");
+      }
     } finally {
       _setLoading(false);
     }
@@ -232,7 +234,9 @@ class ExportViewModel extends ChangeNotifier {
 
       await Share.shareXFiles([XFile(file.path)], subject: 'JSON Backup');
     } catch (e) {
-      _showError(context, "Lỗi xuất JSON: $e");
+      if (context.mounted){
+        _showError(context, "Lỗi xuất JSON: $e");
+      }
     } finally {
       _setLoading(false);
     }
@@ -258,8 +262,9 @@ class ExportViewModel extends ChangeNotifier {
         XFile(file.path),
       ], subject: 'SpendFlow Export Data');
     } catch (e) {
-      debugPrint("Error Export: $e");
-      _showError(context, "Lỗi xuất file: $e");
+      if (context.mounted) {
+        _showError(context, "Lỗi xuất file: $e");
+      }
     } finally {
       _setLoading(false);
     }

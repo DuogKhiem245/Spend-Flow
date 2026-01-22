@@ -30,6 +30,9 @@ class ImportViewModel extends ChangeNotifier {
   String? _errorMessage;
   String? get errorMessage => _errorMessage;
 
+  int? _recentImportCount = 0;
+  int? get recentImportCount => _recentImportCount;
+
   List<Map<String, dynamic>> _recentImports = [];
   List<Map<String, dynamic>> get recentImports => _recentImports;
 
@@ -224,7 +227,9 @@ class ImportViewModel extends ChangeNotifier {
             context: context,
             builder: (context) => CupertinoAlertDialog(
               title: Text(l10n.import_success),
-              content: Text(l10n.import_success_description),
+              content: Text(
+                l10n.import_success_description(_recentImportCount!),
+              ),
               actions: [
                 CupertinoDialogAction(
                   onPressed: () => Navigator.pop(context),
@@ -281,9 +286,7 @@ class ImportViewModel extends ChangeNotifier {
         if (data.containsKey('wallets')) {
           final List<dynamic> walletsRaw = data['wallets'];
           for (var w in walletsRaw) {
-            final wallet = WalletModel.fromMap(
-              Map<String, dynamic>.from(w),
-            ); 
+            final wallet = WalletModel.fromMap(Map<String, dynamic>.from(w));
             await _storage.saveWallet(wallet);
           }
         }
@@ -348,41 +351,36 @@ class ImportViewModel extends ChangeNotifier {
     String language,
   ) async {
     List<TransactionModel> transactionsToSave = [];
-
-    final listWallets = await _storage.getAllWallets();
-    final walletIds = listWallets.map((w) => w.id).toList();
     final defaultWalletId = await _storage.getCurrentWalletId();
-
-    Map<String, dynamic>? result;
 
     for (String line in lines) {
       try {
-        result = await _aiService.analyzeTextCSVImport(
-          line,
-          categories,
-          language,
-          walletIds,
-        );
+        final List<Map<String, dynamic>> results = await _aiService
+            .analyzeTextCSVImport(line, categories, language);
 
-        if (result != null && result['data'] != null) {
-          final data = Map<String, dynamic>.from(result['data']);
+        for (var item in results) {
+          if (item['data'] != null) {
+            final data = Map<String, dynamic>.from(item['data'] as Map);
 
-          final tx = TransactionModel.fromAIResponse(
-            aiData: data,
-            availableCategories: categories,
-            currentWalletId: defaultWalletId,
-          );
+            final tx = TransactionModel.fromAIResponse(
+              aiData: data,
+              availableCategories: categories,
+              currentWalletId: defaultWalletId,
+            );
 
-          transactionsToSave.add(tx);
+            transactionsToSave.add(tx);
+          }
         }
       } catch (e) {
-        debugPrint("Lỗi phân tích dòng [$line]: $e");
+        debugPrint("Lỗi xử lý tại _sendToAI: $e");
       }
     }
-
     if (transactionsToSave.isNotEmpty) {
       for (var tx in transactionsToSave) {
-        await _storage.addTransaction(tx);
+        final result = await _storage.addTransaction(tx);
+        if (result) {
+          _recentImportCount = _recentImportCount! + 1;
+        }
       }
     } else {
       debugPrint("Không có giao dịch hợp lệ nào để lưu.");

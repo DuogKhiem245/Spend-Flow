@@ -1118,8 +1118,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get import_success => 'Nhập thành công!';
 
   @override
-  String get import_success_description =>
-      'Dữ liệu của bạn đã được nhập thành công.';
+  String import_success_description(Object count) {
+    return 'Đã nhập thành công $count giao dịch từ tệp.';
+  }
 
   @override
   String get file_format_template => 'Mẫu định dạng tệp';
@@ -1206,4 +1207,26 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get error_ai_request =>
       'AI không thể nhận dạng yêu cầu này. Hãy thử nói rõ hơn.';
+
+  @override
+  String get ai_powered => 'Hỗ trợ bởi AI';
+
+  @override
+  String get entries_pending => 'Mục đang chờ xử lý';
+
+  @override
+  String get confirm_selected_entries => 'Xác nhận các mục đã chọn';
+
+  @override
+  String get preview_results => 'Xem trước kết quả';
+
+  @override
+  String get clear_all => 'Xóa tất cả';
+
+  @override
+  String get select_all => 'Chọn tất cả';
+
+  @override
+  String get fail_to_save_transactions =>
+      'Lưu giao dịch thất bại. Vui lòng thử lại.';
 }
