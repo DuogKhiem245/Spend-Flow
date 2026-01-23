@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
@@ -9,6 +10,7 @@ import 'package:spend_flow/core/model/budget_model.dart';
 
 class BudgetViewModel extends ChangeNotifier {
   final LocalStorageService _storageService = LocalStorageService();
+  final LocalAuthentication _auth = LocalAuthentication();
 
   List<BudgetModel> budgets = [];
 
@@ -22,6 +24,12 @@ class BudgetViewModel extends ChangeNotifier {
   bool _isLoading = true;
   bool get isLoading => _isLoading;
 
+  bool _isLocked = true;
+  bool get isLocked => _isLocked;
+
+  bool _isFaceIdAvailable = false;
+  bool get isFaceIdAvailable => _isFaceIdAvailable;
+
   bool get canEdit {
     final now = DateTime.now();
     final currentMonthStart = DateTime(now.year, now.month);
@@ -34,7 +42,65 @@ class BudgetViewModel extends ChangeNotifier {
   }
 
   BudgetViewModel() {
+    _checkSecurity();
     _initData();
+  }
+
+  Future<void> _checkSecurity() async {
+    final hasPasscode = await _storageService.hasPasscode();
+    final faceEnabled = await _storageService.isFaceIdEnabled();
+
+    _isFaceIdAvailable = faceEnabled && hasPasscode;
+
+    if (!hasPasscode) {
+      _isLocked = false;
+    } else {
+      _isLocked = true;
+    }
+
+    notifyListeners();
+
+    if (_isLocked && _isFaceIdAvailable) {
+      authenticateBiometric();
+    }
+  }
+
+  Future<void> authenticateBiometric() async {
+    if (!_isFaceIdAvailable) return;
+
+    try {
+      final bool didAuthenticate = await _auth.authenticate(
+        localizedReason: 'Xác thực để xem báo cáo',
+        biometricOnly: true,
+        sensitiveTransaction: true,
+      );
+
+      if (didAuthenticate) {
+        _isLocked = false;
+        notifyListeners();
+      }
+    } catch (e) {
+      debugPrint("Error FaceID: $e");
+    }
+  }
+
+  Future<bool> verifyPasscode(String inputCode) async {
+    final savedCode = await _storageService.getPasscode();
+    if (savedCode == inputCode) {
+      _isLocked = false;
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
+
+  void lockApp() {
+    _storageService.hasPasscode().then((has) {
+      if (has && !_isLocked) {
+        _isLocked = true;
+        notifyListeners();
+      }
+    });
   }
 
   Future<void> _initData() async {

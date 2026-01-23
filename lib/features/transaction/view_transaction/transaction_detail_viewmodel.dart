@@ -85,6 +85,11 @@ class TransactionDetailViewModel extends ChangeNotifier {
     _appDocumentsPath = directory.path;
     notifyListeners();
   }
+  Future<String> loadCurrency() async {
+    final Map<String, String> currencyData = await _storage.getCurrency();
+    final String symbol = currencyData['symbol'] ?? '\$';
+    return symbol;
+  }
 
   File? getRealImageFile(String iconKey) {
     if (_appDocumentsPath == null || iconKey.isEmpty) return null;
@@ -95,7 +100,7 @@ class TransactionDetailViewModel extends ChangeNotifier {
 
   String get totalSpending7DaysString {
     final format = NumberFormat("#,##0.00", "en_US");
-    return "\$${format.format(_totalSpending7Days)}";
+    return " ${format.format(_totalSpending7Days)}";
   }
 
   Future<void> loadTrendData(BuildContext context) async {

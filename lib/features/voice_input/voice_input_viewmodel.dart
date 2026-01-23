@@ -142,8 +142,10 @@ class VoiceInputViewModel extends ChangeNotifier {
         throw Exception(l10n.error_ai_request);
       }
 
+      bool? isSaved = false;
+
       if (parsedTransactions.length == 1) {
-        Navigator.pushReplacement(
+        isSaved = await Navigator.push<bool>(
           context,
           CupertinoPageRoute(
             builder: (context) =>
@@ -151,7 +153,7 @@ class VoiceInputViewModel extends ChangeNotifier {
           ),
         );
       } else {
-        Navigator.pushReplacement(
+        isSaved = await Navigator.push<bool>(
           context,
           CupertinoPageRoute(
             builder: (context) =>
@@ -159,9 +161,14 @@ class VoiceInputViewModel extends ChangeNotifier {
           ),
         );
       }
+
+      if (context.mounted && isSaved == true) {
+        Navigator.pop(context, true);
+      }
     } catch (e) {
       if (context.mounted) {
-        _showErrorDialog(context, l10n, e.toString());
+        debugPrint("Error processing voice input: $e");
+        _showErrorDialog(context, l10n);
       }
     } finally {
       _isProcessing = false;
@@ -172,13 +179,12 @@ class VoiceInputViewModel extends ChangeNotifier {
   void _showErrorDialog(
     BuildContext context,
     AppLocalizations l10n,
-    String error,
   ) {
     showCupertinoDialog(
       context: context,
       builder: (ctx) => CupertinoAlertDialog(
         title: Text(l10n.error),
-        content: Text("${l10n.voice_input_error}: $error"),
+        content: Text(l10n.voice_input_error),
         actions: [
           CupertinoDialogAction(
             child: Text(l10n.close),

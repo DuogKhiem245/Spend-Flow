@@ -932,6 +932,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unlock => 'Unlock';
 
   @override
+  String get click_to_unlock => 'Click to Unlock';
+
+  @override
   String get unlock_untilimited_access => 'Unlock Unlimited Access';
 
   @override
@@ -978,6 +981,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get restore => 'Restore';
+
+  @override
+  String used_up_daily_limit(Object value) {
+    return 'You\'ve used up your voice input limit for today. Watch an ad to get $value more uses or upgrade to Premium.';
+  }
+
+  @override
+  String see_ads(Object additionalUses) {
+    return 'See Ads (+$additionalUses uses)';
+  }
+
+  @override
+  String get ads_loading => 'Ads Loading...';
 
   @override
   String get select_language => 'Select Language';
@@ -1210,6 +1226,19 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get error_ai_request =>
       'The AI ​​cannot recognize this request. Please try to be more specific.';
+
+  @override
+  String get voice_analysis => 'Analyzing voice input...';
+
+  @override
+  String get scan_receipt_error => 'Receipt scanning error. Please try again.';
+
+  @override
+  String get requires_premium =>
+      'This feature requires watching ads to use or upgrading to Premium.';
+
+  @override
+  String get watch_ad_continue => 'Watch Ad to Continue';
 
   @override
   String get ai_powered => 'AI Powered';

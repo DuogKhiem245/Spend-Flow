@@ -931,6 +931,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get unlock => 'Mở khóa';
 
   @override
+  String get click_to_unlock => 'Chạm để mở khóa';
+
+  @override
   String get unlock_untilimited_access => 'Mở khóa truy cập không giới hạn';
 
   @override
@@ -977,6 +980,19 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get restore => 'Khôi phục';
+
+  @override
+  String used_up_daily_limit(Object value) {
+    return 'Bạn đã sử dụng hết giới hạn nhập giọng nói trong ngày hôm nay. Xem quảng cáo để nhận thêm $value lượt sử dụng hoặc nâng cấp lên Premium.';
+  }
+
+  @override
+  String see_ads(Object additionalUses) {
+    return 'Xem quảng cáo (+$additionalUses lượt)';
+  }
+
+  @override
+  String get ads_loading => 'Đang tải quảng cáo...';
 
   @override
   String get select_language => 'Chọn ngôn ngữ';
@@ -1207,6 +1223,19 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get error_ai_request =>
       'AI không thể nhận dạng yêu cầu này. Hãy thử nói rõ hơn.';
+
+  @override
+  String get voice_analysis => 'Đang phân tích giọng nói...';
+
+  @override
+  String get scan_receipt_error => 'Lỗi quét hóa đơn. Vui lòng thử lại.';
+
+  @override
+  String get requires_premium =>
+      'Tính năng này yêu cầu xem quảng cáo để sử dụng hoặc nâng cấp lên Premium.';
+
+  @override
+  String get watch_ad_continue => 'Xem quảng cáo để tiếp tục';
 
   @override
   String get ai_powered => 'Hỗ trợ bởi AI';

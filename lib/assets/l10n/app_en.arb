@@ -307,6 +307,7 @@
 
   "report_locked": " Locked Content",
   "unlock": "Unlock",
+  "click_to_unlock": "Click to Unlock",
 
   "unlock_untilimited_access": "Unlock Unlimited Access",
   "unlock_untilimited_access_description": "Upgrade to Premium to remove all limits and access advanced features.",
@@ -323,6 +324,7 @@
   "day": "day",
   "accept_terms_conditions": "Subscription auto-renews. By continuing, you agree to our Terms of Service and Privacy Policy.",
   "restore": "Restore",
+  "used_up_daily_limit": "You've used up your voice input limit for today. Watch an ad to get {value} more uses or upgrade to Premium.",
 
   "select_language": "Select Language",
   "suggested": "Suggested",
@@ -334,6 +336,8 @@
   "popular": "Popular",
   "all_currencies": "All Currencies",
   "currency_change_warning": "Changing currency will only update the display symbol. Past transaction rates will not be recalculated.",
+  "see_ads": "See Ads (+{additionalUses} uses)",
+  "ads_loading": "Ads Loading...",
 
   "data_management": "Data Management",
   "select_format": "Select Format",
@@ -401,6 +405,10 @@
   "voice_input_not_recognized": "Voice input not recognized. Please try again.",
   "voice_input_permission_denied": "Voice input permission denied. Please enable microphone access in settings.",
   "error_ai_request": "The AI ​​cannot recognize this request. Please try to be more specific.",
+  "voice_analysis": "Analyzing voice input...",
+  "scan_receipt_error": "Receipt scanning error. Please try again.",
+  "requires_premium": "This feature requires watching ads to use or upgrading to Premium.",
+  "watch_ad_continue": "Watch Ad to Continue",
 
   "ai_powered": "AI Powered",
   "entries_pending": "Entries Pending",

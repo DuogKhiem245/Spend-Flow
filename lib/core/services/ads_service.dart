@@ -4,12 +4,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AdsService {
   InterstitialAd? _interstitialAd;
+  RewardedAd? _rewardedAd;
 
   static const String _adCounterKey = 'interstitial_ad_counter';
 
   final String interstitialAdUnitId = Platform.isAndroid
       ? 'ca-app-pub-3940256099942544/1033173712' 
       : 'ca-app-pub-3940256099942544/4411468910';
+
+  final String rewardedAdUnitId = Platform.isAndroid
+      ? 'ca-app-pub-3940256099942544/5224354917'
+      : 'ca-app-pub-3940256099942544/1712485313';
 
   void loadInterstitialAd() {
     InterstitialAd.load(
@@ -18,6 +23,19 @@ class AdsService {
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) => _interstitialAd = ad,
         onAdFailedToLoad: (error) => _interstitialAd = null,
+      ),
+    );
+  }
+
+  void loadRewardedAd() {
+    RewardedAd.load(
+      adUnitId: rewardedAdUnitId,
+      request: const AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) => _rewardedAd = ad,
+        onAdFailedToLoad: (error) {
+          _rewardedAd = null;
+        },
       ),
     );
   }
@@ -49,6 +67,35 @@ class AdsService {
     } else {
       await prefs.setInt(_adCounterKey, currentCount);
       onAdClosed();
+    }
+  }
+
+  void showRewardedAd({
+    required Function onRewardEarned,
+    required Function onAdFailed,
+  }) {
+    if (_rewardedAd != null) {
+      _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (ad) {
+          ad.dispose();
+          loadRewardedAd(); 
+        },
+        onAdFailedToShowFullScreenContent: (ad, error) {
+          ad.dispose();
+          loadRewardedAd();
+          onAdFailed();
+        },
+      );
+
+      _rewardedAd!.show(
+        onUserEarnedReward: (ad, reward) {
+          onRewardEarned(); 
+        },
+      );
+      _rewardedAd = null;
+    } else {
+      loadRewardedAd();
+      onAdFailed();
     }
   }
 }

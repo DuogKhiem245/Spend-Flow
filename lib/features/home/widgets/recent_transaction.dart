@@ -15,24 +15,24 @@ import 'package:spend_flow/features/transaction/view_transaction/transaction_det
 
 class RecentTransaction extends StatefulWidget {
   final List<TransactionModel> transactions;
+  final HomeViewModel viewModel;
 
-  const RecentTransaction({super.key, required this.transactions});
+  const RecentTransaction({super.key, required this.transactions, required this.viewModel});
 
   @override
   State<RecentTransaction> createState() => _RecentTransactionState();
 }
 
 class _RecentTransactionState extends State<RecentTransaction> {
-  final HomeViewModel _viewModel = HomeViewModel();
 
   Future<void> _handleUnlock() async {
     bool success = false;
 
-    if (_viewModel.isFaceIdAvailable) {
-      success = await _viewModel.authenticateBiometric();
+    if (widget.viewModel.isFaceIdAvailable) {
+      success = await widget.viewModel.authenticateBiometric();
     }
 
-    if (!success && mounted && _viewModel.isLocked) {
+    if (!success && mounted && widget.viewModel.isLocked) {
       _showUnlockModal(context);
     }
   }
@@ -43,21 +43,15 @@ class _RecentTransactionState extends State<RecentTransaction> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => VerifyPasscodeSheet(
-        onVerify: (code) => _viewModel.verifyPasscode(code),
+        onVerify: (code) => widget.viewModel.verifyPasscode(code),
       ),
     );
   }
 
   @override
-  void initState() {
-    super.initState();
-    _viewModel.initData();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final symbol = _viewModel.currencySymbol;
+    final symbol = widget.viewModel.currencySymbol;
 
     if (widget.transactions.isEmpty) {
       return const SizedBox();
@@ -90,16 +84,19 @@ class _RecentTransactionState extends State<RecentTransaction> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              _viewModel.hasSecurity ?
+              widget.viewModel.hasSecurity ?
               ListenableBuilder(
-                listenable: _viewModel,
+                listenable: widget.viewModel,
                 builder: (context, _) {
-                  return Icon(
-                    _viewModel.isLocked
-                        ? CupertinoIcons.lock_fill
-                        : CupertinoIcons.lock_open_fill,
-                    size: 18.sp,
-                    color: CupertinoColors.systemGrey,
+                  return GestureDetector(
+                    onTap: widget.viewModel.isLocked ? _handleUnlock : widget.viewModel.lockApp,
+                    child: Icon(
+                      widget.viewModel.isLocked
+                          ? CupertinoIcons.lock_fill
+                          : CupertinoIcons.lock_open_fill,
+                      size: 18.sp,
+                      color: CupertinoColors.systemGrey,
+                    ),
                   );
                 },
               ) : SizedBox.shrink(),
@@ -108,14 +105,14 @@ class _RecentTransactionState extends State<RecentTransaction> {
           SizedBox(height: 20.h),
 
           ListenableBuilder(
-            listenable: _viewModel,
+            listenable: widget.viewModel,
             builder: (context, child) {
               return Stack(
                 children: [
                   ImageFiltered(
                     imageFilter: ImageFilter.blur(
-                      sigmaX: _viewModel.isLocked ? 5.0 : 0.0,
-                      sigmaY: _viewModel.isLocked ? 5.0 : 0.0,
+                      sigmaX: widget.viewModel.isLocked ? 7.0 : 0.0,
+                      sigmaY: widget.viewModel.isLocked ? 7.0 : 0.0,
                     ),
                     child: ListView.builder(
                       padding: EdgeInsets.zero,
@@ -129,7 +126,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
                     ),
                   ),
 
-                  if (_viewModel.isLocked)
+                  if (widget.viewModel.isLocked)
                     Positioned.fill(
                       child: Container(
                         color: Colors.transparent,
@@ -150,7 +147,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
                               Icon(CupertinoIcons.eye_slash_fill, size: 20.sp),
                               SizedBox(width: 8.w),
                               Text(
-                                "Chạm để hiện",
+                                l10n.click_to_unlock,
                                 style: TextStyle(fontSize: 14.sp),
                               ),
                             ],
@@ -169,7 +166,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
 
   Widget _buildTransactionItem(TransactionModel item, BuildContext context, String symbol) {
     final isExpense = item.isIncome == false;
-    final File? imageFile = _viewModel.getRealImageFile(item.category.iconKey);
+    final File? imageFile = widget.viewModel.getRealImageFile(item.category.iconKey);
     final color = isExpense ? AppColors.errorColor : AppColors.secondaryColor;
 
     return CupertinoButton(
@@ -243,8 +240,8 @@ class _RecentTransactionState extends State<RecentTransaction> {
               children: [
                 Text(
                   isExpense
-                      ? "-$symbol ${_viewModel.formatCurrency(item.amount)}"
-                      : "+$symbol ${_viewModel.formatCurrency(item.amount)}",
+                      ? "-$symbol ${widget.viewModel.formatCurrency(item.amount)}"
+                      : "+$symbol ${widget.viewModel.formatCurrency(item.amount)}",
                   style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w700,

@@ -43,14 +43,14 @@ class ReportViewModel extends ChangeNotifier {
 
     if (!hasPasscode) {
       _isLocked = false;
-      notifyListeners();
     } else {
       _isLocked = true;
-      notifyListeners();
+    }
 
-      if (_isFaceIdAvailable) {
-        authenticateBiometric();
-      }
+    notifyListeners();
+
+    if (_isLocked && _isFaceIdAvailable) {
+      authenticateBiometric();
     }
   }
 
@@ -83,6 +83,15 @@ class ReportViewModel extends ChangeNotifier {
     return false;
   }
 
+  void lockApp() {
+    _storage.hasPasscode().then((has) {
+      if (has && !_isLocked) {
+        _isLocked = true;
+        notifyListeners();
+      }
+    });
+  }
+
   Future<void> _loadCurrency() async {
     final Map<String, String> currencyData = await _storage.getCurrency();
     _currencySymbol = currencyData['symbol'] ?? '\$';
@@ -97,8 +106,7 @@ class ReportViewModel extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    if (isDelay)
-    {
+    if (isDelay) {
       await Future.delayed(const Duration(milliseconds: 300));
     }
 

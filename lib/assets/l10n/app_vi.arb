@@ -307,6 +307,7 @@
 
   "report_locked": "Nội dung được khóa",
   "unlock": "Mở khóa",
+  "click_to_unlock": "Chạm để mở khóa",
 
   "unlock_untilimited_access": "Mở khóa truy cập không giới hạn",
   "unlock_untilimited_access_description": "Nâng cấp lên Premium để loại bỏ mọi giới hạn và truy cập các tính năng nâng cao.",
@@ -323,6 +324,9 @@
   "day": "ngày",
   "accept_terms_conditions": "Đăng ký tự động gia hạn. Bằng cách tiếp tục, bạn đồng ý với Điều khoản Dịch vụ và Chính sách Quyền riêng tư của chúng tôi.",
   "restore": "Khôi phục",
+  "used_up_daily_limit": "Bạn đã sử dụng hết giới hạn nhập giọng nói trong ngày hôm nay. Xem quảng cáo để nhận thêm {value} lượt sử dụng hoặc nâng cấp lên Premium.",
+  "see_ads": "Xem quảng cáo (+{additionalUses} lượt)",
+  "ads_loading": "Đang tải quảng cáo...",
 
   "select_language": "Chọn ngôn ngữ",
   "suggested": "Gợi ý",
@@ -401,6 +405,10 @@
   "voice_input_not_recognized": "Không nhận diện được giọng nói. Vui lòng thử lại.",
   "voice_input_permission_denied": "Quyền nhập giọng nói bị từ chối. Vui lòng bật quyền truy cập micro trong cài đặt.",
   "error_ai_request": "AI không thể nhận dạng yêu cầu này. Hãy thử nói rõ hơn.",
+  "voice_analysis": "Đang phân tích giọng nói...",
+  "scan_receipt_error": "Lỗi quét hóa đơn. Vui lòng thử lại.",
+  "requires_premium": "Tính năng này yêu cầu xem quảng cáo để sử dụng hoặc nâng cấp lên Premium.",
+  "watch_ad_continue": "Xem quảng cáo để tiếp tục",
 
   "ai_powered": "Hỗ trợ bởi AI",
   "entries_pending": "Mục đang chờ xử lý",

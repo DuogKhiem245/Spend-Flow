@@ -47,6 +47,7 @@ class _UpgradePremiumWidgetState extends State<UpgradePremiumWidget>
 
     return Container(
       width: double.infinity,
+      margin: EdgeInsets.only(top: 10.h),
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30.r),

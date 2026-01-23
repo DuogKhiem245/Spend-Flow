@@ -14,6 +14,7 @@ import 'package:spend_flow/config/app_icons.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/core/utils/category_helper.dart';
 import 'package:spend_flow/core/widgets/skeleton/skeleton_budget_view.dart';
+import 'package:spend_flow/core/widgets/verify_passcode/verify_passcode_sheet.dart';
 import 'package:spend_flow/features/budget/add_budget/add_budget_view.dart';
 import '../../core/model/budget_model.dart';
 import 'budget_viewmodel.dart';
@@ -25,19 +26,38 @@ class BudgetPage extends StatefulWidget {
   State<BudgetPage> createState() => _BudgetPageState();
 }
 
-class _BudgetPageState extends State<BudgetPage> {
+class _BudgetPageState extends State<BudgetPage> with WidgetsBindingObserver, AutomaticKeepAliveClientMixin {
   final BudgetViewModel _viewModel = BudgetViewModel();
 
   bool _isPremium = false;
 
+    @override
+  bool get wantKeepAlive => true;
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     LocalStorageService().getPremiumStatus().then((value) {
       setState(() {
         _isPremium = value;
       });
     });
+  }
+
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _viewModel.lockApp();
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      _viewModel.lockApp();
+    }
   }
 
   Future<void> _navigateToAddBudget() async {
@@ -50,8 +70,21 @@ class _BudgetPageState extends State<BudgetPage> {
     _viewModel.refreshData();
   }
 
+   void _showUnlockModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => VerifyPasscodeSheet(
+        onVerify: (code) => _viewModel.verifyPasscode(code),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+    
     final l10n = AppLocalizations.of(context)!;
 
     return ListenableBuilder(
@@ -61,6 +94,47 @@ class _BudgetPageState extends State<BudgetPage> {
           child: SafeArea(
             child: _viewModel.isLoading
                 ? const SkeletonBudgetView()
+                : _viewModel.isLocked
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          CupertinoIcons.lock_shield_fill,
+                          size: 80.sp,
+                          color: CupertinoTheme.of(context).primaryColor,
+                        ),
+                        SizedBox(height: 20.h),
+                        Text(
+                          l10n.report_locked,
+                          style: TextStyle(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w600,
+                            color: CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.color,
+                          ),
+                        ),
+                        SizedBox(height: 10.h),
+                        CupertinoButton(
+                          child: Text(
+                            l10n.unlock,
+                            style: TextStyle(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          onPressed: () {
+                            _viewModel.authenticateBiometric().then((_) {
+                              if (_viewModel.isLocked && context.mounted) {
+                                _showUnlockModal(context);
+                              }
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  )
                 : Stack(
                     children: [
                       Column(

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
@@ -179,10 +179,9 @@ class HomeHeader extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 15.sp,
                                 fontWeight: FontWeight.w600,
-                                color: CupertinoTheme.of(context)
-                                    .textTheme
-                                    .textStyle
-                                    .color,
+                                color: CupertinoTheme.of(
+                                  context,
+                                ).textTheme.textStyle.color,
                               ),
                             ),
                           ),
@@ -207,13 +206,12 @@ class HomeHeader extends StatelessWidget {
     );
   }
 
-
   void _showManageWalletDialog(BuildContext context, bool isDarkMode) {
     final l10n = AppLocalizations.of(context)!;
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, 
-      backgroundColor: Colors.transparent, 
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
       enableDrag: true,
       builder: (ctx) => Container(
         constraints: BoxConstraints(
@@ -235,7 +233,7 @@ class HomeHeader extends StatelessWidget {
                   borderRadius: BorderRadius.circular(2.5.r),
                 ),
               ),
-          
+
               Padding(
                 padding: EdgeInsets.only(bottom: 16.h),
                 child: Text(
@@ -247,7 +245,7 @@ class HomeHeader extends StatelessWidget {
                   ),
                 ),
               ),
-          
+
               Expanded(
                 child: Material(
                   color: Colors.transparent,
@@ -258,19 +256,21 @@ class HomeHeader extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final wallet = viewModel.wallets[index];
                       final isCurrent = wallet.id == viewModel.currentWalletId;
-          
+
                       return Container(
                         decoration: BoxDecoration(
                           color: isCurrent
-                              ? AppColors.primaryColor.withValues(alpha: 
-                                  isDarkMode ? 0.15 : 0.08,
+                              ? AppColors.primaryColor.withValues(
+                                  alpha: isDarkMode ? 0.15 : 0.08,
                                 )
                               : CupertinoColors.secondarySystemBackground
                                     .resolveFrom(ctx),
                           borderRadius: BorderRadius.circular(16.r),
                           border: isCurrent
                               ? Border.all(
-                                  color: AppColors.primaryColor.withValues(alpha: .3),
+                                  color: AppColors.primaryColor.withValues(
+                                    alpha: .3,
+                                  ),
                                   width: 1,
                                 )
                               : null,
@@ -285,7 +285,9 @@ class HomeHeader extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: isCurrent
                                   ? AppColors.primaryColor
-                                  : CupertinoColors.systemGrey5.resolveFrom(ctx),
+                                  : CupertinoColors.systemGrey5.resolveFrom(
+                                      ctx,
+                                    ),
                               shape: BoxShape.circle,
                             ),
                             child: Icon(
@@ -319,9 +321,10 @@ class HomeHeader extends StatelessWidget {
                               : null,
                           trailing: IconButton(
                             icon: Icon(
-                              CupertinoIcons
-                                  .trash_circle_fill, 
-                              color: CupertinoColors.systemRed.withValues(alpha: 0.8),
+                              CupertinoIcons.trash_circle_fill,
+                              color: CupertinoColors.systemRed.withValues(
+                                alpha: 0.8,
+                              ),
                               size: 34.sp,
                             ),
                             onPressed: () =>
@@ -351,9 +354,7 @@ class HomeHeader extends StatelessWidget {
       context: context,
       builder: (ctx) => CupertinoAlertDialog(
         title: Text(l10n.delete_wallet),
-        content: Text(
-          l10n.delete_wallet_confirmation(walletName),
-        ),
+        content: Text(l10n.delete_wallet_confirmation(walletName)),
         actions: [
           CupertinoDialogAction(
             isDefaultAction: true,

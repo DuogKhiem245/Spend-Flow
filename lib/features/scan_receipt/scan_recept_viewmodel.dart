@@ -172,8 +172,10 @@ class ScanReceiptViewModel extends ChangeNotifier {
       HapticFeedback.mediumImpact();
       if (!context.mounted) return;
 
+      bool? isSaved = false;
+
       if (parsedTransactions.length == 1) {
-        Navigator.pushReplacement(
+        isSaved = await Navigator.push<bool>(
           context,
           CupertinoPageRoute(
             builder: (context) =>
@@ -181,7 +183,7 @@ class ScanReceiptViewModel extends ChangeNotifier {
           ),
         );
       } else {
-        Navigator.pushReplacement(
+        isSaved = await Navigator.push<bool>(
           context,
           CupertinoPageRoute(
             builder: (context) =>
@@ -189,10 +191,14 @@ class ScanReceiptViewModel extends ChangeNotifier {
           ),
         );
       }
+
+      if (context.mounted && isSaved == true) {
+        Navigator.pop(context, true);
+      }
     } catch (e) {
       HapticFeedback.vibrate();
       if (context.mounted) {
-        _showErrorDialog(context, e.toString().replaceAll("Exception: ", ""));
+        _showErrorDialog(context);
       }
     } finally {
       _isScanning = false;
@@ -200,13 +206,13 @@ class ScanReceiptViewModel extends ChangeNotifier {
     }
   }
 
-  void _showErrorDialog(BuildContext context, String message) {
+  void _showErrorDialog(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     showCupertinoDialog(
       context: context,
       builder: (context) => CupertinoAlertDialog(
         title: Text(l10n.error),
-        content: Text(message),
+        content: Text(l10n.scan_receipt_error),
         actions: [
           CupertinoDialogAction(
             child: Text(l10n.close),

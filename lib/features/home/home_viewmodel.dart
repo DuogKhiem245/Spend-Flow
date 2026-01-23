@@ -25,7 +25,7 @@ class HomeViewModel extends ChangeNotifier {
 
   String? _appDocumentsPath;
 
-  bool _isLocked = false;
+  bool _isLocked = true;
   bool _hasSecurity = false;
   bool _isFaceIdAvailable = false;
 
@@ -113,7 +113,45 @@ class HomeViewModel extends ChangeNotifier {
 
     if (hasPasscode) {
       _isLocked = true;
-      notifyListeners();
+      Future.microtask(() => notifyListeners());
+    }
+  }
+
+  Future<bool> authenticateBiometric() async {
+    if (!_isFaceIdAvailable) return false;
+
+    try {
+      final bool didAuthenticate = await _auth.authenticate(
+        localizedReason: 'Xác thực để xem giao dịch',
+        biometricOnly: true,
+        sensitiveTransaction: true,
+      );
+
+      if (didAuthenticate) {
+        _isLocked = false;
+        notifyListeners();
+        return true;
+      }
+    } catch (e) {
+      debugPrint("Error Auth: $e");
+    }
+    return false;
+  }
+
+  Future<bool> verifyPasscode(String inputCode) async {
+    final savedCode = await _storage.getPasscode();
+    if (savedCode == inputCode) {
+      _isLocked = false;
+      Future.microtask(() => notifyListeners());
+      return true;
+    }
+    return false;
+  }
+
+  void lockApp() {
+    if (_hasSecurity) {
+      _isLocked = true;
+      Future.microtask(() => notifyListeners());
     }
   }
 
@@ -208,37 +246,6 @@ class HomeViewModel extends ChangeNotifier {
     } else {
       _recentTransactions = all;
     }
-  }
-
-  Future<bool> authenticateBiometric() async {
-    if (!_isFaceIdAvailable) return false;
-
-    try {
-      final bool didAuthenticate = await _auth.authenticate(
-        localizedReason: 'Xác thực để xem giao dịch',
-        biometricOnly: true,
-        sensitiveTransaction: true,
-      );
-
-      if (didAuthenticate) {
-        _isLocked = false;
-        notifyListeners();
-        return true;
-      }
-    } catch (e) {
-      debugPrint("Error Auth: $e");
-    }
-    return false;
-  }
-
-  Future<bool> verifyPasscode(String inputCode) async {
-    final savedCode = await _storage.getPasscode();
-    if (savedCode == inputCode) {
-      _isLocked = false;
-      notifyListeners();
-      return true;
-    }
-    return false;
   }
 
   Future<void> _loadWallets() async {

@@ -54,7 +54,7 @@ class _VerifyPasscodeSheetState extends State<VerifyPasscodeSheet> {
         children: [
           SizedBox(height: 20.h),
           Text(
-            l10n.enter_passcode, 
+            l10n.enter_passcode,
             style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.w600,
@@ -69,7 +69,7 @@ class _VerifyPasscodeSheetState extends State<VerifyPasscodeSheet> {
           SizedBox(height: 10.h),
           if (_isError)
             Text(
-              l10n.incorrect_passcode, 
+              l10n.incorrect_passcode,
               style: TextStyle(
                 color: CupertinoColors.systemRed,
                 fontSize: 14.sp,
@@ -101,6 +101,9 @@ class _VerifyPasscodeSheetState extends State<VerifyPasscodeSheet> {
                   cursorColor: Colors.transparent,
                   decoration: const BoxDecoration(color: Colors.transparent),
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  onChanged: (value) => {
+                    HapticFeedback.lightImpact()
+                  },
                 ),
               ),
               IgnorePointer(
@@ -119,12 +122,12 @@ class _VerifyPasscodeSheetState extends State<VerifyPasscodeSheet> {
                       }
                     }
                     return Container(
-                      width: 40.w,
-                      height: 50.h,
+                      width: 48.w,
+                      height: 56.h,
                       margin: EdgeInsets.symmetric(horizontal: 6.w),
                       decoration: BoxDecoration(
                         color: CupertinoTheme.of(context).barBackgroundColor,
-                        borderRadius: BorderRadius.circular(10.r),
+                        borderRadius: BorderRadius.circular(30.r),
                         border: Border.all(
                           color: _isError
                               ? CupertinoColors.systemRed

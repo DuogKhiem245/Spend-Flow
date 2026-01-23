@@ -15,12 +15,11 @@ class SkeletonHomeView extends StatelessWidget {
     return SingleChildScrollView(
       physics: const NeverScrollableScrollPhysics(),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        padding: EdgeInsets.fromLTRB(16.w, 0.h, 16.w, 40.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: MediaQuery.of(context).padding.top + 30.h),
-
+            SizedBox(height: MediaQuery.of(context).padding.top),
             Shimmer.fromColors(
               baseColor: baseColor,
               highlightColor: highlightColor,
@@ -144,7 +143,6 @@ class SkeletonHomeView extends StatelessWidget {
                     padding: EdgeInsets.only(bottom: 16.h),
                     child: Row(
                       children: [
-                        // Icon category
                         Container(
                           width: 48.w,
                           height: 48.w,

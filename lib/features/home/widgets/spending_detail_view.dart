@@ -9,20 +9,21 @@ import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
+import 'package:spend_flow/core/utils/category_helper.dart';
 import 'package:spend_flow/features/home/home_model.dart';
 import 'package:spend_flow/features/home/home_viewmodel.dart';
 import 'package:spend_flow/features/transaction/view_transaction/transaction_detail_view.dart';
 
 class SpendingDetailView extends StatefulWidget {
-  const SpendingDetailView({super.key});
+  final HomeViewModel viewModel;
+
+  const SpendingDetailView({super.key, required this.viewModel});
 
   @override
   State<SpendingDetailView> createState() => _SpendingDetailViewState();
 }
 
-class _SpendingDetailViewState extends State<SpendingDetailView> {
-  final HomeViewModel _viewModel = HomeViewModel();
-
+class _SpendingDetailViewState extends State<SpendingDetailView> with WidgetsBindingObserver {
   List<SpendingModel> _chartData = [];
 
   List<TransactionModel> _allTransactions = [];
@@ -35,15 +36,31 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this); 
     _loadData();
-    _viewModel.initializeImage();
+    widget.viewModel.initializeImage();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this); 
+    widget.viewModel.lockApp(); 
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      widget.viewModel.lockApp();
+      Navigator.pop(context);
+    }
   }
 
   Future<void> _loadData() async {
-    final chartDataFuture = _viewModel.getAllChartData();
-    final transactionsFuture = _viewModel.getTransactionsForCurrentMonth();
-    final change = await _viewModel.calculateSpendingChange();
-
+    final chartDataFuture = widget.viewModel.getAllChartData();
+    final transactionsFuture = widget.viewModel
+        .getTransactionsForCurrentMonth();
+    final change = await widget.viewModel.calculateSpendingChange();
     final results = await Future.wait([chartDataFuture, transactionsFuture]);
 
     if (mounted) {
@@ -60,16 +77,16 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    final sections = _viewModel.generateChartSections(
+    final sections = widget.viewModel.generateChartSections(
       _chartData,
       touchedIndex,
       context,
     );
 
-    final totalSpent = _viewModel.calculateTotalSpent(_chartData);
+    final totalSpent = widget.viewModel.calculateTotalSpent(_chartData);
 
     return ListenableBuilder(
-      listenable: _viewModel,
+      listenable: widget.viewModel,
       builder: (context, child) => CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
           border: null,
@@ -165,7 +182,7 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
                         ),
 
                         Text(
-                          "\$${_viewModel.formatCurrency(totalSpent)}",
+                          "${widget.viewModel.currencySymbol} ${widget.viewModel.formatCurrency(totalSpent)}",
                           style: TextStyle(
                             fontSize: 28.sp,
                             fontWeight: FontWeight.bold,
@@ -278,14 +295,22 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
                                 ),
                                 SizedBox(width: 6.w),
                                 Text(
-                                  item.category,
+                                  item.originalCategory != null
+                                      ? CategoryHelper.getTranslatedName(
+                                          context,
+                                          item.originalCategory!,
+                                        )
+                                      : (item.category.toLowerCase() == "other"
+                                            ? l10n.other
+                                            : item.category),
+
                                   style: TextStyle(
                                     fontSize: 12.sp,
                                     color: CupertinoColors.systemGrey,
                                   ),
                                 ),
                                 Text(
-                                  " (${(item.amount / totalSpent * 100).toStringAsFixed(0)}%)",
+                                  "(${(item.amount / totalSpent * 100).toStringAsFixed(0)}%)",
                                   style: TextStyle(
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600,
@@ -303,7 +328,7 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
                   SizedBox(height: 20.h),
                   _buildFilterTabs(l10n),
                   SizedBox(height: 20.h),
-                  _buildTransactionList(l10n, _viewModel),
+                  _buildTransactionList(l10n, widget.viewModel),
                 ],
               ),
             ),
@@ -316,7 +341,7 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
   Widget _buildFilterTabs(AppLocalizations l10n) {
     final Set<String> categories = {l10n.all};
     for (var tx in _allTransactions) {
-      categories.add(tx.category.name);
+      categories.add(CategoryHelper.getTranslatedName(context, tx.category));
     }
 
     return SingleChildScrollView(
@@ -428,7 +453,7 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
                     ),
                   ),
                   Text(
-                    "\$${_viewModel.formatCurrency(dailyTotal.abs())}",
+                    "${widget.viewModel.currencySymbol} ${widget.viewModel.formatCurrency(dailyTotal.abs())}",
                     style: TextStyle(
                       color: CupertinoColors.systemGrey,
                       fontSize: 14.sp,
@@ -438,7 +463,9 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
               ),
             ),
 
-            ...transactions.map((tx) => _buildTransactionItem(tx)),
+            ...transactions.map(
+              (tx) => _buildTransactionItem(tx, widget.viewModel),
+            ),
 
             SizedBox(height: 10.h),
           ],
@@ -447,13 +474,15 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
     );
   }
 
-  Widget _buildTransactionItem(TransactionModel item) {
+  Widget _buildTransactionItem(TransactionModel item, HomeViewModel viewModel) {
     final isIncome = item.isIncome;
     final amountColor = isIncome
         ? AppColors.primaryColor
         : CupertinoTheme.of(context).textTheme.textStyle.color;
 
-    final File? imageFile = _viewModel.getRealImageFile(item.category.iconKey);
+    final File? imageFile = widget.viewModel.getRealImageFile(
+      item.category.iconKey,
+    );
 
     return GestureDetector(
       onTap: () => {
@@ -513,12 +542,14 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 16.sp,
-                      color: CupertinoTheme.of(context).textTheme.textStyle.color,
+                      color: CupertinoTheme.of(
+                        context,
+                      ).textTheme.textStyle.color,
                     ),
                   ),
                   SizedBox(height: 4.h),
                   Text(
-                    "${item.category.name} • ${_viewModel.formatHours(item.date)}",
+                    "${CategoryHelper.getTranslatedName(context, item.category)} • ${widget.viewModel.formatHours(item.date)}",
                     style: TextStyle(
                       color: CupertinoColors.systemGrey,
                       fontSize: 13.sp,
@@ -528,7 +559,7 @@ class _SpendingDetailViewState extends State<SpendingDetailView> {
               ),
             ),
             Text(
-              "\$${_viewModel.formatCurrency(item.amount)}",
+              "${viewModel.currencySymbol} ${viewModel.formatCurrency(item.amount)}",
               style: TextStyle(
                 color: amountColor,
                 fontSize: 16.sp,

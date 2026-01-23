@@ -1856,6 +1856,12 @@ abstract class AppLocalizations {
   /// **'Mở khóa'**
   String get unlock;
 
+  /// No description provided for @click_to_unlock.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chạm để mở khóa'**
+  String get click_to_unlock;
+
   /// No description provided for @unlock_untilimited_access.
   ///
   /// In vi, this message translates to:
@@ -1945,6 +1951,24 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Khôi phục'**
   String get restore;
+
+  /// No description provided for @used_up_daily_limit.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn đã sử dụng hết giới hạn nhập giọng nói trong ngày hôm nay. Xem quảng cáo để nhận thêm {value} lượt sử dụng hoặc nâng cấp lên Premium.'**
+  String used_up_daily_limit(Object value);
+
+  /// No description provided for @see_ads.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xem quảng cáo (+{additionalUses} lượt)'**
+  String see_ads(Object additionalUses);
+
+  /// No description provided for @ads_loading.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đang tải quảng cáo...'**
+  String get ads_loading;
 
   /// No description provided for @select_language.
   ///
@@ -2365,6 +2389,30 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'AI không thể nhận dạng yêu cầu này. Hãy thử nói rõ hơn.'**
   String get error_ai_request;
+
+  /// No description provided for @voice_analysis.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đang phân tích giọng nói...'**
+  String get voice_analysis;
+
+  /// No description provided for @scan_receipt_error.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lỗi quét hóa đơn. Vui lòng thử lại.'**
+  String get scan_receipt_error;
+
+  /// No description provided for @requires_premium.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tính năng này yêu cầu xem quảng cáo để sử dụng hoặc nâng cấp lên Premium.'**
+  String get requires_premium;
+
+  /// No description provided for @watch_ad_continue.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xem quảng cáo để tiếp tục'**
+  String get watch_ad_continue;
 
   /// No description provided for @ai_powered.
   ///

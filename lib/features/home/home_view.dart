@@ -9,8 +9,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
+import 'package:spend_flow/core/services/ads_service.dart';
 import 'package:spend_flow/core/services/daily_limit_service.dart';
-import 'package:spend_flow/core/services/local_storage_service.dart';
 import 'package:spend_flow/features/premium/premium_view.dart';
 import 'package:spend_flow/features/scan_receipt/scran_receipt_view.dart';
 import 'package:spend_flow/features/transaction/add_transaction/add_transaction_view.dart';
@@ -21,6 +21,7 @@ import 'package:spend_flow/features/home/widgets/recent_transaction.dart';
 import 'package:spend_flow/core/widgets/skeleton/skeleton_home_view.dart';
 import 'package:spend_flow/features/home/widgets/spending_chart.dart';
 import 'package:spend_flow/features/voice_input/voice_input_view.dart';
+import 'package:spend_flow/main.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,85 +30,207 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   final HomeViewModel _viewModel = HomeViewModel();
-
   final DailyLimitService _limitService = DailyLimitService();
-
-  bool _isPremium = false;
+  final AdsService _adsService = AdsService();
+  final _premiumViewModel = premiumViewModel;
 
   @override
-  void initState()  {
+  void initState() {
     super.initState();
-    LocalStorageService().getPremiumStatus().then((value) {
-      setState(() {
-        _isPremium = value;
-      });
-    });
+    WidgetsBinding.instance.addObserver(this);
     _viewModel.initData();
+    _adsService.loadRewardedAd();
   }
 
-  void _showPremiumModal(BuildContext context, bool limitReached) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
-      builder: (context) => PremiumView(isMaximized: limitReached),
-    );
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _viewModel.lockApp();
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      _viewModel.lockApp();
+    }
   }
 
   Future<void> _handleMenuSelection(int index) async {
     HapticFeedback.heavyImpact();
-    if (index == 2) {
-      await Navigator.push(
-        context,
-        CupertinoPageRoute(builder: (context) => const AddTransactionPage()),
-      );
-    } else if (index == 1) {
-      final canUse = await _limitService.canUseVoice();
-      if (canUse) {
-        if (!mounted) return;
-        await Navigator.push(
-          context,
-          CupertinoPageRoute(builder: (context) => const VoiceInputView()),
-        );
-      } else {
-        if (!mounted) return;
-        _showPremiumModal(context, true);
-      }
-    } else if (index == 0) {
-      final bool isPremium = await LocalStorageService().getPremiumStatus();
+    bool? shouldRefresh = false;
 
-      if (!mounted) return;
-
-      if (isPremium) {
-        Navigator.push(
+    switch (index) {
+      case 2:
+        shouldRefresh = await Navigator.push<bool>(
           context,
-          CupertinoPageRoute(builder: (context) => const ScanReceiptView()),
+          CupertinoPageRoute(builder: (context) => const AddTransactionPage()),
         );
-      } else {
-        _showPremiumModal(context, false);
-      }
+        break;
+
+      case 1:
+        final canUse = await _limitService.canUseVoice();
+        if (canUse) {
+          if (!mounted) return;
+          shouldRefresh = await Navigator.push<bool>(
+            context,
+            CupertinoPageRoute(builder: (context) => const VoiceInputView()),
+          );
+        } else {
+          if (!mounted) return;
+          shouldRefresh = await _showLimitOptions(context, isVoice: true);
+        }
+        break;
+
+      case 0:
+        if (_premiumViewModel.isPremium) {
+          shouldRefresh = await Navigator.push<bool>(
+            context,
+            CupertinoPageRoute(builder: (context) => const ScanReceiptView()),
+          );
+        } else {
+          shouldRefresh = await _showLimitOptions(context, isVoice: false);
+        }
+        break;
     }
 
-    await _viewModel.reloadData();
+    if (shouldRefresh == true) {
+      await _viewModel.reloadData();
+    }
   }
 
-  // void _showLimitAlert(AppLocalizations l10n, String featureName, int limit) {
-  //   showCupertinoDialog(
-  //     context: context,
-  //     builder: (context) => CupertinoAlertDialog(
-  //       title: Text(l10n.limit_reached),
-  //       content: Text(l10n.limit_reached_description(featureName, limit)),
-  //       actions: [
-  //         CupertinoDialogAction(
-  //           child: const Text("OK"),
-  //           onPressed: () => Navigator.pop(context),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+  void _handleRewardAdFlow({required bool isVoice}) {
+    _adsService.showRewardedAd(
+      onRewardEarned: ()  async {
+        bool? result = false;
+        if (isVoice) {
+          await _limitService.resetUsageAfterAds();
+          if (mounted) {
+            result = await Navigator.push<bool>(
+              context,
+              CupertinoPageRoute(builder: (context) => const VoiceInputView()),
+            );
+          }
+        } else {
+          if (mounted) {
+            result = await Navigator.push<bool>(
+              context,
+              CupertinoPageRoute(builder: (context) => const ScanReceiptView()),
+            );
+          }
+        }
+        if (mounted) Navigator.pop(context, result);
+      },
+      onAdFailed: () {
+        Navigator.pop(context, false);
+        _showAdErrorDialog();
+      },
+    );
+  }
+
+  Future<bool?> _showLimitOptions(
+    BuildContext context, {
+    required bool isVoice,
+  }) {
+    final l10n = AppLocalizations.of(context)!;
+
+    return showModalBottomSheet<bool>(
+      context: context,
+      backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
+      builder: (context) => Container(
+        padding: EdgeInsets.fromLTRB(24.w, 4.h, 24.w, 24.h),
+        decoration: BoxDecoration(
+          color: CupertinoTheme.of(context).scaffoldBackgroundColor,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(30.r)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                width: 40.w,
+                height: 5.h,
+                decoration: BoxDecoration(
+                  color: CupertinoTheme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            SizedBox(height: 10.h),
+            Icon(
+              isVoice
+                  ? CupertinoIcons.mic_circle
+                  : CupertinoIcons.doc_text_viewfinder,
+              size: 50.sp,
+              color: CupertinoTheme.of(context).primaryColor,
+            ),
+            SizedBox(height: 12.h),
+            Text(
+              isVoice ? l10n.limit_reached : l10n.scan_receipt,
+              style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8.h),
+            Text(
+              isVoice ? l10n.used_up_daily_limit(5) : l10n.requires_premium,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14.sp,
+                color: CupertinoColors.systemGrey,
+              ),
+            ),
+            SizedBox(height: 24.h),
+            _buildCustomOption(
+              context,
+              icon: CupertinoIcons.play_circle_fill,
+              label: isVoice ? l10n.see_ads(5) : l10n.watch_ad_continue,
+              color: CupertinoTheme.of(context).primaryColor,
+              onTap: () => _handleRewardAdFlow(isVoice: isVoice),
+            ),
+            SizedBox(height: 12.h),
+            _buildCustomOption(
+              context,
+              icon: CupertinoIcons.star_fill,
+              label: l10n.upgrade_premium,
+              color: const Color(0xFF9C2CF3),
+              isGradient: true,
+              onTap: () {
+                Navigator.pop(context, false);
+                _showPremiumModal(context, isVoice);
+              },
+            ),
+            SizedBox(height: 20.h),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showPremiumModal(BuildContext context, bool isMaximized) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
+      builder: (context) => PremiumView(isMaximized: isMaximized),
+    );
+  }
+
+  void _showAdErrorDialog() {
+    showCupertinoDialog(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        content: Text(AppLocalizations.of(context)!.ads_loading),
+        actions: [
+          CupertinoDialogAction(
+            child: const Text("OK"),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -152,12 +275,14 @@ class _HomePageState extends State<HomePage> {
                             income: _viewModel.income,
                             expenses: _viewModel.expenses,
                             balance: _viewModel.balance,
+                            viewModel: _viewModel,
                           ),
                           SizedBox(height: 24.h),
-                          SpendingChart(chartData: _viewModel.chartData),
+                          SpendingChart(chartData: _viewModel.chartData, viewModel: _viewModel),
                           SizedBox(height: 24.h),
                           RecentTransaction(
                             transactions: _viewModel.recentTransactions,
+                            viewModel: _viewModel,
                           ),
                         ],
                       ),
@@ -167,7 +292,7 @@ class _HomePageState extends State<HomePage> {
               ),
               Positioned(
                 right: 20.w,
-                bottom: _isPremium ? 100.h : 140.h,
+                bottom: _premiumViewModel.isPremium ? 100.h : 140.h,
                 child: Platform.isIOS
                     ? _buildIOSFloatingButton(l10n)
                     : _buildAndroidFloatingButton(l10n),
@@ -247,6 +372,52 @@ class _HomePageState extends State<HomePage> {
             color: CupertinoColors.white,
             size: 30.sp,
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCustomOption(
+    BuildContext context, {
+    required IconData icon,
+    required String label,
+    required Color color,
+    required VoidCallback onTap,
+    bool isGradient = false,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 20.w),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30.r),
+          gradient: isGradient
+              ? const LinearGradient(
+                  colors: [Color(0xFF9C2CF3), Color(0xFF3A49F9)],
+                )
+              : null,
+          color: isGradient ? null : color.withValues(alpha: 0.1),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, color: isGradient ? Colors.white : color, size: 24.sp),
+            SizedBox(width: 16.w),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w600,
+                color: isGradient ? Colors.white : color,
+              ),
+            ),
+            const Spacer(),
+            Icon(
+              CupertinoIcons.chevron_right,
+              size: 16.sp,
+              color: isGradient ? Colors.white70 : color.withValues(alpha: 0.5),
+            ),
+          ],
         ),
       ),
     );

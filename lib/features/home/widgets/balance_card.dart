@@ -8,15 +8,15 @@ class BalanceCard extends StatelessWidget {
   final double income;
   final double expenses;
   final double balance;
+  final HomeViewModel _viewModel;
 
-  final HomeViewModel _viewModel = HomeViewModel();
-
-  BalanceCard({
+  const BalanceCard({
     super.key,
     required this.income,
     required this.expenses,
     required this.balance,
-  });
+    required HomeViewModel viewModel,
+  }) : _viewModel = viewModel;
 
   @override
   Widget build(BuildContext context) {

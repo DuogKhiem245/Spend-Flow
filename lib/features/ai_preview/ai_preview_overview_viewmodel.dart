@@ -64,6 +64,4 @@ class AIPreviewOverviewViewmodel extends ChangeNotifier {
       notifyListeners();
     }
   }
-
-  
 }

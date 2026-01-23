@@ -46,6 +46,46 @@ class _AIPreviewOverviewViewState extends State<AIPreviewOverviewView> {
     }
   }
 
+  void _handleConfirm() async {
+    final List<TransactionModel> transactionsToSave =
+        _selectedTransactionIndices
+            .map((index) => _localTransactions[index])
+            .toList();
+
+    if (transactionsToSave.isEmpty) return;
+
+    final bool success = await _aiPreviewViewModel.saveBatchTransactions(
+      transactionsToSave,
+    );
+
+    if (success) {
+      HapticFeedback.heavyImpact();
+      if (!mounted) return;
+      Navigator.pop(context, true);
+    } else {
+      if (!mounted) return;
+      final l10n = AppLocalizations.of(context)!;
+      _showErrorDialog(context, l10n.fail_to_save_transactions);
+    }
+  }
+
+  void _showErrorDialog(BuildContext context, String message) {
+    final l10n = AppLocalizations.of(context)!;
+    showCupertinoDialog(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: Text(l10n.error),
+        content: Text(message),
+        actions: [
+          CupertinoDialogAction(
+            child: Text(l10n.close),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -333,46 +373,6 @@ class _AIPreviewOverviewViewState extends State<AIPreviewOverviewView> {
           },
         ),
       ],
-    );
-  }
-
-  void _handleConfirm() async {
-    final List<TransactionModel> transactionsToSave =
-        _selectedTransactionIndices
-            .map((index) => _localTransactions[index])
-            .toList();
-
-    if (transactionsToSave.isEmpty) return;
-
-    final bool success = await _aiPreviewViewModel.saveBatchTransactions(
-      transactionsToSave,
-    );
-
-    if (success) {
-      HapticFeedback.heavyImpact();
-      if (!mounted) return;
-      Navigator.pop(context);
-    } else {
-      if (!mounted) return;
-      final l10n = AppLocalizations.of(context)!;
-      _showErrorDialog(context, l10n.fail_to_save_transactions);
-    }
-  }
-
-  void _showErrorDialog(BuildContext context, String message) {
-    final l10n = AppLocalizations.of(context)!;
-    showCupertinoDialog(
-      context: context,
-      builder: (context) => CupertinoAlertDialog(
-        title: Text(l10n.error),
-        content: Text(message),
-        actions: [
-          CupertinoDialogAction(
-            child: Text(l10n.close),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ],
-      ),
     );
   }
 }

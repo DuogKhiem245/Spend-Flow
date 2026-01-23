@@ -231,7 +231,7 @@ class _VoiceInputViewState extends State<VoiceInputView> {
                         ),
                         SizedBox(height: 16.h),
                         Text(
-                          "Đang phân tích giọng nói...",
+                          l10n.voice_analysis,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16.sp,

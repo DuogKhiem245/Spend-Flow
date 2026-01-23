@@ -22,12 +22,38 @@ class ReportPage extends StatefulWidget {
   State<ReportPage> createState() => _ReportPageState();
 }
 
-class _ReportPageState extends State<ReportPage> {
+class _ReportPageState extends State<ReportPage>
+    with WidgetsBindingObserver, AutomaticKeepAliveClientMixin {
   final ReportViewModel _viewModel = ReportViewModel();
   bool get _isLoading => _viewModel.isLoading;
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _viewModel.lockApp();
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      _viewModel.lockApp();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     final l10n = AppLocalizations.of(context)!;
     final String locale = Localizations.localeOf(context).toString();
 
