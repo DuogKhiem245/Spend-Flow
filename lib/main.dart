@@ -78,7 +78,11 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) {
         return ListenableBuilder(
-          listenable: Listenable.merge([themeService, languageService, premiumViewModel]),
+          listenable: Listenable.merge([
+            themeService,
+            languageService,
+            premiumViewModel,
+          ]),
           builder: (context, child) {
             return CupertinoApp(
               title: 'Spend Flow',
@@ -119,7 +123,7 @@ class MyApp extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
               ],
               supportedLocales: [Locale('en'), Locale('vi')],
-              initialRoute: AppRoutes.main, 
+              initialRoute: AppRoutes.main,
               routes: AppRoutes.getRoutes(
                 onboardDone: onboardDone,
                 createFirstWallet: createFirstWallet,
@@ -131,3 +135,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+

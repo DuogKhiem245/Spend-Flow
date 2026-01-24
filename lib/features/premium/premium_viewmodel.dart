@@ -1,10 +1,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/local_storage_service.dart';
 
-// ID sản phẩm Premium Lifetime của bạn
-const String _kProductId = 'spendflow_premium_lifetime';
+const String _kProductMonthlyId = 'spendflow_premium_monthly';
+const String _kProductYearlyId = 'spendflow_premium_yearly';
+const String _kProductLifetimeId = 'spendflow_premium_lifetime';
+
+enum PremiumPlan { monthly, yearly, lifetime }
 
 class PremiumViewModel extends ChangeNotifier {
   final LocalStorageService _storage = LocalStorageService();
@@ -12,15 +16,25 @@ class PremiumViewModel extends ChangeNotifier {
 
   StreamSubscription<List<PurchaseDetails>>? _subscription;
 
+  PremiumPlan _selectedPlan = PremiumPlan.monthly;
+  PremiumPlan get selectedPlan => _selectedPlan;
+
   bool _isPremium = false;
   bool _isLoading = false;
 
-  String? _storePrice;
-  ProductDetails? _productDetails;
+  final Map<PremiumPlan, String> _storePrices = {};
+  final Map<PremiumPlan, ProductDetails> _productDetailsMap = {};
+
+  Timer? _timeoutTimer;
+  String? _errorMessage;
+  String? get errorMessage => _errorMessage;
 
   bool get isPremium => _isPremium;
   bool get isLoading => _isLoading;
-  String get priceString => _storePrice ?? '---';
+
+  String get priceString => planPrice(_selectedPlan);
+
+  String planPrice(PremiumPlan plan) => _storePrices[plan] ?? '---';
 
   PremiumViewModel() {
     _checkStatus();
@@ -52,19 +66,20 @@ class PremiumViewModel extends ChangeNotifier {
         notifyListeners();
       } else {
         if (purchaseDetails.status == PurchaseStatus.error) {
-          debugPrint("Lỗi mua hàng: ${purchaseDetails.error}");
+          _cancelTimeout();
           _isLoading = false;
           notifyListeners();
         } else if (purchaseDetails.status == PurchaseStatus.purchased ||
             purchaseDetails.status == PurchaseStatus.restored) {
-          // Mua hoặc khôi phục thành công!
+          _cancelTimeout();
+          _errorMessage = null;
           await _setPremiumSuccess();
         } else if (purchaseDetails.status == PurchaseStatus.canceled) {
+          _cancelTimeout();
           _isLoading = false;
           notifyListeners();
         }
 
-        // Bắt buộc: Xác nhận giao dịch với Store để tránh bị refund tự động
         if (purchaseDetails.pendingCompletePurchase) {
           await _iap.completePurchase(purchaseDetails);
         }
@@ -83,36 +98,42 @@ class PremiumViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> purchasePremium() async {
-    if (_productDetails == null) {
-      debugPrint("Sản phẩm chưa sẵn sàng");
+  Future<void> purchasePremium(AppLocalizations l10n) async {
+    final ProductDetails? details = _productDetailsMap[_selectedPlan];
+    if (details == null) {
+      debugPrint("Sản phẩm chưa sẵn sàng cho plan: $_selectedPlan");
       return;
     }
 
     _isLoading = true;
+    _errorMessage = null;
     notifyListeners();
+    _startTimeout(kind: 'purchase', l10n: l10n);
 
-    final PurchaseParam purchaseParam = PurchaseParam(
-      productDetails: _productDetails!,
-    );
+    final PurchaseParam purchaseParam = PurchaseParam(productDetails: details);
 
     try {
       await _iap.buyNonConsumable(purchaseParam: purchaseParam);
     } catch (e) {
+      _cancelTimeout();
       _isLoading = false;
+      _errorMessage = l10n.purchase_failed_description;
       notifyListeners();
-      debugPrint("Không thể bắt đầu thanh toán: $e");
     }
   }
 
-  Future<void> restorePurchase() async {
+  Future<void> restorePurchase(AppLocalizations l10n) async {
     _isLoading = true;
+    _errorMessage = null;
     notifyListeners();
+    _startTimeout(kind: 'restore', l10n: l10n);
 
     try {
       await _iap.restorePurchases();
     } catch (e) {
+      _cancelTimeout();
       _isLoading = false;
+      _errorMessage = l10n.restore_failed_description;
       notifyListeners();
       debugPrint("Lỗi khôi phục: $e");
     }
@@ -124,44 +145,52 @@ class PremiumViewModel extends ChangeNotifier {
   }
 
   Future<void> _loadProducts() async {
-    // try {
-    //   final bool available = await _iap.isAvailable();
-    //   if (!available) {
-    //     _storePrice = "N/A";
-    //     notifyListeners();
-    //     return;
-    //   }
+    try {
+      final bool available = await _iap.isAvailable();
+      if (!available) {
+        notifyListeners();
+        return;
+      }
 
-    //   const Set<String> kIds = {_kProductId};
-    //   final ProductDetailsResponse response = await _iap.queryProductDetails(
-    //     kIds,
-    //   );
+      const Set<String> kIds = {
+        _kProductMonthlyId,
+        _kProductYearlyId,
+        _kProductLifetimeId,
+      };
+      final ProductDetailsResponse response = await _iap.queryProductDetails(
+        kIds,
+      );
 
-    //   if (response.notFoundIDs.isNotEmpty) {
-    //     debugPrint("ID không tồn tại: ${response.notFoundIDs}");
-    //   }
+      if (response.notFoundIDs.isNotEmpty) {
+        debugPrint("ID không tồn tại: ${response.notFoundIDs}");
+      }
 
-    //   if (response.productDetails.isNotEmpty) {
-    //     _productDetails = response.productDetails.first;
-    //     _storePrice = _productDetails!.price;
-    //     notifyListeners();
-    //   }
-    // } catch (e) {
-    //   debugPrint("Lỗi tải sản phẩm: $e");
-    //   _storePrice = "Error";
-    //   notifyListeners();
-    // }
+      PremiumPlan? planFromId(String id) {
+        switch (id) {
+          case _kProductMonthlyId:
+            return PremiumPlan.monthly;
+          case _kProductYearlyId:
+            return PremiumPlan.yearly;
+          case _kProductLifetimeId:
+            return PremiumPlan.lifetime;
+          default:
+            return null;
+        }
+      }
 
-    _storePrice = "99.000đ (Demo)";
-    _productDetails = ProductDetails(
-      id: _kProductId,
-      title: "Premium Lifetime",
-      description: "Mở khóa toàn bộ tính năng",
-      price: "99.000đ",
-      rawPrice: 99000,
-      currencyCode: "VND",
-    );
-    notifyListeners();
+      for (final pd in response.productDetails) {
+        final plan = planFromId(pd.id);
+        if (plan != null) {
+          _productDetailsMap[plan] = pd;
+          _storePrices[plan] = pd.price;
+        }
+      }
+
+      notifyListeners();
+    } catch (e) {
+      debugPrint("Lỗi tải sản phẩm: $e");
+      notifyListeners();
+    }
   }
 
   Future<void> debugFakePurchase({bool shouldNotify = true}) async {
@@ -186,9 +215,39 @@ class PremiumViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void selectPlan(PremiumPlan plan) {
+    _selectedPlan = plan;
+    _errorMessage = null;
+    notifyListeners();
+  }
+
+  void _startTimeout({required String kind, required AppLocalizations l10n}) {
+    _timeoutTimer?.cancel();
+    _timeoutTimer = Timer(const Duration(seconds: 30), () {
+      if (_isLoading) {
+        _isLoading = false;
+        _errorMessage = kind == 'restore'
+            ? l10n.restore_failed_description
+            : l10n.purchase_failed_description;
+        notifyListeners();
+      }
+    });
+  }
+
+  void _cancelTimeout() {
+    _timeoutTimer?.cancel();
+    _timeoutTimer = null;
+  }
+
+  void clearError() {
+    _errorMessage = null;
+    Future.microtask(() => notifyListeners());
+  }
+
   @override
   void dispose() {
     _subscription?.cancel();
+    _timeoutTimer?.cancel();
     super.dispose();
   }
 }

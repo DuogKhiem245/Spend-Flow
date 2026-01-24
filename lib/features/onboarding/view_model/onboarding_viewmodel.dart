@@ -12,19 +12,19 @@ class OnboardingViewModel {
     return [
       OnboardingModel(
         id: '1',
-        image: "lib/assets/images/onboard-1.png",
+        image: "lib/assets/images/onboard-1.2.png",
         title: l10n.onboard_step1_title,
         desc: l10n.onboard_step1_message,
       ),
       OnboardingModel(
         id: '2',
-        image: "lib/assets/images/onboard-2.png",
+        image: "lib/assets/images/onboard-2.2.png",
         title: l10n.onboard_step2_title,
         desc: l10n.onboard_step2_message,
       ),
       OnboardingModel(
         id: '3',
-        image: "lib/assets/images/onboard-3.png",
+        image: "lib/assets/images/onboard-3.2.png",
         title: l10n.onboard_step3_title,
         desc: l10n.onboard_step3_message,
       ),

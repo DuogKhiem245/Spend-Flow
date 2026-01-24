@@ -44,6 +44,7 @@ class AIPreviewOverviewViewmodel extends ChangeNotifier {
             transaction.category,
             transaction.date,
             transaction.note,
+            transaction.location,
           );
         } else {
           await _addTransactionViewmodel.addExpenseTransaction(
@@ -52,6 +53,7 @@ class AIPreviewOverviewViewmodel extends ChangeNotifier {
             transaction.category,
             transaction.date,
             transaction.note,
+            transaction.location,
           );
         }
       }

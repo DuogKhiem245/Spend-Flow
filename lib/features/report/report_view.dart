@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
+import 'package:spend_flow/core/utils/category_helper.dart';
 import 'package:spend_flow/core/widgets/skeleton/skeleton_report_view.dart';
 import 'package:spend_flow/core/widgets/verify_passcode/verify_passcode_sheet.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
@@ -451,7 +452,10 @@ class _ReportPageState extends State<ReportPage>
                       ),
                       SizedBox(height: 4.h),
                       Text(
-                        tx.category.name,
+                        CategoryHelper.getTranslatedName(
+                          context,
+                          tx.category,
+                        ),
                         style: TextStyle(
                           fontSize: 13.sp,
                           color: CupertinoColors.systemGrey,

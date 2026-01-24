@@ -65,6 +65,7 @@ class _NoteWidgetState extends State<NoteWidget> {
               ),
               style: TextStyle(fontSize: 18.sp, color: widget.baseColor),
               padding: EdgeInsets.zero,
+              scrollPadding: EdgeInsets.only(bottom: 210.h),
             ),
           ),
         ],

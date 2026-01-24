@@ -4,6 +4,7 @@ import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
+import 'package:spend_flow/core/utils/category_helper.dart';
 import 'package:spend_flow/features/transaction/view_transaction/widget/view_only_map_widget.dart';
 import 'transaction_detail_viewmodel.dart'; // Nhớ import file ViewModel
 
@@ -91,7 +92,7 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
       ),
       child: IntrinsicHeight(
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch, 
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Column(
               mainAxisSize: MainAxisSize.min,
@@ -266,7 +267,7 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
                   ),
                   SizedBox(height: 4.h),
                   Text(
-                    vm.categoryName,
+                    CategoryHelper.getTranslatedName(context, widget.transaction.category),
                     style: TextStyle(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.bold,

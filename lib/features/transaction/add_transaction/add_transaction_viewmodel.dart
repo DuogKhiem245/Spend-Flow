@@ -55,6 +55,7 @@ class AddTransactionViewmodel extends ChangeNotifier {
     CategoryModel? selectedCategory,
     DateTime? transactionDate,
     String note,
+    LocationModel? location,  
   ) async {
     if (selectedCategory == null) return;
 
@@ -67,7 +68,7 @@ class AddTransactionViewmodel extends ChangeNotifier {
       return;
     }
 
-    final locationData = _getLocationFromState();
+    final locationData = location ?? getLocationFromState();
 
     final transaction = TransactionModel(
       walletId: walletId,
@@ -89,6 +90,7 @@ class AddTransactionViewmodel extends ChangeNotifier {
     CategoryModel? selectedCategory,
     DateTime? transactionDate,
     String note,
+    LocationModel? location,
   ) async {
     if (selectedCategory == null) return;
 
@@ -101,7 +103,7 @@ class AddTransactionViewmodel extends ChangeNotifier {
       return;
     }
 
-    final locationData = _getLocationFromState();
+    final locationData = location ?? getLocationFromState();
 
     final transaction = TransactionModel(
       walletId: walletId,
@@ -142,7 +144,7 @@ class AddTransactionViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  LocationModel _getLocationFromState() {
+  LocationModel getLocationFromState() {
     if (_currentPosition == null) {
       return const LocationModel();
     }

@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
+import 'package:spend_flow/core/model/location_model.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/core/utils/category_helper.dart';
 import 'package:spend_flow/features/ai_preview/ai_preview_overview_viewmodel.dart';
@@ -157,6 +158,7 @@ class _AIPreviewOverviewViewState extends State<AIPreviewOverviewView> {
                     color: transaction.category.color,
                     isIncome: transaction.isIncome,
                     isSelected: _selectedTransactionIndices.contains(index),
+                    location: transaction.location,
                     onToggle: () {
                       setState(() {
                         if (_selectedTransactionIndices.contains(index)) {
@@ -182,7 +184,9 @@ class _AIPreviewOverviewViewState extends State<AIPreviewOverviewView> {
               padding: EdgeInsets.symmetric(vertical: 16.h),
               color: const Color(0xFF007AFF),
               borderRadius: BorderRadius.circular(30.r),
-              onPressed: _selectedTransactionIndices.isNotEmpty ? () => _handleConfirm() : null,
+              onPressed: _selectedTransactionIndices.isNotEmpty
+                  ? () => _handleConfirm()
+                  : null,
               child: Text(
                 "${l10n.confirm_selected_entries} (${_selectedTransactionIndices.length})",
                 style: TextStyle(
@@ -209,11 +213,16 @@ class _AIPreviewOverviewViewState extends State<AIPreviewOverviewView> {
     required bool isSelected,
     required Color color,
     required bool isIncome,
+    LocationModel? location,
     required VoidCallback onToggle,
   }) {
     final File? imageFile = _viewModel.getRealImageFile(icon);
     final bool hasImage = imageFile != null;
     final String prefix = isIncome ? "+" : "-";
+    final bool hasLocation =
+        location != null &&
+        location.address != null &&
+        location.address!.isNotEmpty;
 
     return Container(
       margin: EdgeInsets.only(bottom: 16.h),
@@ -269,6 +278,35 @@ class _AIPreviewOverviewViewState extends State<AIPreviewOverviewView> {
                     ).textTheme.textStyle.color?.withValues(alpha: 0.6),
                   ),
                 ),
+                if (hasLocation) ...[
+                  SizedBox(height: 4.h),
+                  Row(
+                    children: [
+                      Icon(
+                        CupertinoIcons.location_solid,
+                        size: 12.sp,
+                        color: CupertinoTheme.of(
+                          context,
+                        ).primaryColor.withValues(alpha: 0.7),
+                      ),
+                      SizedBox(width: 4.w),
+                      Expanded(
+                        child: Text(
+                          location.address!,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            color: CupertinoTheme.of(
+                              context,
+                            ).primaryColor.withValues(alpha: 0.8),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
                 SizedBox(height: 6.h),
                 Row(
                   children: [

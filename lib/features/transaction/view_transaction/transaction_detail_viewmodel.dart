@@ -12,6 +12,7 @@ class TransactionDetailViewModel extends ChangeNotifier {
   final TransactionModel _transaction;
 
   String? _appDocumentsPath;
+  String _currencySymbol = '\$'; 
 
   List<BarChartData> _spendingTrendData = [];
   List<BarChartData> get spendingTrendData => _spendingTrendData;
@@ -24,6 +25,7 @@ class TransactionDetailViewModel extends ChangeNotifier {
   TransactionDetailViewModel({required TransactionModel transaction})
     : _transaction = transaction {
     _initPath();
+    _loadCurrencySymbol();
   }
 
   File? get customImageFile {
@@ -53,10 +55,9 @@ class TransactionDetailViewModel extends ChangeNotifier {
   double get longitude => _transaction.location.longitude ?? 0.0;
 
   String get amountString {
-    final format = NumberFormat("#,##0.00", "en_US");
-    final formattedAmount = format.format(_transaction.amount);
+    final formattedAmount = _formatCompactCurrency(_transaction.amount);
     final sign = _transaction.isIncome ? "+" : "-";
-    return "$sign\$$formattedAmount";
+    return "$sign $_currencySymbol $formattedAmount"; // Use cached symbol
   }
 
   Color get amountColor =>
@@ -85,6 +86,13 @@ class TransactionDetailViewModel extends ChangeNotifier {
     _appDocumentsPath = directory.path;
     notifyListeners();
   }
+
+  Future<void> _loadCurrencySymbol() async {
+    final Map<String, String> currencyData = await _storage.getCurrency();
+    _currencySymbol = currencyData['symbol'] ?? '\$';
+    notifyListeners();
+  }
+
   Future<String> loadCurrency() async {
     final Map<String, String> currencyData = await _storage.getCurrency();
     final String symbol = currencyData['symbol'] ?? '\$';
@@ -108,7 +116,7 @@ class TransactionDetailViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final l10n = AppLocalizations.of(context)!; 
+      final l10n = AppLocalizations.of(context)!;
 
       final endDate = _transaction.date;
       final startDate = endDate.subtract(const Duration(days: 6));
@@ -146,7 +154,7 @@ class TransactionDetailViewModel extends ChangeNotifier {
       }
 
       _totalSpending7Days = tempTotal7Days;
-      
+
       double maxSpending = 0;
 
       if (dailyTotals.isNotEmpty) {
@@ -189,6 +197,15 @@ class TransactionDetailViewModel extends ChangeNotifier {
       _isLoadingChart = false;
       notifyListeners();
     }
+  }
+
+  String _formatCompactCurrency(double amount) {
+    final formatter = NumberFormat.compactCurrency(
+      locale: "en_US",
+      decimalDigits: 1,
+      symbol: '',
+    );
+    return formatter.format(amount);
   }
 }
 

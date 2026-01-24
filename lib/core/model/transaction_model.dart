@@ -117,13 +117,15 @@ class TransactionModel {
     CategoryModel selectedCategory = availableCategories.firstWhere(
       (cat) => cat.id == aiCategoryId,
       orElse: () => availableCategories.firstWhere(
-        (cat) => cat.name.toLowerCase().contains('khác'),
+        (cat) => cat.id == 'others' || cat.name.toLowerCase().contains('others'),
         orElse: () => availableCategories.first,
       ),
     );
 
+    final String? aiAddress = aiData['address'];
+
     return TransactionModel(
-      id: aiData['categoryId'] ?? const Uuid().v4(),
+      id: const Uuid().v4(),
       amount: (aiData['amount'] as num?)?.toDouble() ?? 0.0,
       title: aiData['title'] ?? 'Giao dịch mới',
       category: selectedCategory,
@@ -135,6 +137,9 @@ class TransactionModel {
       walletId: currentWalletId,
       currency: 'VND', 
       exchangeRate: 1.0,
+      location: LocationModel(
+        address: aiAddress != null && aiAddress.isNotEmpty ? aiAddress : null,
+      ),
     );
   }
 

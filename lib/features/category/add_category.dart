@@ -10,7 +10,9 @@ import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
 import 'package:spend_flow/core/data/category_data.dart';
 import 'package:spend_flow/core/model/category_model.dart';
+import 'package:spend_flow/core/services/ads_service.dart';
 import 'package:spend_flow/core/widgets/check_valid/check_valid_widget.dart';
+import 'package:spend_flow/main.dart';
 
 class AddCategoryView extends StatefulWidget {
   final CategoryModel? categoryToEdit;
@@ -24,6 +26,9 @@ class AddCategoryView extends StatefulWidget {
 class _AddCategoryViewState extends State<AddCategoryView> {
   final TextEditingController _nameController = TextEditingController();
 
+  final AdsService _adsService = AdsService();
+  final _premiumViewModel = premiumViewModel;
+
   Color _selectedColor = Colors.orange;
   String _selectedIconKey = 'food';
 
@@ -36,8 +41,9 @@ class _AddCategoryViewState extends State<AddCategoryView> {
   @override
   void initState() {
     super.initState();
-    // Gọi hàm async để init dữ liệu
     _initData();
+
+    _adsService.loadInterstitialAd();
 
     _nameController.addListener(() {
       setState(() {});
@@ -60,7 +66,7 @@ class _AddCategoryViewState extends State<AddCategoryView> {
         if (await file.exists()) {
           setState(() {
             _pickedImage = file;
-            _selectedIconKey = ''; 
+            _selectedIconKey = '';
           });
         } else {
           setState(() {
@@ -125,10 +131,10 @@ class _AddCategoryViewState extends State<AddCategoryView> {
               fontWeight: FontWeight.w600,
             ),
           ),
-          onPressed: () {
+          onPressed: () async {
             List<String> missingFields = [];
 
-            if (_nameController.text.isEmpty ) {
+            if (_nameController.text.isEmpty) {
               missingFields.add(l10n.category_name);
             }
             if (missingFields.isNotEmpty) {
@@ -150,11 +156,31 @@ class _AddCategoryViewState extends State<AddCategoryView> {
               color: _selectedColor,
               isCustom: true,
             );
-
-            Navigator.pop(context, {
-              'category': newCategory,
-              'imageFile': _pickedImage,
-            });
+            if (_pickedImage != null) {
+              if (_premiumViewModel.isPremium) {
+                Navigator.pop(context, {
+                  'category': newCategory,
+                  'imageFile': _pickedImage,
+                });
+              } else {
+                await _adsService.showInterstitialWithFrequency(
+                  () {},
+                  isPremium: _premiumViewModel.isPremium,
+                  onAdClosed: () {
+                    Navigator.pop(context, {
+                      'category': newCategory,
+                      'imageFile': _pickedImage,
+                    });
+                  },
+                );
+              }
+            } else {
+              Navigator.pop(context, {
+                'category': newCategory,
+                'imageFile': null,
+              });
+            }
+            
           },
         ),
       ),

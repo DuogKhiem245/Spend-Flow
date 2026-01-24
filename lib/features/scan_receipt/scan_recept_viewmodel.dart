@@ -2,10 +2,13 @@ import 'dart:convert';
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/data/category_data.dart';
+import 'package:spend_flow/core/model/location_model.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/core/services/ai_service.dart';
 import 'package:spend_flow/core/model/category_model.dart';
@@ -152,7 +155,7 @@ class ScanReceiptViewModel extends ChangeNotifier {
         final data = Map<String, dynamic>.from(item['data'] ?? {});
 
         if (actionType == "TRANSACTION") {
-          final transaction = TransactionModel.fromAIResponse(
+          var transaction = TransactionModel.fromAIResponse(
             aiData: data,
             availableCategories: currentCategories,
             currentWalletId: currentWalletId,
@@ -161,9 +164,38 @@ class ScanReceiptViewModel extends ChangeNotifier {
           if (transaction.date.isAfter(today)) {
             continue;
           }
+
+          if (transaction.location.address != null) {
+            final coords = await getCoordinatesFromAddress(
+              transaction.location.address!,
+            );
+            if (coords != null) {
+              transaction = transaction.copyWith(
+                location: LocationModel(
+                  address: transaction.location.address,
+                  latitude: coords['latitude'],
+                  longitude: coords['longitude'],
+                ),
+              );
+            }
+          }
           parsedTransactions.add(transaction);
         }
       }
+
+      // debugPrint("====================================");
+      // debugPrint("📊 TOTAL TRANSACTIONS: ${parsedTransactions.length}");
+      // for (var i = 0; i < parsedTransactions.length; i++) {
+      //   final tx = parsedTransactions[i];
+      //   debugPrint("TX #$i: Title: ${tx.title}");
+      //   debugPrint("       Amount: ${tx.amount}");
+      //   debugPrint("       Category: ${tx.category.name}");
+      //   debugPrint("       Address: ${tx.location.address}");
+      //   debugPrint(
+      //     "       Coords: ${tx.location.latitude}, ${tx.location.longitude}",
+      //   );
+      // }
+      // debugPrint("====================================");
 
       if (parsedTransactions.isEmpty) {
         throw Exception("No valid transactions found in receipt");
@@ -204,6 +236,36 @@ class ScanReceiptViewModel extends ChangeNotifier {
       _isScanning = false;
       notifyListeners();
     }
+  }
+
+  Future<Map<String, double>?> getCoordinatesFromAddress(String address) async {
+    if (address.isEmpty) return null;
+
+    final apiKey = dotenv.env['GOONG_API_KEY'] ?? '';
+
+    final encodedAddress = Uri.encodeComponent(address);
+    final langCode = LanguageService().currentLanguageCode;
+
+    final url = Uri.parse(
+      "https://rsapi.goong.io/Geocode?address=$encodedAddress&api_key=$apiKey&language=$langCode",
+    );
+
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+
+        if (data['status'] == 'OK' && data['results'].isNotEmpty) {
+          final location = data['results'][0]['geometry']['location'];
+          return {"latitude": location['lat'], "longitude": location['lng']};
+        } else {
+          debugPrint("Goong Status: ${data['status']}");
+        }
+      }
+    } catch (e) {
+      debugPrint("Goong Geocoding Error: $e");
+    }
+    return null;
   }
 
   void _showErrorDialog(BuildContext context) {

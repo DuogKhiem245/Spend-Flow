@@ -976,6 +976,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get day => 'day';
 
   @override
+  String get year => 'Year';
+
+  @override
   String get accept_terms_conditions =>
       'Subscription auto-renews. By continuing, you agree to our Terms of Service and Privacy Policy.';
 
@@ -994,6 +997,66 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ads_loading => 'Ads Loading...';
+
+  @override
+  String get monthly_plan => 'Monthly Plan';
+
+  @override
+  String get yearly_plan => 'Yearly Plan';
+
+  @override
+  String get lifetime_plan => 'Lifetime Plan';
+
+  @override
+  String get pay_once_enjoy_forever => 'Pay once, enjoy forever';
+
+  @override
+  String get yearly_discount => 'Save 20% with Yearly Plan';
+
+  @override
+  String get best_value => 'BEST VALUE';
+
+  @override
+  String get purchase_successful => 'Purchase Successful!';
+
+  @override
+  String get purchase_successful_description =>
+      'Thank you for upgrading to Premium! Enjoy your enhanced experience.';
+
+  @override
+  String get restore_successful => 'Restore Successful!';
+
+  @override
+  String get restore_successful_description =>
+      'Your previous purchase has been restored. Enjoy your Premium features!';
+
+  @override
+  String get nothing_to_restore => 'Nothing to Restore';
+
+  @override
+  String get nothing_to_restore_description =>
+      'No previous purchases were found to restore.';
+
+  @override
+  String get restore_failed => 'Restore Failed';
+
+  @override
+  String get restore_failed_description =>
+      'An error occurred while restoring your purchase. Please try again.';
+
+  @override
+  String get purchase_failed => 'Purchase Failed';
+
+  @override
+  String get purchase_failed_description =>
+      'An error occurred during the transaction. Please try again.';
+
+  @override
+  String get purchase_canceled => 'Giao dịch đã bị hủy';
+
+  @override
+  String get purchase_canceled_description =>
+      'Giao dịch của bạn đã bị hủy. Vui lòng thử lại nếu bạn muốn nâng cấp lên Premium.';
 
   @override
   String get select_language => 'Select Language';

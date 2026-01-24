@@ -975,6 +975,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get day => 'ngày';
 
   @override
+  String get year => 'Năm';
+
+  @override
   String get accept_terms_conditions =>
       'Đăng ký tự động gia hạn. Bằng cách tiếp tục, bạn đồng ý với Điều khoản Dịch vụ và Chính sách Quyền riêng tư của chúng tôi.';
 
@@ -993,6 +996,66 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get ads_loading => 'Đang tải quảng cáo...';
+
+  @override
+  String get monthly_plan => 'Gói hàng tháng';
+
+  @override
+  String get yearly_plan => 'Gói hàng năm';
+
+  @override
+  String get lifetime_plan => 'Gói vĩnh viễn';
+
+  @override
+  String get pay_once_enjoy_forever => 'Trả một lần, sử dụng mãi mãi';
+
+  @override
+  String get yearly_discount => 'Tiết kiệm 20% với gói hàng năm';
+
+  @override
+  String get best_value => 'GIÁ TRỊ TỐT NHẤT';
+
+  @override
+  String get purchase_successful => 'Mua thành công!';
+
+  @override
+  String get purchase_successful_description =>
+      'Cảm ơn bạn đã nâng cấp lên Premium! Hãy tận hưởng trải nghiệm nâng cao của bạn.';
+
+  @override
+  String get restore_successful => 'Khôi phục thành công!';
+
+  @override
+  String get restore_successful_description =>
+      'Mua hàng trước đó của bạn đã được khôi phục. Hãy tận hưởng các tính năng Premium của bạn!';
+
+  @override
+  String get nothing_to_restore => 'Không có gì để khôi phục';
+
+  @override
+  String get nothing_to_restore_description =>
+      'Không tìm thấy mua hàng trước đó để khôi phục.';
+
+  @override
+  String get restore_failed => 'Khôi phục thất bại';
+
+  @override
+  String get restore_failed_description =>
+      'Đã xảy ra lỗi khi khôi phục mua hàng của bạn. Vui lòng thử lại.';
+
+  @override
+  String get purchase_failed => 'Mua hàng thất bại';
+
+  @override
+  String get purchase_failed_description =>
+      'Đã xảy ra lỗi trong quá trình giao dịch. Vui lòng thử lại.';
+
+  @override
+  String get purchase_canceled => 'Giao dịch đã bị hủy';
+
+  @override
+  String get purchase_canceled_description =>
+      'Giao dịch của bạn đã bị hủy. Vui lòng thử lại nếu bạn muốn nâng cấp lên Premium.';
 
   @override
   String get select_language => 'Chọn ngôn ngữ';

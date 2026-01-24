@@ -59,7 +59,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       children: [
                         SizedBox(height: 10.h),
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(20.r),
+                          borderRadius: BorderRadius.circular(30.r),
                           child: Image.asset(
                             item.image,
                             height: 350.h,
@@ -125,24 +125,43 @@ class _OnboardingPageState extends State<OnboardingPage> {
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CupertinoButton(
                     padding: EdgeInsets.zero,
-                    child: Text(l10n.skip, style: TextStyle(fontSize: 16.sp)),
+                    child: Text(
+                      l10n.skip,
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                     onPressed: () => _vm.skip(context),
                   ),
+
                   CupertinoButton.filled(
-                    minimumSize: Size(120.w, 40.h),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 20.w,
-                      vertical: 5.h,
-                    ),
                     borderRadius: BorderRadius.circular(30.r),
-                    child: Text(
-                      _vm.currentPage == pages.length - 1
-                          ? l10n.start
-                          : l10n.next,
-                      style: TextStyle(fontSize: 16.sp),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 30.w,
+                    ),
+                    child: Container(
+                      constraints: BoxConstraints(
+                        minWidth: 80.w,
+                      ), 
+                      alignment: Alignment
+                          .center,
+                      child: Text(
+                        _vm.currentPage == pages.length - 1
+                            ? l10n.start
+                            : l10n.next,
+                        textAlign: TextAlign
+                            .center, 
+                        style: TextStyle(
+                          fontSize: 17.sp,
+                          fontWeight: FontWeight.w500,
+                          color: CupertinoColors.white,
+                        ),
+                      ),
                     ),
                     onPressed: () => _vm.next(context, pages.length),
                   ),

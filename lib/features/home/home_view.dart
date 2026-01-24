@@ -103,29 +103,33 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   void _handleRewardAdFlow({required bool isVoice}) {
     _adsService.showRewardedAd(
-      onRewardEarned: ()  async {
+      onRewardEarned: () async {
+        await _limitService.grantAdReward();
+
+        if (!mounted) return;
+
         bool? result = false;
         if (isVoice) {
-          await _limitService.resetUsageAfterAds();
-          if (mounted) {
-            result = await Navigator.push<bool>(
-              context,
-              CupertinoPageRoute(builder: (context) => const VoiceInputView()),
-            );
-          }
+          result = await Navigator.push<bool>(
+            context,
+            CupertinoPageRoute(builder: (context) => const VoiceInputView()),
+          );
         } else {
-          if (mounted) {
-            result = await Navigator.push<bool>(
-              context,
-              CupertinoPageRoute(builder: (context) => const ScanReceiptView()),
-            );
-          }
+          result = await Navigator.push<bool>(
+            context,
+            CupertinoPageRoute(builder: (context) => const ScanReceiptView()),
+          );
         }
-        if (mounted) Navigator.pop(context, result);
+
+        if (mounted) {
+          Navigator.pop(context, result);
+        }
       },
       onAdFailed: () {
-        Navigator.pop(context, false);
-        _showAdErrorDialog();
+        if (mounted) {
+          Navigator.pop(context, false);
+          _showAdErrorDialog();
+        }
       },
     );
   }

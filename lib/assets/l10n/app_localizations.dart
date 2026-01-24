@@ -1940,6 +1940,12 @@ abstract class AppLocalizations {
   /// **'ngày'**
   String get day;
 
+  /// No description provided for @year.
+  ///
+  /// In vi, this message translates to:
+  /// **'Năm'**
+  String get year;
+
   /// No description provided for @accept_terms_conditions.
   ///
   /// In vi, this message translates to:
@@ -1969,6 +1975,114 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Đang tải quảng cáo...'**
   String get ads_loading;
+
+  /// No description provided for @monthly_plan.
+  ///
+  /// In vi, this message translates to:
+  /// **'Gói hàng tháng'**
+  String get monthly_plan;
+
+  /// No description provided for @yearly_plan.
+  ///
+  /// In vi, this message translates to:
+  /// **'Gói hàng năm'**
+  String get yearly_plan;
+
+  /// No description provided for @lifetime_plan.
+  ///
+  /// In vi, this message translates to:
+  /// **'Gói vĩnh viễn'**
+  String get lifetime_plan;
+
+  /// No description provided for @pay_once_enjoy_forever.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trả một lần, sử dụng mãi mãi'**
+  String get pay_once_enjoy_forever;
+
+  /// No description provided for @yearly_discount.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tiết kiệm 20% với gói hàng năm'**
+  String get yearly_discount;
+
+  /// No description provided for @best_value.
+  ///
+  /// In vi, this message translates to:
+  /// **'GIÁ TRỊ TỐT NHẤT'**
+  String get best_value;
+
+  /// No description provided for @purchase_successful.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mua thành công!'**
+  String get purchase_successful;
+
+  /// No description provided for @purchase_successful_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cảm ơn bạn đã nâng cấp lên Premium! Hãy tận hưởng trải nghiệm nâng cao của bạn.'**
+  String get purchase_successful_description;
+
+  /// No description provided for @restore_successful.
+  ///
+  /// In vi, this message translates to:
+  /// **'Khôi phục thành công!'**
+  String get restore_successful;
+
+  /// No description provided for @restore_successful_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mua hàng trước đó của bạn đã được khôi phục. Hãy tận hưởng các tính năng Premium của bạn!'**
+  String get restore_successful_description;
+
+  /// No description provided for @nothing_to_restore.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không có gì để khôi phục'**
+  String get nothing_to_restore;
+
+  /// No description provided for @nothing_to_restore_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không tìm thấy mua hàng trước đó để khôi phục.'**
+  String get nothing_to_restore_description;
+
+  /// No description provided for @restore_failed.
+  ///
+  /// In vi, this message translates to:
+  /// **'Khôi phục thất bại'**
+  String get restore_failed;
+
+  /// No description provided for @restore_failed_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã xảy ra lỗi khi khôi phục mua hàng của bạn. Vui lòng thử lại.'**
+  String get restore_failed_description;
+
+  /// No description provided for @purchase_failed.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mua hàng thất bại'**
+  String get purchase_failed;
+
+  /// No description provided for @purchase_failed_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã xảy ra lỗi trong quá trình giao dịch. Vui lòng thử lại.'**
+  String get purchase_failed_description;
+
+  /// No description provided for @purchase_canceled.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giao dịch đã bị hủy'**
+  String get purchase_canceled;
+
+  /// No description provided for @purchase_canceled_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giao dịch của bạn đã bị hủy. Vui lòng thử lại nếu bạn muốn nâng cấp lên Premium.'**
+  String get purchase_canceled_description;
 
   /// No description provided for @select_language.
   ///

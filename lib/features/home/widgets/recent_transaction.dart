@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
+import 'package:spend_flow/core/extension/string_extension.dart';
 import 'package:spend_flow/core/utils/category_helper.dart';
 import 'package:spend_flow/core/widgets/verify_passcode/verify_passcode_sheet.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
@@ -215,7 +216,9 @@ class _RecentTransactionState extends State<RecentTransaction> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      item.title,
+                      item.title.truncate(20),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: CupertinoTheme.of(context).textTheme.textStyle
                           .copyWith(fontSize: 16.sp, fontWeight: FontWeight.w600),
                     ),
@@ -240,8 +243,8 @@ class _RecentTransactionState extends State<RecentTransaction> {
               children: [
                 Text(
                   isExpense
-                      ? "-$symbol ${widget.viewModel.formatCurrency(item.amount)}"
-                      : "+$symbol ${widget.viewModel.formatCurrency(item.amount)}",
+                      ? "-$symbol ${widget.viewModel.formatCompactCurrency(item.amount)}"
+                      : "+$symbol ${widget.viewModel.formatCompactCurrency(item.amount)}",
                   style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w700,

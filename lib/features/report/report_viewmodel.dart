@@ -64,7 +64,7 @@ class ReportViewModel extends ChangeNotifier {
         sensitiveTransaction: true,
       );
 
-      if (didAuthenticate) {
+      if (didAuthenticate) { 
         _isLocked = false;
         notifyListeners();
       }

@@ -113,8 +113,10 @@ class HomeViewModel extends ChangeNotifier {
 
     if (hasPasscode) {
       _isLocked = true;
-      Future.microtask(() => notifyListeners());
+    } else {
+      _isLocked = false;
     }
+    Future.microtask(() => notifyListeners());
   }
 
   Future<bool> authenticateBiometric() async {
@@ -151,6 +153,9 @@ class HomeViewModel extends ChangeNotifier {
   void lockApp() {
     if (_hasSecurity) {
       _isLocked = true;
+      Future.microtask(() => notifyListeners());
+    } else {
+      _isLocked = false;
       Future.microtask(() => notifyListeners());
     }
   }

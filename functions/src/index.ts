@@ -44,17 +44,22 @@ export const analyzeReceiptImage = onCall(
         User categories: ${categoriesJson}
         Today: ${new Date().toISOString()}
 
+        QUANTITY & CALCULATION RULES:
+        1. For each item, identify the QUANTITY and UNIT PRICE.
+        2. Set "amount" as the TOTAL for that line item (Quantity * Unit Price).
+        3. In the "note" field, follow this format: "[Store Name] - [Qty] x [Unit Price]" (Multiple items will automatically wrap to the next line.).
+        
         STRICT RULES TO AVOID DOUBLE COUNTING:
-        1. If you can identify individual items with their specific prices, list ONLY those items. 
-           DO NOT include the "Total" or "Grand Total" as a separate transaction in this case.
-        2. If the receipt is too blurry or complex to list individual items, provide ONLY one single transaction representing the Grand Total.
-        3. NEVER include both the individual items and the total amount in the same response.
+        1. List individual items ONLY. DO NOT include "Total", "Tax", or "Change".
+        2. If items are unclear, provide one single transaction for the Grand Total.
+        3. ADDRESS: Extract full physical address. If not visible, use the STORE NAME. NEVER leave empty.
 
         REQUIREMENTS:
-        - Map each transaction to the most relevant categoryId.
-        - title: Concise summary (e.g., "Starbucks Coffee", "Chicken Breast").
-        - note: Include store name and details.
-        - isIncome: false (default for receipts).
+        - Map each item to the best categoryId.
+        - title: Item name (e.g., "Coca Cola", "Apple").
+        - amount: Total cost for this item (Number only).
+        - address: Full street address or Store Name.
+        - isIncome: false.
 
         Output plain JSON (No Markdown):
         {
@@ -67,6 +72,7 @@ export const analyzeReceiptImage = onCall(
                         "categoryId": string,
                         "date": string (ISO 8601),
                         "note": string,
+                        "address": string,
                         "isIncome": boolean
                     }
                 }
@@ -80,6 +86,7 @@ export const analyzeReceiptImage = onCall(
 
             const result = await model.generateContent([prompt, imagePart]);
             const response = result.response.text();
+
             const jsonMatch = response.match(/\{[\s\S]*\}/);
             const cleanJson = jsonMatch ? jsonMatch[0] : response;
 
