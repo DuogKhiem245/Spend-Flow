@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
-import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 import 'package:spend_flow/core/utils/category_helper.dart';
 import 'package:spend_flow/core/utils/date_helper.dart';
 import 'package:spend_flow/features/category/category_view.dart';

@@ -273,7 +273,7 @@ class _SecurityViewState extends State<SecurityView> {
 
                                       final errorMsg = await _viewModel
                                           .toggleBiometric(value);
-
+                                      
                                       if (errorMsg != null && context.mounted) {
                                         HapticFeedback.vibrate();
 

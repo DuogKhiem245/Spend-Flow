@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 import 'package:spend_flow/core/model/category_model.dart';
 import 'package:spend_flow/core/model/budget_model.dart';
 

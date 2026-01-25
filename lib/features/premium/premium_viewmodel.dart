@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
-import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 
 const String _kProductMonthlyId = 'spendflow_premium_monthly';
 const String _kProductYearlyId = 'spendflow_premium_yearly';
@@ -129,7 +129,12 @@ class PremiumViewModel extends ChangeNotifier {
     _startTimeout(kind: 'restore', l10n: l10n);
 
     try {
-      await _iap.restorePurchases();
+      // await _iap.restorePurchases();
+      debugFakePurchase(shouldNotify: false).then((_) {
+        _cancelTimeout();
+        _isLoading = false;
+        notifyListeners();
+      });
     } catch (e) {
       _cancelTimeout();
       _isLoading = false;

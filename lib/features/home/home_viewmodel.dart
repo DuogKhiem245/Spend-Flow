@@ -9,11 +9,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/model/wallet_model.dart';
-import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 import 'package:spend_flow/core/model/category_model.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
-import 'package:spend_flow/core/services/notification_service.dart';
+import 'package:spend_flow/core/services/general_service/notification_service.dart';
 import 'package:spend_flow/core/services/sync_service/sync_service.dart';
+import 'package:spend_flow/core/utils/category_helper.dart';
 import 'package:spend_flow/features/home/home_model.dart';
 
 class HomeViewModel extends ChangeNotifier {
@@ -62,7 +63,7 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
 
     await notificationService.requestPermissions();
-    
+
     initializeImage();
 
     final prefs = await SharedPreferences.getInstance();
@@ -308,8 +309,8 @@ class HomeViewModel extends ChangeNotifier {
     }
   }
 
-  String currentWalletName (AppLocalizations l10n) {
-    if (_wallets.isEmpty ||_currentWalletId == null) return l10n.select_wallet;
+  String currentWalletName(AppLocalizations l10n) {
+    if (_wallets.isEmpty || _currentWalletId == null) return l10n.select_wallet;
 
     try {
       final wallet = _wallets.firstWhere((w) => w.id == _currentWalletId);
@@ -407,7 +408,7 @@ class HomeViewModel extends ChangeNotifier {
 
       await refreshWallets();
 
-      return null; 
+      return null;
     } catch (e) {
       debugPrint("Lỗi xóa ví: $e");
     }
@@ -548,17 +549,24 @@ class HomeViewModel extends ChangeNotifier {
       final i = entry.key;
       final item = entry.value;
       final isTouched = i == touchedIndex;
-      final fontSize = 15.0.sp;
+      final fontSize = 16.sp;
       final radius = isTouched ? 45.0.w : 35.0.w;
+      final categoryName = CategoryHelper.getTranslatedName(
+        context,
+        item.originalCategory!,
+      );
 
       return PieChartSectionData(
         color: item.color,
         value: item.amount,
-        title: isTouched ? '\$${formatCurrency(item.amount)}' : '',
+        title: isTouched
+            ? '$categoryName \n $currencySymbol ${formatCurrency(item.amount)}'
+            : '',
         radius: radius,
         titleStyle: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
           fontSize: fontSize,
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.w500,
+          color: CupertinoTheme.of(context).textTheme.textStyle.color,
         ),
       );
     }).toList();

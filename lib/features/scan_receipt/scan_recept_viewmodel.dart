@@ -12,8 +12,8 @@ import 'package:spend_flow/core/model/location_model.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/core/services/ai_service.dart';
 import 'package:spend_flow/core/model/category_model.dart';
-import 'package:spend_flow/core/services/language_service.dart';
-import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/core/services/general_service/language_service.dart';
+import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 import 'package:spend_flow/features/ai_preview/ai_preview_overview_view.dart';
 import 'package:spend_flow/features/transaction/add_transaction/add_transaction_view.dart';
 
@@ -144,6 +144,7 @@ class ScanReceiptViewModel extends ChangeNotifier {
       }
 
       final List<TransactionModel> parsedTransactions = [];
+      Map<String, Map<String, double>?> locationCache = {};
       final DateTime today = DateTime.now().copyWith(
         hour: 23,
         minute: 59,
@@ -166,13 +167,19 @@ class ScanReceiptViewModel extends ChangeNotifier {
           }
 
           if (transaction.location.address != null) {
-            final coords = await getCoordinatesFromAddress(
-              transaction.location.address!,
-            );
+            final addr = transaction.location.address!;
+            Map<String, double>? coords;
+            if (locationCache.containsKey(addr)) {
+              coords = locationCache[addr];
+            } else {
+              coords = await getCoordinatesFromAddress(addr);
+              locationCache[addr] = coords; 
+            }
+
             if (coords != null) {
               transaction = transaction.copyWith(
                 location: LocationModel(
-                  address: transaction.location.address,
+                  address: addr,
                   latitude: coords['latitude'],
                   longitude: coords['longitude'],
                 ),
@@ -182,20 +189,6 @@ class ScanReceiptViewModel extends ChangeNotifier {
           parsedTransactions.add(transaction);
         }
       }
-
-      // debugPrint("====================================");
-      // debugPrint("📊 TOTAL TRANSACTIONS: ${parsedTransactions.length}");
-      // for (var i = 0; i < parsedTransactions.length; i++) {
-      //   final tx = parsedTransactions[i];
-      //   debugPrint("TX #$i: Title: ${tx.title}");
-      //   debugPrint("       Amount: ${tx.amount}");
-      //   debugPrint("       Category: ${tx.category.name}");
-      //   debugPrint("       Address: ${tx.location.address}");
-      //   debugPrint(
-      //     "       Coords: ${tx.location.latitude}, ${tx.location.longitude}",
-      //   );
-      // }
-      // debugPrint("====================================");
 
       if (parsedTransactions.isEmpty) {
         throw Exception("No valid transactions found in receipt");
@@ -242,7 +235,7 @@ class ScanReceiptViewModel extends ChangeNotifier {
     if (address.isEmpty) return null;
 
     final apiKey = dotenv.env['GOONG_API_KEY'] ?? '';
-
+ 
     final encodedAddress = Uri.encodeComponent(address);
     final langCode = LanguageService().currentLanguageCode;
 

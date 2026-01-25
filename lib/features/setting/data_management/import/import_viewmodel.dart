@@ -14,8 +14,8 @@ import 'package:spend_flow/core/model/category_model.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/core/model/wallet_model.dart';
 import 'package:spend_flow/core/services/ai_service.dart';
-import 'package:spend_flow/core/services/language_service.dart';
-import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/core/services/general_service/language_service.dart';
+import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 import 'package:spend_flow/core/widgets/check_valid/check_valid_widget.dart';
 
 enum ImportStatus { initial, loading, success, error }

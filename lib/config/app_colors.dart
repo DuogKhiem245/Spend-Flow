@@ -10,13 +10,13 @@ class AppColors {
   static const darkText = Color(0xFFFFFFFF);
   // static const darkButton = Color(0xFF8e85ef);
 
-  static const primaryColor = Color(0xFF0A84FF);
+  static const primaryColor = Color.fromARGB(255, 10, 132, 255);
   static const secondaryColor = CupertinoColors.systemGreen;
   static const thirdColor = Color.fromRGBO(140, 133, 231, 1);
   static const borderColor = Color.fromARGB(255, 165, 165, 165);
   static const boxShadow = Color.fromRGBO(0, 0, 0, 0.05);
 
-  static const successColor = Color(0xFF34C759);
+  static const successColor = Color(0xFF34C759); 
   static const warningColor = Color(0xFFFFCC00);
   static const errorColor = Color(0xFFFF3B30);
   static const disabledColor = CupertinoColors.systemGrey3;

@@ -6,8 +6,8 @@ import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/ai_service.dart';
 import 'package:spend_flow/core/data/category_data.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
-import 'package:spend_flow/core/services/language_service.dart';
-import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/core/services/general_service/language_service.dart';
+import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 import 'package:spend_flow/features/ai_preview/ai_preview_overview_view.dart';
 import 'package:spend_flow/features/transaction/add_transaction/add_transaction_view.dart';
 

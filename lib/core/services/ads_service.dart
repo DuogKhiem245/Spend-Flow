@@ -49,7 +49,7 @@ class AdsService {
     int currentCount = prefs.getInt(_adCounterKey) ?? 0;
     currentCount++;
 
-    if (currentCount >= 3 && _interstitialAd != null) {
+    if (currentCount >= 5 && _interstitialAd != null) {
       _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
         onAdDismissedFullScreenContent: (ad) async {
           ad.dispose();

@@ -5,8 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:spend_flow/core/model/user_model.dart';
 import 'package:spend_flow/core/services/auth_service.dart';
-import 'package:spend_flow/core/services/firestore_service.dart';
-import 'package:spend_flow/core/services/storage_service.dart';
+import 'package:spend_flow/core/services/data_service/firestore_service.dart';
+import 'package:spend_flow/core/services/data_service/storage_service.dart';
 
 class ProfileViewModel extends ChangeNotifier {
   final AuthService _authService = AuthService();

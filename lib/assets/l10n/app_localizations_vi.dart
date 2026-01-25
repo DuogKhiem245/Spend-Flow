@@ -1213,6 +1213,19 @@ class AppLocalizationsVi extends AppLocalizations {
   String get card => 'Thẻ';
 
   @override
+  String get font_selection => 'Lựa chọn Font chữ';
+
+  @override
+  String get select_font => 'Chọn Font chữ';
+
+  @override
+  String get font => 'Font chữ';
+
+  @override
+  String get font_description =>
+      'Một giao dịch mỗi ngày sẽ giúp bạn tránh được \'Tháng túng thiếu\'.';
+
+  @override
   String get reminder_title => 'Nhắc nhở chi tiêu hàng ngày';
 
   @override
@@ -1307,13 +1320,13 @@ class AppLocalizationsVi extends AppLocalizations {
   String get entries_pending => 'Mục đang chờ xử lý';
 
   @override
-  String get confirm_selected_entries => 'Xác nhận các mục đã chọn';
+  String get confirm_selected_entries => 'Thêm các mục đã chọn';
 
   @override
   String get preview_results => 'Xem trước kết quả';
 
   @override
-  String get clear_all => 'Xóa tất cả';
+  String get clear_all => 'Bỏ chọn tất cả';
 
   @override
   String get select_all => 'Chọn tất cả';

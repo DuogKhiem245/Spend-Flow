@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 
 enum BiometricDisplayType { faceId, touchId, none }
 
@@ -52,6 +52,14 @@ class SecurityViewModel extends ChangeNotifier {
 
   Future<void> _checkBiometricType() async {
     try {
+      final bool canAuthenticateWithBiometrics = await _auth.canCheckBiometrics;
+      final bool isDeviceSupported = await _auth.isDeviceSupported();
+
+      if (!canAuthenticateWithBiometrics && !isDeviceSupported) {
+        _biometricType = BiometricDisplayType.none;
+        return;
+      }
+
       List<BiometricType> availableBiometrics = await _auth
           .getAvailableBiometrics();
 

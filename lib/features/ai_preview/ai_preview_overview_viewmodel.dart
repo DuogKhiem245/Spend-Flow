@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/foundation.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
-import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 import 'package:spend_flow/features/transaction/add_transaction/add_transaction_viewmodel.dart';
 
 class AIPreviewOverviewViewmodel extends ChangeNotifier {

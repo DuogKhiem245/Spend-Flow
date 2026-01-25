@@ -95,6 +95,7 @@ class _AIPreviewOverviewViewState extends State<AIPreviewOverviewView> {
       navigationBar: CupertinoNavigationBar(
         padding: EdgeInsetsDirectional.only(end: 10.w),
         border: null,
+        backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
         leading: CupertinoNavigationBarBackButton(
           color: CupertinoTheme.of(context).primaryColor,
           onPressed: () => Navigator.pop(context),
@@ -133,68 +134,76 @@ class _AIPreviewOverviewViewState extends State<AIPreviewOverviewView> {
           ),
         ),
       ),
-      child: Stack(
+      child: Column(
         children: [
-          ListView(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            children: [
-              _buildHeader(l10n),
+          _buildHeader(l10n),
 
-              if (_localTransactions.isNotEmpty) ...[
-                ..._localTransactions.asMap().entries.map((entry) {
-                  final index = entry.key;
-                  final transaction = entry.value;
-                  return _buildReviewCard(
-                    index: index,
-                    model: transaction,
-                    title: transaction.title,
-                    category: CategoryHelper.getTranslatedName(
-                      context,
-                      transaction.category,
-                    ),
-                    amount: transaction.amount,
-                    date: transaction.date,
-                    icon: transaction.category.iconKey,
-                    color: transaction.category.color,
-                    isIncome: transaction.isIncome,
-                    isSelected: _selectedTransactionIndices.contains(index),
-                    location: transaction.location,
-                    onToggle: () {
-                      setState(() {
-                        if (_selectedTransactionIndices.contains(index)) {
-                          _selectedTransactionIndices.remove(index);
-                        } else {
-                          _selectedTransactionIndices.add(index);
-                        }
-                      });
-                    },
-                  );
-                }),
-              ],
+          Expanded(
+            child: Stack(
+              children: [
+                ListView(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  children: [
+                    if (_localTransactions.isNotEmpty) ...[
+                      ..._localTransactions.asMap().entries.map((entry) {
+                        final index = entry.key;
+                        final transaction = entry.value;
+                        return _buildReviewCard(
+                          index: index,
+                          model: transaction,
+                          title: transaction.title,
+                          category: CategoryHelper.getTranslatedName(
+                            context,
+                            transaction.category,
+                          ),
+                          amount: transaction.amount,
+                          date: transaction.date,
+                          icon: transaction.category.iconKey,
+                          color: transaction.category.color,
+                          isIncome: transaction.isIncome,
+                          isSelected: _selectedTransactionIndices.contains(
+                            index,
+                          ),
+                          location: transaction.location,
+                          onToggle: () {
+                            setState(() {
+                              if (_selectedTransactionIndices.contains(index)) {
+                                _selectedTransactionIndices.remove(index);
+                              } else {
+                                _selectedTransactionIndices.add(index);
+                              }
+                            });
+                          },
+                        );
+                      }),
+                    ],
 
-              SizedBox(height: 100.h),
-            ],
-          ),
-
-          Positioned(
-            bottom: 30.h,
-            left: 20.w,
-            right: 20.w,
-            child: CupertinoButton(
-              padding: EdgeInsets.symmetric(vertical: 16.h),
-              color: const Color(0xFF007AFF),
-              borderRadius: BorderRadius.circular(30.r),
-              onPressed: _selectedTransactionIndices.isNotEmpty
-                  ? () => _handleConfirm()
-                  : null,
-              child: Text(
-                "${l10n.confirm_selected_entries} (${_selectedTransactionIndices.length})",
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w700,
-                  color: CupertinoColors.white,
+                    SizedBox(height: 100.h),
+                  ],
                 ),
-              ),
+
+                Positioned(
+                  bottom: 30.h,
+                  left: 20.w,
+                  right: 20.w,
+                  child: CupertinoButton(
+                    padding: EdgeInsets.symmetric(vertical: 16.h),
+                    color: const Color(0xFF007AFF),
+                    borderRadius: BorderRadius.circular(30.r),
+                    onPressed: _selectedTransactionIndices.isNotEmpty
+                        ? () => _handleConfirm()
+                        : null,
+                    child: Text(
+                      "${l10n.confirm_selected_entries} (${_selectedTransactionIndices.length})",
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w700,
+                        color: CupertinoColors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -379,38 +388,41 @@ class _AIPreviewOverviewViewState extends State<AIPreviewOverviewView> {
     bool isAllSelected =
         _selectedTransactionIndices.length == total && total > 0;
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          "$total ${l10n.entries_pending}",
-          style: TextStyle(
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w600,
-            color: CupertinoColors.systemGrey,
-          ),
-        ),
-        CupertinoButton(
-          padding: EdgeInsets.zero,
-          child: Text(
-            isAllSelected ? l10n.clear_all : l10n.select_all,
+    return Padding(
+      padding:  EdgeInsets.symmetric(horizontal: 20.0.w),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "$total ${l10n.entries_pending}",
             style: TextStyle(
               fontSize: 14.sp,
-              color: CupertinoTheme.of(context).primaryColor,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
+              color: CupertinoColors.systemGrey,
             ),
           ),
-          onPressed: () {
-            setState(() {
-              if (isAllSelected) {
-                _selectedTransactionIndices.clear();
-              } else {
-                _selectedTransactionIndices.addAll(Iterable.generate(total));
-              }
-            });
-          },
-        ),
-      ],
+          CupertinoButton(
+            padding: EdgeInsets.zero,
+            child: Text(
+              isAllSelected ? l10n.clear_all : l10n.select_all,
+              style: TextStyle(
+                fontSize: 14.sp,
+                color: CupertinoTheme.of(context).primaryColor,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            onPressed: () {
+              setState(() {
+                if (isAllSelected) {
+                  _selectedTransactionIndices.clear();
+                } else {
+                  _selectedTransactionIndices.addAll(Iterable.generate(total));
+                }
+              });
+            },
+          ),
+        ],
+      ),
     );
   }
 }

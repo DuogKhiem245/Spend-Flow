@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
-import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 
 class TransactionDetailViewModel extends ChangeNotifier {
   final LocalStorageService _storage = LocalStorageService();

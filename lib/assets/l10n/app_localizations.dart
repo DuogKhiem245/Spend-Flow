@@ -2366,6 +2366,30 @@ abstract class AppLocalizations {
   /// **'Thẻ'**
   String get card;
 
+  /// No description provided for @font_selection.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lựa chọn Font chữ'**
+  String get font_selection;
+
+  /// No description provided for @select_font.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn Font chữ'**
+  String get select_font;
+
+  /// No description provided for @font.
+  ///
+  /// In vi, this message translates to:
+  /// **'Font chữ'**
+  String get font;
+
+  /// No description provided for @font_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Một giao dịch mỗi ngày sẽ giúp bạn tránh được \'Tháng túng thiếu\'.'**
+  String get font_description;
+
   /// No description provided for @reminder_title.
   ///
   /// In vi, this message translates to:
@@ -2543,7 +2567,7 @@ abstract class AppLocalizations {
   /// No description provided for @confirm_selected_entries.
   ///
   /// In vi, this message translates to:
-  /// **'Xác nhận các mục đã chọn'**
+  /// **'Thêm các mục đã chọn'**
   String get confirm_selected_entries;
 
   /// No description provided for @preview_results.
@@ -2555,7 +2579,7 @@ abstract class AppLocalizations {
   /// No description provided for @clear_all.
   ///
   /// In vi, this message translates to:
-  /// **'Xóa tất cả'**
+  /// **'Bỏ chọn tất cả'**
   String get clear_all;
 
   /// No description provided for @select_all.

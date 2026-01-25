@@ -1215,6 +1215,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get card => 'Card';
 
   @override
+  String get font_selection => 'Font Selection';
+
+  @override
+  String get select_font => 'Select font';
+
+  @override
+  String get font => 'Font';
+
+  @override
+  String get font_description =>
+      'A transaction a day keeps the \'Broke Month\' away.';
+
+  @override
   String get reminder_title => 'Daily Expense Reminder';
 
   @override
@@ -1310,10 +1323,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get entries_pending => 'Entries Pending';
 
   @override
-  String get confirm_selected_entries => 'Confirm Selected Entries';
+  String get confirm_selected_entries => 'Add selected entries';
 
   @override
-  String get preview_results => 'Preview Results';
+  String get preview_results => 'Preview results';
 
   @override
   String get clear_all => 'Clear all';

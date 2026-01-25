@@ -47,18 +47,23 @@ export const analyzeReceiptImage = onCall(
         QUANTITY & CALCULATION RULES:
         1. For each item, identify the QUANTITY and UNIT PRICE.
         2. Set "amount" as the TOTAL for that line item (Quantity * Unit Price).
-        3. In the "note" field, follow this format: "[Store Name] - [Qty] x [Unit Price]" (Multiple items will automatically wrap to the next line.).
+        3. In the "note" field, follow this format: "[Store Name] - [Qty] x [Unit Price]".
         
         STRICT RULES TO AVOID DOUBLE COUNTING:
         1. List individual items ONLY. DO NOT include "Total", "Tax", or "Change".
         2. If items are unclear, provide one single transaction for the Grand Total.
-        3. ADDRESS: Extract full physical address. If not visible, use the STORE NAME. NEVER leave empty.
+        
+        ADDRESS LOGIC:
+        1. Try to extract the full physical address of the store.
+        2. If the full address is not clear, use the STORE NAME.
+        3. If BOTH the address and store name cannot be identified with high confidence, set "address" to null.
+        4. NEVER guess or provide a generic address.
 
         REQUIREMENTS:
         - Map each item to the best categoryId.
         - title: Item name (e.g., "Coca Cola", "Apple").
         - amount: Total cost for this item (Number only).
-        - address: Full street address or Store Name.
+        - address: Full street address, Store Name, or null.
         - isIncome: false.
 
         Output plain JSON (No Markdown):
@@ -72,7 +77,7 @@ export const analyzeReceiptImage = onCall(
                         "categoryId": string,
                         "date": string (ISO 8601),
                         "note": string,
-                        "address": string,
+                        "address": string | null,
                         "isIncome": boolean
                     }
                 }

@@ -36,9 +36,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final List<OnboardingModel> pages = _vm.getPages(l10n);
+    final List<OnboardingModel> pages = _vm.getPages(
+      l10n,
+      CupertinoTheme.of(context).brightness == Brightness.dark,
+    );
 
     return CupertinoPageScaffold(
+      backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
       child: SafeArea(
         child: Column(
           children: [
@@ -52,32 +56,29 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
                   return Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: 30.w,
-                      vertical: 20.h,
+                      horizontal: 20.w,
+                      vertical: 10.h,
                     ),
                     child: Column(
                       children: [
-                        SizedBox(height: 10.h),
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(30.r),
                           child: Image.asset(
                             item.image,
-                            height: 350.h,
+                            height: 480.h, // 500
                             width: double.infinity,
                             fit: BoxFit.cover,
                           ),
                         ),
-                        SizedBox(height: 35.h),
                         Text(
                           item.title,
                           textAlign: TextAlign.center,
                           style: CupertinoTheme.of(context).textTheme.textStyle
                               .copyWith(
-                            fontSize: 26.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
+                                fontSize: 26.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
                         ),
-                        SizedBox(height: 15.h),
+                        SizedBox(height: 10.h),
                         Opacity(
                           opacity: 0.8,
                           child: Text(
@@ -86,10 +87,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             style: CupertinoTheme.of(context)
                                 .textTheme
                                 .textStyle
-                                .copyWith(
-                                  fontSize: 16.sp,
-                                  height: 1.4,
-                                ),
+                                .copyWith(fontSize: 15.sp, height: 1.4),
                           ),
                         ),
                       ],
@@ -141,21 +139,15 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
                   CupertinoButton.filled(
                     borderRadius: BorderRadius.circular(30.r),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 30.w,
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 30.w),
                     child: Container(
-                      constraints: BoxConstraints(
-                        minWidth: 80.w,
-                      ), 
-                      alignment: Alignment
-                          .center,
+                      constraints: BoxConstraints(minWidth: 80.w),
+                      alignment: Alignment.center,
                       child: Text(
                         _vm.currentPage == pages.length - 1
                             ? l10n.start
                             : l10n.next,
-                        textAlign: TextAlign
-                            .center, 
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 17.sp,
                           fontWeight: FontWeight.w500,

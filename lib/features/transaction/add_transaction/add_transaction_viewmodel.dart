@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart' show Geolocator, LocationPermission;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/core/model/location_model.dart';
-import 'package:spend_flow/core/services/local_storage_service.dart';
+import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
-import 'package:spend_flow/core/services/location_service.dart';
+import 'package:spend_flow/core/services/sercurity_service/location_service.dart';
 import '../../../core/model/category_model.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 

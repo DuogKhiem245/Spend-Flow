@@ -397,6 +397,11 @@
   "download_sample_file": "Tải xuống tệp mẫu {format}",
 
   "card": "Thẻ",
+
+  "font_selection": "Lựa chọn Font chữ",
+  "select_font": "Chọn Font chữ",
+  "font": "Font chữ",
+  "font_description": "Một giao dịch mỗi ngày sẽ giúp bạn tránh được 'Tháng túng thiếu'.",
   
   "reminder_title": "Nhắc nhở chi tiêu hàng ngày",
   "reminder_body": "Bạn đã ghi chép chi tiêu hôm nay chưa? 💸",
@@ -431,9 +436,9 @@
 
   "ai_powered": "Hỗ trợ bởi AI",
   "entries_pending": "Mục đang chờ xử lý",
-  "confirm_selected_entries": "Xác nhận các mục đã chọn",
+  "confirm_selected_entries": "Thêm các mục đã chọn",
   "preview_results": "Xem trước kết quả",
-  "clear_all": "Xóa tất cả",
+  "clear_all": "Bỏ chọn tất cả",
   "select_all": "Chọn tất cả",
   "fail_to_save_transactions": "Lưu giao dịch thất bại. Vui lòng thử lại."
 }

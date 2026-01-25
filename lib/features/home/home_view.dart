@@ -10,7 +10,7 @@ import 'package:pull_down_button/pull_down_button.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/core/services/ads_service.dart';
-import 'package:spend_flow/core/services/daily_limit_service.dart';
+import 'package:spend_flow/core/services/data_service/daily_limit_service.dart';
 import 'package:spend_flow/features/premium/premium_view.dart';
 import 'package:spend_flow/features/scan_receipt/scran_receipt_view.dart';
 import 'package:spend_flow/features/transaction/add_transaction/add_transaction_view.dart';
@@ -282,7 +282,10 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                             viewModel: _viewModel,
                           ),
                           SizedBox(height: 24.h),
-                          SpendingChart(chartData: _viewModel.chartData, viewModel: _viewModel),
+                          SpendingChart(
+                            chartData: _viewModel.chartData,
+                            viewModel: _viewModel,
+                          ),
                           SizedBox(height: 24.h),
                           RecentTransaction(
                             transactions: _viewModel.recentTransactions,

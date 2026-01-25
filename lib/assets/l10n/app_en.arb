@@ -399,6 +399,11 @@
 
   "card": "Card",
 
+  "font_selection": "Font Selection",
+  "select_font": "Select font",
+  "font": "Font",
+  "font_description": "A transaction a day keeps the 'Broke Month' away.",
+
   "reminder_title": "Daily Expense Reminder",
   "reminder_body": "Have you logged your expenses for today? 💸",
 
@@ -432,8 +437,8 @@
 
   "ai_powered": "AI Powered",
   "entries_pending": "Entries Pending",
-  "confirm_selected_entries": "Confirm Selected Entries",
-  "preview_results": "Preview Results",
+  "confirm_selected_entries": "Add selected entries",
+  "preview_results": "Preview results",
   "clear_all": "Clear all",
   "select_all": "Select all",
   "fail_to_save_transactions": "Failed to save transactions. Please try again."

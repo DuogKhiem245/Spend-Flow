@@ -8,23 +8,23 @@ class OnboardingViewModel {
   final PageController pageController = PageController();
   int currentPage = 0;
 
-  List<OnboardingModel> getPages(AppLocalizations l10n) {
+  List<OnboardingModel> getPages(AppLocalizations l10n, bool isDarkMode) {
     return [
       OnboardingModel(
         id: '1',
-        image: "lib/assets/images/onboard-1.2.png",
+        image: isDarkMode ? "lib/assets/images/dark_1.png" : "lib/assets/images/light_1.png",
         title: l10n.onboard_step1_title,
         desc: l10n.onboard_step1_message,
       ),
       OnboardingModel(
         id: '2',
-        image: "lib/assets/images/onboard-2.2.png",
+        image: isDarkMode ? "lib/assets/images/dark_2.png" : "lib/assets/images/light_2.png",
         title: l10n.onboard_step2_title,
-        desc: l10n.onboard_step2_message,
+        desc: l10n.onboard_step2_message, 
       ),
       OnboardingModel(
         id: '3',
-        image: "lib/assets/images/onboard-3.2.png",
+        image: isDarkMode ? "lib/assets/images/dark_3.png" : "lib/assets/images/light_3.png",
         title: l10n.onboard_step3_title,
         desc: l10n.onboard_step3_message,
       ),
