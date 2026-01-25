@@ -165,13 +165,14 @@ class _MyMapWidgetState extends State<MyMapWidget> {
                   ),
                   child: Text(
                     l10n.location,
-                    style: TextStyle(
-                      color: CupertinoTheme.of(
-                        context,
-                      ).textTheme.textStyle.color?.withValues(alpha: .7),
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: CupertinoTheme.of(context).textTheme.textStyle
+                        .copyWith(
+                          color: CupertinoTheme.of(
+                            context,
+                          ).textTheme.textStyle.color?.withValues(alpha: .7),
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
                   ),
                 ),
 
@@ -200,12 +201,15 @@ class _MyMapWidgetState extends State<MyMapWidget> {
                                   child: Text(
                                     l10n.location_permission_denied,
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: CupertinoTheme.of(
-                                        context,
-                                      ).textTheme.textStyle.color,
-                                      fontSize: 14.sp,
-                                    ),
+                                    style: CupertinoTheme.of(context)
+                                        .textTheme
+                                        .textStyle
+                                        .copyWith(
+                                          color: CupertinoTheme.of(
+                                            context,
+                                          ).textTheme.textStyle.color,
+                                          fontSize: 14.sp,
+                                        ),
                                   ),
                                 )
                               : currentPos == null
@@ -384,13 +388,16 @@ class _MyMapWidgetState extends State<MyMapWidget> {
                                     children: [
                                       Text(
                                         displayAddress,
-                                        style: TextStyle(
-                                          color: CupertinoTheme.of(
-                                            context,
-                                          ).textTheme.textStyle.color,
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                                        style: CupertinoTheme.of(context)
+                                            .textTheme
+                                            .textStyle
+                                            .copyWith(
+                                              color: CupertinoTheme.of(
+                                                context,
+                                              ).textTheme.textStyle.color,
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.w500,
+                                            ),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -398,14 +405,17 @@ class _MyMapWidgetState extends State<MyMapWidget> {
                                       SizedBox(height: 4.h),
                                       Text(
                                         l10n.tap_to_change_location,
-                                        style: TextStyle(
-                                          color: CupertinoTheme.of(context)
-                                              .textTheme
-                                              .textStyle
-                                              .color!
-                                              .withValues(alpha: 0.5),
-                                          fontSize: 12.sp,
-                                        ),
+                                        style: CupertinoTheme.of(context)
+                                            .textTheme
+                                            .textStyle
+                                            .copyWith(
+                                              color: CupertinoTheme.of(context)
+                                                  .textTheme
+                                                  .textStyle
+                                                  .color!
+                                                  .withValues(alpha: 0.5),
+                                              fontSize: 12.sp,
+                                            ),
                                       ),
                                     ],
                                   ),

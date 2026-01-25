@@ -94,7 +94,7 @@ class _ImportViewState extends State<ImportView>
             ),
             middle: Text(
               l10n.import_data,
-              style: TextStyle(
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                 fontWeight: FontWeight.w600,
                 fontSize: 18.sp,
                 color: CupertinoTheme.of(context).textTheme.textStyle.color,
@@ -128,11 +128,12 @@ class _ImportViewState extends State<ImportView>
                       children: [
                         Text(
                           l10n.recent_imports,
-                          style: TextStyle(
-                            color: CupertinoColors.systemGrey,
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: CupertinoTheme.of(context).textTheme.textStyle
+                              .copyWith(
+                                color: CupertinoColors.systemGrey,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
                         ),
                         SizedBox(height: 12.h),
                         Expanded(
@@ -143,10 +144,13 @@ class _ImportViewState extends State<ImportView>
                                 return Center(
                                   child: Text(
                                     l10n.no_recent_imports,
-                                    style: TextStyle(
-                                      color: CupertinoColors.systemGrey,
-                                      fontSize: 14.sp,
-                                    ),
+                                    style: CupertinoTheme.of(context)
+                                        .textTheme
+                                        .textStyle
+                                        .copyWith(
+                                          color: CupertinoColors.systemGrey,
+                                          fontSize: 14.sp,
+                                        ),
                                   ),
                                 );
                               }
@@ -186,7 +190,7 @@ class _ImportViewState extends State<ImportView>
         RichText(
           textAlign: TextAlign.center,
           text: TextSpan(
-            style: TextStyle(
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               fontSize: 28.sp,
               fontWeight: FontWeight.w800,
               color: CupertinoTheme.of(context).textTheme.textStyle.color,
@@ -195,7 +199,9 @@ class _ImportViewState extends State<ImportView>
               TextSpan(text: l10n.import_data_title),
               TextSpan(
                 text: l10n.data,
-                style: TextStyle(color: AppColors.primaryColor),
+                style: CupertinoTheme.of(
+                  context,
+                ).textTheme.textStyle.copyWith(color: AppColors.primaryColor),
               ),
               TextSpan(text: l10n.import_data_title_2),
             ],
@@ -205,7 +211,10 @@ class _ImportViewState extends State<ImportView>
         Text(
           l10n.import_data_description,
           textAlign: TextAlign.center,
-          style: TextStyle(color: CupertinoColors.systemGrey, fontSize: 14.sp),
+          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+            color: CupertinoColors.systemGrey,
+            fontSize: 14.sp,
+          ),
         ),
       ],
     );
@@ -264,7 +273,7 @@ class _ImportViewState extends State<ImportView>
             SizedBox(height: 16.h),
             Text(
               l10n.select_file_to_import,
-              style: TextStyle(
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                 fontWeight: FontWeight.bold,
                 fontSize: 20.sp,
                 color: CupertinoTheme.of(context).textTheme.textStyle.color,
@@ -274,7 +283,7 @@ class _ImportViewState extends State<ImportView>
             Text(
               l10n.tap_to_browse,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                 color: CupertinoColors.systemGrey,
                 fontSize: 13.sp,
               ),
@@ -294,11 +303,12 @@ class _ImportViewState extends State<ImportView>
                     )
                   : Text(
                       l10n.select_file,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.sp,
-                        color: Colors.white,
-                      ),
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.sp,
+                            color: Colors.white,
+                          ),
                     ),
             ),
           ],
@@ -313,7 +323,7 @@ class _ImportViewState extends State<ImportView>
       children: [
         Text(
           l10n.accepted_formats,
-          style: TextStyle(
+          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
             color: CupertinoColors.systemGrey,
             fontSize: 12.sp,
             fontWeight: FontWeight.w600,
@@ -353,7 +363,7 @@ class _ImportViewState extends State<ImportView>
             Text(
               label,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                 fontWeight: FontWeight.w600,
                 fontSize: 14.sp,
                 color: CupertinoTheme.of(context).textTheme.textStyle.color,
@@ -395,21 +405,27 @@ class _ImportViewState extends State<ImportView>
               children: [
                 Text(
                   item['name'],
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14.sp,
-                    height: 1.2,
-                    color: CupertinoTheme.of(context).textTheme.textStyle.color,
-                  ),
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14.sp,
+                        height: 1.2,
+                        color: CupertinoTheme.of(
+                          context,
+                        ).textTheme.textStyle.color,
+                      ),
                 ),
                 SizedBox(height: 4.h),
                 Text(
                   "${item['time']} • ${item['format']}",
-                  style: TextStyle(
-                    color: CupertinoColors.secondaryLabel.resolveFrom(context),
-                    fontSize: 11.sp,
-                    height: 1.1,
-                  ),
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(
+                        color: CupertinoColors.secondaryLabel.resolveFrom(
+                          context,
+                        ),
+                        fontSize: 11.sp,
+                        height: 1.1,
+                      ),
                 ),
               ],
             ),
@@ -439,7 +455,7 @@ class _ImportViewState extends State<ImportView>
               SizedBox(width: 6.w),
               Text(
                 l10n.protected,
-                style: TextStyle(
+                style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                   color: AppColors.primaryColor,
                   fontSize: 10.sp,
                   fontWeight: FontWeight.bold,
@@ -452,7 +468,10 @@ class _ImportViewState extends State<ImportView>
         Text(
           l10n.protected_description,
           textAlign: TextAlign.center,
-          style: TextStyle(color: CupertinoColors.systemGrey, fontSize: 10),
+          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+            color: CupertinoColors.systemGrey,
+            fontSize: 10,
+          ),
         ),
       ],
     );

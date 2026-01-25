@@ -100,7 +100,9 @@ class AccountWidget extends StatelessWidget {
   }
 
   Widget _buildUserView(AppLocalizations l10n, BuildContext context) {
-    final String displayName = currentUser?.displayName ?? SettingViewModel().getGreetingMessage(context);
+    final String displayName =
+        currentUser?.displayName ??
+        SettingViewModel().getGreetingMessage(context);
     final String email = currentUser!.email!;
     final String? photoUrl = currentUser?.photoURL;
 
@@ -198,7 +200,9 @@ class AccountWidget extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          CupertinoPageRoute(builder: (context) => const LoginPage(haveBack: true,)),
+          CupertinoPageRoute(
+            builder: (context) => const LoginPage(haveBack: true),
+          ),
         );
       },
       child: Row(
@@ -231,11 +235,12 @@ class AccountWidget extends StatelessWidget {
                     children: [
                       Text(
                         l10n.sign_in_now,
-                        style: TextStyle(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.primaryColor,
-                        ),
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.primaryColor,
+                            ),
                       ),
                       SizedBox(height: 4.h),
                       Text(
@@ -243,7 +248,7 @@ class AccountWidget extends StatelessWidget {
                         style: CupertinoTheme.of(context).textTheme.textStyle
                             .copyWith(
                               fontSize: 13.sp,
-                              height: 1.4, 
+                              height: 1.4,
                               fontWeight: FontWeight.w500,
                               color: CupertinoTheme.of(
                                 context,

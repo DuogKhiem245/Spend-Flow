@@ -34,9 +34,9 @@ class _UpgradePremiumWidgetState extends State<UpgradePremiumWidget>
   void _showPremiumModal(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, 
+      isScrollControlled: true,
       backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
-      // transitionAnimationController: _animationController, 
+      // transitionAnimationController: _animationController,
       builder: (context) => const PremiumView(),
     );
   }
@@ -69,7 +69,7 @@ class _UpgradePremiumWidgetState extends State<UpgradePremiumWidget>
         children: [
           Text(
             l10n.upgrade_premium,
-            style: TextStyle(
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               color: Colors.white,
               fontSize: 22.sp,
               fontWeight: FontWeight.w700,
@@ -78,7 +78,7 @@ class _UpgradePremiumWidgetState extends State<UpgradePremiumWidget>
           SizedBox(height: 8.h),
           Text(
             l10n.upgrade_premium_description,
-            style: TextStyle(
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               color: Colors.white.withValues(alpha: 0.9),
               fontSize: 15.sp,
               height: 1.4,
@@ -87,7 +87,7 @@ class _UpgradePremiumWidgetState extends State<UpgradePremiumWidget>
           ),
           SizedBox(height: 20.h),
           GestureDetector(
-            onTap: () => _showPremiumModal(context), 
+            onTap: () => _showPremiumModal(context),
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
               decoration: BoxDecoration(
@@ -96,7 +96,7 @@ class _UpgradePremiumWidgetState extends State<UpgradePremiumWidget>
               ),
               child: Text(
                 l10n.upgrade_now,
-                style: TextStyle(
+                style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                   color: const Color(0xFF3A49F9),
                   fontSize: 15.sp,
                   fontWeight: FontWeight.w700,

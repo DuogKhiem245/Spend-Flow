@@ -268,10 +268,13 @@ class _RegisterPageState extends State<RegisterPage> {
                                 )
                               : Text(
                                   l10n.register,
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                                  style: CupertinoTheme.of(context)
+                                      .textTheme
+                                      .textStyle
+                                      .copyWith(
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                 ),
                         ),
 
@@ -291,10 +294,13 @@ class _RegisterPageState extends State<RegisterPage> {
                               padding: EdgeInsets.zero,
                               child: Text(
                                 l10n.login,
-                                style: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                style: CupertinoTheme.of(context)
+                                    .textTheme
+                                    .textStyle
+                                    .copyWith(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                               ),
                               onPressed: () {
                                 Navigator.pop(context);
@@ -353,7 +359,9 @@ class _RegisterPageState extends State<RegisterPage> {
               keyboardType: inputType,
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 14.h),
               decoration: null,
-              style: TextStyle(fontSize: 14.sp),
+              style: CupertinoTheme.of(
+                context,
+              ).textTheme.textStyle.copyWith(fontSize: 14.sp),
             ),
           ),
         ],
@@ -395,7 +403,9 @@ class _RegisterPageState extends State<RegisterPage> {
               obscureText: obscureText,
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 14.h),
               decoration: null,
-              style: TextStyle(fontSize: 14.sp),
+              style: CupertinoTheme.of(
+                context,
+              ).textTheme.textStyle.copyWith(fontSize: 14.sp),
               onChanged: (value) {
                 setState(() {
                   onChanged(value);

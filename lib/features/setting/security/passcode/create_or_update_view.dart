@@ -37,7 +37,6 @@ class _CreateOrUpdateViewState extends State<CreateOrUpdateView> {
       isChangeMode: widget.isChangeMode,
       isRemoveMode: widget.isRemoveMode,
     );
-
   }
 
   @override
@@ -59,7 +58,7 @@ class _CreateOrUpdateViewState extends State<CreateOrUpdateView> {
       currentCode: _currentController.text,
       newCode: _newController.text,
       confirmCode: _confirmController.text,
-      context: context, 
+      context: context,
     );
 
     if (!mounted) return;
@@ -116,7 +115,7 @@ class _CreateOrUpdateViewState extends State<CreateOrUpdateView> {
           ),
           middle: Text(
             _getTitle(l10n),
-            style: TextStyle(
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               fontWeight: FontWeight.w600,
               fontSize: 20.sp,
               color: CupertinoTheme.of(context).textTheme.textStyle.color,
@@ -140,10 +139,11 @@ class _CreateOrUpdateViewState extends State<CreateOrUpdateView> {
                             ? l10n.description_remove_passcode
                             : l10n.description_create_passcode,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: CupertinoColors.systemGrey,
-                          fontSize: 13.sp,
-                        ),
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              color: CupertinoColors.systemGrey,
+                              fontSize: 13.sp,
+                            ),
                       ),
 
                       SizedBox(height: 20.h),
@@ -201,10 +201,11 @@ class _CreateOrUpdateViewState extends State<CreateOrUpdateView> {
                   onPressed: _onSubmit,
                   child: Text(
                     _getButtonLabel(l10n),
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
+                    style: CupertinoTheme.of(context).textTheme.textStyle
+                        .copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
                   ),
                 ),
               ),
@@ -220,7 +221,7 @@ class _CreateOrUpdateViewState extends State<CreateOrUpdateView> {
       alignment: Alignment.centerLeft,
       child: Text(
         title,
-        style: TextStyle(
+        style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
           fontSize: 16.sp,
           fontWeight: FontWeight.w600,
           color: CupertinoTheme.of(context).textTheme.textStyle.color,
@@ -233,14 +234,14 @@ class _CreateOrUpdateViewState extends State<CreateOrUpdateView> {
     required TextEditingController controller,
     required FocusNode focusNode,
     required bool isAutoFocus,
-    FocusNode? prevFocus, 
+    FocusNode? prevFocus,
     FocusNode? nextFocus,
   }) {
     return AnimatedBuilder(
-      animation: Listenable.merge([controller, focusNode]), 
+      animation: Listenable.merge([controller, focusNode]),
       builder: (context, child) {
         return SizedBox(
-          height: 60.h, 
+          height: 60.h,
           child: Stack(
             children: [
               Positioned.fill(
@@ -249,7 +250,7 @@ class _CreateOrUpdateViewState extends State<CreateOrUpdateView> {
                   focusNode: focusNode,
                   autofocus: isAutoFocus,
                   keyboardType: TextInputType.number,
-                  maxLength: 6, 
+                  maxLength: 6,
                   style: const TextStyle(color: Colors.transparent),
                   cursorColor: Colors.transparent,
                   decoration: const BoxDecoration(color: Colors.transparent),
@@ -299,9 +300,7 @@ class _CreateOrUpdateViewState extends State<CreateOrUpdateView> {
       width: 48.w,
       height: 56.h,
       decoration: BoxDecoration(
-        color: isDarkMode
-            ? const Color(0xFF2C2C2E) 
-            : CupertinoColors.white,
+        color: isDarkMode ? const Color(0xFF2C2C2E) : CupertinoColors.white,
         borderRadius: BorderRadius.circular(30.r),
         border: Border.all(
           color: isFocused

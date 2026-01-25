@@ -12,7 +12,11 @@ import 'package:spend_flow/features/setting/widget/setting_item_widget.dart';
 class SettingDataWidget extends StatefulWidget {
   final String lastSyncText;
   final VoidCallback onSyncSuccess;
-  const SettingDataWidget({super.key, required this.lastSyncText, required this.onSyncSuccess});
+  const SettingDataWidget({
+    super.key,
+    required this.lastSyncText,
+    required this.onSyncSuccess,
+  });
 
   @override
   State<SettingDataWidget> createState() => _SettingDataWidgetState();
@@ -68,7 +72,7 @@ class _SettingDataWidgetState extends State<SettingDataWidget> {
           padding: EdgeInsets.only(left: 4.w, bottom: 8.h),
           child: Text(
             l10n.data_management,
-            style: TextStyle(
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               fontSize: 16.sp,
               fontWeight: FontWeight.w600,
               color: CupertinoTheme.of(
@@ -87,7 +91,7 @@ class _SettingDataWidgetState extends State<SettingDataWidget> {
             onTap: _onTap,
             child: Text(
               _isLoading ? l10n.syncing : l10n.sync_data_now,
-              style: TextStyle(
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                 fontSize: 14.sp,
                 color: CupertinoColors.systemBlue,
                 fontWeight: FontWeight.w500,

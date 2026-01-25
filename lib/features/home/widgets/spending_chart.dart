@@ -112,7 +112,7 @@ class _SpendingChartState extends State<SpendingChart>
           children: [
             Text(
               l10n.spending_this_month,
-              style: TextStyle(
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.bold,
                 color: CupertinoTheme.of(context).textTheme.textStyle.color,
@@ -129,7 +129,7 @@ class _SpendingChartState extends State<SpendingChart>
             SizedBox(height: 10.h),
             Text(
               l10n.no_transactions,
-              style: TextStyle(
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                 color: CupertinoTheme.of(
                   context,
                 ).textTheme.textStyle.color?.withValues(alpha: .6),
@@ -262,10 +262,11 @@ class _SpendingChartState extends State<SpendingChart>
                   children: [
                     Text(
                       l10n.total_spent,
-                      style: TextStyle(
-                        color: CupertinoColors.systemGrey,
-                        fontSize: 14.sp,
-                      ),
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            color: CupertinoColors.systemGrey,
+                            fontSize: 14.sp,
+                          ),
                     ),
                     SizedBox(height: 4.h),
                     ScaleTransition(
@@ -311,7 +312,7 @@ class _SpendingChartState extends State<SpendingChart>
                             ),
                           ),
                           SizedBox(width: 8.w),
-                
+
                           Text(
                             item.originalCategory != null
                                 ? CategoryHelper.getTranslatedName(
@@ -321,18 +322,22 @@ class _SpendingChartState extends State<SpendingChart>
                                 : (item.category.toLowerCase() == "other"
                                       ? l10n.other
                                       : item.category),
-                
-                            style: CupertinoTheme.of(context).textTheme.textStyle
+
+                            style: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
                                 .copyWith(
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.w500,
                                 ),
                           ),
-                
+
                           Spacer(),
                           Text(
                             "$symbol ${widget.viewModel.formatCurrency(item.amount)}",
-                            style: CupertinoTheme.of(context).textTheme.textStyle
+                            style: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
                                 .copyWith(
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.w700,
@@ -366,7 +371,9 @@ class _SpendingChartState extends State<SpendingChart>
                           SizedBox(width: 8.w),
                           Text(
                             l10n.click_to_unlock,
-                            style: TextStyle(fontSize: 14.sp),
+                            style: CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.copyWith(fontSize: 14.sp),
                           ),
                         ],
                       ),

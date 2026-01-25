@@ -226,10 +226,11 @@ class _AddBudgetViewState extends State<AddBudgetView> {
                     padding: EdgeInsets.symmetric(vertical: 16.h),
                     child: Text(
                       l10n.save,
-                      style: TextStyle(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
                     ),
                   ),
                 ),

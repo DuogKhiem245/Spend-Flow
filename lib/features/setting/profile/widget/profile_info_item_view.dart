@@ -29,7 +29,7 @@ class ProfileInfoItem extends StatelessWidget {
       children: [
         Text(
           label.toUpperCase(),
-          style: TextStyle(
+          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
             fontSize: 14.sp,
             color: CupertinoColors.systemGrey,
             fontWeight: FontWeight.w500,
@@ -61,15 +61,16 @@ class ProfileInfoItem extends StatelessWidget {
                         keyboardType: keyboardType,
                         decoration: null,
                         padding: EdgeInsets.zero,
-                        style: TextStyle(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w400,
-                          color: isReadOnly
-                              ? CupertinoColors.systemGrey
-                              : CupertinoTheme.of(
-                                  context,
-                                ).textTheme.textStyle.color,
-                        ),
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w400,
+                              color: isReadOnly
+                                  ? CupertinoColors.systemGrey
+                                  : CupertinoTheme.of(
+                                      context,
+                                    ).textTheme.textStyle.color,
+                            ),
                         cursorColor: CupertinoColors.activeBlue,
                       )
                     : GestureDetector(
@@ -77,13 +78,14 @@ class ProfileInfoItem extends StatelessWidget {
                         behavior: HitTestBehavior.opaque,
                         child: Text(
                           textValue ?? '',
-                          style: TextStyle(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w400,
-                            color: CupertinoTheme.of(
-                              context,
-                            ).textTheme.textStyle.color,
-                          ),
+                          style: CupertinoTheme.of(context).textTheme.textStyle
+                              .copyWith(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w400,
+                                color: CupertinoTheme.of(
+                                  context,
+                                ).textTheme.textStyle.color,
+                              ),
                         ),
                       ),
               ),

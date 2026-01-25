@@ -45,7 +45,10 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
             border: null,
             middle: Text(
               l10n.transaction_details,
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17.sp),
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+                fontWeight: FontWeight.w600,
+                fontSize: 17.sp,
+              ),
             ),
             leading: CupertinoNavigationBarBackButton(
               color: CupertinoTheme.of(context).primaryColor,
@@ -131,11 +134,12 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
                   ),
                   child: Text(
                     vm.categoryName,
-                    style: TextStyle(
-                      fontSize: 11.sp,
-                      fontWeight: FontWeight.bold,
-                      color: vm.categoryColor,
-                    ),
+                    style: CupertinoTheme.of(context).textTheme.textStyle
+                        .copyWith(
+                          fontSize: 11.sp,
+                          fontWeight: FontWeight.bold,
+                          color: vm.categoryColor,
+                        ),
                   ),
                 ),
               ],
@@ -153,25 +157,29 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
                     children: [
                       Text(
                         vm.name,
-                        style: TextStyle(
-                          fontSize: 22.sp,
-                          fontWeight: FontWeight.w600,
-                          color: CupertinoTheme.of(
-                            context,
-                          ).textTheme.textStyle.color,
-                        ),
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              fontSize: 22.sp,
+                              fontWeight: FontWeight.w600,
+                              color: CupertinoTheme.of(
+                                context,
+                              ).textTheme.textStyle.color,
+                            ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
                       SizedBox(height: 6.h),
                       Text(
                         vm.getDateString(context),
-                        style: TextStyle(
-                          fontSize: 13.sp,
-                          color: CupertinoTheme.of(
-                            context,
-                          ).textTheme.textStyle.color?.withValues(alpha: .5),
-                        ),
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              fontSize: 13.sp,
+                              color: CupertinoTheme.of(context)
+                                  .textTheme
+                                  .textStyle
+                                  .color
+                                  ?.withValues(alpha: .5),
+                            ),
                       ),
                     ],
                   ),
@@ -181,14 +189,15 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       vm.amountString,
-                      style: TextStyle(
-                        fontSize: 34.sp,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: -1,
-                        color: CupertinoTheme.of(
-                          context,
-                        ).textTheme.textStyle.color,
-                      ),
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            fontSize: 34.sp,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: -1,
+                            color: CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.color,
+                          ),
                     ),
                   ),
                 ],
@@ -216,7 +225,7 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
         children: [
           Text(
             AppLocalizations.of(context)!.note_2,
-            style: TextStyle(
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               fontSize: 15.sp,
               fontWeight: FontWeight.w600,
               color: CupertinoColors.systemGrey,
@@ -225,7 +234,7 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
           SizedBox(height: 10.h),
           Text(
             vm.note,
-            style: TextStyle(
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               fontSize: 16.sp,
               color: CupertinoTheme.of(context).textTheme.textStyle.color,
             ),
@@ -257,24 +266,29 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
                 children: [
                   Text(
                     AppLocalizations.of(context)!.spending_trend.toUpperCase(),
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                      color: CupertinoTheme.of(
-                        context,
-                      ).textTheme.textStyle.color!.withValues(alpha: .6),
-                    ),
+                    style: CupertinoTheme.of(context).textTheme.textStyle
+                        .copyWith(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                          color: CupertinoTheme.of(
+                            context,
+                          ).textTheme.textStyle.color!.withValues(alpha: .6),
+                        ),
                   ),
                   SizedBox(height: 4.h),
                   Text(
-                    CategoryHelper.getTranslatedName(context, widget.transaction.category),
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.bold,
-                      color: CupertinoTheme.of(
-                        context,
-                      ).textTheme.textStyle.color,
+                    CategoryHelper.getTranslatedName(
+                      context,
+                      widget.transaction.category,
                     ),
+                    style: CupertinoTheme.of(context).textTheme.textStyle
+                        .copyWith(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold,
+                          color: CupertinoTheme.of(
+                            context,
+                          ).textTheme.textStyle.color,
+                        ),
                   ),
                 ],
               ),
@@ -283,21 +297,23 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
                 children: [
                   Text(
                     vm.totalSpending7DaysString,
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.bold,
-                      color: CupertinoTheme.of(
-                        context,
-                      ).textTheme.textStyle.color,
-                    ),
+                    style: CupertinoTheme.of(context).textTheme.textStyle
+                        .copyWith(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.bold,
+                          color: CupertinoTheme.of(
+                            context,
+                          ).textTheme.textStyle.color,
+                        ),
                   ),
                   Text(
                     AppLocalizations.of(context)!.spending_last_7_days,
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      color: AppColors.secondaryColor,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: CupertinoTheme.of(context).textTheme.textStyle
+                        .copyWith(
+                          fontSize: 12.sp,
+                          color: AppColors.secondaryColor,
+                          fontWeight: FontWeight.w500,
+                        ),
                   ),
                 ],
               ),
@@ -356,7 +372,7 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
         SizedBox(height: 6.h),
         Text(
           day,
-          style: TextStyle(
+          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
             fontSize: 10.sp,
             fontWeight: FontWeight.w600,
             color: isActive

@@ -96,7 +96,10 @@ class _WalletViewState extends State<WalletView> {
                   ),
             middle: Text(
               widget.firstWallet ? l10n.create_first_wallet : l10n.add_wallet,
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20.sp),
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+                fontWeight: FontWeight.w600,
+                fontSize: 20.sp,
+              ),
             ),
           ),
           child: SafeArea(
@@ -152,10 +155,13 @@ class _WalletViewState extends State<WalletView> {
                                   ? l10n.welcome_create_wallet
                                   : l10n.add_wallet_description,
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                color: CupertinoColors.systemGrey,
-                              ),
+                              style: CupertinoTheme.of(context)
+                                  .textTheme
+                                  .textStyle
+                                  .copyWith(
+                                    fontSize: 14.sp,
+                                    color: CupertinoColors.systemGrey,
+                                  ),
                             ),
                           ),
 
@@ -163,15 +169,18 @@ class _WalletViewState extends State<WalletView> {
 
                           Text(
                             l10n.enter_wallet_name,
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
-                              color: CupertinoTheme.of(context)
-                                  .textTheme
-                                  .textStyle
-                                  .color!
-                                  .withValues(alpha: .8),
-                            ),
+                            style: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
+                                .copyWith(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: CupertinoTheme.of(context)
+                                      .textTheme
+                                      .textStyle
+                                      .color!
+                                      .withValues(alpha: .8),
+                                ),
                           ),
 
                           SizedBox(height: 8.h),
@@ -190,17 +199,23 @@ class _WalletViewState extends State<WalletView> {
                               vertical: 16.h,
                             ),
 
-                            placeholderStyle: TextStyle(
-                              fontSize: 16.sp,
-                              color: CupertinoColors.placeholderText,
-                            ),
+                            placeholderStyle: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
+                                .copyWith(
+                                  fontSize: 16.sp,
+                                  color: CupertinoColors.placeholderText,
+                                ),
 
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              color: CupertinoTheme.of(
-                                context,
-                              ).textTheme.textStyle.color,
-                            ),
+                            style: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
+                                .copyWith(
+                                  fontSize: 16.sp,
+                                  color: CupertinoTheme.of(
+                                    context,
+                                  ).textTheme.textStyle.color,
+                                ),
                           ),
 
                           SizedBox(height: 24.h),
@@ -208,15 +223,18 @@ class _WalletViewState extends State<WalletView> {
                           if (widget.firstWallet) ...[
                             Text(
                               l10n.currency_unit,
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w600,
-                                color: CupertinoTheme.of(context)
-                                    .textTheme
-                                    .textStyle
-                                    .color!
-                                    .withValues(alpha: .8),
-                              ),
+                              style: CupertinoTheme.of(context)
+                                  .textTheme
+                                  .textStyle
+                                  .copyWith(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: CupertinoTheme.of(context)
+                                        .textTheme
+                                        .textStyle
+                                        .color!
+                                        .withValues(alpha: .8),
+                                  ),
                             ),
                             SizedBox(height: 8.h),
                             GestureDetector(
@@ -251,23 +269,29 @@ class _WalletViewState extends State<WalletView> {
                                     SizedBox(width: 10.w),
                                     Text(
                                       l10n.currency,
-                                      style: TextStyle(
-                                        fontSize: 16.sp,
-                                        color: CupertinoTheme.of(
-                                          context,
-                                        ).textTheme.textStyle.color,
-                                      ),
+                                      style: CupertinoTheme.of(context)
+                                          .textTheme
+                                          .textStyle
+                                          .copyWith(
+                                            fontSize: 16.sp,
+                                            color: CupertinoTheme.of(
+                                              context,
+                                            ).textTheme.textStyle.color,
+                                          ),
                                     ),
 
                                     const Spacer(),
 
                                     Text(
                                       _settingViewModel.currentCurrencyCode,
-                                      style: TextStyle(
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w600,
-                                        color: CupertinoColors.systemGrey,
-                                      ),
+                                      style: CupertinoTheme.of(context)
+                                          .textTheme
+                                          .textStyle
+                                          .copyWith(
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.w600,
+                                            color: CupertinoColors.systemGrey,
+                                          ),
                                     ),
                                     SizedBox(width: 4.w),
                                     Icon(
@@ -299,15 +323,19 @@ class _WalletViewState extends State<WalletView> {
                                     )
                                   : Text(
                                       l10n.create_wallet,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16.sp,
-                                        color: Colors.white,
-                                      ),
+                                      style: CupertinoTheme.of(context)
+                                          .textTheme
+                                          .textStyle
+                                          .copyWith(
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 16.sp,
+                                            color: Colors.white,
+                                          ),
                                     ),
                             ),
                           ),
-                          if (widget.firstWallet && FirebaseAuth.instance.currentUser == null) ...[
+                          if (widget.firstWallet &&
+                              FirebaseAuth.instance.currentUser == null) ...[
                             SizedBox(height: 10.h),
                             Center(
                               child: Row(
@@ -315,14 +343,17 @@ class _WalletViewState extends State<WalletView> {
                                 children: [
                                   Text(
                                     l10n.have_account,
-                                    style: TextStyle(
-                                      fontSize: 14.sp,
-                                      color: CupertinoTheme.of(context)
-                                          .textTheme
-                                          .textStyle
-                                          .color!
-                                          .withValues(alpha: 0.7),
-                                    ),
+                                    style: CupertinoTheme.of(context)
+                                        .textTheme
+                                        .textStyle
+                                        .copyWith(
+                                          fontSize: 14.sp,
+                                          color: CupertinoTheme.of(context)
+                                              .textTheme
+                                              .textStyle
+                                              .color!
+                                              .withValues(alpha: 0.7),
+                                        ),
                                   ),
 
                                   CupertinoButton(
@@ -345,11 +376,14 @@ class _WalletViewState extends State<WalletView> {
                                           },
                                     child: Text(
                                       l10n.login,
-                                      style: TextStyle(
-                                        fontSize: 14.sp,
-                                        color: AppColors.primaryColor,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                      style: CupertinoTheme.of(context)
+                                          .textTheme
+                                          .textStyle
+                                          .copyWith(
+                                            fontSize: 14.sp,
+                                            color: AppColors.primaryColor,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                     ),
                                   ),
                                 ],

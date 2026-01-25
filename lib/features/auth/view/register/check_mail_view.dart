@@ -29,7 +29,7 @@ class CheckMailPage extends StatelessWidget {
 
               Text(
                 l10n.check_your_mail,
-                style: TextStyle(
+                style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                   fontSize: 28.sp,
                   fontWeight: FontWeight.bold,
                   color: CupertinoTheme.of(context).textTheme.textStyle.color,
@@ -40,7 +40,7 @@ class CheckMailPage extends StatelessWidget {
               Text(
                 l10n.we_have_sent_mail,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                   fontSize: 16.sp,
                   color: CupertinoColors.systemGrey,
                 ),
@@ -49,7 +49,7 @@ class CheckMailPage extends StatelessWidget {
               Text(
                 email,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w600,
                   color: CupertinoTheme.of(context).textTheme.textStyle.color,
@@ -59,7 +59,7 @@ class CheckMailPage extends StatelessWidget {
               Text(
                 l10n.please_check_your_mail_to_verify_account,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                   fontSize: 14.sp,
                   color: CupertinoColors.systemGrey,
                 ),
@@ -78,10 +78,8 @@ class CheckMailPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30.r),
                 child: Text(
                   l10n.back_login,
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(fontSize: 16.sp, fontWeight: FontWeight.w500),
                 ),
               ),
             ],

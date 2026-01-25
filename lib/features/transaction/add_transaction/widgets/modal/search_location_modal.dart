@@ -141,10 +141,11 @@ class _SearchLocationModalState extends State<SearchLocationModal> {
                     ),
                     middle: Text(
                       l10n.select_location,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18.sp,
-                      ),
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18.sp,
+                          ),
                     ),
                   ),
                 ),
@@ -174,12 +175,13 @@ class _SearchLocationModalState extends State<SearchLocationModal> {
                           decoration: BoxDecoration(color: Colors.transparent),
                           controller: _searchController,
                           placeholder: l10n.search_location,
-                          style: TextStyle(
-                            fontSize: 16.sp,
-                            color: CupertinoTheme.of(
-                              context,
-                            ).textTheme.textStyle.color,
-                          ),
+                          style: CupertinoTheme.of(context).textTheme.textStyle
+                              .copyWith(
+                                fontSize: 16.sp,
+                                color: CupertinoTheme.of(
+                                  context,
+                                ).textTheme.textStyle.color,
+                              ),
                           onChanged: (value) {
                             if (_debounce?.isActive ?? false) {
                               _debounce!.cancel();
@@ -286,7 +288,7 @@ class _SearchLocationModalState extends State<SearchLocationModal> {
           padding: EdgeInsets.only(left: 12.w, bottom: 8.h, top: 10.h),
           child: Text(
             title,
-            style: TextStyle(
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               fontSize: 13.sp,
               fontWeight: FontWeight.w600,
               color: CupertinoColors.secondaryLabel.resolveFrom(context),
@@ -342,25 +344,29 @@ class _SearchLocationModalState extends State<SearchLocationModal> {
                     children: [
                       Text(
                         title,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                          color: CupertinoTheme.of(
-                            context,
-                          ).textTheme.textStyle.color,
-                        ),
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                              color: CupertinoTheme.of(
+                                context,
+                              ).textTheme.textStyle.color,
+                            ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       SizedBox(height: 2.h),
                       Text(
                         subtitle,
-                        style: TextStyle(
-                          fontSize: 13.sp,
-                          color: CupertinoTheme.of(
-                            context,
-                          ).textTheme.textStyle.color?.withValues(alpha: .7),
-                        ),
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              fontSize: 13.sp,
+                              color: CupertinoTheme.of(context)
+                                  .textTheme
+                                  .textStyle
+                                  .color
+                                  ?.withValues(alpha: .7),
+                            ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),

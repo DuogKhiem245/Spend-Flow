@@ -40,7 +40,7 @@ class _AmountWidgetState extends State<AmountWidget> {
               margin: EdgeInsets.symmetric(horizontal: 6.w),
               child: Text(
                 l10n.amount,
-                style: TextStyle(
+                style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                   color: CupertinoTheme.of(
                     context,
                   ).textTheme.textStyle.color?.withValues(alpha: .7),
@@ -71,13 +71,14 @@ class _AmountWidgetState extends State<AmountWidget> {
                 children: [
                   Text(
                     symbol,
-                    style: TextStyle(
-                      fontSize: 40.sp,
-                      fontWeight: FontWeight.w700,
-                      color: widget.amountController.text.isEmpty
-                          ? widget.baseColor?.withValues(alpha: .7)
-                          : widget.baseColor,
-                    ),
+                    style: CupertinoTheme.of(context).textTheme.textStyle
+                        .copyWith(
+                          fontSize: 40.sp,
+                          fontWeight: FontWeight.w700,
+                          color: widget.amountController.text.isEmpty
+                              ? widget.baseColor?.withValues(alpha: .7)
+                              : widget.baseColor,
+                        ),
                   ),
                   Expanded(
                     child: CupertinoTextField(
@@ -96,16 +97,22 @@ class _AmountWidgetState extends State<AmountWidget> {
                       ),
                       inputFormatters: [CurrencyInputFormatter()],
                       placeholder: '0,00',
-                      placeholderStyle: TextStyle(
-                        fontSize: 40.sp,
-                        fontWeight: FontWeight.w700,
-                        color: widget.baseColor?.withAlpha((0.7 * 255).toInt()),
-                      ),
-                      style: TextStyle(
-                        fontSize: 36.sp,
-                        fontWeight: FontWeight.w700,
-                        color: widget.baseColor,
-                      ),
+                      placeholderStyle: CupertinoTheme.of(context)
+                          .textTheme
+                          .textStyle
+                          .copyWith(
+                            fontSize: 40.sp,
+                            fontWeight: FontWeight.w700,
+                            color: widget.baseColor?.withAlpha(
+                              (0.7 * 255).toInt(),
+                            ),
+                          ),
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            fontSize: 36.sp,
+                            fontWeight: FontWeight.w700,
+                            color: widget.baseColor,
+                          ),
                     ),
                   ),
                 ],

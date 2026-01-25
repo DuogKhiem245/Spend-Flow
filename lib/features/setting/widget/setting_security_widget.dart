@@ -39,7 +39,7 @@ class _SettingSecurityWidgetState extends State<SettingSecurityWidget> {
           padding: EdgeInsets.only(left: 4.w, bottom: 8.h),
           child: Text(
             l10n.privacy_and_security,
-            style: TextStyle(
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               fontSize: 16.sp,
               fontWeight: FontWeight.w600,
               color: CupertinoTheme.of(
@@ -57,7 +57,7 @@ class _SettingSecurityWidgetState extends State<SettingSecurityWidget> {
             listenable: _viewModel,
             builder: (context, child) {
               return CNSwitch(
-                value: _viewModel.isLocationEnabled, 
+                value: _viewModel.isLocationEnabled,
                 onChanged: (v) => _viewModel.toggleLocation(v, context),
               );
             },

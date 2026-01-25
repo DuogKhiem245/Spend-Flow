@@ -57,7 +57,7 @@ class _SecurityViewState extends State<SecurityView> {
             ),
             middle: Text(
               '${l10n.passcode} & ${_viewModel.isFaceId() ? l10n.face : l10n.fingerprint}',
-              style: TextStyle(
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                 color: CupertinoTheme.of(context).textTheme.textStyle.color,
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w600,
@@ -100,13 +100,16 @@ class _SecurityViewState extends State<SecurityView> {
                                 SizedBox(width: 12.w),
                                 Text(
                                   l10n.passcode.toUpperCase(),
-                                  style: TextStyle(
-                                    color: CupertinoTheme.of(
-                                      context,
-                                    ).textTheme.textStyle.color,
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                                  style: CupertinoTheme.of(context)
+                                      .textTheme
+                                      .textStyle
+                                      .copyWith(
+                                        color: CupertinoTheme.of(
+                                          context,
+                                        ).textTheme.textStyle.color,
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                 ),
                               ],
                             ),
@@ -160,13 +163,16 @@ class _SecurityViewState extends State<SecurityView> {
                         SizedBox(height: 12.h),
                         Text(
                           l10n.pass_code_description,
-                          style: TextStyle(
-                            color: CupertinoTheme.of(
-                              context,
-                            ).textTheme.textStyle.color?.withValues(alpha: 0.7),
-                            fontSize: 13.sp,
-                            height: 1.4,
-                          ),
+                          style: CupertinoTheme.of(context).textTheme.textStyle
+                              .copyWith(
+                                color: CupertinoTheme.of(context)
+                                    .textTheme
+                                    .textStyle
+                                    .color
+                                    ?.withValues(alpha: 0.7),
+                                fontSize: 13.sp,
+                                height: 1.4,
+                              ),
                         ),
 
                         if (_viewModel.isPasscodeEnabled) ...[
@@ -226,13 +232,16 @@ class _SecurityViewState extends State<SecurityView> {
                                   _viewModel.isFaceId()
                                       ? l10n.face
                                       : l10n.fingerprint,
-                                  style: TextStyle(
-                                    color: CupertinoTheme.of(
-                                      context,
-                                    ).textTheme.textStyle.color,
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                                  style: CupertinoTheme.of(context)
+                                      .textTheme
+                                      .textStyle
+                                      .copyWith(
+                                        color: CupertinoTheme.of(
+                                          context,
+                                        ).textTheme.textStyle.color,
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                 ),
                               ],
                             ),
@@ -273,7 +282,7 @@ class _SecurityViewState extends State<SecurityView> {
 
                                       final errorMsg = await _viewModel
                                           .toggleBiometric(value);
-                                      
+
                                       if (errorMsg != null && context.mounted) {
                                         HapticFeedback.vibrate();
 
@@ -303,13 +312,16 @@ class _SecurityViewState extends State<SecurityView> {
                           _viewModel.isFaceId()
                               ? l10n.face_id_description
                               : l10n.touch_id_description,
-                          style: TextStyle(
-                            color: CupertinoTheme.of(
-                              context,
-                            ).textTheme.textStyle.color?.withValues(alpha: 0.7),
-                            fontSize: 13.sp,
-                            height: 1.4,
-                          ),
+                          style: CupertinoTheme.of(context).textTheme.textStyle
+                              .copyWith(
+                                color: CupertinoTheme.of(context)
+                                    .textTheme
+                                    .textStyle
+                                    .color
+                                    ?.withValues(alpha: 0.7),
+                                fontSize: 13.sp,
+                                height: 1.4,
+                              ),
                         ),
                       ],
                     ),
@@ -328,7 +340,7 @@ class _SecurityViewState extends State<SecurityView> {
       padding: EdgeInsets.only(left: 4.w),
       child: Text(
         title,
-        style: TextStyle(
+        style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
           color: const Color(0xFF9CA3AF),
           fontSize: 12.sp,
           fontWeight: FontWeight.w600,
@@ -371,7 +383,7 @@ class _SecurityViewState extends State<SecurityView> {
             SizedBox(width: 8.w),
             Text(
               label,
-              style: TextStyle(
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                 color: CupertinoColors.white,
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w600,

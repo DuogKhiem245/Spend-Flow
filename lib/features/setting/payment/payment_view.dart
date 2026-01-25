@@ -10,8 +10,6 @@ class PaymentView extends StatefulWidget {
 }
 
 class _PaymentViewState extends State<PaymentView> {
-
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -25,13 +23,14 @@ class _PaymentViewState extends State<PaymentView> {
         ),
         middle: Text(
           l10n.edit_profile,
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20.sp),
+          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+            fontWeight: FontWeight.w600,
+            fontSize: 20.sp,
+          ),
         ),
       ),
-      
-      child: Center(
-        child: Text('Payment Methods Page'),
-      ),
+
+      child: Center(child: Text('Payment Methods Page')),
     );
   }
 }

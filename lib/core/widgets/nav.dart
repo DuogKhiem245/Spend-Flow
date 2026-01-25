@@ -3,6 +3,7 @@ import 'package:cupertino_native/components/tab_bar.dart';
 import 'package:cupertino_native/style/sf_symbol.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/widgets/banner_ads_widget.dart';
@@ -75,17 +76,29 @@ class _BottomNavbarState extends State<BottomNavbar> {
 
   Widget _buildIOSTabBar(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final textStyle = CupertinoTheme.of(context).textTheme.textStyle;
 
-    return CNTabBar(
-      currentIndex: _currentIndex,
-      onTap: (i) => setState(() => _currentIndex = i),
-      backgroundColor: CupertinoTheme.of(context).barBackgroundColor,
-      items: [
-        CNTabBarItem(label: l10n.home, icon: CNSymbol('square.grid.2x2')),
-        CNTabBarItem(label: l10n.transaction, icon: CNSymbol('chart.bar')),
-        CNTabBarItem(label: l10n.budgets, icon: CNSymbol('creditcard')),
-        CNTabBarItem(label: l10n.settings, icon: CNSymbol('gearshape.fill')),
-      ],
+    return CupertinoTheme(
+      data: CupertinoTheme.of(context).copyWith(
+        textTheme: CupertinoTextThemeData(
+          tabLabelTextStyle: textStyle.copyWith(fontSize: 10.sp),
+          textStyle: textStyle,
+        ),
+      ),
+      child: CNTabBar(
+        currentIndex: _currentIndex,
+        onTap: (i) => setState(() {
+          _currentIndex = i;
+          HapticFeedback.heavyImpact();
+        }),
+        backgroundColor: CupertinoTheme.of(context).barBackgroundColor,
+        items: [
+          CNTabBarItem(label: l10n.home, icon: CNSymbol('square.grid.2x2')),
+          CNTabBarItem(label: l10n.transaction, icon: CNSymbol('chart.bar')),
+          CNTabBarItem(label: l10n.budgets, icon: CNSymbol('creditcard')),
+          CNTabBarItem(label: l10n.settings, icon: CNSymbol('gearshape.fill')),
+        ],
+      ),
     );
   }
 
@@ -101,7 +114,10 @@ class _BottomNavbarState extends State<BottomNavbar> {
         child: CupertinoTabBar(
           backgroundColor: Colors.transparent,
           currentIndex: _currentIndex,
-          onTap: (i) => setState(() => _currentIndex = i),
+          onTap: (i) => setState(() {
+            _currentIndex = i;
+            HapticFeedback.heavyImpact();
+          }),
           activeColor: CupertinoColors.activeBlue,
           inactiveColor: CupertinoColors.systemGrey,
           border: const Border(

@@ -51,11 +51,14 @@ class CheckValidWidget {
                   SizedBox(width: 12.w),
                   Text(
                     title,
-                    style: TextStyle(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.bold,
-                      color: CupertinoTheme.of(context).textTheme.textStyle.color,
-                    ),
+                    style: CupertinoTheme.of(context).textTheme.textStyle
+                        .copyWith(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.bold,
+                          color: CupertinoTheme.of(
+                            context,
+                          ).textTheme.textStyle.color,
+                        ),
                   ),
                 ],
               ),
@@ -64,13 +67,13 @@ class CheckValidWidget {
 
               Text(
                 description,
-                style: TextStyle(
+                style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                   fontSize: 15.sp,
                   height: 1.4,
                   color: CupertinoColors.secondaryLabel.resolveFrom(context),
                 ),
               ),
-              
+
               SizedBox(height: 10.h),
 
               if (missingFields != null && missingFields.isNotEmpty) ...[
@@ -84,23 +87,25 @@ class CheckValidWidget {
                   children: [
                     Text(
                       subtitle_1,
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: CupertinoTheme.of(
-                          context,
-                        ).textTheme.textStyle.color,
-                      ),
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            fontSize: 14.sp,
+                            color: CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.color,
+                          ),
                     ),
                     CupertinoButton(
                       padding: EdgeInsets.symmetric(horizontal: 4.w),
                       onPressed: onButtonPressed,
                       child: Text(
                         subtitle_2,
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w600,
-                          color: CupertinoTheme.of(context).primaryColor,
-                        ),
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w600,
+                              color: CupertinoTheme.of(context).primaryColor,
+                            ),
                       ),
                     ),
                   ],
@@ -117,11 +122,12 @@ class CheckValidWidget {
                   onPressed: () => Navigator.pop(context),
                   child: Text(
                     buttonText,
-                    style: TextStyle(
-                      color: CupertinoColors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.sp,
-                    ),
+                    style: CupertinoTheme.of(context).textTheme.textStyle
+                        .copyWith(
+                          color: CupertinoColors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.sp,
+                        ),
                   ),
                 ),
               ),
@@ -149,7 +155,7 @@ class CheckValidWidget {
           SizedBox(width: 12.w),
           Text(
             fieldName,
-            style: TextStyle(
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               fontSize: 16.sp,
               fontWeight: FontWeight.w500,
               color: CupertinoColors.label.resolveFrom(context),

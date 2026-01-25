@@ -250,10 +250,11 @@ class _RegisterStep2PageState extends State<RegisterStep2Page> {
                       padding: EdgeInsets.symmetric(vertical: 16.h),
                       child: Text(
                         l10n.create_account,
-                        style: TextStyle(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
                       ),
                     ),
 

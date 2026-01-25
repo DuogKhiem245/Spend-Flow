@@ -174,13 +174,16 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             SizedBox(height: 12.h),
             Text(
               isVoice ? l10n.limit_reached : l10n.scan_receipt,
-              style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+                fontSize: 20.sp,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(height: 8.h),
             Text(
               isVoice ? l10n.used_up_daily_limit(5) : l10n.requires_premium,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                 fontSize: 14.sp,
                 color: CupertinoColors.systemGrey,
               ),
@@ -412,7 +415,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             SizedBox(width: 16.w),
             Text(
               label,
-              style: TextStyle(
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w600,
                 color: isGradient ? Colors.white : color,

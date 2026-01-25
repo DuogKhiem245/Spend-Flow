@@ -129,10 +129,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     padding: EdgeInsets.zero,
                     child: Text(
                       l10n.skip,
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
                     ),
                     onPressed: () => _vm.skip(context),
                   ),
@@ -148,11 +149,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             ? l10n.start
                             : l10n.next,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 17.sp,
-                          fontWeight: FontWeight.w500,
-                          color: CupertinoColors.white,
-                        ),
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              fontSize: 17.sp,
+                              fontWeight: FontWeight.w500,
+                              color: CupertinoColors.white,
+                            ),
                       ),
                     ),
                     onPressed: () => _vm.next(context, pages.length),

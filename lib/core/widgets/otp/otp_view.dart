@@ -82,7 +82,7 @@ class _OTPInputViewState extends State<OTPInputView> {
           child: Center(
             child: Text(
               char,
-              style: TextStyle(
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                 fontSize: 24.sp,
                 fontWeight: isPlaceholder ? FontWeight.w400 : FontWeight.bold,
                 color: CupertinoColors.label.resolveFrom(context),

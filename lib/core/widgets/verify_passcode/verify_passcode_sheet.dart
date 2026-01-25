@@ -55,7 +55,7 @@ class _VerifyPasscodeSheetState extends State<VerifyPasscodeSheet> {
           SizedBox(height: 20.h),
           Text(
             l10n.enter_passcode,
-            style: TextStyle(
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               fontSize: 18.sp,
               fontWeight: FontWeight.w600,
               color: CupertinoTheme.of(context).textTheme.textStyle.color,
@@ -70,7 +70,7 @@ class _VerifyPasscodeSheetState extends State<VerifyPasscodeSheet> {
           if (_isError)
             Text(
               l10n.incorrect_passcode,
-              style: TextStyle(
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                 color: CupertinoColors.systemRed,
                 fontSize: 14.sp,
               ),
@@ -101,9 +101,7 @@ class _VerifyPasscodeSheetState extends State<VerifyPasscodeSheet> {
                   cursorColor: Colors.transparent,
                   decoration: const BoxDecoration(color: Colors.transparent),
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  onChanged: (value) => {
-                    HapticFeedback.lightImpact()
-                  },
+                  onChanged: (value) => {HapticFeedback.lightImpact()},
                 ),
               ),
               IgnorePointer(
@@ -152,13 +150,16 @@ class _VerifyPasscodeSheetState extends State<VerifyPasscodeSheet> {
                                     )
                                   : Text(
                                       displayChar,
-                                      style: TextStyle(
-                                        fontSize: 20.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: CupertinoTheme.of(
-                                          context,
-                                        ).textTheme.textStyle.color,
-                                      ),
+                                      style: CupertinoTheme.of(context)
+                                          .textTheme
+                                          .textStyle
+                                          .copyWith(
+                                            fontSize: 20.sp,
+                                            fontWeight: FontWeight.bold,
+                                            color: CupertinoTheme.of(
+                                              context,
+                                            ).textTheme.textStyle.color,
+                                          ),
                                     ))
                             : null,
                       ),

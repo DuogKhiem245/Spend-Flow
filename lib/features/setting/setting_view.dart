@@ -166,11 +166,14 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
                                     SizedBox(width: 8.w),
                                     Text(
                                       l10n.logout,
-                                      style: TextStyle(
-                                        color: CupertinoColors.systemRed,
-                                        fontSize: 18.sp,
-                                        fontWeight: FontWeight.w500,
-                                      ),
+                                      style: CupertinoTheme.of(context)
+                                          .textTheme
+                                          .textStyle
+                                          .copyWith(
+                                            color: CupertinoColors.systemRed,
+                                            fontSize: 18.sp,
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                     ),
                                   ],
                                 ),

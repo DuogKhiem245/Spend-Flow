@@ -81,9 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                     context: context,
                     builder: (context) => CupertinoAlertDialog(
                       title: Text(l10n.success),
-                      content: Text(
-                        l10n.verification_email_sent,
-                      ), 
+                      content: Text(l10n.verification_email_sent),
                       actions: [
                         CupertinoDialogAction(
                           child: const Text("OK"),
@@ -290,7 +288,10 @@ class _LoginPageState extends State<LoginPage> {
                                         vertical: 14.h,
                                       ),
                                       decoration: null,
-                                      style: TextStyle(fontSize: 14.sp),
+                                      style: CupertinoTheme.of(context)
+                                          .textTheme
+                                          .textStyle
+                                          .copyWith(fontSize: 14.sp),
                                     ),
                                   ),
                                 ],
@@ -341,7 +342,10 @@ class _LoginPageState extends State<LoginPage> {
                                         vertical: 14.h,
                                       ),
                                       decoration: null,
-                                      style: TextStyle(fontSize: 14.sp),
+                                      style: CupertinoTheme.of(context)
+                                          .textTheme
+                                          .textStyle
+                                          .copyWith(fontSize: 14.sp),
                                     ),
                                   ),
                                   GestureDetector(
@@ -382,13 +386,16 @@ class _LoginPageState extends State<LoginPage> {
                                 },
                                 child: Text(
                                   l10n.forgot_password,
-                                  style: TextStyle(
-                                    fontSize: 13.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: CupertinoTheme.of(
-                                      context,
-                                    ).primaryColor,
-                                  ),
+                                  style: CupertinoTheme.of(context)
+                                      .textTheme
+                                      .textStyle
+                                      .copyWith(
+                                        fontSize: 13.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: CupertinoTheme.of(
+                                          context,
+                                        ).primaryColor,
+                                      ),
                                 ),
                               ),
                             ),
@@ -406,10 +413,13 @@ class _LoginPageState extends State<LoginPage> {
                                     )
                                   : Text(
                                       l10n.login,
-                                      style: TextStyle(
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                      style: CupertinoTheme.of(context)
+                                          .textTheme
+                                          .textStyle
+                                          .copyWith(
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                     ),
                             ),
 
@@ -430,10 +440,13 @@ class _LoginPageState extends State<LoginPage> {
                                   padding: EdgeInsets.zero,
                                   child: Text(
                                     l10n.register,
-                                    style: TextStyle(
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                    style: CupertinoTheme.of(context)
+                                        .textTheme
+                                        .textStyle
+                                        .copyWith(
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                   ),
                                   onPressed: () {
                                     Navigator.push(
@@ -464,10 +477,13 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                     child: Text(
                                       l10n.or_continue_with,
-                                      style: TextStyle(
-                                        color: CupertinoColors.systemGrey,
-                                        fontSize: 14.sp,
-                                      ),
+                                      style: CupertinoTheme.of(context)
+                                          .textTheme
+                                          .textStyle
+                                          .copyWith(
+                                            color: CupertinoColors.systemGrey,
+                                            fontSize: 14.sp,
+                                          ),
                                     ),
                                   ),
                                   const Expanded(
@@ -571,7 +587,7 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(width: 12.w),
               Text(
                 label,
-                style: TextStyle(
+                style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w600,
                   color: textColor,

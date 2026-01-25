@@ -86,11 +86,12 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                   onTap: () => Navigator.of(context).pop(),
                   child: Text(
                     AppLocalizations.of(context)!.done,
-                    style: TextStyle(
-                      color: CupertinoTheme.of(context).primaryColor,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: CupertinoTheme.of(context).textTheme.textStyle
+                        .copyWith(
+                          color: CupertinoTheme.of(context).primaryColor,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
                 ),
               ),
@@ -140,7 +141,7 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
         children: [
           Text(
             l10n.suggested_category,
-            style: TextStyle(
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               color: CupertinoTheme.of(
                 context,
               ).textTheme.textStyle.color?.withValues(alpha: .7),
@@ -181,15 +182,16 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                     ),
                     child: Text(
                       CategoryHelper.getTranslatedName(context, category),
-                      style: TextStyle(
-                        color: isSelected
-                            ? CupertinoColors.white
-                            : CupertinoTheme.of(
-                                context,
-                              ).textTheme.textStyle.color,
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            color: isSelected
+                                ? CupertinoColors.white
+                                : CupertinoTheme.of(
+                                    context,
+                                  ).textTheme.textStyle.color,
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
                     ),
                   ),
                 );
@@ -236,11 +238,12 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                         ),
                         Text(
                           l10n.category,
-                          style: TextStyle(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w500,
-                            color: widget.baseColor,
-                          ),
+                          style: CupertinoTheme.of(context).textTheme.textStyle
+                              .copyWith(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w500,
+                                color: widget.baseColor,
+                              ),
                         ),
                       ],
                     ),
@@ -266,20 +269,26 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                                   context,
                                   widget.selectedCategory!,
                                 ),
-                                style: TextStyle(
-                                  fontSize: 16.sp,
-                                  color: widget.baseColor,
-                                ),
+                                style: CupertinoTheme.of(context)
+                                    .textTheme
+                                    .textStyle
+                                    .copyWith(
+                                      fontSize: 16.sp,
+                                      color: widget.baseColor,
+                                    ),
                               ),
                             if (widget.selectedCategory == null)
                               Text(
                                 l10n.select_category,
-                                style: TextStyle(
-                                  fontSize: 16.sp,
-                                  color: widget.baseColor?.withValues(
-                                    alpha: .7,
-                                  ),
-                                ),
+                                style: CupertinoTheme.of(context)
+                                    .textTheme
+                                    .textStyle
+                                    .copyWith(
+                                      fontSize: 16.sp,
+                                      color: widget.baseColor?.withValues(
+                                        alpha: .7,
+                                      ),
+                                    ),
                               ),
                             SizedBox(width: 8.w),
                             Icon(
@@ -324,11 +333,12 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                         ),
                         Text(
                           widget.isMonthPicker ? l10n.month : l10n.date,
-                          style: TextStyle(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w500,
-                            color: widget.baseColor,
-                          ),
+                          style: CupertinoTheme.of(context).textTheme.textStyle
+                              .copyWith(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w500,
+                                color: widget.baseColor,
+                              ),
                         ),
                       ],
                     ),
@@ -342,10 +352,13 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                           children: [
                             Text(
                               _getDateText(displayDate, l10n),
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                color: widget.baseColor,
-                              ),
+                              style: CupertinoTheme.of(context)
+                                  .textTheme
+                                  .textStyle
+                                  .copyWith(
+                                    fontSize: 16.sp,
+                                    color: widget.baseColor,
+                                  ),
                             ),
                             SizedBox(width: 8.w),
                             Icon(

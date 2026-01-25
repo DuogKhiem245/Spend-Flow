@@ -93,7 +93,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               Text(
                 l10n.forgot_password_description,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                   fontSize: 15.sp,
                   color: CupertinoColors.systemGrey,
                 ),
@@ -126,7 +126,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     vertical: 14.h,
                   ),
                   decoration: null,
-                  style: TextStyle(fontSize: 14.sp),
+                  style: CupertinoTheme.of(
+                    context,
+                  ).textTheme.textStyle.copyWith(fontSize: 14.sp),
                   prefix: Padding(
                     padding: EdgeInsets.only(left: 16.w),
                     child: Icon(
@@ -145,14 +147,17 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 borderRadius: BorderRadius.circular(30.r),
                 child: _isLoading
                     ? CupertinoActivityIndicator(
-                        color: CupertinoTheme.of(context).textTheme.textStyle.color,
+                        color: CupertinoTheme.of(
+                          context,
+                        ).textTheme.textStyle.color,
                       )
                     : Text(
                         l10n.send_email_reset,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
                       ),
               ),
             ],

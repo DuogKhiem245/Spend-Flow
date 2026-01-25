@@ -21,7 +21,7 @@ class _RegisterStep1PageState extends State<RegisterStep1Page> {
 
     return CupertinoPageScaffold(
       child: SafeArea(
-        top: true, 
+        top: true,
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           behavior: HitTestBehavior.translucent,
@@ -52,9 +52,9 @@ class _RegisterStep1PageState extends State<RegisterStep1Page> {
                     style: CupertinoTheme.of(context).textTheme.textStyle
                         .copyWith(fontSize: 28.sp, fontWeight: FontWeight.bold),
                   ),
-        
+
                   SizedBox(height: 30.h),
-        
+
                   Container(
                     padding: EdgeInsets.all(15.w),
                     margin: EdgeInsets.symmetric(horizontal: 20.w),
@@ -71,7 +71,7 @@ class _RegisterStep1PageState extends State<RegisterStep1Page> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         SizedBox(height: 4.h),
-        
+
                         Text(
                           l10n.email,
                           style: CupertinoTheme.of(context).textTheme.textStyle
@@ -80,9 +80,9 @@ class _RegisterStep1PageState extends State<RegisterStep1Page> {
                                 fontWeight: FontWeight.w600,
                               ),
                         ),
-        
+
                         SizedBox(height: 8.h),
-        
+
                         Container(
                           decoration: BoxDecoration(
                             color: CupertinoTheme.of(
@@ -115,17 +115,23 @@ class _RegisterStep1PageState extends State<RegisterStep1Page> {
                                     16.h,
                                   ),
                                   decoration: null,
-                                  style: TextStyle(fontSize: 16.sp),
+                                  style: CupertinoTheme.of(context)
+                                      .textTheme
+                                      .textStyle
+                                      .copyWith(fontSize: 16.sp),
                                 ),
                               ),
                               CupertinoButton(
                                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                                 child: Text(
                                   l10n.send_otp,
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w700,
-                                  ),
+                                  style: CupertinoTheme.of(context)
+                                      .textTheme
+                                      .textStyle
+                                      .copyWith(
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                 ),
                                 onPressed: () {
                                   // Handle send OTP action
@@ -134,9 +140,9 @@ class _RegisterStep1PageState extends State<RegisterStep1Page> {
                             ],
                           ),
                         ),
-        
+
                         SizedBox(height: 16.h),
-        
+
                         Text(
                           "OTP",
                           style: CupertinoTheme.of(context).textTheme.textStyle
@@ -145,9 +151,9 @@ class _RegisterStep1PageState extends State<RegisterStep1Page> {
                                 fontWeight: FontWeight.w600,
                               ),
                         ),
-        
+
                         SizedBox(height: 8.h),
-        
+
                         OTPInputView(
                           onChanged: (value) {
                             setState(() {
@@ -155,7 +161,7 @@ class _RegisterStep1PageState extends State<RegisterStep1Page> {
                             });
                           },
                         ),
-        
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -170,10 +176,13 @@ class _RegisterStep1PageState extends State<RegisterStep1Page> {
                               padding: EdgeInsets.symmetric(vertical: 10.h),
                               child: Text(
                                 l10n.resend,
-                                style: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                style: CupertinoTheme.of(context)
+                                    .textTheme
+                                    .textStyle
+                                    .copyWith(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                               ),
                               onPressed: () {
                                 // Handle resend action
@@ -181,9 +190,9 @@ class _RegisterStep1PageState extends State<RegisterStep1Page> {
                             ),
                           ],
                         ),
-        
+
                         SizedBox(height: 10.h),
-        
+
                         CupertinoButton.filled(
                           onPressed: () {
                             Navigator.pushReplacement(
@@ -196,10 +205,13 @@ class _RegisterStep1PageState extends State<RegisterStep1Page> {
                           borderRadius: BorderRadius.circular(30.r),
                           child: Text(
                             l10n.continueAction,
-                            style: TextStyle(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
+                                .copyWith(
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
                           ),
                         ),
                         SizedBox(height: 4.h),
@@ -217,10 +229,13 @@ class _RegisterStep1PageState extends State<RegisterStep1Page> {
                               padding: EdgeInsets.zero,
                               child: Text(
                                 l10n.login,
-                                style: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                style: CupertinoTheme.of(context)
+                                    .textTheme
+                                    .textStyle
+                                    .copyWith(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                               ),
                               onPressed: () {
                                 Navigator.pop(context);

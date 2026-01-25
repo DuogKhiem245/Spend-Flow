@@ -80,22 +80,24 @@ class _ReportPageState extends State<ReportPage>
                     SizedBox(height: 20.h),
                     Text(
                       l10n.report_locked,
-                      style: TextStyle(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w600,
-                        color: CupertinoTheme.of(
-                          context,
-                        ).textTheme.textStyle.color,
-                      ),
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w600,
+                            color: CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.color,
+                          ),
                     ),
                     SizedBox(height: 10.h),
                     CupertinoButton(
                       child: Text(
                         l10n.unlock,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
                       ),
                       onPressed: () {
                         _viewModel.authenticateBiometric().then((_) {
@@ -140,13 +142,16 @@ class _ReportPageState extends State<ReportPage>
                                       l10n,
                                       locale,
                                     ),
-                                    style: TextStyle(
-                                      fontSize: 18.sp,
-                                      fontWeight: FontWeight.bold,
-                                      color: CupertinoTheme.of(
-                                        context,
-                                      ).textTheme.textStyle.color,
-                                    ),
+                                    style: CupertinoTheme.of(context)
+                                        .textTheme
+                                        .textStyle
+                                        .copyWith(
+                                          fontSize: 18.sp,
+                                          fontWeight: FontWeight.bold,
+                                          color: CupertinoTheme.of(
+                                            context,
+                                          ).textTheme.textStyle.color,
+                                        ),
                                   ),
                                 ),
                                 ...group.transactions.map(
@@ -185,7 +190,7 @@ class _ReportPageState extends State<ReportPage>
           SizedBox(height: 15.h),
           Text(
             l10n.no_transactions,
-            style: TextStyle(
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               fontSize: 16.sp,
               color: CupertinoTheme.of(
                 context,
@@ -225,13 +230,14 @@ class _ReportPageState extends State<ReportPage>
                             ).format(_viewModel.selectedMonth),
                           ) ??
                           '',
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w700,
-                        color: CupertinoTheme.of(
-                          context,
-                        ).textTheme.textStyle.color,
-                      ),
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.w700,
+                            color: CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.color,
+                          ),
                     ),
 
                     Text(
@@ -239,12 +245,13 @@ class _ReportPageState extends State<ReportPage>
                         'yyyy',
                         locale,
                       ).format(_viewModel.selectedMonth),
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        color: CupertinoTheme.of(
-                          context,
-                        ).textTheme.textStyle.color?.withValues(alpha: .6),
-                      ),
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            fontSize: 12.sp,
+                            color: CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.color?.withValues(alpha: .6),
+                          ),
                     ),
                   ],
                 ),
@@ -306,7 +313,7 @@ class _ReportPageState extends State<ReportPage>
       children: [
         Text(
           label,
-          style: TextStyle(
+          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
             fontSize: 13.sp,
             color: CupertinoTheme.of(
               context,
@@ -316,7 +323,7 @@ class _ReportPageState extends State<ReportPage>
         SizedBox(height: 4.h),
         Text(
           value,
-          style: TextStyle(
+          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
             fontSize: 16.sp,
             fontWeight: FontWeight.bold,
             color: color,
@@ -442,24 +449,23 @@ class _ReportPageState extends State<ReportPage>
                     children: [
                       Text(
                         tx.title,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                          color: CupertinoTheme.of(
-                            context,
-                          ).textTheme.textStyle.color,
-                        ),
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                              color: CupertinoTheme.of(
+                                context,
+                              ).textTheme.textStyle.color,
+                            ),
                       ),
                       SizedBox(height: 4.h),
                       Text(
-                        CategoryHelper.getTranslatedName(
-                          context,
-                          tx.category,
-                        ),
-                        style: TextStyle(
-                          fontSize: 13.sp,
-                          color: CupertinoColors.systemGrey,
-                        ),
+                        CategoryHelper.getTranslatedName(context, tx.category),
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              fontSize: 13.sp,
+                              color: CupertinoColors.systemGrey,
+                            ),
                       ),
                     ],
                   ),
@@ -470,21 +476,23 @@ class _ReportPageState extends State<ReportPage>
                   children: [
                     Text(
                       "$prefix$symbol ${_viewModel.formatCurrency(tx.amount)}",
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                        color: amountColor,
-                      ),
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.bold,
+                            color: amountColor,
+                          ),
                     ),
                     SizedBox(height: 4.h),
                     Text(
                       _viewModel.formatTime(tx.date),
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        color: CupertinoTheme.of(
-                          context,
-                        ).textTheme.textStyle.color?.withValues(alpha: 0.6),
-                      ),
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            fontSize: 12.sp,
+                            color: CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.color?.withValues(alpha: 0.6),
+                          ),
                     ),
                   ],
                 ),
@@ -565,11 +573,12 @@ class _ReportPageState extends State<ReportPage>
                   },
                   child: Text(
                     l10n.done,
-                    style: TextStyle(
-                      color: CupertinoTheme.of(context).primaryColor,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: CupertinoTheme.of(context).textTheme.textStyle
+                        .copyWith(
+                          color: CupertinoTheme.of(context).primaryColor,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
                 ),
               ),

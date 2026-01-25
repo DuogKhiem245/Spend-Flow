@@ -18,14 +18,17 @@ class RecentTransaction extends StatefulWidget {
   final List<TransactionModel> transactions;
   final HomeViewModel viewModel;
 
-  const RecentTransaction({super.key, required this.transactions, required this.viewModel});
+  const RecentTransaction({
+    super.key,
+    required this.transactions,
+    required this.viewModel,
+  });
 
   @override
   State<RecentTransaction> createState() => _RecentTransactionState();
 }
 
 class _RecentTransactionState extends State<RecentTransaction> {
-
   Future<void> _handleUnlock() async {
     bool success = false;
 
@@ -85,22 +88,25 @@ class _RecentTransactionState extends State<RecentTransaction> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              widget.viewModel.hasSecurity ?
-              ListenableBuilder(
-                listenable: widget.viewModel,
-                builder: (context, _) {
-                  return GestureDetector(
-                    onTap: widget.viewModel.isLocked ? _handleUnlock : widget.viewModel.lockApp,
-                    child: Icon(
-                      widget.viewModel.isLocked
-                          ? CupertinoIcons.lock_fill
-                          : CupertinoIcons.lock_open_fill,
-                      size: 18.sp,
-                      color: CupertinoColors.systemGrey,
-                    ),
-                  );
-                },
-              ) : SizedBox.shrink(),
+              widget.viewModel.hasSecurity
+                  ? ListenableBuilder(
+                      listenable: widget.viewModel,
+                      builder: (context, _) {
+                        return GestureDetector(
+                          onTap: widget.viewModel.isLocked
+                              ? _handleUnlock
+                              : widget.viewModel.lockApp,
+                          child: Icon(
+                            widget.viewModel.isLocked
+                                ? CupertinoIcons.lock_fill
+                                : CupertinoIcons.lock_open_fill,
+                            size: 18.sp,
+                            color: CupertinoColors.systemGrey,
+                          ),
+                        );
+                      },
+                    )
+                  : SizedBox.shrink(),
             ],
           ),
           SizedBox(height: 20.h),
@@ -149,7 +155,9 @@ class _RecentTransactionState extends State<RecentTransaction> {
                               SizedBox(width: 8.w),
                               Text(
                                 l10n.click_to_unlock,
-                                style: TextStyle(fontSize: 14.sp),
+                                style: CupertinoTheme.of(
+                                  context,
+                                ).textTheme.textStyle.copyWith(fontSize: 14.sp),
                               ),
                             ],
                           ),
@@ -165,9 +173,15 @@ class _RecentTransactionState extends State<RecentTransaction> {
     );
   }
 
-  Widget _buildTransactionItem(TransactionModel item, BuildContext context, String symbol) {
+  Widget _buildTransactionItem(
+    TransactionModel item,
+    BuildContext context,
+    String symbol,
+  ) {
     final isExpense = item.isIncome == false;
-    final File? imageFile = widget.viewModel.getRealImageFile(item.category.iconKey);
+    final File? imageFile = widget.viewModel.getRealImageFile(
+      item.category.iconKey,
+    );
     final color = isExpense ? AppColors.errorColor : AppColors.secondaryColor;
 
     return CupertinoButton(
@@ -194,15 +208,14 @@ class _RecentTransactionState extends State<RecentTransaction> {
                     color: item.category.color.withValues(alpha: .15),
                     borderRadius: BorderRadius.circular(30.r),
                   ),
-                  child: imageFile != null 
+                  child: imageFile != null
                       ? ClipRRect(
                           borderRadius: BorderRadius.circular(30.r),
                           child: Image.file(
-                            imageFile, 
+                            imageFile,
                             width: 24.w,
                             height: 24.w,
-                            fit: BoxFit
-                                .cover, 
+                            fit: BoxFit.cover,
                           ),
                         )
                       : Icon(
@@ -220,14 +233,14 @@ class _RecentTransactionState extends State<RecentTransaction> {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: CupertinoTheme.of(context).textTheme.textStyle
-                          .copyWith(fontSize: 16.sp, fontWeight: FontWeight.w600),
+                          .copyWith(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      CategoryHelper.getTranslatedName(
-                        context,
-                        item.category,
-                      ),
+                      CategoryHelper.getTranslatedName(context, item.category),
                       style: CupertinoTheme.of(context).textTheme.textStyle
                           .copyWith(
                             fontSize: 14.sp,
@@ -245,19 +258,21 @@ class _RecentTransactionState extends State<RecentTransaction> {
                   isExpense
                       ? "-$symbol ${widget.viewModel.formatCompactCurrency(item.amount)}"
                       : "+$symbol ${widget.viewModel.formatCompactCurrency(item.amount)}",
-                  style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w700,
-                    color: color,
-                  ),
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w700,
+                        color: color,
+                      ),
                 ),
                 SizedBox(height: 4.h),
                 Text(
                   DateFormat('dd/MM/yyyy').format(item.date),
-                  style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                    fontSize: 12.sp,
-                    color: CupertinoColors.systemGrey,
-                  ),
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(
+                        fontSize: 12.sp,
+                        color: CupertinoColors.systemGrey,
+                      ),
                 ),
               ],
             ),

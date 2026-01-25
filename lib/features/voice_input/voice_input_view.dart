@@ -18,7 +18,7 @@ class _VoiceInputViewState extends State<VoiceInputView> {
   final VoiceInputViewModel _viewModel = VoiceInputViewModel();
 
   @override
-  void initState() { 
+  void initState() {
     super.initState();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -60,7 +60,7 @@ class _VoiceInputViewState extends State<VoiceInputView> {
             ),
             middle: Text(
               l10n.add_via_voice,
-              style: TextStyle(
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w600,
                 color: CupertinoTheme.of(context).textTheme.textStyle.color,
@@ -108,13 +108,14 @@ class _VoiceInputViewState extends State<VoiceInputView> {
                       _viewModel.isListening
                           ? l10n.listening
                           : (l10n.tap_to_listen),
-                      style: TextStyle(
-                        color: CupertinoTheme.of(
-                          context,
-                        ).textTheme.textStyle.color,
-                        fontSize: 22.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            color: CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.color,
+                            fontSize: 22.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
 
                     SizedBox(height: 10.h),
@@ -126,17 +127,18 @@ class _VoiceInputViewState extends State<VoiceInputView> {
                             ? l10n.voice_example
                             : _viewModel.lastWords,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: _viewModel.lastWords.isEmpty
-                              ? CupertinoColors.systemGrey
-                              : CupertinoTheme.of(
-                                  context,
-                                ).textTheme.textStyle.color,
-                          fontSize: 18.sp,
-                          fontWeight: _viewModel.lastWords.isEmpty
-                              ? FontWeight.normal
-                              : FontWeight.w500,
-                        ),
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              color: _viewModel.lastWords.isEmpty
+                                  ? CupertinoColors.systemGrey
+                                  : CupertinoTheme.of(
+                                      context,
+                                    ).textTheme.textStyle.color,
+                              fontSize: 18.sp,
+                              fontWeight: _viewModel.lastWords.isEmpty
+                                  ? FontWeight.normal
+                                  : FontWeight.w500,
+                            ),
                       ),
                     ),
 
@@ -189,8 +191,7 @@ class _VoiceInputViewState extends State<VoiceInputView> {
                             ),
                             child: Icon(
                               _viewModel.isListening
-                                  ? CupertinoIcons
-                                        .stop_fill 
+                                  ? CupertinoIcons.stop_fill
                                   : CupertinoIcons.mic_fill,
                               color: Colors.white,
                               size: 32.sp,
@@ -205,10 +206,11 @@ class _VoiceInputViewState extends State<VoiceInputView> {
                     if (_viewModel.isListening)
                       Text(
                         l10n.tap_to_stop,
-                        style: TextStyle(
-                          color: CupertinoColors.systemGrey,
-                          fontSize: 14.sp,
-                        ),
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              color: CupertinoColors.systemGrey,
+                              fontSize: 14.sp,
+                            ),
                       )
                     else
                       SizedBox(height: 18.h),
@@ -232,12 +234,13 @@ class _VoiceInputViewState extends State<VoiceInputView> {
                         SizedBox(height: 16.h),
                         Text(
                           l10n.voice_analysis,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.sp,
-                            decoration: TextDecoration.none,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          style: CupertinoTheme.of(context).textTheme.textStyle
+                              .copyWith(
+                                color: Colors.white,
+                                fontSize: 16.sp,
+                                decoration: TextDecoration.none,
+                                fontWeight: FontWeight.w500,
+                              ),
                         ),
                       ],
                     ),

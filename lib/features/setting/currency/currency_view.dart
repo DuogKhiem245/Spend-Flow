@@ -44,7 +44,10 @@ class _CurrencyViewState extends State<CurrencyView> {
         ),
         middle: Text(
           l10n.select_currency,
-          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
+          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
       child: Column(
@@ -57,11 +60,12 @@ class _CurrencyViewState extends State<CurrencyView> {
                 vertical: 10.h,
               ),
               controller: _searchController,
-              placeholderStyle: TextStyle(
-                color: CupertinoColors.systemGrey,
+              placeholderStyle: CupertinoTheme.of(context).textTheme.textStyle
+                  .copyWith(color: CupertinoColors.systemGrey, fontSize: 16.sp),
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+                color: CupertinoColors.black,
                 fontSize: 16.sp,
               ),
-              style: TextStyle(color: CupertinoColors.black, fontSize: 16.sp),
               itemColor: CupertinoColors.systemGrey,
               placeholder: l10n.search_currency,
               onChanged: (value) {
@@ -111,17 +115,17 @@ class _CurrencyViewState extends State<CurrencyView> {
         children: [
           Icon(
             CupertinoIcons.exclamationmark_circle_fill,
-            color: AppColors.warningColor, 
+            color: AppColors.warningColor,
             size: 20.sp,
           ),
           SizedBox(width: 10.w),
           Expanded(
             child: Text(
               l10n.currency_change_warning,
-              style: TextStyle(
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                 fontSize: 13.sp,
                 fontWeight: FontWeight.w400,
-                height: 1.4, 
+                height: 1.4,
                 color: CupertinoTheme.of(context).textTheme.textStyle.color,
               ),
             ),
@@ -136,7 +140,7 @@ class _CurrencyViewState extends State<CurrencyView> {
       padding: EdgeInsets.fromLTRB(16.w, 10.h, 16.w, 8.h),
       child: Text(
         title,
-        style: TextStyle(
+        style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
           color: CupertinoColors.systemGrey,
           fontSize: 13.sp,
           fontWeight: FontWeight.w600,
@@ -183,7 +187,12 @@ class _CurrencyViewState extends State<CurrencyView> {
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
               child: Row(
                 children: [
-                  Text(item['flag']!, style: TextStyle(fontSize: 28.sp)),
+                  Text(
+                    item['flag']!,
+                    style: CupertinoTheme.of(
+                      context,
+                    ).textTheme.textStyle.copyWith(fontSize: 28.sp),
+                  ),
                   SizedBox(width: 16.w),
                   Expanded(
                     child: Column(
@@ -194,21 +203,27 @@ class _CurrencyViewState extends State<CurrencyView> {
                             children: [
                               TextSpan(
                                 text: item['code']!,
-                                style: TextStyle(
-                                  color: CupertinoTheme.of(
-                                    context,
-                                  ).textTheme.textStyle.color,
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                style: CupertinoTheme.of(context)
+                                    .textTheme
+                                    .textStyle
+                                    .copyWith(
+                                      color: CupertinoTheme.of(
+                                        context,
+                                      ).textTheme.textStyle.color,
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                               ),
                               TextSpan(
                                 text: " (${item['symbol']})",
-                                style: TextStyle(
-                                  color: CupertinoColors.systemGrey,
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                                style: CupertinoTheme.of(context)
+                                    .textTheme
+                                    .textStyle
+                                    .copyWith(
+                                      color: CupertinoColors.systemGrey,
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                               ),
                             ],
                           ),
@@ -216,10 +231,11 @@ class _CurrencyViewState extends State<CurrencyView> {
                         SizedBox(height: 2.h),
                         Text(
                           item['name']!,
-                          style: TextStyle(
-                            color: CupertinoColors.systemGrey,
-                            fontSize: 14.sp,
-                          ),
+                          style: CupertinoTheme.of(context).textTheme.textStyle
+                              .copyWith(
+                                color: CupertinoColors.systemGrey,
+                                fontSize: 14.sp,
+                              ),
                         ),
                       ],
                     ),

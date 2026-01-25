@@ -6,7 +6,11 @@ import 'package:spend_flow/config/app_colors.dart';
 class NameTransactionWidget extends StatefulWidget {
   final TextEditingController nameController;
   final Color? baseColor;
-  const NameTransactionWidget({super.key, required this.nameController, this.baseColor});
+  const NameTransactionWidget({
+    super.key,
+    required this.nameController,
+    this.baseColor,
+  });
 
   @override
   State<NameTransactionWidget> createState() => _NameTransactionWidgetState();
@@ -25,12 +29,10 @@ class _NameTransactionWidgetState extends State<NameTransactionWidget> {
           alignment: Alignment.centerLeft,
           child: Text(
             l10n.name,
-            style: TextStyle(
-              color: CupertinoTheme.of(context)
-            .textTheme
-            .textStyle
-            .color
-            ?.withValues(alpha: .7),
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+              color: CupertinoTheme.of(
+                context,
+              ).textTheme.textStyle.color?.withValues(alpha: .7),
               fontSize: 18.sp,
               fontWeight: FontWeight.w500,
             ),
@@ -58,11 +60,15 @@ class _NameTransactionWidgetState extends State<NameTransactionWidget> {
             cursorColor: widget.baseColor,
             keyboardType: TextInputType.text,
             placeholder: l10n.enter_transaction_name,
-            placeholderStyle: TextStyle(
+            placeholderStyle: CupertinoTheme.of(context).textTheme.textStyle
+                .copyWith(
+                  fontSize: 16.sp,
+                  color: widget.baseColor?.withAlpha((0.7 * 255).toInt()),
+                ),
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               fontSize: 16.sp,
-              color: widget.baseColor?.withAlpha((0.7 * 255).toInt()),
+              color: widget.baseColor,
             ),
-            style: TextStyle(fontSize: 16.sp, color: widget.baseColor),
           ),
         ),
       ],

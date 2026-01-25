@@ -16,7 +16,7 @@ class FontView extends StatefulWidget {
 class _FontViewState extends State<FontView> {
   late String _selectedFont;
 
-final List<String> _allFonts = [
+  final List<String> _allFonts = [
     'Lexend',
     'Plus Jakarta Sans',
     'Outfit',
@@ -34,7 +34,7 @@ final List<String> _allFonts = [
     'Space Grotesk',
     'Space Mono',
   ];
-  
+
   @override
   void initState() {
     super.initState();
@@ -55,7 +55,10 @@ final List<String> _allFonts = [
         ),
         middle: Text(
           l10n.font_selection,
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18.sp),
+          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+            fontWeight: FontWeight.w600,
+            fontSize: 18.sp,
+          ),
         ),
       ),
       child: SafeArea(
@@ -82,15 +85,13 @@ final List<String> _allFonts = [
       },
       behavior: HitTestBehavior.opaque,
       child: Container(
-        margin: EdgeInsets.only(bottom: 12.h), 
+        margin: EdgeInsets.only(bottom: 12.h),
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
         decoration: BoxDecoration(
           color: CupertinoTheme.of(context).barBackgroundColor,
           borderRadius: BorderRadius.circular(30.r),
           border: Border.all(
-            color: isSelected
-                ? AppColors.primaryColor
-                : Colors.transparent, 
+            color: isSelected ? AppColors.primaryColor : Colors.transparent,
             width: 1.5,
           ),
         ),
@@ -103,8 +104,9 @@ final List<String> _allFonts = [
               decoration: BoxDecoration(
                 color: isSelected
                     ? AppColors.primaryColor.withValues(alpha: .1)
-                    : CupertinoTheme.of(context).textTheme.textStyle.color!
-                        .withValues(alpha: .15),
+                    : CupertinoTheme.of(
+                        context,
+                      ).textTheme.textStyle.color!.withValues(alpha: .15),
                 shape: BoxShape.circle,
               ),
               child: Text(
@@ -113,10 +115,9 @@ final List<String> _allFonts = [
                   fontName,
                   fontSize: 20.sp,
                   fontWeight: FontWeight.bold,
-                  color: isSelected ? AppColors.primaryColor : CupertinoTheme.of(context)
-                      .textTheme
-                      .textStyle
-                      .color,
+                  color: isSelected
+                      ? AppColors.primaryColor
+                      : CupertinoTheme.of(context).textTheme.textStyle.color,
                 ),
               ),
             ),
@@ -131,17 +132,21 @@ final List<String> _allFonts = [
                       fontName,
                       fontSize: 17.sp,
                       fontWeight: FontWeight.w600,
-                      color: CupertinoTheme.of(context).textTheme.textStyle.color,
+                      color: CupertinoTheme.of(
+                        context,
+                      ).textTheme.textStyle.color,
                     ),
                   ),
                   SizedBox(height: 4.h),
                   Text(
-                    l10n.font_description, 
+                    l10n.font_description,
                     style: GoogleFonts.getFont(
                       fontName,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w400,
-                      color: CupertinoTheme.of(context).textTheme.textStyle.color!.withValues(alpha: .6),
+                      color: CupertinoTheme.of(
+                        context,
+                      ).textTheme.textStyle.color!.withValues(alpha: .6),
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,

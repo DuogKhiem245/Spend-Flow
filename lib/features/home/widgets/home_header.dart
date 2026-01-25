@@ -104,6 +104,20 @@ class HomeHeader extends StatelessWidget {
                           ? CupertinoIcons.checkmark_circle_fill
                           : CupertinoIcons.creditcard,
                       iconColor: isSelected ? AppColors.primaryColor : null,
+                      itemTheme: PullDownMenuItemTheme(
+                        textStyle: CupertinoTheme.of(context)
+                            .textTheme
+                            .textStyle
+                            .copyWith(
+                              fontSize: 16.sp,
+                              fontWeight: isSelected
+                                  ? FontWeight.w600
+                                  : FontWeight.w500,
+                              color: CupertinoTheme.of(
+                                context,
+                              ).textTheme.textStyle.color,
+                            ),
+                      ),
                     ),
                   );
                 }
@@ -114,6 +128,18 @@ class HomeHeader extends StatelessWidget {
                   PullDownMenuItem(
                     title: l10n.add_wallet,
                     icon: CupertinoIcons.add_circled,
+                    itemTheme: PullDownMenuItemTheme(
+                      textStyle: CupertinoTheme.of(context)
+                          .textTheme
+                          .textStyle
+                          .copyWith(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w500,
+                            color: CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.color,
+                          ),
+                    ),
                     onTap: () async {
                       await Navigator.push(
                         context,
@@ -132,6 +158,16 @@ class HomeHeader extends StatelessWidget {
                     icon: CupertinoIcons.trash,
                     isDestructive: true,
                     onTap: () => _showManageWalletDialog(context, isDarkMode),
+                    itemTheme: PullDownMenuItemTheme(
+                      textStyle: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w500,
+                            color: CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.color,
+                          ),
+                    ),
                   ),
                 );
                 return items;
@@ -176,13 +212,16 @@ class HomeHeader extends StatelessWidget {
                               viewModel.currentWalletName(l10n),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.w600,
-                                color: CupertinoTheme.of(
-                                  context,
-                                ).textTheme.textStyle.color,
-                              ),
+                              style: CupertinoTheme.of(context)
+                                  .textTheme
+                                  .textStyle
+                                  .copyWith(
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: CupertinoTheme.of(
+                                      context,
+                                    ).textTheme.textStyle.color,
+                                  ),
                             ),
                           ),
                           SizedBox(width: 6.w),
@@ -238,11 +277,12 @@ class HomeHeader extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 16.h),
                 child: Text(
                   l10n.delete_wallet,
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.bold,
-                    color: CupertinoColors.label.resolveFrom(ctx),
-                  ),
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold,
+                        color: CupertinoColors.label.resolveFrom(ctx),
+                      ),
                 ),
               ),
 
@@ -300,22 +340,28 @@ class HomeHeader extends StatelessWidget {
                           ),
                           title: Text(
                             wallet.name,
-                            style: TextStyle(
-                              fontSize: 17.sp,
-                              fontWeight: FontWeight.w600,
-                              color: CupertinoColors.label.resolveFrom(ctx),
-                            ),
+                            style: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
+                                .copyWith(
+                                  fontSize: 17.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: CupertinoColors.label.resolveFrom(ctx),
+                                ),
                           ),
                           subtitle: isCurrent
                               ? Padding(
                                   padding: EdgeInsets.only(top: 4.h),
                                   child: Text(
                                     l10n.in_use,
-                                    style: TextStyle(
-                                      fontSize: 13.sp,
-                                      color: AppColors.primaryColor,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                    style: CupertinoTheme.of(context)
+                                        .textTheme
+                                        .textStyle
+                                        .copyWith(
+                                          fontSize: 13.sp,
+                                          color: AppColors.primaryColor,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                   ),
                                 )
                               : null,

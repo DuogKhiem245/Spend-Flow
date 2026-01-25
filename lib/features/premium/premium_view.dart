@@ -108,7 +108,7 @@ class PremiumView extends StatelessWidget {
               const Spacer(),
 
               if (!viewModel.isLoading)
-                _buildRestoreButton(viewModel, l10n)
+                _buildRestoreButton(viewModel, l10n, context)
               else
                 SizedBox(height: 36.h),
             ],
@@ -158,7 +158,7 @@ class PremiumView extends StatelessWidget {
         Text(
           l10n.unlock_untilimited_access,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
             fontSize: 28.sp,
             fontWeight: FontWeight.w800,
             height: 1.2,
@@ -168,7 +168,7 @@ class PremiumView extends StatelessWidget {
         Text(
           l10n.unlock_untilimited_access_description,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
             fontSize: 15.sp,
             color: Colors.grey.shade600,
             height: 1.4,
@@ -207,20 +207,26 @@ class PremiumView extends StatelessWidget {
                         children: [
                           Text(
                             l10n.daily_input_cap_reached,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14.sp,
-                              color: Colors.black87,
-                            ),
+                            style: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
+                                .copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14.sp,
+                                  color: Colors.black87,
+                                ),
                           ),
                           SizedBox(height: 4.h),
                           Text(
                             l10n.daily_input_cap_reached_description,
-                            style: TextStyle(
-                              fontSize: 13.sp,
-                              color: Colors.black54,
-                              height: 1.4,
-                            ),
+                            style: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
+                                .copyWith(
+                                  fontSize: 13.sp,
+                                  color: Colors.black54,
+                                  height: 1.4,
+                                ),
                           ),
                         ],
                       ),
@@ -236,7 +242,10 @@ class PremiumView extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Text(
             l10n.feature_comparison,
-            style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w700),
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
         SizedBox(height: 16.h),
@@ -313,11 +322,14 @@ class PremiumView extends StatelessWidget {
           child: isHeader
               ? Text(
                   feature,
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w500,
-                    color: CupertinoTheme.of(context).textTheme.textStyle.color,
-                  ),
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w500,
+                        color: CupertinoTheme.of(
+                          context,
+                        ).textTheme.textStyle.color,
+                      ),
                 )
               : Row(
                   children: [
@@ -331,13 +343,14 @@ class PremiumView extends StatelessWidget {
                     Expanded(
                       child: Text(
                         feature,
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w500,
-                          color: CupertinoTheme.of(
-                            context,
-                          ).textTheme.textStyle.color,
-                        ),
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w500,
+                              color: CupertinoTheme.of(
+                                context,
+                              ).textTheme.textStyle.color,
+                            ),
                       ),
                     ),
                   ],
@@ -354,11 +367,14 @@ class PremiumView extends StatelessWidget {
               : Text(
                   free,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w500,
-                    color: CupertinoTheme.of(context).textTheme.textStyle.color,
-                  ),
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w500,
+                        color: CupertinoTheme.of(
+                          context,
+                        ).textTheme.textStyle.color,
+                      ),
                 ),
         ),
         Expanded(
@@ -372,11 +388,14 @@ class PremiumView extends StatelessWidget {
               : Text(
                   premium,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w500,
-                    color: CupertinoTheme.of(context).textTheme.textStyle.color,
-                  ),
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w500,
+                        color: CupertinoTheme.of(
+                          context,
+                        ).textTheme.textStyle.color,
+                      ),
                 ),
         ),
       ],
@@ -427,10 +446,11 @@ class PremiumView extends StatelessWidget {
                     children: [
                       Text(
                         l10n.continue_with(viewModel.priceString),
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w700,
-                        ),
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w700,
+                            ),
                       ),
                       SizedBox(width: 8.w),
                       Icon(CupertinoIcons.arrow_right, size: 18.sp),
@@ -441,7 +461,9 @@ class PremiumView extends StatelessWidget {
           Text(
             l10n.accept_terms_conditions,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 11.sp),
+            style: CupertinoTheme.of(
+              context,
+            ).textTheme.textStyle.copyWith(fontSize: 11.sp),
           ),
         ],
       ),
@@ -529,10 +551,11 @@ class PremiumView extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16.sp,
-                        ),
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16.sp,
+                            ),
                       ),
                       if (tag != null) ...[
                         SizedBox(width: 8.w),
@@ -547,11 +570,14 @@ class PremiumView extends StatelessWidget {
                           ),
                           child: Text(
                             tag,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 9.sp,
-                              fontWeight: FontWeight.w800,
-                            ),
+                            style: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
+                                .copyWith(
+                                  color: Colors.white,
+                                  fontSize: 9.sp,
+                                  fontWeight: FontWeight.w800,
+                                ),
                           ),
                         ),
                       ],
@@ -560,14 +586,18 @@ class PremiumView extends StatelessWidget {
                   if (description != null)
                     Text(
                       description,
-                      style: TextStyle(fontSize: 12.sp, color: Colors.grey),
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(fontSize: 12.sp, color: Colors.grey),
                     ),
                 ],
               ),
             ),
             Text(
               price,
-              style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16.sp),
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+                fontWeight: FontWeight.w800,
+                fontSize: 16.sp,
+              ),
             ),
           ],
         ),
@@ -578,6 +608,7 @@ class PremiumView extends StatelessWidget {
   Widget _buildRestoreButton(
     PremiumViewModel viewModel,
     AppLocalizations l10n,
+    BuildContext context,
   ) {
     return GestureDetector(
       onTap: () {
@@ -585,7 +616,7 @@ class PremiumView extends StatelessWidget {
       },
       child: Text(
         l10n.restore,
-        style: TextStyle(
+        style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
           fontSize: 15.sp,
           fontWeight: FontWeight.w600,
           color: Colors.grey.shade600,

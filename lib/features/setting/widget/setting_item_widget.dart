@@ -61,43 +61,54 @@ class SettingItem extends StatelessWidget {
                 SizedBox(width: 14.w),
 
                 Expanded(
-                  child: description == null ?  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 17.sp,
-                      fontWeight: FontWeight.w500,
-                      color: CupertinoTheme.of(
-                        context,
-                      ).textTheme.textStyle.color,
-                    ),
-                  ) : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        title,
-                        style: TextStyle(
-                          fontSize: 17.sp,
-                          fontWeight: FontWeight.w500,
-                          color: CupertinoTheme.of(
-                            context,
-                          ).textTheme.textStyle.color,
+                  child: description == null
+                      ? Text(
+                          title,
+                          style: CupertinoTheme.of(context).textTheme.textStyle
+                              .copyWith(
+                                fontSize: 17.sp,
+                                fontWeight: FontWeight.w500,
+                                color: CupertinoTheme.of(
+                                  context,
+                                ).textTheme.textStyle.color,
+                              ),
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              title,
+                              style: CupertinoTheme.of(context)
+                                  .textTheme
+                                  .textStyle
+                                  .copyWith(
+                                    fontSize: 17.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: CupertinoTheme.of(
+                                      context,
+                                    ).textTheme.textStyle.color,
+                                  ),
+                            ),
+                            SizedBox(height: 2.h),
+                            Text(
+                              description!,
+                              style: CupertinoTheme.of(context)
+                                  .textTheme
+                                  .textStyle
+                                  .copyWith(
+                                    fontSize: 13.sp,
+                                    color: CupertinoTheme.of(context)
+                                        .textTheme
+                                        .textStyle
+                                        .color
+                                        ?.withValues(alpha: 0.6),
+                                  ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
                         ),
-                      ),
-                      SizedBox(height: 2.h),
-                      Text(
-                        description!,
-                        style: TextStyle(
-                          fontSize: 13.sp,
-                          color: CupertinoTheme.of(
-                            context,
-                          ).textTheme.textStyle.color?.withValues(alpha: 0.6),
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
                 ),
 
                 trailing,

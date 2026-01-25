@@ -49,25 +49,27 @@ class BalanceCard extends StatelessWidget {
                 children: [
                   Text(
                     l10n.total_balance,
-                    style: TextStyle(
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w500,
-                      color: CupertinoTheme.of(
-                        context,
-                      ).textTheme.textStyle.color?.withValues(alpha: .6),
-                    ),
+                    style: CupertinoTheme.of(context).textTheme.textStyle
+                        .copyWith(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w500,
+                          color: CupertinoTheme.of(
+                            context,
+                          ).textTheme.textStyle.color?.withValues(alpha: .6),
+                        ),
                   ),
                   SizedBox(height: 8.h),
                   Text(
                     "$symbol ${_viewModel.formatCurrency(balance)}",
-                    style: TextStyle(
-                      letterSpacing: 2,
-                      fontSize: 28.sp,
-                      fontWeight: FontWeight.w700,
-                      color: balance >= 0
-                          ? AppColors.secondaryColor
-                          : AppColors.errorColor.withValues(alpha: .8),
-                    ),
+                    style: CupertinoTheme.of(context).textTheme.textStyle
+                        .copyWith(
+                          letterSpacing: 2,
+                          fontSize: 28.sp,
+                          fontWeight: FontWeight.w700,
+                          color: balance >= 0
+                              ? AppColors.secondaryColor
+                              : AppColors.errorColor.withValues(alpha: .8),
+                        ),
                   ),
                 ],
               ),
@@ -101,29 +103,33 @@ class BalanceCard extends StatelessWidget {
                             SizedBox(width: 8.w),
                             Text(
                               l10n.income,
-                              style: TextStyle(
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.w500,
-                                color: CupertinoTheme.of(context)
-                                    .textTheme
-                                    .textStyle
-                                    .color
-                                    ?.withValues(alpha: .6),
-                              ),
+                              style: CupertinoTheme.of(context)
+                                  .textTheme
+                                  .textStyle
+                                  .copyWith(
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: CupertinoTheme.of(context)
+                                        .textTheme
+                                        .textStyle
+                                        .color
+                                        ?.withValues(alpha: .6),
+                                  ),
                             ),
                           ],
                         ),
                         SizedBox(height: 12.h),
                         Text(
                           "$symbol ${_viewModel.formatCompactCurrency(income)}",
-                          style: TextStyle(
-                            fontSize: 24.sp,
-                            letterSpacing: 2,
-                            fontWeight: FontWeight.bold,
-                            color: CupertinoTheme.of(
-                              context,
-                            ).textTheme.textStyle.color,
-                          ),
+                          style: CupertinoTheme.of(context).textTheme.textStyle
+                              .copyWith(
+                                fontSize: 24.sp,
+                                letterSpacing: 2,
+                                fontWeight: FontWeight.bold,
+                                color: CupertinoTheme.of(
+                                  context,
+                                ).textTheme.textStyle.color,
+                              ),
                         ),
                       ],
                     ),
@@ -156,29 +162,33 @@ class BalanceCard extends StatelessWidget {
                             SizedBox(width: 8.w),
                             Text(
                               l10n.expenses,
-                              style: TextStyle(
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.w500,
-                                color: CupertinoTheme.of(context)
-                                    .textTheme
-                                    .textStyle
-                                    .color
-                                    ?.withValues(alpha: .6),
-                              ),
+                              style: CupertinoTheme.of(context)
+                                  .textTheme
+                                  .textStyle
+                                  .copyWith(
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: CupertinoTheme.of(context)
+                                        .textTheme
+                                        .textStyle
+                                        .color
+                                        ?.withValues(alpha: .6),
+                                  ),
                             ),
                           ],
                         ),
                         SizedBox(height: 12.h),
                         Text(
                           "$symbol ${_viewModel.formatCompactCurrency(expenses)}",
-                          style: TextStyle(
-                            fontSize: 24.sp,
-                            letterSpacing: 2,
-                            fontWeight: FontWeight.bold,
-                            color: CupertinoTheme.of(
-                              context,
-                            ).textTheme.textStyle.color,
-                          ),
+                          style: CupertinoTheme.of(context).textTheme.textStyle
+                              .copyWith(
+                                fontSize: 24.sp,
+                                letterSpacing: 2,
+                                fontWeight: FontWeight.bold,
+                                color: CupertinoTheme.of(
+                                  context,
+                                ).textTheme.textStyle.color,
+                              ),
                         ),
                       ],
                     ),

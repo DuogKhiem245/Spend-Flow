@@ -25,7 +25,7 @@ class _NoteWidgetState extends State<NoteWidget> {
         children: [
           Text(
             l10n.note,
-            style: TextStyle(
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               color: CupertinoTheme.of(
                 context,
               ).textTheme.textStyle.color?.withValues(alpha: .7),
@@ -59,11 +59,15 @@ class _NoteWidgetState extends State<NoteWidget> {
               textInputAction: TextInputAction.newline,
               cursorColor: widget.baseColor,
               placeholder: l10n.enter_note,
-              placeholderStyle: TextStyle(
+              placeholderStyle: CupertinoTheme.of(context).textTheme.textStyle
+                  .copyWith(
+                    fontSize: 18.sp,
+                    color: widget.baseColor?.withAlpha((0.7 * 255).toInt()),
+                  ),
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                 fontSize: 18.sp,
-                color: widget.baseColor?.withAlpha((0.7 * 255).toInt()),
+                color: widget.baseColor,
               ),
-              style: TextStyle(fontSize: 18.sp, color: widget.baseColor),
               padding: EdgeInsets.zero,
               scrollPadding: EdgeInsets.only(bottom: 210.h),
             ),

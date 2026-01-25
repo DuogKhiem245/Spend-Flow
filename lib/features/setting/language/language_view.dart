@@ -44,7 +44,10 @@ class _LanguageViewState extends State<LanguageView> {
         ),
         middle: Text(
           l10n.select_language,
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18.sp),
+          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+            fontWeight: FontWeight.w600,
+            fontSize: 18.sp,
+          ),
         ),
       ),
       child: SafeArea(
@@ -109,7 +112,7 @@ class _LanguageViewState extends State<LanguageView> {
       padding: EdgeInsets.only(left: 10.w),
       child: Text(
         title,
-        style: TextStyle(
+        style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
           fontSize: 13.sp,
           fontWeight: FontWeight.w600,
           color: CupertinoColors.systemGrey,
@@ -135,7 +138,12 @@ class _LanguageViewState extends State<LanguageView> {
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
             child: Row(
               children: [
-                Text(lang['flag']!, style: TextStyle(fontSize: 24.sp)),
+                Text(
+                  lang['flag']!,
+                  style: CupertinoTheme.of(
+                    context,
+                  ).textTheme.textStyle.copyWith(fontSize: 24.sp),
+                ),
                 SizedBox(width: 16.w),
                 Expanded(
                   child: Column(
@@ -143,22 +151,24 @@ class _LanguageViewState extends State<LanguageView> {
                     children: [
                       Text(
                         lang['nativeName']!,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                          color: CupertinoTheme.of(
-                            context,
-                          ).textTheme.textStyle.color,
-                        ),
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                              color: CupertinoTheme.of(
+                                context,
+                              ).textTheme.textStyle.color,
+                            ),
                       ),
                       if (lang['name'] != lang['nativeName']) ...[
                         SizedBox(height: 2.h),
                         Text(
                           lang['name']!,
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: CupertinoColors.systemGrey,
-                          ),
+                          style: CupertinoTheme.of(context).textTheme.textStyle
+                              .copyWith(
+                                fontSize: 14.sp,
+                                color: CupertinoColors.systemGrey,
+                              ),
                         ),
                       ],
                     ],

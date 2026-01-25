@@ -125,7 +125,7 @@ class _AddCategoryViewState extends State<AddCategoryView> {
           padding: EdgeInsets.zero,
           child: Text(
             l10n.save,
-            style: TextStyle(
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               color: primaryColor,
               fontSize: 18.sp,
               fontWeight: FontWeight.w600,
@@ -180,7 +180,6 @@ class _AddCategoryViewState extends State<AddCategoryView> {
                 'imageFile': null,
               });
             }
-            
           },
         ),
       ),
@@ -228,10 +227,8 @@ class _AddCategoryViewState extends State<AddCategoryView> {
                     vertical: 16.h,
                   ),
                   decoration: null,
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    color: CupertinoColors.label,
-                  ),
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(fontSize: 18.sp, color: CupertinoColors.label),
                   suffix: _nameController.text.isNotEmpty
                       ? CupertinoButton(
                           padding: EdgeInsets.only(right: 12.w),
@@ -267,7 +264,7 @@ class _AddCategoryViewState extends State<AddCategoryView> {
         alignment: Alignment.centerLeft,
         child: Text(
           title,
-          style: TextStyle(
+          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
             color: CupertinoTheme.of(
               context,
             ).textTheme.textStyle.color?.withValues(alpha: .7),

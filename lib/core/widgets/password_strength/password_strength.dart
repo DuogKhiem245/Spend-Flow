@@ -93,7 +93,7 @@ class PasswordStrength extends StatelessWidget {
             Text(
               label,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                 color: statusColor,
                 fontSize: 16.sp,
                 fontWeight: FontWeight.bold,
@@ -105,7 +105,7 @@ class PasswordStrength extends StatelessWidget {
         Text(
           description,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
             color: statusColor,
             fontSize: 14.sp,
             fontWeight: FontWeight.w400,

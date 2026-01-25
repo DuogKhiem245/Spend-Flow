@@ -128,10 +128,8 @@ class _ProfileViewState extends State<ProfileView> {
                       ),
                 middle: Text(
                   l10n.edit_profile,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20.sp,
-                  ),
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(fontWeight: FontWeight.w600, fontSize: 20.sp),
                 ),
               ),
               child: SafeArea(
@@ -209,11 +207,14 @@ class _ProfileViewState extends State<ProfileView> {
                                 color: AppColors.primaryColor,
                                 child: Text(
                                   l10n.save_changes,
-                                  style: TextStyle(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: const Color(0xFFFFFFFF),
-                                  ),
+                                  style: CupertinoTheme.of(context)
+                                      .textTheme
+                                      .textStyle
+                                      .copyWith(
+                                        fontSize: 18.sp,
+                                        fontWeight: FontWeight.w600,
+                                        color: const Color(0xFFFFFFFF),
+                                      ),
                                 ),
                               ),
                             ],

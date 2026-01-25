@@ -124,7 +124,7 @@ class _AIPreviewOverviewViewState extends State<AIPreviewOverviewView> {
               SizedBox(width: 4.w),
               Text(
                 l10n.ai_powered,
-                style: TextStyle(
+                style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                   fontSize: 10.sp,
                   fontWeight: FontWeight.bold,
                   color: CupertinoTheme.of(context).primaryColor,
@@ -195,11 +195,12 @@ class _AIPreviewOverviewViewState extends State<AIPreviewOverviewView> {
                         : null,
                     child: Text(
                       "${l10n.confirm_selected_entries} (${_selectedTransactionIndices.length})",
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w700,
-                        color: CupertinoColors.white,
-                      ),
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w700,
+                            color: CupertinoColors.white,
+                          ),
                     ),
                   ),
                 ),
@@ -271,21 +272,25 @@ class _AIPreviewOverviewViewState extends State<AIPreviewOverviewView> {
                   title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
-                    color: CupertinoTheme.of(context).textTheme.textStyle.color,
-                  ),
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                        color: CupertinoTheme.of(
+                          context,
+                        ).textTheme.textStyle.color,
+                      ),
                 ),
                 SizedBox(height: 4.h),
                 Text(
                   "$category • ${DateFormat('dd MMM yyyy').format(date)}",
-                  style: TextStyle(
-                    fontSize: 13.sp,
-                    color: CupertinoTheme.of(
-                      context,
-                    ).textTheme.textStyle.color?.withValues(alpha: 0.6),
-                  ),
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(
+                        fontSize: 13.sp,
+                        color: CupertinoTheme.of(
+                          context,
+                        ).textTheme.textStyle.color?.withValues(alpha: 0.6),
+                      ),
                 ),
                 if (hasLocation) ...[
                   SizedBox(height: 4.h),
@@ -304,13 +309,14 @@ class _AIPreviewOverviewViewState extends State<AIPreviewOverviewView> {
                           location.address!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 12.sp,
-                            color: CupertinoTheme.of(
-                              context,
-                            ).primaryColor.withValues(alpha: 0.8),
-                            fontWeight: FontWeight.w500,
-                          ),
+                          style: CupertinoTheme.of(context).textTheme.textStyle
+                              .copyWith(
+                                fontSize: 12.sp,
+                                color: CupertinoTheme.of(
+                                  context,
+                                ).primaryColor.withValues(alpha: 0.8),
+                                fontWeight: FontWeight.w500,
+                              ),
                         ),
                       ),
                     ],
@@ -321,13 +327,14 @@ class _AIPreviewOverviewViewState extends State<AIPreviewOverviewView> {
                   children: [
                     Text(
                       "$prefix ${_aiPreviewViewModel.formatCurrency(amount)}",
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.bold,
-                        color: isIncome
-                            ? AppColors.secondaryColor
-                            : AppColors.errorColor,
-                      ),
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.bold,
+                            color: isIncome
+                                ? AppColors.secondaryColor
+                                : AppColors.errorColor,
+                          ),
                     ),
                     SizedBox(width: 6.w),
                     GestureDetector(
@@ -389,13 +396,13 @@ class _AIPreviewOverviewViewState extends State<AIPreviewOverviewView> {
         _selectedTransactionIndices.length == total && total > 0;
 
     return Padding(
-      padding:  EdgeInsets.symmetric(horizontal: 20.0.w),
+      padding: EdgeInsets.symmetric(horizontal: 20.0.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             "$total ${l10n.entries_pending}",
-            style: TextStyle(
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               fontSize: 14.sp,
               fontWeight: FontWeight.w600,
               color: CupertinoColors.systemGrey,
@@ -405,7 +412,7 @@ class _AIPreviewOverviewViewState extends State<AIPreviewOverviewView> {
             padding: EdgeInsets.zero,
             child: Text(
               isAllSelected ? l10n.clear_all : l10n.select_all,
-              style: TextStyle(
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                 fontSize: 14.sp,
                 color: CupertinoTheme.of(context).primaryColor,
                 fontWeight: FontWeight.w500,

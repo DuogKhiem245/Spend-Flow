@@ -20,7 +20,6 @@ class ViewOnlyMapWidget extends StatefulWidget {
 }
 
 class _ViewOnlyMapWidgetState extends State<ViewOnlyMapWidget> {
-
   static const String _darkStyle =
       "mapbox://styles/khiemduong2405/cmkcmk34300dl01sc6bfuajnx";
   static const String _lightStyle =
@@ -35,9 +34,7 @@ class _ViewOnlyMapWidgetState extends State<ViewOnlyMapWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.symmetric(
-            horizontal: 0.w,
-          ), 
+          margin: EdgeInsets.symmetric(horizontal: 0.w),
           decoration: BoxDecoration(
             color: CupertinoTheme.of(context).barBackgroundColor,
             borderRadius: BorderRadius.circular(30.r),
@@ -47,7 +44,7 @@ class _ViewOnlyMapWidgetState extends State<ViewOnlyMapWidget> {
             child: Column(
               children: [
                 SizedBox(
-                  height: 220.h, 
+                  height: 220.h,
                   child: Stack(
                     children: [
                       MapWidget(
@@ -76,9 +73,7 @@ class _ViewOnlyMapWidgetState extends State<ViewOnlyMapWidget> {
 
                       Center(
                         child: Padding(
-                          padding: EdgeInsets.only(
-                            bottom: 30.h,
-                          ), 
+                          padding: EdgeInsets.only(bottom: 30.h),
                           child: Icon(
                             CupertinoIcons.location_solid,
                             size: 36.sp,
@@ -125,13 +120,14 @@ class _ViewOnlyMapWidgetState extends State<ViewOnlyMapWidget> {
                       Expanded(
                         child: Text(
                           widget.address,
-                          style: TextStyle(
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.w500,
-                            color: CupertinoTheme.of(
-                              context,
-                            ).textTheme.textStyle.color,
-                          ),
+                          style: CupertinoTheme.of(context).textTheme.textStyle
+                              .copyWith(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w500,
+                                color: CupertinoTheme.of(
+                                  context,
+                                ).textTheme.textStyle.color,
+                              ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),

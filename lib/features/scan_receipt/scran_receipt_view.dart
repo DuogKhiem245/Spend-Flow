@@ -55,7 +55,10 @@ class _ScanReceiptViewState extends State<ScanReceiptView>
             ),
             middle: Text(
               l10n.scan_receipt,
-              style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+                fontSize: 20.sp,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
           child: Stack(
@@ -81,11 +84,12 @@ class _ScanReceiptViewState extends State<ScanReceiptView>
                     ),
                     child: Text(
                       l10n.align_receipt,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            color: Colors.white,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
                     ),
                   ),
 
@@ -109,12 +113,13 @@ class _ScanReceiptViewState extends State<ScanReceiptView>
                         SizedBox(height: 16.h),
                         Text(
                           l10n.invoice_analysis,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.sp,
-                            decoration: TextDecoration.none,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          style: CupertinoTheme.of(context).textTheme.textStyle
+                              .copyWith(
+                                color: Colors.white,
+                                fontSize: 16.sp,
+                                decoration: TextDecoration.none,
+                                fontWeight: FontWeight.w500,
+                              ),
                         ),
                       ],
                     ),

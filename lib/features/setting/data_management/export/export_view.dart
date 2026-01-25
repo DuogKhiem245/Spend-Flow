@@ -35,7 +35,7 @@ class _ExportViewState extends State<ExportView> {
         ),
         middle: Text(
           l10n.export_data,
-          style: TextStyle(
+          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
             fontWeight: FontWeight.w600,
             fontSize: 18.sp,
             color: CupertinoTheme.of(context).textTheme.textStyle.color,
@@ -53,14 +53,14 @@ class _ExportViewState extends State<ExportView> {
                   children: [
                     Text(
                       l10n.select_format,
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                        color: CupertinoTheme.of(context)
-                            .textTheme
-                            .textStyle
-                            .color
-                      ),
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            color: CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.color,
+                          ),
                     ),
                     SizedBox(height: 16.h),
 
@@ -69,7 +69,7 @@ class _ExportViewState extends State<ExportView> {
                       title: l10n.csv_format,
                       subtitle: l10n.csv_description,
                       icon: CupertinoIcons.doc_text_fill,
-                      iconColor: const Color(0xFF2196F3), 
+                      iconColor: const Color(0xFF2196F3),
                       context: context,
                     ),
 
@@ -80,7 +80,7 @@ class _ExportViewState extends State<ExportView> {
                       title: l10n.excel_format,
                       subtitle: l10n.excel_description,
                       icon: CupertinoIcons.table_fill,
-                      iconColor: CupertinoColors.activeGreen, 
+                      iconColor: CupertinoColors.activeGreen,
                       context: context,
                     ),
                     SizedBox(height: 12.h),
@@ -89,7 +89,7 @@ class _ExportViewState extends State<ExportView> {
                       format: ExportFormat.json,
                       title: l10n.json_format,
                       subtitle: l10n.json_description,
-                      icon: CupertinoIcons.chevron_left_slash_chevron_right, 
+                      icon: CupertinoIcons.chevron_left_slash_chevron_right,
                       iconColor: Color.fromRGBO(232, 162, 59, 1),
                       context: context,
                     ),
@@ -116,10 +116,13 @@ class _ExportViewState extends State<ExportView> {
                             )
                           : Text(
                               l10n.export_data,
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: CupertinoTheme.of(context)
+                                  .textTheme
+                                  .textStyle
+                                  .copyWith(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                             ),
                     ),
                   );
@@ -200,26 +203,25 @@ class _ExportViewState extends State<ExportView> {
                 children: [
                   Text(
                     title,
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.bold,
-                      color: CupertinoTheme.of(context)
-                          .textTheme
-                          .textStyle
-                          .color,
-                    ),
+                    style: CupertinoTheme.of(context).textTheme.textStyle
+                        .copyWith(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold,
+                          color: CupertinoTheme.of(
+                            context,
+                          ).textTheme.textStyle.color,
+                        ),
                   ),
                   SizedBox(height: 4.h),
                   Text(
                     subtitle,
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      color: CupertinoTheme.of(context)
-                          .textTheme
-                          .textStyle
-                          .color
-                          ?.withValues(alpha: .7),
-                    ),
+                    style: CupertinoTheme.of(context).textTheme.textStyle
+                        .copyWith(
+                          fontSize: 12.sp,
+                          color: CupertinoTheme.of(
+                            context,
+                          ).textTheme.textStyle.color?.withValues(alpha: .7),
+                        ),
                   ),
                 ],
               ),

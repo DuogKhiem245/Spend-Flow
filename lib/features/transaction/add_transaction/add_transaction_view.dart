@@ -271,7 +271,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                             ? null
                             : () async {
                                 List<String> missingFields = [];
-                      
+
                                 if (_amountController.text.trim().isEmpty ||
                                     _amountController.text == "0") {
                                   missingFields.add(l10n.amount);
@@ -286,17 +286,18 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                                   CheckValidWidget.showIncompleteDetailsSheet(
                                     context: context,
                                     title: l10n.incomplete_details,
-                                    description: l10n.please_fill_required_fields,
+                                    description:
+                                        l10n.please_fill_required_fields,
                                     missingFields: missingFields,
                                     buttonText: "OK",
                                   );
                                   return;
                                 }
-                      
+
                                 if (widget.isFromAI) {
                                   String rawAmount = _amountController.text
                                       .replaceAll(RegExp(r'[^0-9]'), '');
-                      
+
                                   double finalAmount =
                                       double.tryParse(rawAmount) ?? 0;
                                   final updatedTransaction = widget
@@ -308,16 +309,17 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                                         date: _transactionDate,
                                         note: _noteController.text.trim(),
                                         isIncome: _index == 1,
-                                        location: _viewModel.getLocationFromState(),
+                                        location: _viewModel
+                                            .getLocationFromState(),
                                       );
-                      
+
                                   if (!context.mounted) return;
                                   Navigator.pop(context, updatedTransaction);
                                   return;
                                 }
-                      
+
                                 setState(() => _isLoading = true);
-                      
+
                                 _hasWallet = await WalletViewModel()
                                     .checkUserHasWallet();
                                 if (!_hasWallet) {
@@ -326,7 +328,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                                   _showNoWalletAlert(context);
                                   return;
                                 }
-                      
+
                                 try {
                                   if (_index == 0) {
                                     await _viewModel.addExpenseTransaction(
@@ -347,9 +349,9 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                                       _viewModel.getLocationFromState(),
                                     );
                                   }
-                      
+
                                   if (!context.mounted) return;
-                      
+
                                   if (_premiumViewModel.isPremium) {
                                     Navigator.pop(context, true);
                                     return;
@@ -357,12 +359,13 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                                     await _adsService
                                         .showInterstitialWithFrequency(
                                           () {},
-                                          isPremium: _premiumViewModel.isPremium,
+                                          isPremium:
+                                              _premiumViewModel.isPremium,
                                           onAdClosed: () {
                                             Navigator.pop(context, true);
                                           },
                                         );
-                                  } 
+                                  }
                                 } catch (e) {
                                   debugPrint("Error add transaction: $e");
                                 } finally {
@@ -375,10 +378,11 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                         padding: EdgeInsets.symmetric(vertical: 16.h),
                         child: Text(
                           _index == 0 ? l10n.add_expense : l10n.add_income,
-                          style: TextStyle(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: CupertinoTheme.of(context).textTheme.textStyle
+                              .copyWith(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
                         ),
                       ),
                     ),
@@ -397,7 +401,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
       padding: EdgeInsets.symmetric(vertical: 12.h),
       child: Text(
         text,
-        style: TextStyle(
+        style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
           fontSize: 16.sp,
           fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
           color: isSelected

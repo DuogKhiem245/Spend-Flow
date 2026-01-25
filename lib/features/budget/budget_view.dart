@@ -26,12 +26,13 @@ class BudgetPage extends StatefulWidget {
   State<BudgetPage> createState() => _BudgetPageState();
 }
 
-class _BudgetPageState extends State<BudgetPage> with WidgetsBindingObserver, AutomaticKeepAliveClientMixin {
+class _BudgetPageState extends State<BudgetPage>
+    with WidgetsBindingObserver, AutomaticKeepAliveClientMixin {
   final BudgetViewModel _viewModel = BudgetViewModel();
 
   bool _isPremium = false;
 
-    @override
+  @override
   bool get wantKeepAlive => true;
 
   @override
@@ -44,7 +45,6 @@ class _BudgetPageState extends State<BudgetPage> with WidgetsBindingObserver, Au
       });
     });
   }
-
 
   @override
   void dispose() {
@@ -70,7 +70,7 @@ class _BudgetPageState extends State<BudgetPage> with WidgetsBindingObserver, Au
     _viewModel.refreshData();
   }
 
-   void _showUnlockModal(BuildContext context) {
+  void _showUnlockModal(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -84,7 +84,7 @@ class _BudgetPageState extends State<BudgetPage> with WidgetsBindingObserver, Au
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    
+
     final l10n = AppLocalizations.of(context)!;
 
     return ListenableBuilder(
@@ -107,22 +107,26 @@ class _BudgetPageState extends State<BudgetPage> with WidgetsBindingObserver, Au
                         SizedBox(height: 20.h),
                         Text(
                           l10n.report_locked,
-                          style: TextStyle(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w600,
-                            color: CupertinoTheme.of(
-                              context,
-                            ).textTheme.textStyle.color,
-                          ),
+                          style: CupertinoTheme.of(context).textTheme.textStyle
+                              .copyWith(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w600,
+                                color: CupertinoTheme.of(
+                                  context,
+                                ).textTheme.textStyle.color,
+                              ),
                         ),
                         SizedBox(height: 10.h),
                         CupertinoButton(
                           child: Text(
                             l10n.unlock,
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
+                                .copyWith(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
                           ),
                           onPressed: () {
                             _viewModel.authenticateBiometric().then((_) {
@@ -154,13 +158,16 @@ class _BudgetPageState extends State<BudgetPage> with WidgetsBindingObserver, Au
                                 children: [
                                   Text(
                                     l10n.categories,
-                                    style: TextStyle(
-                                      fontSize: 18.sp,
-                                      fontWeight: FontWeight.bold,
-                                      color: CupertinoTheme.of(
-                                        context,
-                                      ).textTheme.textStyle.color,
-                                    ),
+                                    style: CupertinoTheme.of(context)
+                                        .textTheme
+                                        .textStyle
+                                        .copyWith(
+                                          fontSize: 18.sp,
+                                          fontWeight: FontWeight.bold,
+                                          color: CupertinoTheme.of(
+                                            context,
+                                          ).textTheme.textStyle.color,
+                                        ),
                                   ),
                                   SizedBox(height: 12.h),
 
@@ -243,7 +250,7 @@ class _BudgetPageState extends State<BudgetPage> with WidgetsBindingObserver, Au
           SizedBox(height: 16.h),
           Text(
             l10n.no_budgets_yet,
-            style: TextStyle(
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               fontSize: 18.sp,
               fontWeight: FontWeight.w600,
               color: CupertinoTheme.of(
@@ -255,7 +262,7 @@ class _BudgetPageState extends State<BudgetPage> with WidgetsBindingObserver, Au
           Text(
             l10n.create_budget_description,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               fontSize: 14.sp,
               color: CupertinoColors.systemGrey,
             ),
@@ -284,7 +291,7 @@ class _BudgetPageState extends State<BudgetPage> with WidgetsBindingObserver, Au
         children: [
           Text(
             l10n.your_monthly_budget,
-            style: TextStyle(
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               fontSize: 14.sp,
               color: CupertinoTheme.of(
                 context,
@@ -295,7 +302,7 @@ class _BudgetPageState extends State<BudgetPage> with WidgetsBindingObserver, Au
           SizedBox(height: 8.h),
           Text(
             _viewModel.formatCurrency(_viewModel.totalBudget),
-            style: TextStyle(
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               fontSize: 40.sp,
               fontWeight: FontWeight.w800,
               color: CupertinoTheme.of(context).textTheme.textStyle.color,
@@ -304,7 +311,7 @@ class _BudgetPageState extends State<BudgetPage> with WidgetsBindingObserver, Au
           SizedBox(height: 8.h),
           RichText(
             text: TextSpan(
-              style: TextStyle(
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                 fontSize: 14.sp,
                 color: CupertinoTheme.of(context).textTheme.textStyle.color,
               ),
@@ -329,7 +336,7 @@ class _BudgetPageState extends State<BudgetPage> with WidgetsBindingObserver, Au
           SizedBox(height: 12.h),
           Text(
             "${_viewModel.formatCurrency(_viewModel.totalRemaining)} ${l10n.left_to_spend}",
-            style: TextStyle(
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               fontSize: 14.sp,
               color: _viewModel.getProgressBarColor(_viewModel.totalProgress),
               fontWeight: FontWeight.w600,
@@ -431,25 +438,31 @@ class _BudgetPageState extends State<BudgetPage> with WidgetsBindingObserver, Au
                               context,
                               budget.category,
                             ),
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                              color: CupertinoTheme.of(
-                                context,
-                              ).textTheme.textStyle.color,
-                            ),
+                            style: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
+                                .copyWith(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: CupertinoTheme.of(
+                                    context,
+                                  ).textTheme.textStyle.color,
+                                ),
                           ),
                           SizedBox(height: 4.h),
                           Text(
                             "${_viewModel.formatCurrency(budget.remaining)} left",
-                            style: TextStyle(
-                              fontSize: 13.sp,
-                              color: CupertinoTheme.of(context)
-                                  .textTheme
-                                  .textStyle
-                                  .color!
-                                  .withValues(alpha: .6),
-                            ),
+                            style: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
+                                .copyWith(
+                                  fontSize: 13.sp,
+                                  color: CupertinoTheme.of(context)
+                                      .textTheme
+                                      .textStyle
+                                      .color!
+                                      .withValues(alpha: .6),
+                                ),
                           ),
                         ],
                       ),
@@ -458,15 +471,18 @@ class _BudgetPageState extends State<BudgetPage> with WidgetsBindingObserver, Au
                         children: [
                           Text(
                             "${_viewModel.formatCurrency(budget.spent)} / ${_viewModel.formatCurrency(budget.total)}",
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              color: CupertinoTheme.of(context)
-                                  .textTheme
-                                  .textStyle
-                                  .color!
-                                  .withValues(alpha: .6),
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
+                                .copyWith(
+                                  fontSize: 14.sp,
+                                  color: CupertinoTheme.of(context)
+                                      .textTheme
+                                      .textStyle
+                                      .color!
+                                      .withValues(alpha: .6),
+                                  fontWeight: FontWeight.w500,
+                                ),
                           ),
                           SizedBox(height: 6.h),
                           SizedBox(
@@ -576,13 +592,14 @@ class _BudgetPageState extends State<BudgetPage> with WidgetsBindingObserver, Au
                             ).format(_viewModel.selectedMonth),
                           ) ??
                           '',
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w700,
-                        color: CupertinoTheme.of(
-                          context,
-                        ).textTheme.textStyle.color,
-                      ),
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.w700,
+                            color: CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.color,
+                          ),
                     ),
 
                     Text(
@@ -590,12 +607,13 @@ class _BudgetPageState extends State<BudgetPage> with WidgetsBindingObserver, Au
                         'yyyy',
                         locale,
                       ).format(_viewModel.selectedMonth),
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        color: CupertinoTheme.of(
-                          context,
-                        ).textTheme.textStyle.color?.withValues(alpha: .6),
-                      ),
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            fontSize: 12.sp,
+                            color: CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.color?.withValues(alpha: .6),
+                          ),
                     ),
                   ],
                 ),
@@ -666,11 +684,12 @@ class _BudgetPageState extends State<BudgetPage> with WidgetsBindingObserver, Au
                   },
                   child: Text(
                     l10n.done,
-                    style: TextStyle(
-                      color: CupertinoTheme.of(context).primaryColor,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: CupertinoTheme.of(context).textTheme.textStyle
+                        .copyWith(
+                          color: CupertinoTheme.of(context).primaryColor,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
                 ),
               ),

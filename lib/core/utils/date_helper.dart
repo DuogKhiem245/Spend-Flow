@@ -23,11 +23,12 @@ class DateHelper {
                 onTap: () => Navigator.of(context).pop(),
                 child: Text(
                   AppLocalizations.of(context)!.done,
-                  style: TextStyle(
-                    color: CupertinoTheme.of(context).primaryColor,
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(
+                        color: CupertinoTheme.of(context).primaryColor,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
                 ),
               ),
             ),

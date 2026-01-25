@@ -58,7 +58,7 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
           padding: EdgeInsets.only(left: 4.w, bottom: 8.h),
           child: Text(
             l10n.general,
-            style: TextStyle(
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               fontSize: 16.sp,
               fontWeight: FontWeight.w600,
               color: CupertinoTheme.of(
@@ -109,26 +109,23 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
           ),
         ),
 
-        SettingItem(
-          title: l10n.font,
-          icon: CupertinoIcons.globe,
-          iconBgColor: Color(0xFF7C3AED),
-          onTap: () {
-            Navigator.push(
-              context,
-              CupertinoPageRoute(builder: (context) => const FontView()),
-            );
-          },
-          trailing: ListenableBuilder(
-            listenable: fontViewModel,
-            builder: (context, child) {
-              return _buildTextTrailing(
-                context,
-                fontViewModel.currentFont, 
-              );
-            },
-          ),
-        ),
+        // SettingItem(
+        //   title: l10n.font,
+        //   icon: CupertinoIcons.globe,
+        //   iconBgColor: Color(0xFF7C3AED),
+        //   onTap: () {
+        //     Navigator.push(
+        //       context,
+        //       CupertinoPageRoute(builder: (context) => const FontView()),
+        //     );
+        //   },
+        //   trailing: ListenableBuilder(
+        //     listenable: fontViewModel,
+        //     builder: (context, child) {
+        //       return _buildTextTrailing(context, fontViewModel.currentFont);
+        //     },
+        //   ),
+        // ),
 
         ListenableBuilder(
           listenable: _settingViewModel,
@@ -162,7 +159,7 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
       children: [
         Text(
           text,
-          style: TextStyle(
+          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
             fontSize: 15.sp,
             fontWeight: FontWeight.w400,
             color: CupertinoColors.systemGrey,

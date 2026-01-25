@@ -153,7 +153,7 @@ class _CategoryViewState extends State<CategoryView> {
       children: [
         Text(
           title,
-          style: TextStyle(
+          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
             fontSize: 18.sp,
             fontWeight: FontWeight.w600,
             color: CupertinoTheme.of(context).textTheme.textStyle.color,
@@ -227,7 +227,7 @@ class _CategoryViewState extends State<CategoryView> {
           Text(
             CategoryHelper.getTranslatedName(context, item),
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
               fontSize: 16.sp,
               fontWeight: FontWeight.w500,
               color: CupertinoTheme.of(context).textTheme.textStyle.color,

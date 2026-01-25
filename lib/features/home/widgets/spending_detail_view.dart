@@ -23,7 +23,8 @@ class SpendingDetailView extends StatefulWidget {
   State<SpendingDetailView> createState() => _SpendingDetailViewState();
 }
 
-class _SpendingDetailViewState extends State<SpendingDetailView> with WidgetsBindingObserver {
+class _SpendingDetailViewState extends State<SpendingDetailView>
+    with WidgetsBindingObserver {
   List<SpendingModel> _chartData = [];
 
   List<TransactionModel> _allTransactions = [];
@@ -36,15 +37,15 @@ class _SpendingDetailViewState extends State<SpendingDetailView> with WidgetsBin
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this); 
+    WidgetsBinding.instance.addObserver(this);
     _loadData();
     widget.viewModel.initializeImage();
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this); 
-    widget.viewModel.lockApp(); 
+    WidgetsBinding.instance.removeObserver(this);
+    widget.viewModel.lockApp();
     super.dispose();
   }
 
@@ -97,7 +98,10 @@ class _SpendingDetailViewState extends State<SpendingDetailView> with WidgetsBin
           ),
           middle: Text(
             l10n.spending_this_month,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18.sp),
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+              fontWeight: FontWeight.w600,
+              fontSize: 18.sp,
+            ),
           ),
         ),
         child: SafeArea(
@@ -129,14 +133,17 @@ class _SpendingDetailViewState extends State<SpendingDetailView> with WidgetsBin
                           children: [
                             Text(
                               l10n.total_spent,
-                              style: TextStyle(
-                                color: CupertinoTheme.of(context)
-                                    .textTheme
-                                    .textStyle
-                                    .color!
-                                    .withValues(alpha: .6),
-                                fontSize: 14.sp,
-                              ),
+                              style: CupertinoTheme.of(context)
+                                  .textTheme
+                                  .textStyle
+                                  .copyWith(
+                                    color: CupertinoTheme.of(context)
+                                        .textTheme
+                                        .textStyle
+                                        .color!
+                                        .withValues(alpha: .6),
+                                    fontSize: 14.sp,
+                                  ),
                             ),
                             Container(
                               padding: EdgeInsets.symmetric(
@@ -167,13 +174,16 @@ class _SpendingDetailViewState extends State<SpendingDetailView> with WidgetsBin
                                   SizedBox(width: 4.w),
                                   Text(
                                     "${_percentChange > 0 ? '+' : ''}${_percentChange.toStringAsFixed(1)}% ${l10n.vs_last_month}",
-                                    style: TextStyle(
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: _percentChange > 0
-                                          ? AppColors.errorColor
-                                          : AppColors.primaryColor,
-                                    ),
+                                    style: CupertinoTheme.of(context)
+                                        .textTheme
+                                        .textStyle
+                                        .copyWith(
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.w600,
+                                          color: _percentChange > 0
+                                              ? AppColors.errorColor
+                                              : AppColors.primaryColor,
+                                        ),
                                   ),
                                 ],
                               ),
@@ -183,14 +193,15 @@ class _SpendingDetailViewState extends State<SpendingDetailView> with WidgetsBin
 
                         Text(
                           "${widget.viewModel.currencySymbol} ${widget.viewModel.formatCurrency(totalSpent)}",
-                          style: TextStyle(
-                            fontSize: 28.sp,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 1,
-                            color: CupertinoTheme.of(
-                              context,
-                            ).textTheme.textStyle.color,
-                          ),
+                          style: CupertinoTheme.of(context).textTheme.textStyle
+                              .copyWith(
+                                fontSize: 28.sp,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1,
+                                color: CupertinoTheme.of(
+                                  context,
+                                ).textTheme.textStyle.color,
+                              ),
                         ),
 
                         if (_isLoading)
@@ -250,24 +261,30 @@ class _SpendingDetailViewState extends State<SpendingDetailView> with WidgetsBin
                                   children: [
                                     Text(
                                       l10n.categories,
-                                      style: TextStyle(
-                                        color: CupertinoTheme.of(context)
-                                            .textTheme
-                                            .textStyle
-                                            .color!
-                                            .withValues(alpha: .6),
-                                        fontSize: 12.sp,
-                                      ),
+                                      style: CupertinoTheme.of(context)
+                                          .textTheme
+                                          .textStyle
+                                          .copyWith(
+                                            color: CupertinoTheme.of(context)
+                                                .textTheme
+                                                .textStyle
+                                                .color!
+                                                .withValues(alpha: .6),
+                                            fontSize: 12.sp,
+                                          ),
                                     ),
                                     Text(
                                       "${_chartData.length}",
-                                      style: TextStyle(
-                                        fontSize: 24.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: CupertinoTheme.of(
-                                          context,
-                                        ).textTheme.textStyle.color,
-                                      ),
+                                      style: CupertinoTheme.of(context)
+                                          .textTheme
+                                          .textStyle
+                                          .copyWith(
+                                            fontSize: 24.sp,
+                                            fontWeight: FontWeight.bold,
+                                            color: CupertinoTheme.of(
+                                              context,
+                                            ).textTheme.textStyle.color,
+                                          ),
                                     ),
                                   ],
                                 ),
@@ -304,18 +321,24 @@ class _SpendingDetailViewState extends State<SpendingDetailView> with WidgetsBin
                                             ? l10n.other
                                             : item.category),
 
-                                  style: TextStyle(
-                                    fontSize: 12.sp,
-                                    color: CupertinoColors.systemGrey,
-                                  ),
+                                  style: CupertinoTheme.of(context)
+                                      .textTheme
+                                      .textStyle
+                                      .copyWith(
+                                        fontSize: 12.sp,
+                                        color: CupertinoColors.systemGrey,
+                                      ),
                                 ),
                                 Text(
                                   "(${(item.amount / totalSpent * 100).toStringAsFixed(0)}%)",
-                                  style: TextStyle(
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: CupertinoColors.systemGrey,
-                                  ),
+                                  style: CupertinoTheme.of(context)
+                                      .textTheme
+                                      .textStyle
+                                      .copyWith(
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w600,
+                                        color: CupertinoColors.systemGrey,
+                                      ),
                                 ),
                               ],
                             );
@@ -380,13 +403,16 @@ class _SpendingDetailViewState extends State<SpendingDetailView> with WidgetsBin
                 ),
                 child: Text(
                   categoryName,
-                  style: TextStyle(
-                    color: isSelected
-                        ? Colors.white
-                        : CupertinoTheme.of(context).textTheme.textStyle.color,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14.sp,
-                  ),
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(
+                        color: isSelected
+                            ? Colors.white
+                            : CupertinoTheme.of(
+                                context,
+                              ).textTheme.textStyle.color,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14.sp,
+                      ),
                 ),
               ),
             ),
@@ -419,7 +445,10 @@ class _SpendingDetailViewState extends State<SpendingDetailView> with WidgetsBin
         padding: EdgeInsets.only(top: 20.h),
         child: Text(
           l10n.no_transactions,
-          style: TextStyle(color: CupertinoColors.systemGrey, fontSize: 14.sp),
+          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+            color: CupertinoColors.systemGrey,
+            fontSize: 14.sp,
+          ),
         ),
       );
     }
@@ -444,20 +473,22 @@ class _SpendingDetailViewState extends State<SpendingDetailView> with WidgetsBin
                 children: [
                   Text(
                     dateKey,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.sp,
-                      color: CupertinoTheme.of(
-                        context,
-                      ).textTheme.textStyle.color,
-                    ),
+                    style: CupertinoTheme.of(context).textTheme.textStyle
+                        .copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.sp,
+                          color: CupertinoTheme.of(
+                            context,
+                          ).textTheme.textStyle.color,
+                        ),
                   ),
                   Text(
                     "${widget.viewModel.currencySymbol} ${widget.viewModel.formatCurrency(dailyTotal.abs())}",
-                    style: TextStyle(
-                      color: CupertinoColors.systemGrey,
-                      fontSize: 14.sp,
-                    ),
+                    style: CupertinoTheme.of(context).textTheme.textStyle
+                        .copyWith(
+                          color: CupertinoColors.systemGrey,
+                          fontSize: 14.sp,
+                        ),
                   ),
                 ],
               ),
@@ -539,28 +570,30 @@ class _SpendingDetailViewState extends State<SpendingDetailView> with WidgetsBin
                 children: [
                   Text(
                     item.title,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16.sp,
-                      color: CupertinoTheme.of(
-                        context,
-                      ).textTheme.textStyle.color,
-                    ),
+                    style: CupertinoTheme.of(context).textTheme.textStyle
+                        .copyWith(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16.sp,
+                          color: CupertinoTheme.of(
+                            context,
+                          ).textTheme.textStyle.color,
+                        ),
                   ),
                   SizedBox(height: 4.h),
                   Text(
                     "${CategoryHelper.getTranslatedName(context, item.category)} • ${widget.viewModel.formatHours(item.date)}",
-                    style: TextStyle(
-                      color: CupertinoColors.systemGrey,
-                      fontSize: 13.sp,
-                    ),
+                    style: CupertinoTheme.of(context).textTheme.textStyle
+                        .copyWith(
+                          color: CupertinoColors.systemGrey,
+                          fontSize: 13.sp,
+                        ),
                   ),
                 ],
               ),
             ),
             Text(
               "${viewModel.currencySymbol} ${viewModel.formatCurrency(item.amount)}",
-              style: TextStyle(
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                 color: amountColor,
                 fontSize: 16.sp,
                 fontWeight: FontWeight.bold,
