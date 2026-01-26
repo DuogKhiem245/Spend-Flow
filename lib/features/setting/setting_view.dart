@@ -1,3 +1,4 @@
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,7 +32,7 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     _loadLastSyncTime();
-    SettingViewModel().initLocationState();
+    SettingViewModel().initLocationState(context);
     NotificationViewModel().init(context);
     WidgetsBinding.instance.addObserver(this);
   }
@@ -45,7 +46,7 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      SettingViewModel().initLocationState();
+      SettingViewModel().initLocationState(context);
       NotificationViewModel().init(context);
     }
   }
@@ -144,42 +145,46 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
                           lastSyncText: _lastSyncText,
                           onSyncSuccess: _loadLastSyncTime,
                         ),
-                        SizedBox(height: 40.h),
+                        SizedBox(height: 30.h),
 
                         isLoggedIn
-                            ? CupertinoButton(
-                                onPressed: () => _showLogoutDialog(context),
-                                borderRadius: BorderRadius.circular(30.r),
-                                padding: EdgeInsets.symmetric(vertical: 12.h),
-                                minimumSize: Size(double.infinity, 60.h),
-                                color: CupertinoTheme.of(
-                                  context,
-                                ).barBackgroundColor,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      CupertinoIcons.square_arrow_right,
-                                      color: CupertinoColors.systemRed,
-                                      size: 20.r,
+                            ? Column(
+                              children: [
+                                CupertinoButton(
+                                    onPressed: () => _showLogoutDialog(context),
+                                    borderRadius: BorderRadius.circular(30.r),
+                                    padding: EdgeInsets.symmetric(vertical: 12.h),
+                                    minimumSize: Size(double.infinity, 60.h),
+                                    color: CupertinoTheme.of(
+                                      context,
+                                    ).barBackgroundColor,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          CupertinoIcons.square_arrow_right,
+                                          color: CupertinoColors.systemRed,
+                                          size: 20.r,
+                                        ),
+                                        SizedBox(width: 8.w),
+                                        Text(
+                                          l10n.logout,
+                                          style: CupertinoTheme.of(context)
+                                              .textTheme
+                                              .textStyle
+                                              .copyWith(
+                                                color: CupertinoColors.systemRed,
+                                                fontSize: 18.sp,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                        ),
+                                      ],
                                     ),
-                                    SizedBox(width: 8.w),
-                                    Text(
-                                      l10n.logout,
-                                      style: CupertinoTheme.of(context)
-                                          .textTheme
-                                          .textStyle
-                                          .copyWith(
-                                            color: CupertinoColors.systemRed,
-                                            fontSize: 18.sp,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : const SizedBox.shrink(),
-                        SizedBox(height: 80.h),
+                                  ),
+                                  SizedBox(height: 120.h),
+                              ],
+                            )
+                            : SizedBox(height: 80.h),
                       ],
                     ),
                   ),
@@ -195,27 +200,25 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
   void _showLogoutDialog(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    showCupertinoDialog(
+    AdaptiveAlertDialog.show(
       context: context,
-      builder: (ctx) => CupertinoAlertDialog(
-        title: Text(l10n.logout),
-        content: Text(l10n.are_you_sure_logout),
-        actions: [
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            child: Text(l10n.cancel),
-            onPressed: () => Navigator.pop(ctx),
-          ),
-          CupertinoDialogAction(
-            isDestructiveAction: true,
-            child: Text(l10n.logout),
-            onPressed: () async {
-              Navigator.pop(ctx);
-              await authService.signOut();
-            },
-          ),
-        ],
-      ),
+      title: l10n.logout,
+      message: l10n.are_you_sure_logout,
+      icon: 'rectangle.portrait.and.arrow.right.fill',
+      actions: [
+        AlertAction(
+          title: l10n.cancel,
+          style: AlertActionStyle.cancel,
+          onPressed: () => {},
+        ),
+        AlertAction(
+          title: l10n.logout,
+          style: AlertActionStyle.destructive,
+          onPressed: () async {
+            await authService.signOut();
+          },
+        ),
+      ],
     );
   }
 }

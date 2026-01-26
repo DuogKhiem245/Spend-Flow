@@ -274,6 +274,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       .copyWith(
                                         fontSize: 16.sp,
                                         fontWeight: FontWeight.w600,
+                                        color: CupertinoColors.white,
                                       ),
                                 ),
                         ),

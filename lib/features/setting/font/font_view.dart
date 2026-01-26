@@ -61,14 +61,12 @@ class _FontViewState extends State<FontView> {
           ),
         ),
       ),
-      child: SafeArea(
-        child: ListView.builder(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
-          itemCount: _allFonts.length,
-          itemBuilder: (context, index) {
-            return _buildFontItem(_allFonts[index], l10n);
-          },
-        ),
+      child: ListView.builder(
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+        itemCount: _allFonts.length,
+        itemBuilder: (context, index) {
+          return _buildFontItem(_allFonts[index], l10n);
+        },
       ),
     );
   }

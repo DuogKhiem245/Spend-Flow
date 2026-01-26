@@ -1,3 +1,4 @@
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
@@ -64,25 +65,26 @@ class NotificationViewModel extends ChangeNotifier {
 
   void _showOpenNotificationSettingsDialog(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    showCupertinoDialog(
+
+    AdaptiveAlertDialog.show(
       context: context,
-      builder: (context) => CupertinoAlertDialog(
-        title: Text(l10n.notification_permission_denied),
-        content: Text(l10n.notification_permission_denied_description),
-        actions: [
-          CupertinoDialogAction(
-            child: Text(l10n.cancel),
-            onPressed: () => Navigator.pop(context),
-          ),
-          CupertinoDialogAction(
-            child: Text(l10n.settings),
-            onPressed: () async {
-              Navigator.pop(context);
-              await openAppSettings();
-            },
-          ),
-        ],
-      ),
+      title: l10n.notification_permission_denied,
+      message: l10n.notification_permission_denied_description,
+      icon: 'bell.badge.fill',
+      actions: [
+        AlertAction(
+          title: l10n.cancel,
+          style: AlertActionStyle.cancel,
+          onPressed: () => Navigator.pop(context),
+        ),
+        AlertAction(
+          title: l10n.settings,
+          style: AlertActionStyle.primary,
+          onPressed: () async {
+            await openAppSettings();
+          },
+        ),
+      ],
     );
   }
 }

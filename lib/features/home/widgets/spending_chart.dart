@@ -159,13 +159,16 @@ class _SpendingChartState extends State<SpendingChart>
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                l10n.spending_this_month,
-                style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w700,
+              Expanded(
+                child: Text(
+                  l10n.spending_this_month,
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(fontSize: 20.sp, fontWeight: FontWeight.w700),
+                  softWrap: true,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               GestureDetector(
@@ -217,7 +220,7 @@ class _SpendingChartState extends State<SpendingChart>
               ),
             ],
           ),
-          SizedBox(height: 35.h),
+          SizedBox(height: 15.h),
           SizedBox(
             height: 200.h,
             child: Stack(

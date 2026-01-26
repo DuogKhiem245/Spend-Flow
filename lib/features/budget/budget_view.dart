@@ -1,7 +1,5 @@
 import 'dart:io';
-
-import 'package:cupertino_native/style/sf_symbol.dart';
-import 'package:cupertino_native/components/button.dart';
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -195,44 +193,36 @@ class _BudgetPageState extends State<BudgetPage>
                       ),
 
                       Positioned(
-                        right: 20.w,
-                        bottom: _isPremium ? 75.h : 105.h,
-                        child: Platform.isIOS
-                            ? _buildIOSAddButton()
-                            : _buildAndroidAddButton(),
+                        right: 0.w,
+                        bottom: _isPremium
+                            ? Platform.isIOS
+                                  ? 50.h
+                                  : 90.h
+                            : Platform.isIOS
+                            ? 90.h
+                            : 108.h,
+                        child: CupertinoButton(
+                          onPressed: _navigateToAddBudget,
+                          child: Container(
+                            width: 60.w,
+                            height: 60.w,
+                            decoration: BoxDecoration(
+                              color: CupertinoTheme.of(context).primaryColor,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              CupertinoIcons.add,
+                              color: CupertinoColors.white,
+                              size: 30.sp,
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
           ),
         );
       },
-    );
-  }
-
-  Widget _buildIOSAddButton() {
-    return CNButton.icon(
-      icon: CNSymbol(
-        'plus.circle.fill',
-        size: 24.sp,
-        color: CupertinoTheme.of(context).textTheme.textStyle.color,
-      ),
-      size: 60.w,
-      onPressed: _navigateToAddBudget,
-    );
-  }
-
-  Widget _buildAndroidAddButton() {
-    return GestureDetector(
-      onTap: _navigateToAddBudget,
-      child: Container(
-        width: 60.w,
-        height: 60.w,
-        decoration: BoxDecoration(
-          color: CupertinoTheme.of(context).primaryColor,
-          shape: BoxShape.circle,
-        ),
-        child: Icon(CupertinoIcons.add, color: Colors.white, size: 30.sp),
-      ),
     );
   }
 
@@ -365,7 +355,7 @@ class _BudgetPageState extends State<BudgetPage>
               CustomSlidableAction(
                 onPressed: (context) => {
                   HapticFeedback.heavyImpact(),
-                  _onDeleteBudget(budget),
+                  _onDeleteBudget(budget, context),
                 },
                 backgroundColor: Colors.transparent,
                 foregroundColor: Colors.transparent,
@@ -515,30 +505,29 @@ class _BudgetPageState extends State<BudgetPage>
     _viewModel.refreshData();
   }
 
-  void _onDeleteBudget(BudgetModel budget) async {
+  void _onDeleteBudget(BudgetModel budget, BuildContext context) async {
     final l10n = AppLocalizations.of(context)!;
 
-    showCupertinoDialog(
+    AdaptiveAlertDialog.show(
       context: context,
-      builder: (ctx) => CupertinoAlertDialog(
-        title: Text(l10n.delete_budget),
-        content: Text(l10n.are_you_sure_delete_budget(budget.category.name)),
-        actions: [
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            child: Text(l10n.cancel),
-            onPressed: () => Navigator.pop(ctx),
-          ),
-          CupertinoDialogAction(
-            isDestructiveAction: true,
-            child: Text(l10n.delete),
-            onPressed: () async {
-              Navigator.pop(ctx);
-              await _viewModel.deleteBudget(budget);
-            },
-          ),
-        ],
-      ),
+      title: l10n.delete_budget,
+      message: l10n.are_you_sure_delete_budget(budget.category.name),
+      icon: 'trash.fill',
+      actions: [
+        AlertAction(
+          title: l10n.cancel,
+          style: AlertActionStyle.cancel,
+          onPressed: () => {},
+        ),
+        AlertAction(
+          title: l10n.delete,
+          style: AlertActionStyle.destructive,
+          onPressed: () async {
+            Navigator.pop(context);
+            await _viewModel.deleteBudget(budget);
+          },
+        ),
+      ],
     );
   }
 

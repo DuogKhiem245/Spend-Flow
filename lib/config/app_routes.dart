@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:spend_flow/core/navigation/root_check.dart';
-import 'package:spend_flow/core/widgets/nav.dart';
 import 'package:spend_flow/features/auth/view/login_view.dart';
+import 'package:spend_flow/features/home/home_view.dart';
 import 'package:spend_flow/features/onboarding/view/onboarding_view.dart';
 import 'package:spend_flow/features/wallet/wallet_view.dart';
 
@@ -23,7 +23,7 @@ class AppRoutes {
       ),
       onboarding: (context) => const OnboardingPage(),
       wallet: (context) => const WalletView(firstWallet: true),
-      home: (context) => const BottomNavbar(),
+      home: (context) => const HomePage(),
       login: (context) => const LoginPage(),
     };
   }

@@ -282,7 +282,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get check_your_mail => 'Check your mail';
 
   @override
-  String get we_have_sent_mail => 'Chúng tôi đã gửi một email đến:';
+  String get we_have_sent_mail => 'We have sent an email to:';
 
   @override
   String get please_check_your_mail_to_verify_account =>
@@ -1052,11 +1052,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'An error occurred during the transaction. Please try again.';
 
   @override
-  String get purchase_canceled => 'Giao dịch đã bị hủy';
+  String get purchase_canceled => 'Purchase Canceled';
 
   @override
   String get purchase_canceled_description =>
-      'Giao dịch của bạn đã bị hủy. Vui lòng thử lại nếu bạn muốn nâng cấp lên Premium.';
+      'The transaction was canceled. No changes were made to your account.';
 
   @override
   String get select_language => 'Select Language';
@@ -1317,6 +1317,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get watch_ad_continue => 'Watch Ad to Continue';
 
   @override
+  String get permission_required_voice_input => 'Microphone access denied';
+
+  @override
+  String get permission_required_voice_input_description =>
+      'Please enable microphone access in settings to use voice input.';
+
+  @override
+  String get permission_required_location => 'Location access denied';
+
+  @override
+  String get permission_required_location_description =>
+      'Please enable location access in settings to use location features.';
+
+  @override
   String get ai_powered => 'AI Powered';
 
   @override
@@ -1337,4 +1351,23 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get fail_to_save_transactions =>
       'Failed to save transactions. Please try again.';
+
+  @override
+  String get tap_to_check_in => 'Tap to check in';
+
+  @override
+  String get keep_your_streak => 'Keep your streak!';
+
+  @override
+  String keep_your_streak_day(Object streak) {
+    return 'Keep your $streak-day streak!';
+  }
+
+  @override
+  String get streak => 'Streak';
+
+  @override
+  String streak_days(Object days) {
+    return '$days days';
+  }
 }

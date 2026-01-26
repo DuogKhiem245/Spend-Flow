@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -383,7 +384,7 @@ class _ReportPageState extends State<ReportPage>
               CustomSlidableAction(
                 onPressed: (context) => {
                   HapticFeedback.heavyImpact(),
-                  _onDeleteTransaction(tx),
+                  _onDeleteTransaction(tx, context),
                 },
                 backgroundColor: Colors.transparent,
                 foregroundColor: Colors.transparent,
@@ -526,28 +527,29 @@ class _ReportPageState extends State<ReportPage>
     );
   }
 
-  void _onDeleteTransaction(TransactionModel tx) {
+  void _onDeleteTransaction(TransactionModel tx, BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    showCupertinoDialog(
+
+    AdaptiveAlertDialog.show(
       context: context,
-      builder: (ctx) => CupertinoAlertDialog(
-        title: Text(l10n.delete_transaction),
-        content: Text(l10n.delete_transaction_confirmation),
-        actions: [
-          CupertinoDialogAction(
-            child: Text(l10n.cancel),
-            onPressed: () => Navigator.pop(ctx),
-          ),
-          CupertinoDialogAction(
-            isDestructiveAction: true,
-            onPressed: () async {
-              Navigator.pop(ctx);
-              await _viewModel.deleteTransaction(tx.id);
-            },
-            child: Text(l10n.delete),
-          ),
-        ],
-      ),
+      title: l10n.delete_transaction,
+      message: l10n.delete_transaction_confirmation,
+      icon: 'arrow.up.bin.fill',
+      actions: [
+        AlertAction(
+          title: l10n.cancel,
+          style: AlertActionStyle.cancel,
+          onPressed: () => Navigator.pop(context),
+        ),
+        AlertAction(
+          title: l10n.delete,
+          style: AlertActionStyle.destructive,
+          onPressed: () async {
+            Navigator.pop(context);
+            await _viewModel.deleteTransaction(tx.id);
+          },
+        ),
+      ],
     );
   }
 

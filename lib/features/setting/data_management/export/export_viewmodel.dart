@@ -1,11 +1,13 @@
 import 'dart:io';
 import 'dart:convert';
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:csv/csv.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:intl/intl.dart';
+import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 
 class ExportViewModel extends ChangeNotifier {
@@ -278,18 +280,21 @@ class ExportViewModel extends ChangeNotifier {
   void _showError(BuildContext context, String message) {
     if (!context.mounted) return;
 
-    showCupertinoDialog(
+    final l10n = AppLocalizations.of(context)!;
+
+    AdaptiveAlertDialog.show(
       context: context,
-      builder: (ctx) => CupertinoAlertDialog(
-        title: const Text("Lỗi"),
-        content: Text(message),
-        actions: [
-          CupertinoDialogAction(
-            child: const Text("OK"),
-            onPressed: () => Navigator.pop(ctx),
-          ),
-        ],
-      ),
+      title: l10n.error, 
+      message: message,
+      icon:
+          'exclamationmark.circle.fill', 
+      actions: [
+        AlertAction(
+          title: "OK",
+          style: AlertActionStyle.primary,
+          onPressed: () {},
+        ),
+      ],
     );
   }
 }

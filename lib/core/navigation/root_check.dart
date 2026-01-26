@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:spend_flow/core/widgets/nav.dart';
+import 'package:spend_flow/core/widgets/bottom_bar.dart';
 import 'package:spend_flow/features/onboarding/view/onboarding_view.dart';
 import 'package:spend_flow/features/wallet/wallet_view.dart';
 

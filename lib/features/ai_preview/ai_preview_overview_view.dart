@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -72,18 +73,19 @@ class _AIPreviewOverviewViewState extends State<AIPreviewOverviewView> {
 
   void _showErrorDialog(BuildContext context, String message) {
     final l10n = AppLocalizations.of(context)!;
-    showCupertinoDialog(
+
+    AdaptiveAlertDialog.show(
       context: context,
-      builder: (context) => CupertinoAlertDialog(
-        title: Text(l10n.error),
-        content: Text(message),
-        actions: [
-          CupertinoDialogAction(
-            child: Text(l10n.close),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ],
-      ),
+      title: l10n.error,
+      message: message,
+      icon: 'exclamationmark.triangle.fill',
+      actions: [
+        AlertAction(
+          title: l10n.close,
+          style: AlertActionStyle.primary,
+          onPressed: () => {},
+        ),
+      ],
     );
   }
 

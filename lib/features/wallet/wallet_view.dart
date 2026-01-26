@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/core/widgets/check_valid/check_valid_widget.dart';
-import 'package:spend_flow/core/widgets/nav.dart';
+import 'package:spend_flow/core/widgets/bottom_bar.dart';
 import 'package:spend_flow/features/auth/view/login_view.dart';
 import 'package:spend_flow/features/setting/currency/currency_view.dart';
 import 'package:spend_flow/features/setting/setting_viewmodel.dart';

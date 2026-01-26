@@ -1,3 +1,4 @@
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:local_auth/local_auth.dart';
@@ -39,10 +40,39 @@ class SettingViewModel extends ChangeNotifier {
     await _localStorage.saveCurrencyCode(code);
   }
 
-  Future<void> initLocationState() async {
-    final status = await _locationService.requestPermission();
-    _localStorage.saveLocationStatus(status);
-    _isLocationEnabled = status;
+  Future<void> initLocationState(BuildContext context) async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    bool isServiceEnabled = await Geolocator.isLocationServiceEnabled();
+
+    if (permission == LocationPermission.always ||
+        permission == LocationPermission.whileInUse) {
+      _isLocationEnabled = isServiceEnabled;
+      await _localStorage.saveLocationStatus(true);
+    } else {
+      _isLocationEnabled = false;
+    }
+
+    notifyListeners();
+
+    if (permission == LocationPermission.deniedForever) {
+      final status = await _localStorage.getLocationStatus();
+      if (status == true && context.mounted) {
+        _showOpenSettingsDialog(context);
+      }
+    }
+  }
+
+  Future<void> loadLocationState(BuildContext context) async {
+    LocationPermission permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.always ||
+        permission == LocationPermission.whileInUse) {
+      _isLocationEnabled = true;
+      await _localStorage.saveLocationStatus(true);
+    } else {
+      _isLocationEnabled = false;
+      await _localStorage.saveLocationStatus(false);
+    }
     notifyListeners();
   }
 
@@ -52,30 +82,22 @@ class SettingViewModel extends ChangeNotifier {
     if (permission == LocationPermission.deniedForever && value == true) {
       if (!context.mounted) return;
       _showOpenSettingsDialog(context);
+      _isLocationEnabled = false;
       notifyListeners();
       return;
     }
 
     if (value) {
       final granted = await _locationService.requestPermission();
-      if (granted) {
-        _isLocationEnabled = true;
-        await _localStorage.saveLocationStatus(true);
-      } else {
-        _isLocationEnabled = false;
-        await _localStorage.saveLocationStatus(false);
+      _isLocationEnabled = granted;
+      await _localStorage.saveLocationStatus(granted);
+
+      if (!granted && context.mounted) {
+        _showOpenSettingsDialog(context);
       }
     } else {
       _isLocationEnabled = false;
       await _localStorage.saveLocationStatus(false);
-    }
-
-    notifyListeners();
-  }
-
-  Future<void> loadLocationState() async {
-    if (await _localStorage.getLocationStatus() == null) {
-      await _locationService.requestPermission();
     }
     notifyListeners();
   }
@@ -125,25 +147,26 @@ class SettingViewModel extends ChangeNotifier {
 
   void _showOpenSettingsDialog(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    showCupertinoDialog(
+
+    AdaptiveAlertDialog.show(
       context: context,
-      builder: (context) => CupertinoAlertDialog(
-        title: Text(l10n.location_permission_denied),
-        content: Text(l10n.settings),
-        actions: [
-          CupertinoDialogAction(
-            child: Text(l10n.cancel),
-            onPressed: () => Navigator.pop(context),
-          ),
-          CupertinoDialogAction(
-            child: Text(l10n.settings),
-            onPressed: () {
-              Navigator.pop(context);
-              _locationService.openAppSettings();
-            },
-          ),
-        ],
-      ),
+      title: l10n.permission_required_location,
+      message: l10n.permission_required_location_description,
+      icon: 'location.circle.fill',
+      actions: [
+        AlertAction(
+          title: l10n.cancel,
+          style: AlertActionStyle.cancel,
+          onPressed: () => Navigator.pop(context),
+        ),
+        AlertAction(
+          title: l10n.settings,
+          style: AlertActionStyle.primary,
+          onPressed: () {
+            _locationService.openAppSettings();
+          },
+        ),
+      ],
     );
   }
 }

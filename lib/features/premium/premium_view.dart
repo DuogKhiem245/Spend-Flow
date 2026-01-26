@@ -1,3 +1,4 @@
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,23 +19,24 @@ class PremiumView extends StatelessWidget {
 
     if (viewModel.errorMessage != null) {
       final msg = viewModel.errorMessage!;
+
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        showCupertinoDialog(
+        AdaptiveAlertDialog.show(
           context: context,
-          builder: (_) => CupertinoAlertDialog(
-            title: Text(l10n.error),
-            content: Text(msg),
-            actions: [
-              CupertinoDialogAction(
-                isDefaultAction: true,
-                child: Text(l10n.ok),
-                onPressed: () => {
-                  Navigator.of(context).pop(),
-                  viewModel.clearError(),
-                },
-              ),
-            ],
-          ),
+          title: l10n.error,
+          message: msg,
+          icon:
+              'exclamationmark.octagon.fill', 
+          actions: [
+            AlertAction(
+              title: l10n.ok,
+              style: AlertActionStyle.primary,
+              onPressed: () {
+                Navigator.of(context).pop();
+                viewModel.clearError();
+              },
+            ),
+          ],
         );
       });
     }

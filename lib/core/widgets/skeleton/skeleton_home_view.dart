@@ -123,7 +123,7 @@ class SkeletonHomeView extends StatelessWidget {
               highlightColor: highlightColor,
               child: Container(
                 width: double.infinity,
-                height: 300.h, 
+                height: 300.h,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20.r),
@@ -191,6 +191,7 @@ class SkeletonHomeView extends StatelessWidget {
                 ),
               ),
             ),
+            SizedBox(height: 80.h),
           ],
         ),
       ),

@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/ai_service.dart';
@@ -53,7 +55,59 @@ class VoiceInputViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> startListening(String localeId) async {
+  Future<bool> _checkPermission(BuildContext context) async {
+    final status = await Permission.microphone.status;
+    if (status.isGranted) {
+      return true;
+    }
+
+    if (status.isPermanentlyDenied) {
+      if (context.mounted) {
+        _showPermissionDialog(context);
+      }
+      return false;
+    }
+
+    final result = await Permission.microphone.request();
+    if (result.isGranted) {
+      return true;
+    } else {
+      if (context.mounted) {
+        _showPermissionDialog(context);
+      }
+      return false;
+    }
+  }
+
+  void _showPermissionDialog(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    AdaptiveAlertDialog.show(
+      context: context,
+      title: l10n.permission_required_voice_input,
+      message: l10n.permission_required_voice_input_description,
+      icon: 'mic.fill',
+      actions: [
+        AlertAction(
+          title: l10n.cancel,
+          style: AlertActionStyle.cancel,
+          onPressed: () => {},
+        ),
+        AlertAction(
+          title: l10n.settings,
+          style: AlertActionStyle.primary,
+          onPressed: () {
+            openAppSettings();
+          },
+        ),
+      ],
+    );
+  }
+
+  Future<void> startListening(BuildContext context, String localeId) async {
+    final hasPermission = await _checkPermission(context);
+    if (!hasPermission) return;
+
     if (!_isSpeechEnabled) {
       await initSpeech();
     }
@@ -79,20 +133,20 @@ class VoiceInputViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> stopListening() async {
-    _isListening = false;
-    _stopWaveAnimation();
-    await _speechToText.stop();
-    notifyListeners();
-  }
-
   void toggleListening(BuildContext context, String localeId) {
     if (_isListening) {
       stopListening();
       processVoiceInput(context);
     } else {
-      startListening(localeId);
+      startListening(context, localeId);
     }
+  }
+
+  Future<void> stopListening() async {
+    _isListening = false;
+    _stopWaveAnimation();
+    await _speechToText.stop();
+    notifyListeners();
   }
 
   Future<void> processVoiceInput(BuildContext context) async {
@@ -176,22 +230,23 @@ class VoiceInputViewModel extends ChangeNotifier {
     }
   }
 
-  void _showErrorDialog(
-    BuildContext context,
-    AppLocalizations l10n,
-  ) {
-    showCupertinoDialog(
+  void _showErrorDialog(BuildContext context, AppLocalizations l10n) {
+    AdaptiveAlertDialog.show(
       context: context,
-      builder: (ctx) => CupertinoAlertDialog(
-        title: Text(l10n.error),
-        content: Text(l10n.voice_input_error),
-        actions: [
-          CupertinoDialogAction(
-            child: Text(l10n.close),
-            onPressed: () => Navigator.pop(ctx),
-          ),
-        ],
-      ),
+      title: l10n.error,
+      message: l10n.voice_input_error,
+      icon: 'mic.slash.fill',
+      actions: [
+        AlertAction(
+          title: l10n.close,
+          style: AlertActionStyle.primary,
+          onPressed: () {
+            if (context.mounted) {
+              Navigator.pop(context);
+            }
+          },
+        ),
+      ],
     );
   }
 

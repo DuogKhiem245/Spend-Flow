@@ -58,6 +58,7 @@ dependencies:
   dotted_border: ^3.1.0
   google_mobile_ads: ^7.0.0
   google_fonts: ^8.0.0
+  adaptive_platform_ui: ^0.1.100
   # google_maps_flutter: ^2.14.0
   # geolocator: ^14.0.2
   

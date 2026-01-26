@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:csv/csv.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/cupertino.dart';
@@ -223,20 +224,19 @@ class ImportViewModel extends ChangeNotifier {
 
         if (context.mounted) {
           final l10n = AppLocalizations.of(context)!;
-          showCupertinoModalPopup(
+
+          AdaptiveAlertDialog.show(
             context: context,
-            builder: (context) => CupertinoAlertDialog(
-              title: Text(l10n.import_success),
-              content: Text(
-                l10n.import_success_description(_recentImportCount!),
+            title: l10n.import_success,
+            message: l10n.import_success_description(_recentImportCount!),
+            icon: 'arrow.down.doc.fill',
+            actions: [
+              AlertAction(
+                title: l10n.ok,
+                style: AlertActionStyle.primary,
+                onPressed: () {},
               ),
-              actions: [
-                CupertinoDialogAction(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text(l10n.ok),
-                ),
-              ],
-            ),
+            ],
           );
         }
       } else {

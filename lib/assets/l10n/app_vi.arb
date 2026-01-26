@@ -433,6 +433,10 @@
   "scan_receipt_error": "Lỗi quét hóa đơn. Vui lòng thử lại.",
   "requires_premium": "Tính năng này yêu cầu xem quảng cáo để sử dụng hoặc nâng cấp lên Premium.",
   "watch_ad_continue": "Xem quảng cáo để tiếp tục",
+  "permission_required_voice_input": "Quyền truy cập micro bị từ chối",
+  "permission_required_voice_input_description": "Vui lòng bật quyền truy cập micro trong cài đặt để sử dụng nhập giọng nói.",
+  "permission_required_location": "Quyền truy cập vị trí bị từ chối",
+  "permission_required_location_description": "Vui lòng bật quyền truy cập vị trí trong cài đặt để sử dụng các tính năng vị trí.",
 
   "ai_powered": "Hỗ trợ bởi AI",
   "entries_pending": "Mục đang chờ xử lý",
@@ -440,5 +444,11 @@
   "preview_results": "Xem trước kết quả",
   "clear_all": "Bỏ chọn tất cả",
   "select_all": "Chọn tất cả",
-  "fail_to_save_transactions": "Lưu giao dịch thất bại. Vui lòng thử lại."
+  "fail_to_save_transactions": "Lưu giao dịch thất bại. Vui lòng thử lại.",
+
+  "tap_to_check_in": "Chạm để kiểm tra",
+  "keep_your_streak": "Duy trì chuỗi của bạn!",
+  "keep_your_streak_day": "Duy trì chuỗi {streak} ngày của bạn!",
+  "streak": "Chuỗi",
+  "streak_days": "{days} ngày"
 }

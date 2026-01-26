@@ -2552,6 +2552,30 @@ abstract class AppLocalizations {
   /// **'Xem quảng cáo để tiếp tục'**
   String get watch_ad_continue;
 
+  /// No description provided for @permission_required_voice_input.
+  ///
+  /// In vi, this message translates to:
+  /// **'Quyền truy cập micro bị từ chối'**
+  String get permission_required_voice_input;
+
+  /// No description provided for @permission_required_voice_input_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng bật quyền truy cập micro trong cài đặt để sử dụng nhập giọng nói.'**
+  String get permission_required_voice_input_description;
+
+  /// No description provided for @permission_required_location.
+  ///
+  /// In vi, this message translates to:
+  /// **'Quyền truy cập vị trí bị từ chối'**
+  String get permission_required_location;
+
+  /// No description provided for @permission_required_location_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng bật quyền truy cập vị trí trong cài đặt để sử dụng các tính năng vị trí.'**
+  String get permission_required_location_description;
+
   /// No description provided for @ai_powered.
   ///
   /// In vi, this message translates to:
@@ -2593,6 +2617,36 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Lưu giao dịch thất bại. Vui lòng thử lại.'**
   String get fail_to_save_transactions;
+
+  /// No description provided for @tap_to_check_in.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chạm để kiểm tra'**
+  String get tap_to_check_in;
+
+  /// No description provided for @keep_your_streak.
+  ///
+  /// In vi, this message translates to:
+  /// **'Duy trì chuỗi của bạn!'**
+  String get keep_your_streak;
+
+  /// No description provided for @keep_your_streak_day.
+  ///
+  /// In vi, this message translates to:
+  /// **'Duy trì chuỗi {streak} ngày của bạn!'**
+  String keep_your_streak_day(Object streak);
+
+  /// No description provided for @streak.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chuỗi'**
+  String get streak;
+
+  /// No description provided for @streak_days.
+  ///
+  /// In vi, this message translates to:
+  /// **'{days} ngày'**
+  String streak_days(Object days);
 }
 
 class _AppLocalizationsDelegate

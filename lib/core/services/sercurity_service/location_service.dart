@@ -1,5 +1,4 @@
 import 'package:geolocator/geolocator.dart';
-import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 
 class LocationService {
   static final LocationService _instance = LocationService._internal();
@@ -28,7 +27,6 @@ class LocationService {
       return false;
     }
 
-    LocalStorageService().saveLocationStatus(true);
     return true;
   }
 

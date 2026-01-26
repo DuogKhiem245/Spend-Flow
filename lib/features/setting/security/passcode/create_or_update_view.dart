@@ -1,3 +1,4 @@
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -72,18 +73,19 @@ class _CreateOrUpdateViewState extends State<CreateOrUpdateView> {
 
   void _showError(String message) {
     final l10n = AppLocalizations.of(context)!;
-    showCupertinoDialog(
+
+    AdaptiveAlertDialog.show(
       context: context,
-      builder: (ctx) => CupertinoAlertDialog(
-        title: Text(l10n.error),
-        content: Text(message),
-        actions: [
-          CupertinoDialogAction(
-            child: Text(l10n.ok),
-            onPressed: () => Navigator.pop(ctx),
-          ),
-        ],
-      ),
+      title: l10n.error,
+      message: message,
+      icon: 'exclamationmark.circle.fill',
+      actions: [
+        AlertAction(
+          title: l10n.ok,
+          style: AlertActionStyle.primary,
+          onPressed: () {},
+        ),
+      ],
     );
   }
 

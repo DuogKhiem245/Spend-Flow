@@ -1,3 +1,4 @@
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/core/services/sync_service/sync_service.dart';
 import 'package:spend_flow/core/widgets/check_valid/check_valid_widget.dart';
-import 'package:spend_flow/core/widgets/nav.dart';
+import 'package:spend_flow/core/widgets/bottom_bar.dart';
 import 'package:spend_flow/features/auth/auth_viewmodel.dart';
 import 'package:spend_flow/features/auth/view/forgot_password_view.dart';
 import 'package:spend_flow/features/auth/view/register/register_view.dart';
@@ -33,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  Future<void> _handleLogin() async {
+  Future<void> _handleLogin(BuildContext context) async {
     FocusScope.of(context).unfocus();
     final l10n = AppLocalizations.of(context)!;
 
@@ -66,29 +67,30 @@ class _LoginPageState extends State<LoginPage> {
         if (user.emailVerified) {
           _navigateToHome();
         } else {
-          if (mounted) {
+          _viewModel.signOut();
+          if (context.mounted) {
             CheckValidWidget.showIncompleteDetailsSheet(
               context: context,
               title: l10n.email_not_verified,
               description: l10n.please_verify_your_email_to_continue,
-              haveAction: true,
-              subtitle_1: l10n.email_not_received,
-              subtitle_2: l10n.resend,
+              //haveAction: true,
+              // subtitle_1: l10n.email_not_received,
+              // subtitle_2: l10n.resend,
               onButtonPressed: () async {
                 await _viewModel.resendVerificationEmail(user);
-                if (mounted) {
-                  showCupertinoDialog(
+                if (context.mounted) {
+                  AdaptiveAlertDialog.show(
                     context: context,
-                    builder: (context) => CupertinoAlertDialog(
-                      title: Text(l10n.success),
-                      content: Text(l10n.verification_email_sent),
-                      actions: [
-                        CupertinoDialogAction(
-                          child: const Text("OK"),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                      ],
-                    ),
+                    title: l10n.success,
+                    message: l10n.verification_email_sent,
+                    icon: 'envelope.badge.fill',
+                    actions: [
+                      AlertAction(
+                        title: "OK",
+                        style: AlertActionStyle.primary,
+                        onPressed: () => {},
+                      ),
+                    ],
                   );
                 }
               },
@@ -116,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
         default:
           message = e.message ?? message;
       }
-      if (mounted) {
+      if (context.mounted) {
         CheckValidWidget.showIncompleteDetailsSheet(
           context: context,
           title: l10n.error,
@@ -125,7 +127,7 @@ class _LoginPageState extends State<LoginPage> {
         );
       }
     } catch (e) {
-      if (mounted) {
+      if (context.mounted) {
         CheckValidWidget.showIncompleteDetailsSheet(
           context: context,
           title: l10n.error,
@@ -403,7 +405,9 @@ class _LoginPageState extends State<LoginPage> {
                             SizedBox(height: 20.h),
 
                             CupertinoButton.filled(
-                              onPressed: isLoading ? null : _handleLogin,
+                              onPressed: isLoading
+                                  ? null
+                                  : () => _handleLogin(context),
                               borderRadius: BorderRadius.circular(30.r),
                               child: isLoading
                                   ? CupertinoActivityIndicator(
@@ -419,6 +423,7 @@ class _LoginPageState extends State<LoginPage> {
                                           .copyWith(
                                             fontSize: 16.sp,
                                             fontWeight: FontWeight.w600,
+                                            color: CupertinoColors.white,
                                           ),
                                     ),
                             ),

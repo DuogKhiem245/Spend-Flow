@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -261,20 +262,22 @@ class ScanReceiptViewModel extends ChangeNotifier {
     return null;
   }
 
-  void _showErrorDialog(BuildContext context) {
+ void _showErrorDialog(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    showCupertinoDialog(
+
+    AdaptiveAlertDialog.show(
       context: context,
-      builder: (context) => CupertinoAlertDialog(
-        title: Text(l10n.error),
-        content: Text(l10n.scan_receipt_error),
-        actions: [
-          CupertinoDialogAction(
-            child: Text(l10n.close),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ],
-      ),
+      title: l10n.error,
+      message:
+          l10n.scan_receipt_error,
+      icon: 'doc.text.viewfinder', 
+      actions: [
+        AlertAction(
+          title: l10n.close,
+          style: AlertActionStyle.primary,
+          onPressed: () {},
+        ),
+      ],
     );
   }
 

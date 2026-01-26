@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
-import 'package:spend_flow/features/auth/view/login_view.dart';
 
 class CheckMailPage extends StatelessWidget {
   final String email;
@@ -69,11 +68,7 @@ class CheckMailPage extends StatelessWidget {
 
               CupertinoButton.filled(
                 onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    CupertinoPageRoute(builder: (context) => const LoginPage()),
-                    (route) => false,
-                  );
+                  Navigator.pop(context);
                 },
                 borderRadius: BorderRadius.circular(30.r),
                 child: Text(

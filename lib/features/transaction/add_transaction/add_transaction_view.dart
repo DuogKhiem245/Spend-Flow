@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:cupertino_native/components/segmented_control.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -112,30 +113,31 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
 
   void _showNoWalletAlert(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    showCupertinoDialog(
+
+    AdaptiveAlertDialog.show(
       context: context,
-      builder: (context) => CupertinoAlertDialog(
-        title: Text(l10n.no_wallets_yet),
-        content: Text(l10n.please_create_wallet_first),
-        actions: [
-          CupertinoDialogAction(
-            child: Text(l10n.cancel),
-            onPressed: () => Navigator.pop(context),
-          ),
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            child: Text(l10n.create_now),
-            onPressed: () {
-              Navigator.push(
-                context,
-                CupertinoPageRoute(
-                  builder: (context) => const WalletView(firstWallet: false),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
+      title: l10n.no_wallets_yet,
+      message: l10n.please_create_wallet_first,
+      icon: 'creditcard.and.123', 
+      actions: [
+        AlertAction(
+          title: l10n.cancel,
+          style: AlertActionStyle.cancel,
+          onPressed: () => Navigator.pop(context),
+        ),
+        AlertAction(
+          title: l10n.create_now,
+          style: AlertActionStyle.primary, 
+          onPressed: () {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: (context) => const WalletView(firstWallet: false),
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
@@ -22,183 +23,101 @@ class BalanceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    final boxDecoration = BoxDecoration(
-      color: CupertinoTheme.of(context).barBackgroundColor,
-      borderRadius: BorderRadius.circular(30.r),
-      boxShadow: [
-        BoxShadow(
-          color: AppColors.boxShadow,
-          blurRadius: 10.r,
-          offset: Offset(0, 4.h),
-        ),
-      ],
-    );
-
     return ListenableBuilder(
       listenable: _viewModel,
       builder: (context, child) {
         final symbol = _viewModel.currencySymbol;
-        return Column(
-          children: [
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(20.w),
-              decoration: boxDecoration,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    l10n.total_balance,
-                    style: CupertinoTheme.of(context).textTheme.textStyle
-                        .copyWith(
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.w500,
-                          color: CupertinoTheme.of(
-                            context,
-                          ).textTheme.textStyle.color?.withValues(alpha: .6),
-                        ),
-                  ),
-                  SizedBox(height: 8.h),
-                  Text(
-                    "$symbol ${_viewModel.formatCurrency(balance)}",
-                    style: CupertinoTheme.of(context).textTheme.textStyle
-                        .copyWith(
-                          letterSpacing: 2,
-                          fontSize: 28.sp,
-                          fontWeight: FontWeight.w700,
-                          color: balance >= 0
-                              ? AppColors.secondaryColor
-                              : AppColors.errorColor.withValues(alpha: .8),
-                        ),
-                  ),
-                ],
+
+        return Container(
+          width: double.infinity,
+          padding: EdgeInsets.all(24.w),
+          decoration: BoxDecoration(
+            color: CupertinoTheme.of(context).barBackgroundColor,
+            borderRadius: BorderRadius.circular(24.r),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.boxShadow.withValues(alpha: 0.05),
+                blurRadius: 20.r,
+                offset: Offset(0, 10.h),
               ),
-            ),
+            ],
+          ),
+          child: Column(
+            children: [
+              _buildBalanceRow(
+                context,
+                label: l10n.income,
+                amount: "${_viewModel.formatCurrency(income)} $symbol",
+                isTotal: false,
+              ),
 
-            SizedBox(height: 16.h),
+              SizedBox(height: 10.h),
 
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.all(16.w),
-                    decoration: boxDecoration,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(8.w),
-                              decoration: BoxDecoration(
-                                color: AppColors.secondaryColor.withAlpha(30),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                CupertinoIcons.arrow_up,
-                                color: AppColors.secondaryColor,
-                                size: 16.sp,
-                              ),
-                            ),
-                            SizedBox(width: 8.w),
-                            Text(
-                              l10n.income,
-                              style: CupertinoTheme.of(context)
-                                  .textTheme
-                                  .textStyle
-                                  .copyWith(
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: CupertinoTheme.of(context)
-                                        .textTheme
-                                        .textStyle
-                                        .color
-                                        ?.withValues(alpha: .6),
-                                  ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 12.h),
-                        Text(
-                          "$symbol ${_viewModel.formatCompactCurrency(income)}",
-                          style: CupertinoTheme.of(context).textTheme.textStyle
-                              .copyWith(
-                                fontSize: 24.sp,
-                                letterSpacing: 2,
-                                fontWeight: FontWeight.bold,
-                                color: CupertinoTheme.of(
-                                  context,
-                                ).textTheme.textStyle.color,
-                              ),
-                        ),
-                      ],
-                    ),
-                  ),
+              _buildBalanceRow(
+                context,
+                label: l10n.expenses,
+                amount: "${_viewModel.formatCurrency(expenses)} $symbol",
+                isTotal: false,
+              ),
+
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.h),
+                child: Divider(
+                  height: 1,
+                  color: CupertinoColors.systemGrey.withValues(alpha: 0.2),
                 ),
+              ),
 
-                SizedBox(width: 16.w),
-
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.all(16.w),
-                    decoration: boxDecoration,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(8.w),
-                              decoration: BoxDecoration(
-                                color: AppColors.errorColor.withAlpha(30),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                CupertinoIcons.arrow_down,
-                                color: AppColors.errorColor,
-                                size: 16.sp,
-                              ),
-                            ),
-                            SizedBox(width: 8.w),
-                            Text(
-                              l10n.expenses,
-                              style: CupertinoTheme.of(context)
-                                  .textTheme
-                                  .textStyle
-                                  .copyWith(
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: CupertinoTheme.of(context)
-                                        .textTheme
-                                        .textStyle
-                                        .color
-                                        ?.withValues(alpha: .6),
-                                  ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 12.h),
-                        Text(
-                          "$symbol ${_viewModel.formatCompactCurrency(expenses)}",
-                          style: CupertinoTheme.of(context).textTheme.textStyle
-                              .copyWith(
-                                fontSize: 24.sp,
-                                letterSpacing: 2,
-                                fontWeight: FontWeight.bold,
-                                color: CupertinoTheme.of(
-                                  context,
-                                ).textTheme.textStyle.color,
-                              ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
+              _buildBalanceRow(
+                context,
+                label: l10n.total_balance,
+                amount: "${_viewModel.formatCurrency(balance)} $symbol",
+                isTotal: true,
+                amountColor: balance >= 0
+                    ? AppColors.secondaryColor
+                    : AppColors.errorColor,
+              ),
+              _buildStreakArea(context),
+            ],
+          ),
         );
       },
     );
+  }
+
+  Widget _buildBalanceRow(
+    BuildContext context, {
+    required String label,
+    required String amount,
+    required bool isTotal,
+    Color? amountColor,
+  }) {
+    final baseStyle = CupertinoTheme.of(context).textTheme.textStyle;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: baseStyle.copyWith(
+            fontSize: isTotal ? 17.sp : 15.sp,
+            fontWeight: isTotal ? FontWeight.w600 : FontWeight.w500,
+            color: baseStyle.color?.withValues(alpha: isTotal ? 0.9 : 0.6),
+          ),
+        ),
+        Text(
+          amount,
+          style: baseStyle.copyWith(
+            fontSize: isTotal ? 22.sp : 18.sp,
+            fontWeight: isTotal ? FontWeight.bold : FontWeight.w600,
+            color: amountColor ?? baseStyle.color,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildStreakArea(BuildContext context) {
+    return const SizedBox.shrink();
   }
 }

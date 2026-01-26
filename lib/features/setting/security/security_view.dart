@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:cupertino_native/components/switch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -253,20 +254,22 @@ class _SecurityViewState extends State<SecurityView> {
                                           .toggleBiometric(value);
 
                                       if (errorMsg != null && context.mounted) {
-                                        showCupertinoDialog(
+                                        final l10n = AppLocalizations.of(
+                                          context,
+                                        )!;
+
+                                        AdaptiveAlertDialog.show(
                                           context: context,
-                                          builder: (ctx) =>
-                                              CupertinoAlertDialog(
-                                                title: Text(l10n.error),
-                                                content: Text(errorMsg),
-                                                actions: [
-                                                  CupertinoDialogAction(
-                                                    child: Text(l10n.ok),
-                                                    onPressed: () =>
-                                                        Navigator.pop(ctx),
-                                                  ),
-                                                ],
-                                              ),
+                                          title: l10n.error,
+                                          message: errorMsg,
+                                          icon: 'exclamationmark.triangle.fill',
+                                          actions: [
+                                            AlertAction(
+                                              title: l10n.ok,
+                                              style: AlertActionStyle.primary,
+                                              onPressed: () {},
+                                            ),
+                                          ],
                                         );
                                         setState(() {});
                                       }
@@ -286,21 +289,24 @@ class _SecurityViewState extends State<SecurityView> {
                                       if (errorMsg != null && context.mounted) {
                                         HapticFeedback.vibrate();
 
-                                        showCupertinoDialog(
+                                        final l10n = AppLocalizations.of(
+                                          context,
+                                        )!;
+
+                                        AdaptiveAlertDialog.show(
                                           context: context,
-                                          builder: (ctx) =>
-                                              CupertinoAlertDialog(
-                                                title: Text(l10n.error),
-                                                content: Text(errorMsg),
-                                                actions: [
-                                                  CupertinoDialogAction(
-                                                    child: Text(l10n.ok),
-                                                    onPressed: () =>
-                                                        Navigator.pop(ctx),
-                                                  ),
-                                                ],
-                                              ),
+                                          title: l10n.error,
+                                          message: errorMsg,
+                                          icon: 'exclamationmark.octagon.fill',
+                                          actions: [
+                                            AlertAction(
+                                              title: l10n.ok,
+                                              style: AlertActionStyle.primary,
+                                              onPressed: () {},
+                                            ),
+                                          ],
                                         );
+
                                         setState(() {});
                                       }
                                     },
@@ -456,28 +462,33 @@ class _SecurityViewState extends State<SecurityView> {
     bool isChangeMode,
     bool isRemoveMode,
   ) {
-    String message;
     final l10n = AppLocalizations.of(context)!;
+    String message;
+    String iconName;
+
     if (isRemoveMode) {
       message = l10n.passcode_turn_off_success;
+      iconName = 'lock.slash.fill'; 
     } else if (isChangeMode) {
       message = l10n.passcode_update_success;
+      iconName = 'lock.rotation'; 
     } else {
       message = l10n.passcode_create_success;
+      iconName = 'lock.fill';
     }
 
-    showCupertinoDialog(
+    AdaptiveAlertDialog.show(
       context: context,
-      builder: (ctx) => CupertinoAlertDialog(
-        title: Text(l10n.notifications),
-        content: Text(message),
-        actions: [
-          CupertinoDialogAction(
-            child: Text(l10n.ok),
-            onPressed: () => Navigator.pop(ctx),
-          ),
-        ],
-      ),
+      title: l10n.notifications,
+      message: message,
+      icon: iconName, 
+      actions: [
+        AlertAction(
+          title: l10n.ok,
+          style: AlertActionStyle.primary,
+          onPressed: () {},
+        ),
+      ],
     );
   }
 }

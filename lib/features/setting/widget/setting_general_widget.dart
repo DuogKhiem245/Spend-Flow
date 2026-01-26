@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/data/language_data.dart';
-import 'package:spend_flow/core/services/general_service/font_service.dart';
 import 'package:spend_flow/core/services/general_service/language_service.dart';
 import 'package:spend_flow/features/setting/currency/currency_view.dart';
 import 'package:spend_flow/features/setting/font/font_view.dart';
@@ -23,7 +22,6 @@ class SettingGeneralWidget extends StatefulWidget {
 class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
   final NotificationViewModel _viewModel = NotificationViewModel();
   final SettingViewModel _settingViewModel = SettingViewModel();
-  final FontService _fontService = FontService();
 
   static final List<Map<String, String>> _allLanguages =
       LanguageData.allLanguages;
@@ -109,23 +107,23 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
           ),
         ),
 
-        // SettingItem(
-        //   title: l10n.font,
-        //   icon: CupertinoIcons.globe,
-        //   iconBgColor: Color(0xFF7C3AED),
-        //   onTap: () {
-        //     Navigator.push(
-        //       context,
-        //       CupertinoPageRoute(builder: (context) => const FontView()),
-        //     );
-        //   },
-        //   trailing: ListenableBuilder(
-        //     listenable: fontViewModel,
-        //     builder: (context, child) {
-        //       return _buildTextTrailing(context, fontViewModel.currentFont);
-        //     },
-        //   ),
-        // ),
+        SettingItem(
+          title: l10n.font,
+          icon: CupertinoIcons.textformat,
+          iconBgColor: Color.fromARGB(255, 211, 187, 0),
+          onTap: () {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(builder: (context) => const FontView()),
+            );
+          },
+          trailing: ListenableBuilder(
+            listenable: fontViewModel,
+            builder: (context, child) {
+              return _buildTextTrailing(context, fontViewModel.currentFont);
+            },
+          ),
+        ),
 
         ListenableBuilder(
           listenable: _settingViewModel,

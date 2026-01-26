@@ -1314,6 +1314,21 @@ class AppLocalizationsVi extends AppLocalizations {
   String get watch_ad_continue => 'Xem quảng cáo để tiếp tục';
 
   @override
+  String get permission_required_voice_input =>
+      'Quyền truy cập micro bị từ chối';
+
+  @override
+  String get permission_required_voice_input_description =>
+      'Vui lòng bật quyền truy cập micro trong cài đặt để sử dụng nhập giọng nói.';
+
+  @override
+  String get permission_required_location => 'Quyền truy cập vị trí bị từ chối';
+
+  @override
+  String get permission_required_location_description =>
+      'Vui lòng bật quyền truy cập vị trí trong cài đặt để sử dụng các tính năng vị trí.';
+
+  @override
   String get ai_powered => 'Hỗ trợ bởi AI';
 
   @override
@@ -1334,4 +1349,23 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get fail_to_save_transactions =>
       'Lưu giao dịch thất bại. Vui lòng thử lại.';
+
+  @override
+  String get tap_to_check_in => 'Chạm để kiểm tra';
+
+  @override
+  String get keep_your_streak => 'Duy trì chuỗi của bạn!';
+
+  @override
+  String keep_your_streak_day(Object streak) {
+    return 'Duy trì chuỗi $streak ngày của bạn!';
+  }
+
+  @override
+  String get streak => 'Chuỗi';
+
+  @override
+  String streak_days(Object days) {
+    return '$days ngày';
+  }
 }

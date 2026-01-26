@@ -27,7 +27,7 @@ class _VoiceInputViewState extends State<VoiceInputView> {
         final currentLocale = Localizations.localeOf(context);
         final localeId = currentLocale.toString();
 
-        _viewModel.startListening(localeId);
+        _viewModel.startListening(context,localeId);
       });
     });
   }

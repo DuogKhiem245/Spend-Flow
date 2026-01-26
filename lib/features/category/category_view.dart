@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -329,46 +330,44 @@ class _CategoryViewState extends State<CategoryView> {
     CategoryModel category,
   ) async {
     final l10n = AppLocalizations.of(context)!;
-    showCupertinoDialog(
+
+    AdaptiveAlertDialog.show(
       context: context,
-      builder: (ctx) => CupertinoAlertDialog(
-        title: Text(l10n.delete),
-        content: Text(l10n.are_you_sure_delete_category(category.name)),
-        actions: [
-          CupertinoDialogAction(
-            child: Text(l10n.cancel),
-            onPressed: () => Navigator.pop(ctx),
-          ),
-          CupertinoDialogAction(
-            isDestructiveAction: true,
-            child: Text(l10n.delete),
-            onPressed: () async {
-              Navigator.pop(ctx);
-              await _viewModel.deleteCategory(category);
-            },
-          ),
-        ],
-      ),
+      title: l10n.delete,
+      message: l10n.are_you_sure_delete_category(category.name),
+      icon: 'trash.fill',
+      actions: [
+        AlertAction(
+          title: l10n.cancel,
+          style: AlertActionStyle.cancel,
+          onPressed: () => {},
+        ),
+        AlertAction(
+          title: l10n.delete,
+          style: AlertActionStyle.destructive,
+          onPressed: () async {
+            await _viewModel.deleteCategory(category);
+          },
+        ),
+      ],
     );
   }
 
   void _showSystemItemMessage(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    showCupertinoDialog(
+
+    AdaptiveAlertDialog.show(
       context: context,
-      barrierDismissible: true,
-      builder: (ctx) {
-        return CupertinoAlertDialog(
-          title: Text(l10n.system_category),
-          content: Text(l10n.system_category_description),
-          actions: [
-            CupertinoDialogAction(
-              child: Text(l10n.ok),
-              onPressed: () => Navigator.pop(ctx),
-            ),
-          ],
-        );
-      },
+      title: l10n.system_category,
+      message: l10n.system_category_description,
+      icon: 'info.circle.fill',
+      actions: [
+        AlertAction(
+          title: l10n.ok,
+          style: AlertActionStyle.primary,
+          onPressed: () => {},
+        ),
+      ],
     );
   }
 }

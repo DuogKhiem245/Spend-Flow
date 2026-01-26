@@ -1,3 +1,4 @@
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -396,51 +397,57 @@ class HomeHeader extends StatelessWidget {
     String walletName,
   ) {
     final l10n = AppLocalizations.of(context)!;
-    showCupertinoDialog(
+
+    AdaptiveAlertDialog.show(
       context: context,
-      builder: (ctx) => CupertinoAlertDialog(
-        title: Text(l10n.delete_wallet),
-        content: Text(l10n.delete_wallet_confirmation(walletName)),
-        actions: [
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            child: Text(l10n.cancel),
-            onPressed: () => Navigator.pop(ctx),
-          ),
-          CupertinoDialogAction(
-            isDestructiveAction: true,
-            child: Text(l10n.delete),
-            onPressed: () async {
-              Navigator.pop(ctx);
-              final error = await viewModel.deleteWallet(walletId, context);
-              if (context.mounted) {
-                if (error != null) {
-                  _showErrorDialog(context, error);
-                } else {
-                  Navigator.pop(context);
-                }
+      title: l10n.delete_wallet,
+      message: l10n.delete_wallet_confirmation(walletName),
+      icon: 'creditcard.fill',
+      actions: [
+        AlertAction(
+          title: l10n.cancel,
+          style: AlertActionStyle.cancel, 
+          onPressed: () => {},
+        ),
+        AlertAction(
+          title: l10n.delete,
+          style: AlertActionStyle.destructive, 
+          onPressed: () async {
+            final error = await viewModel.deleteWallet(walletId, context);
+            if (context.mounted) {
+              if (error != null) {
+                _showErrorDialog(context, error);
+              } else {
+                Navigator.pop(
+                  context,
+                ); 
               }
-            },
-          ),
-        ],
-      ),
+            }
+          },
+        ),
+      ],
     );
   }
 
   void _showErrorDialog(BuildContext context, String message) {
     final l10n = AppLocalizations.of(context)!;
-    showCupertinoDialog(
+
+    AdaptiveAlertDialog.show(
       context: context,
-      builder: (ctx) => CupertinoAlertDialog(
-        title: Text(l10n.error),
-        content: Text(message),
-        actions: [
-          CupertinoDialogAction(
-            child: const Text("OK"),
-            onPressed: () => Navigator.pop(ctx),
-          ),
-        ],
-      ),
+      title: l10n.error,
+      message: message,
+      icon: 'exclamationmark.triangle.fill', 
+      actions: [
+        AlertAction(
+          title: "OK",
+          style: AlertActionStyle.primary,
+          onPressed: () {
+            if (context.mounted) {
+              Navigator.pop(context);
+            }
+          },
+        ),
+      ],
     );
   }
 }

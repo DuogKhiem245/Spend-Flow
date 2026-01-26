@@ -6,7 +6,7 @@ class AppIcons {
     'transport': CupertinoIcons.car_detailed,
     'salary': CupertinoIcons.money_dollar_circle_fill,
     'shopping': CupertinoIcons.bag_fill,
-    'game': CupertinoIcons.game_controller_solid,
+    'game': CupertinoIcons.gamecontroller_alt_fill,
     'house': CupertinoIcons.house_fill,
     'gift': CupertinoIcons.gift_fill,
     'health': CupertinoIcons.heart_fill,
@@ -14,7 +14,7 @@ class AppIcons {
     'bill': CupertinoIcons.doc_text_fill,
     'insurance': CupertinoIcons.shield_fill,
     'education': CupertinoIcons.book_fill,
-    'pet': CupertinoIcons.tortoise_fill,
+    'pet': CupertinoIcons.paw_solid, 
     'travel': CupertinoIcons.airplane,
     'savings': CupertinoIcons.creditcard_fill,
     'phone': CupertinoIcons.phone_fill,
@@ -22,16 +22,38 @@ class AppIcons {
     'water': CupertinoIcons.drop_fill,
     'electricity': CupertinoIcons.bolt_fill,
     'gas': CupertinoIcons.flame_fill,
-    'cleaning': CupertinoIcons.clear,
+    'cleaning': CupertinoIcons.wind, 
     'beauty': CupertinoIcons.sparkles,
-    'baby': CupertinoIcons.heart_circle_fill,
+    'baby': CupertinoIcons.person_crop_circle_fill_badge_checkmark,
     'sport': CupertinoIcons.sportscourt_fill,
     'music': CupertinoIcons.music_note_2,
     'repair': CupertinoIcons.wrench_fill,
     'tax': CupertinoIcons.chart_pie_fill,
+
+    'drink': CupertinoIcons.ant_fill, 
+    'market': CupertinoIcons.bag_badge_plus,
+    'laundry': CupertinoIcons.infinite, 
+    'taxi': CupertinoIcons.car_fill,
+    'fuel': CupertinoIcons.gauge,
+    'bonus': CupertinoIcons.money_yen_circle_fill, 
+    'invest': CupertinoIcons.chart_bar_alt_fill,
+    'interest': CupertinoIcons.percent,
+    'movie': CupertinoIcons.film_fill,
+    'spa': CupertinoIcons.hand_raised_fill,
+    'fitness': CupertinoIcons.flame,
+    'furniture': CupertinoIcons.bed_double_fill,
+    'pharmacy': CupertinoIcons.bandage_fill,
+    'book': CupertinoIcons.book_circle_fill,
+    'charity': CupertinoIcons.heart_circle,
+    'wedding': CupertinoIcons.person_2_fill,
+    'funeral': CupertinoIcons.cloud_heavyrain_fill,
+    'work': CupertinoIcons.briefcase_fill,
+    'other': CupertinoIcons.ellipsis_circle_fill,
   };
 
   static IconData getIcon(String key) {
     return icons[key] ?? CupertinoIcons.question_circle;
   }
+
+  static List<String> get allKeys => icons.keys.toList();
 }

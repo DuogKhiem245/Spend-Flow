@@ -1,3 +1,4 @@
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -69,6 +70,7 @@ class _ProfileViewState extends State<ProfileView> {
         _showDialog(
           l10n.success,
           l10n.profile_updated_success,
+          context,
           onSuccess: () {
             Navigator.pop(context);
           },
@@ -76,30 +78,30 @@ class _ProfileViewState extends State<ProfileView> {
       }
     } catch (e) {
       if (mounted) {
-        _showDialog(l10n.error, e.toString());
+        _showDialog(l10n.error, e.toString(), context);
       }
     }
   }
 
-  void _showDialog(String title, String content, {VoidCallback? onSuccess}) {
-    showCupertinoDialog(
+  void _showDialog(String title, String content, BuildContext context, {VoidCallback? onSuccess}) {
+    final l10n = AppLocalizations.of(context)!;
+
+    AdaptiveAlertDialog.show(
       context: context,
-      builder: (ctx) => CupertinoAlertDialog(
-        title: Text(title),
-        content: Text(content),
-        actions: [
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            child: Text(AppLocalizations.of(context)!.ok),
-            onPressed: () {
-              Navigator.pop(ctx);
-              if (onSuccess != null) {
-                onSuccess();
-              }
-            },
-          ),
-        ],
-      ),
+      title: title,
+      message: content,
+      icon: 'info.circle.fill',
+      actions: [
+        AlertAction(
+          title: l10n.ok,
+          style: AlertActionStyle.primary,
+          onPressed: () {
+            if (onSuccess != null) {
+              onSuccess();
+            }
+          },
+        ),
+      ],
     );
   }
 
