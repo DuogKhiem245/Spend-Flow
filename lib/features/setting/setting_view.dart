@@ -149,17 +149,20 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
 
                         isLoggedIn
                             ? Column(
-                              children: [
-                                CupertinoButton(
+                                children: [
+                                  CupertinoButton(
                                     onPressed: () => _showLogoutDialog(context),
                                     borderRadius: BorderRadius.circular(30.r),
-                                    padding: EdgeInsets.symmetric(vertical: 12.h),
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 12.h,
+                                    ),
                                     minimumSize: Size(double.infinity, 60.h),
                                     color: CupertinoTheme.of(
                                       context,
                                     ).barBackgroundColor,
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Icon(
                                           CupertinoIcons.square_arrow_right,
@@ -173,7 +176,8 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
                                               .textTheme
                                               .textStyle
                                               .copyWith(
-                                                color: CupertinoColors.systemRed,
+                                                color:
+                                                    CupertinoColors.systemRed,
                                                 fontSize: 18.sp,
                                                 fontWeight: FontWeight.w500,
                                               ),
@@ -182,8 +186,8 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
                                     ),
                                   ),
                                   SizedBox(height: 120.h),
-                              ],
-                            )
+                                ],
+                              )
                             : SizedBox(height: 80.h),
                       ],
                     ),

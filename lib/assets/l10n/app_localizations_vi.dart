@@ -1368,4 +1368,15 @@ class AppLocalizationsVi extends AppLocalizations {
   String streak_days(Object days) {
     return '$days ngày';
   }
+
+  @override
+  String get not_logined => 'Chưa đăng nhập';
+
+  @override
+  String get please_login_to_sync_data =>
+      'Vui lòng đăng nhập để đồng bộ dữ liệu của bạn trên các thiết bị.';
+
+  @override
+  String get require_premium_to_sync =>
+      'Bạn cần nâng cấp lên Premium hoặc xem quảng cáo để đồng bộ dữ liệu.';
 }

@@ -75,7 +75,7 @@ class NotificationViewModel extends ChangeNotifier {
         AlertAction(
           title: l10n.cancel,
           style: AlertActionStyle.cancel,
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => {},
         ),
         AlertAction(
           title: l10n.settings,

@@ -451,5 +451,9 @@
   "keep_your_streak": "Keep your streak!",
   "keep_your_streak_day": "Keep your {streak}-day streak!",
   "streak": "Streak",
-  "streak_days": "{days} days"
+  "streak_days": "{days} days",
+
+  "not_logined": "Not Logged In",
+  "please_login_to_sync_data": "Please log in to sync your data across devices.",
+  "require_premium_to_sync": "You need to upgrade to Premium or watch ads to sync data."
 }

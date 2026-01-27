@@ -2647,6 +2647,24 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'{days} ngày'**
   String streak_days(Object days);
+
+  /// No description provided for @not_logined.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa đăng nhập'**
+  String get not_logined;
+
+  /// No description provided for @please_login_to_sync_data.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng đăng nhập để đồng bộ dữ liệu của bạn trên các thiết bị.'**
+  String get please_login_to_sync_data;
+
+  /// No description provided for @require_premium_to_sync.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn cần nâng cấp lên Premium hoặc xem quảng cáo để đồng bộ dữ liệu.'**
+  String get require_premium_to_sync;
 }
 
 class _AppLocalizationsDelegate

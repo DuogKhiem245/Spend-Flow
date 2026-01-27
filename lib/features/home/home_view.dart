@@ -9,7 +9,7 @@ import 'package:pull_down_button/pull_down_button.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/ads_service.dart';
 import 'package:spend_flow/core/services/data_service/daily_limit_service.dart';
-import 'package:spend_flow/features/home/widgets/streak_card.dart';
+import 'package:spend_flow/core/widgets/custom_option/custom_option_widget.dart';
 import 'package:spend_flow/features/premium/premium_view.dart';
 import 'package:spend_flow/features/scan_receipt/scran_receipt_view.dart';
 import 'package:spend_flow/features/transaction/add_transaction/add_transaction_view.dart';
@@ -187,16 +187,16 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               ),
             ),
             SizedBox(height: 24.h),
-            _buildCustomOption(
-              context,
+            CustomOptionWidget(
+              context: context,
               icon: CupertinoIcons.play_circle_fill,
               label: isVoice ? l10n.see_ads(5) : l10n.watch_ad_continue,
               color: CupertinoTheme.of(context).primaryColor,
               onTap: () => _handleRewardAdFlow(isVoice: isVoice),
             ),
             SizedBox(height: 12.h),
-            _buildCustomOption(
-              context,
+            CustomOptionWidget(
+              context: context,
               icon: CupertinoIcons.star_fill,
               label: l10n.upgrade_premium,
               color: const Color(0xFF9C2CF3),
@@ -222,13 +222,13 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     );
   }
 
- void _showAdErrorDialog(BuildContext context) {
+  void _showAdErrorDialog(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
     AdaptiveAlertDialog.show(
       context: context,
       title: l10n.error,
-      message: l10n.ads_loading, 
+      message: l10n.ads_loading,
       icon: 'antennas.bubble.left.fill',
       actions: [
         AlertAction(
@@ -375,52 +375,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             color: CupertinoColors.white,
             size: 30.sp,
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCustomOption(
-    BuildContext context, {
-    required IconData icon,
-    required String label,
-    required Color color,
-    required VoidCallback onTap,
-    bool isGradient = false,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: double.infinity,
-        padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 20.w),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30.r),
-          gradient: isGradient
-              ? const LinearGradient(
-                  colors: [Color(0xFF9C2CF3), Color(0xFF3A49F9)],
-                )
-              : null,
-          color: isGradient ? null : color.withValues(alpha: 0.1),
-        ),
-        child: Row(
-          children: [
-            Icon(icon, color: isGradient ? Colors.white : color, size: 24.sp),
-            SizedBox(width: 16.w),
-            Text(
-              label,
-              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w600,
-                color: isGradient ? Colors.white : color,
-              ),
-            ),
-            const Spacer(),
-            Icon(
-              CupertinoIcons.chevron_right,
-              size: 16.sp,
-              color: isGradient ? Colors.white70 : color.withValues(alpha: 0.5),
-            ),
-          ],
         ),
       ),
     );

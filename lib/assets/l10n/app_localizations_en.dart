@@ -1370,4 +1370,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String streak_days(Object days) {
     return '$days days';
   }
+
+  @override
+  String get not_logined => 'Not Logged In';
+
+  @override
+  String get please_login_to_sync_data =>
+      'Please log in to sync your data across devices.';
+
+  @override
+  String get require_premium_to_sync =>
+      'You need to upgrade to Premium or watch ads to sync data.';
 }

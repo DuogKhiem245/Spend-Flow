@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
-import 'package:cupertino_native/components/segmented_control.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -118,7 +115,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
       context: context,
       title: l10n.no_wallets_yet,
       message: l10n.please_create_wallet_first,
-      icon: 'creditcard.and.123', 
+      icon: 'creditcard.and.123',
       actions: [
         AlertAction(
           title: l10n.cancel,
@@ -127,7 +124,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
         ),
         AlertAction(
           title: l10n.create_now,
-          style: AlertActionStyle.primary, 
+          style: AlertActionStyle.primary,
           onPressed: () {
             Navigator.push(
               context,
@@ -155,8 +152,10 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
         ),
         middle: Text(
           l10n.add_transaction,
-          style: CupertinoTheme.of(context).textTheme.navTitleTextStyle
-              .copyWith(fontWeight: FontWeight.w600, fontSize: 20.sp),
+          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+            fontWeight: FontWeight.w600,
+            fontSize: 20.sp,
+          ),
         ),
         backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
       ),
@@ -168,35 +167,16 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
             children: [
               Column(
                 children: [
-                  Platform.isIOS
-                      ? CNSegmentedControl(
-                          labels: [l10n.expenses, l10n.income],
-                          height: 50.h,
-                          selectedIndex: _index,
-                          onValueChanged: _isLoading
-                              ? (i) {}
-                              : (i) => setState(() => _onTabChanged(i)),
-                          color: CupertinoTheme.of(context).primaryColor,
-                        )
-                      : SizedBox(
-                          width: double.infinity,
-                          child: CupertinoSlidingSegmentedControl<int>(
-                            groupValue: _index,
-                            backgroundColor: CupertinoTheme.of(
-                              context,
-                            ).barBackgroundColor,
-                            thumbColor: CupertinoTheme.of(context).primaryColor,
-                            children: {
-                              0: _buildSegmentItem(l10n.expenses, _index == 0),
-                              1: _buildSegmentItem(l10n.income, _index == 1),
-                            },
-                            onValueChanged: (int? i) {
-                              if (!_isLoading && i != null) {
-                                setState(() => _onTabChanged(i));
-                              }
-                            },
-                          ),
-                        ),
+                  AdaptiveSegmentedControl(
+                    labels: [l10n.expenses, l10n.income],
+                    selectedIndex: _index,
+                    height: 50.h,
+                    color: CupertinoTheme.of(context).primaryColor,
+                    onValueChanged: _isLoading
+                        ? (i) {}
+                        : (i) => setState(() => _onTabChanged(i)),
+                  ),
+
                   Expanded(
                     child: GestureDetector(
                       onTap: () => FocusScope.of(context).unfocus(),

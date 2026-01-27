@@ -111,7 +111,7 @@ class _AddBudgetViewState extends State<AddBudgetView> {
         ),
         middle: Text(
           pageTitle,
-          style: CupertinoTheme.of(context).textTheme.navTitleTextStyle
+          style: CupertinoTheme.of(context).textTheme.textStyle
               .copyWith(fontWeight: FontWeight.w600, fontSize: 20.sp),
         ),
         backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,

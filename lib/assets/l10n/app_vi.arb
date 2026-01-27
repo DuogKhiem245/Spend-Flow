@@ -450,5 +450,9 @@
   "keep_your_streak": "Duy trì chuỗi của bạn!",
   "keep_your_streak_day": "Duy trì chuỗi {streak} ngày của bạn!",
   "streak": "Chuỗi",
-  "streak_days": "{days} ngày"
+  "streak_days": "{days} ngày",
+
+  "not_logined": "Chưa đăng nhập",
+  "please_login_to_sync_data": "Vui lòng đăng nhập để đồng bộ dữ liệu của bạn trên các thiết bị.",
+  "require_premium_to_sync": "Bạn cần nâng cấp lên Premium hoặc xem quảng cáo để đồng bộ dữ liệu."
 }

@@ -32,15 +32,15 @@ class SyncService {
   DocumentReference get _userRef {
     final uid = _auth.currentUser?.uid;
     if (uid == null) throw Exception("User not logged in");
-    return _firestore.collection('users').doc(uid);
+    return _firestore.collection('data_users').doc(uid);
   }
 
-  Future<void> syncData({bool force = false}) async {
+  Future<void> syncData({bool force = false, bool isAds = false}) async {
     final user = _auth.currentUser;
     if (user == null) return;
 
     final isPremium = await _localStorage.getPremiumStatus();
-    if (!isPremium) {
+    if (!isPremium && isAds == false) {
       return;
     }
 
@@ -280,7 +280,7 @@ class SyncService {
       Query query = _userRef.collection('recent_locations');
 
       if (lastSyncTime > 0) {
-         final queryTimestamp = Timestamp.fromMillisecondsSinceEpoch(
+        final queryTimestamp = Timestamp.fromMillisecondsSinceEpoch(
           lastSyncTime,
         );
         query = query.where('timestamp', isGreaterThan: queryTimestamp);

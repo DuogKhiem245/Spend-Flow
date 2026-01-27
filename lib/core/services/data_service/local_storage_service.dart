@@ -844,9 +844,9 @@ class LocalStorageService {
 
       await incrementCategoryUsage(transaction.category);
 
-      return true; 
+      return true;
     } catch (e) {
-      return false; 
+      return false;
     }
   }
 
@@ -1183,7 +1183,7 @@ class LocalStorageService {
             if (data.containsKey('id')) {
               hasDataToDelete = true;
               final docRef = FirebaseFirestore.instance
-                  .collection('users')
+                  .collection('data_users') // Update, if bug set "users"
                   .doc(user.uid)
                   .collection(collections[i])
                   .doc(data['id'].toString());
