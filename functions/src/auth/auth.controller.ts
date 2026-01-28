@@ -1,244 +1,173 @@
 import * as admin from "firebase-admin";
+import { getFirestore, FieldValue } from "firebase-admin/firestore";
 import { HttpsError, CallableRequest } from "firebase-functions/v2/https";
-import bcrypt from "bcrypt";
 import { randomUUID } from "crypto";
+import bcrypt from "bcryptjs";
 import { sendOTPEmail } from "./auth.service.js";
+import { getT } from "./auth.messages.js";
 
-export const registerHandler = async (request: CallableRequest) => {
-    const { email, password } = request.data;
-    const db = admin.firestore();
-
-    if (!email || !password) {
-        throw new HttpsError("invalid-argument", "Vui lòng nhập đầy đủ thông tin.");
-    }
-
-    try {
-        const userDoc = await db.collection("users").doc(email).get();
-        if (userDoc.exists) {
-            throw new HttpsError("already-exists", "Email này đã được sử dụng.");
-        }
-
-        const userId = randomUUID();
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const otp = Math.floor(100000 + Math.random() * 900000).toString();
-        const expiresAt = Date.now() + 5 * 60 * 1000; 
-
-        await db.collection("temp_users").doc(email).set({
-            userId,
-            email,
-            password: hashedPassword,
-            otp,
-            expiresAt,
-            lastSentAt: Date.now(),
-            createdAt: admin.firestore.FieldValue.serverTimestamp(),
-        });
-
-        await sendOTPEmail(email, otp, 'REGISTER');
-
-        return {
-            success: true,
-            message: "Mã OTP đã được gửi.",
-        };
-
-    } catch (error: any) {
-        if (error instanceof HttpsError) throw error;
-        throw new HttpsError("internal", error.message);
+const validateFields = (fields: Record<string, any>, t: any) => {
+    const missing = Object.keys(fields).filter(k => !fields[k]);
+    if (missing.length > 0) {
+        throw new HttpsError("invalid-argument", `${t.missingFields}: ${missing.join(", ")}`);
     }
 };
 
-export const verifyOtpHandler = async (request: CallableRequest) => {
-    const { email, otp } = request.data;
-    const db = admin.firestore();
+const wrapError = (error: any, context: string) => {
+    console.error(`[ERROR][${context.toUpperCase()}]`, error);
+    if (error instanceof HttpsError) return error;
+    return new HttpsError("internal", `Server Error: ${error.message || error}`, { context });
+};
 
-    if (!email || !otp) {
-        throw new HttpsError("invalid-argument", "Thiếu email hoặc mã OTP.");
-    }
+export const registerHandler = async (request: CallableRequest) => {
+    const { email, password, lang } = request.data;
+    const t = getT(lang);
+    const db = getFirestore();
+
+    validateFields({ email, password }, t);
 
     try {
-        const tempUserDoc = await db.collection("temp_users").doc(email).get();
+        const userDoc = await db.collection("users").doc(email).get();
+        if (userDoc.exists) throw new HttpsError("already-exists", t.emailExists);
 
-        if (!tempUserDoc.exists) {
-            throw new HttpsError("not-found", "Yêu cầu đăng ký không tồn tại.");
-        }
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-        const userData = tempUserDoc.data()!;
+        await db.collection("temp_users").doc(email).set({
+            userId: randomUUID(),
+            email,
+            password: await bcrypt.hash(password, 10),
+            otp,
+            expiresAt: Date.now() + 5 * 60 * 1000,
+            lastSentAt: Date.now(),
+            createdAt: FieldValue.serverTimestamp(),
+        });
 
-        if (userData.otp !== otp) {
-            throw new HttpsError("permission-denied", "Mã OTP không chính xác.");
-        }
+        await sendOTPEmail(email, otp, 'REGISTER', lang || 'en');
+        return { success: true, message: t.otpSent };
+    } catch (error) { throw wrapError(error, "register"); }
+};
 
-        if (Date.now() > (userData.expiresAt + 30000)) {
-            throw new HttpsError("deadline-exceeded", "Mã OTP đã hết hạn.");
-        }
+export const verifyOtpHandler = async (request: CallableRequest) => {
+    const { email, otp, lang } = request.data;
+    const t = getT(lang);
+    const db = getFirestore();
+
+    validateFields({ email, otp }, t);
+
+    try {
+        const tempDoc = await db.collection("temp_users").doc(email).get();
+        const userData = tempDoc.data();
+
+        if (!tempDoc.exists || !userData) throw new HttpsError("not-found", t.reqNotFound);
+        if (userData.otp !== otp) throw new HttpsError("permission-denied", t.invalidOtp);
+        if (Date.now() > (userData.expiresAt + 30000)) throw new HttpsError("deadline-exceeded", t.otpExpired);
 
         await db.collection("users").doc(email).set({
-            userId: userData.userId, 
+            userId: userData.userId,
             email: userData.email,
             password: userData.password,
-            createdAt: admin.firestore.FieldValue.serverTimestamp(),
+            createdAt: FieldValue.serverTimestamp(),
             isVerified: true
         });
 
         await db.collection("temp_users").doc(email).delete();
-
-        return {
-            success: true,
-            message: "Xác thực thành công! Bạn có thể đăng nhập ngay bây giờ.",
-            userId: userData.userId
-        };
-
-    } catch (error: any) {
-        if (error instanceof HttpsError) throw error;
-        throw new HttpsError("internal", error.message);
-    }
+        return { success: true, message: t.verifySuccess, userId: userData.userId };
+    } catch (error) { throw wrapError(error, "verify-otp"); }
 };
 
 export const resendOtpHandler = async (request: CallableRequest) => {
-    const { email } = request.data;
-    const db = admin.firestore();
+    const { email, lang } = request.data;
+    const t = getT(lang);
+    const db = getFirestore();
 
-    if (!email) {
-        throw new HttpsError("invalid-argument", "Vui lòng cung cấp địa chỉ email.");
-    }
+    validateFields({ email }, t);
 
     try {
-        const tempUserDoc = await db.collection("temp_users").doc(email).get();
+        const tempDoc = await db.collection("temp_users").doc(email).get();
+        if (!tempDoc.exists) throw new HttpsError("not-found", t.reqNotFound);
 
-        if (!tempUserDoc.exists) {
-            throw new HttpsError("not-found", "Yêu cầu không tồn tại.");
-        }
-
-        const userData = tempUserDoc.data()!;
-
-        const now = Date.now();
-        if (userData.lastSentAt && now - userData.lastSentAt < 60000) {
-            throw new HttpsError("resource-exhausted", "Vui lòng đợi 60 giây trước khi yêu cầu mã mới.");
+        const userData = tempDoc.data()!;
+        if (Date.now() - (userData.lastSentAt || 0) < 60000) {
+            throw new HttpsError("resource-exhausted", t.waitResend);
         }
 
         const newOtp = Math.floor(100000 + Math.random() * 900000).toString();
-        const newExpiresAt = now + 5 * 60 * 1000; 
 
         await db.collection("temp_users").doc(email).update({
             otp: newOtp,
-            expiresAt: newExpiresAt,
-            lastSentAt: now
+            expiresAt: Date.now() + 5 * 60 * 1000,
+            lastSentAt: Date.now()
         });
 
-        await sendOTPEmail(email, newOtp, 'REGISTER');
-
-        return { success: true, message: "Mã OTP mới đã được gửi!" };
-
-    } catch (error: any) {
-        if (error instanceof HttpsError) throw error;
-        throw new HttpsError("internal", error.message);
-    }
+        await sendOTPEmail(email, newOtp, 'REGISTER', lang || 'en');
+        return { success: true, message: t.newOtpSent };
+    } catch (error) { throw wrapError(error, "resend-otp"); }
 };
 
 export const loginHandler = async (request: CallableRequest) => {
-    const { email, password } = request.data;
-    const db = admin.firestore();
+    const { email, password, lang } = request.data;
+    const t = getT(lang);
+    const db = getFirestore();
+
+    validateFields({ email, password }, t);
 
     try {
         const userDoc = await db.collection("users").doc(email).get();
-        if (!userDoc.exists) {
-            throw new HttpsError("not-found", "Tài khoản không tồn tại.");
-        }
+        const userData = userDoc.data();
 
-        const userData = userDoc.data()!;
-        const isPasswordMatch = await bcrypt.compare(password, userData.password);
+        if (!userDoc.exists || !userData) throw new HttpsError("not-found", t.userNotFound);
 
-        if (!isPasswordMatch) {
-            throw new HttpsError("unauthenticated", "Sai mật khẩu.");
-        }
+        const isMatch = await bcrypt.compare(password, userData.password);
+        if (!isMatch) throw new HttpsError("unauthenticated", t.wrongPassword);
 
- 
         const customToken = await admin.auth().createCustomToken(userData.userId);
-
-        return {
-            success: true,
-            customToken, 
-            userId: userData.userId
-        };
-    } catch (error: any) {
-        throw new HttpsError("internal", error.message);
-    }
+        return { success: true, customToken, userId: userData.userId };
+    } catch (error) { throw wrapError(error, "login"); }
 };
 
 export const forgotPasswordHandler = async (request: CallableRequest) => {
-    const { email } = request.data;
-    const db = admin.firestore();
+    const { email, lang } = request.data;
+    const t = getT(lang);
+    const db = getFirestore();
 
-    if (!email) {
-        throw new HttpsError("invalid-argument", "Vui lòng nhập email.");
-    }
+    validateFields({ email }, t);
 
     try {
         const userDoc = await db.collection("users").doc(email).get();
-        if (!userDoc.exists) {
-            throw new HttpsError("not-found", "Email này chưa được đăng ký.");
-        }
+        if (!userDoc.exists) throw new HttpsError("not-found", t.userNotFound);
 
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
-        const expiresAt = Date.now() + 5 * 60 * 1000;
 
         await db.collection("password_resets").doc(email).set({
-            email,
-            otp,
-            expiresAt,
-            createdAt: admin.firestore.FieldValue.serverTimestamp(),
+            email, otp, expiresAt: Date.now() + 5 * 60 * 1000,
+            createdAt: FieldValue.serverTimestamp(),
         });
 
-        await sendOTPEmail(email, otp, 'RESET');
-
-        return {
-            success: true,
-            message: "Mã xác thực đặt lại mật khẩu đã được gửi đến email."
-        };
-
-    } catch (error: any) {
-        if (error instanceof HttpsError) throw error;
-        throw new HttpsError("internal", error.message);
-    }
+        await sendOTPEmail(email, otp, 'RESET', lang || 'en');
+        return { success: true, message: t.otpSent };
+    } catch (error) { throw wrapError(error, "forgot-password"); }
 };
 
 export const resetPasswordHandler = async (request: CallableRequest) => {
-    const { email, otp, newPassword } = request.data;
-    const db = admin.firestore();
+    const { email, otp, newPassword, lang } = request.data;
+    const t = getT(lang);
+    const db = getFirestore();
 
-    if (!email || !otp || !newPassword) {
-        throw new HttpsError("invalid-argument", "Thiếu thông tin cần thiết.");
-    }
+    validateFields({ email, otp, newPassword }, t);
 
     try {
         const resetDoc = await db.collection("password_resets").doc(email).get();
-        if (!resetDoc.exists) {
-            throw new HttpsError("not-found", "Yêu cầu đặt lại mật khẩu không hợp lệ.");
-        }
+        const resetData = resetDoc.data();
 
-        const resetData = resetDoc.data()!;
+        if (!resetDoc.exists || !resetData) throw new HttpsError("not-found", t.reqNotFound);
+        if (resetData.otp !== otp) throw new HttpsError("permission-denied", t.invalidOtp);
+        if (Date.now() > resetData.expiresAt) throw new HttpsError("deadline-exceeded", t.otpExpired);
 
-        if (resetData.otp !== otp) {
-            throw new HttpsError("permission-denied", "Mã xác thực không đúng.");
-        }
-
-        if (Date.now() > resetData.expiresAt) {
-            throw new HttpsError("deadline-exceeded", "Mã xác thực đã hết hạn.");
-        }
-
-        const hashedPassword = await bcrypt.hash(newPassword, 10);
         await db.collection("users").doc(email).update({
-            password: hashedPassword
+            password: await bcrypt.hash(newPassword, 10)
         });
-
         await db.collection("password_resets").doc(email).delete();
 
-        return {
-            success: true,
-            message: "Mật khẩu của bạn đã được cập nhật thành công!"
-        };
-
-    } catch (error: any) {
-        if (error instanceof HttpsError) throw error;
-        throw new HttpsError("internal", error.message);
-    }
+        return { success: true, message: t.passwordUpdated };
+    } catch (error) { throw wrapError(error, "reset-password"); }
 };

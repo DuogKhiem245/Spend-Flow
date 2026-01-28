@@ -8,7 +8,7 @@ if (getApps().length === 0) {
 }
 
 export const registerUser = onCall(
-    { secrets: ["RESEND_API_KEY"] },
+    { secrets: ["GMAIL_APP_PASSWORD"] },
     registerHandler
 );
 
@@ -17,7 +17,7 @@ export const verifyOtp = onCall(
 );
 
 export const resendOtp = onCall(
-    { secrets: ["RESEND_API_KEY"] },
+    { secrets: ["GMAIL_APP_PASSWORD"] },
     resendOtpHandler
 );
 
@@ -26,7 +26,7 @@ export const loginUser = onCall(
 );
 
 export const forgotPassword = onCall(
-    { secrets: ["RESEND_API_KEY"] },
+    { secrets: ["GMAIL_APP_PASSWORD"] },
     forgotPasswordHandler
 );
 

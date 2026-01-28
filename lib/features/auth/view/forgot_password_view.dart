@@ -36,27 +36,27 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     setState(() => _isLoading = true);
 
     try {
-      await _viewModel.resetPassword(email);
+      // await _viewModel.resetPassword(email);
 
-      if (context.mounted) {
-        AdaptiveAlertDialog.show(
-          context: context,
-          title: l10n.success,
-          message: l10n.password_reset_email_sent,
-          icon: 'paperplane.fill',
-          actions: [
-            AlertAction(
-              title: l10n.ok,
-              style: AlertActionStyle.primary,
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        );
-      }
+      // if (context.mounted) {
+      //   AdaptiveAlertDialog.show(
+      //     context: context,
+      //     title: l10n.success,
+      //     message: l10n.password_reset_email_sent,
+      //     icon: 'paperplane.fill',
+      //     actions: [
+      //       AlertAction(
+      //         title: l10n.ok,
+      //         style: AlertActionStyle.primary,
+      //         onPressed: () {
+      //           Navigator.pop(context);
+      //         },
+      //       ),
+      //     ],
+      //   );
+      // }
     } catch (e) {
-      if (mounted) {
+      if (context.mounted) {
         CheckValidWidget.showIncompleteDetailsSheet(
           context: context,
           title: l10n.error,
@@ -97,8 +97,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   color: CupertinoColors.systemGrey,
                 ),
               ),
-              SizedBox(height: 30.h),
-
+              SizedBox(height: 20.h),
               Text(
                 l10n.email,
                 style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
@@ -151,7 +150,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         ).textTheme.textStyle.color,
                       )
                     : Text(
-                        l10n.send_email_reset,
+                        l10n.send_otp,
                         style: CupertinoTheme.of(context).textTheme.textStyle
                             .copyWith(
                               fontSize: 16.sp,

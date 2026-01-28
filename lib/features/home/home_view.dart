@@ -310,7 +310,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                       bottom: _premiumViewModel.isPremium
                           ? Platform.isIOS
                                 ? 100.h
-                                : 140.h
+                                : 70.h
                           : Platform.isIOS
                           ? 140.h
                           : 125.h,

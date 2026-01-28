@@ -1,12 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
-import 'package:spend_flow/core/services/auth_service.dart';
 import 'package:spend_flow/core/widgets/check_valid/check_valid_widget.dart';
 import 'package:spend_flow/core/widgets/password_strength/password_strength.dart';
-import 'package:spend_flow/features/auth/view/register/check_mail_view.dart';
+import 'package:spend_flow/features/auth/auth_viewmodel.dart';
+import 'package:spend_flow/features/auth/view/otp_view.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -16,7 +16,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final AuthService _authService = AuthService();
+  final AuthViewModel _viewModel = AuthViewModel();
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -73,37 +73,17 @@ class _RegisterPageState extends State<RegisterPage> {
     setState(() => _isLoading = true);
 
     try {
-      final credential = await _authService.signUpWithEmail(
-        email: email,
-        password: password,
-      );
-
-      if (credential != null && credential.user != null) {
-        await credential.user!.sendEmailVerification();
-
-        await _authService.signOut();
-
-        if (mounted) {
-          Navigator.pushReplacement(
-            context,
-            CupertinoPageRoute(
-              builder: (context) => CheckMailPage(email: email),
-            ),
-          );
-        }
-      }
-    } on FirebaseAuthException catch (e) {
-      String errorMessage = _getFirebaseErrorMessage(e, l10n);
+      await _viewModel.registerWithEmail(context, email, password);
       if (mounted) {
-        CheckValidWidget.showIncompleteDetailsSheet(
-          context: context,
-          title: l10n.error,
-          description: errorMessage,
-          buttonText: "OK",
+        Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => OTPPage(email: email, password: password),
+          ),
         );
       }
-      return;
     } catch (e) {
+      debugPrint(e.toString());
       if (mounted) {
         CheckValidWidget.showIncompleteDetailsSheet(
           context: context,
@@ -114,26 +94,6 @@ class _RegisterPageState extends State<RegisterPage> {
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
-    }
-  }
-
-  String _getFirebaseErrorMessage(
-    FirebaseAuthException e,
-    AppLocalizations l10n,
-  ) {
-    switch (e.code) {
-      case 'email-already-in-use':
-        return l10n.email_already_in_use;
-      case 'invalid-email':
-        return l10n.invalid_email;
-      case 'operation-not-allowed':
-        return l10n.operation_not_allowed;
-      case 'weak-password':
-        return l10n.password_weak_password;
-      case 'network-request-failed':
-        return l10n.network_error;
-      default:
-        return e.message ?? l10n.something_went_wrong;
     }
   }
 
@@ -162,7 +122,6 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(height: 20.h),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(30.r),
                     child: SizedBox(
@@ -182,9 +141,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     style: CupertinoTheme.of(context).textTheme.textStyle
                         .copyWith(fontSize: 24.sp, fontWeight: FontWeight.bold),
                   ),
-
-                  SizedBox(height: 30.h),
-
+                  SizedBox(height: 20.h),
                   Container(
                     padding: EdgeInsets.all(15.w),
                     margin: EdgeInsets.symmetric(horizontal: 20.w),
@@ -261,10 +218,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           onPressed: _isLoading ? null : _handleRegister,
                           borderRadius: BorderRadius.circular(30.r),
                           child: _isLoading
-                              ? CupertinoActivityIndicator(
+                              ? LoadingAnimationWidget.staggeredDotsWave(
                                   color: CupertinoTheme.of(
                                     context,
-                                  ).textTheme.textStyle.color,
+                                  ).textTheme.textStyle.color!,
+                                  size: 24.w,
                                 )
                               : Text(
                                   l10n.register,
@@ -301,6 +259,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                     .copyWith(
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w600,
+                                      color: CupertinoTheme.of(
+                                        context,
+                                      ).primaryColor,
                                     ),
                               ),
                               onPressed: () {

@@ -1,57 +1,110 @@
-import 'dart:ui' as ui;
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:spend_flow/core/services/general_service/language_service.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFunctions _functions = FirebaseFunctions.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
+  final LanguageService _languageService = LanguageService();
 
   User? get currentUser => _auth.currentUser;
-
-  Stream<User?> get authStateChanges => _auth.authStateChanges();
-
   Stream<User?> get userChanges => _auth.userChanges();
 
-  Future<UserCredential?> signUpWithEmail({
-    required String email,
-    required String password,
-  }) async {
-    final systemLocale = ui.PlatformDispatcher.instance.locale.languageCode;
-    await _auth.setLanguageCode(systemLocale);
-    
+  String _getLanguageCode() {
+    return _languageService.currentLanguageCode;
+  }
+
+  Future<void> registerWithEmail(String email, String password) async {
     try {
-      return await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-    } on FirebaseAuthException catch (e) {
-      throw e.message ?? "Can't sign up";
+      final HttpsCallable callable = _functions.httpsCallable('registerUser');
+      final result = await callable.call({
+        'email': email,
+        'password': password,
+        'lang': _getLanguageCode(), 
+      });
+
+      if (result.data['success'] != true) {
+        throw result.data['message'];
+      }
+    } on FirebaseFunctionsException catch (e) {
+      throw e.message ?? "Đăng ký thất bại";
+    } catch (e) {
+      throw e.toString();
     }
   }
 
-  Future<UserCredential?> signInWithEmail({
-    required String email,
-    required String password,
-  }) async {
+  Future<void> verifyOtp(String email, String otp) async {
     try {
-      return await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-    } on FirebaseAuthException catch (e) {
-      throw e.message ?? "Can't sign in";
+      final HttpsCallable callable = _functions.httpsCallable('verifyOtp');
+      final result = await callable.call({
+        'email': email,
+        'otp': otp,
+        'lang':
+            _getLanguageCode(), // Để nhận thông báo lỗi/thành công đúng ngôn ngữ
+      });
+
+      if (result.data['success'] != true) {
+        throw result.data['message'];
+      }
+    } on FirebaseFunctionsException catch (e) {
+      throw e.message ?? "Lỗi xác thực OTP";
     }
   }
 
-  Future<void> sendPasswordResetEmail(String email) async {
+  Future<void> resendOtp(String email) async {
     try {
-      final systemLocale = ui.PlatformDispatcher.instance.locale.languageCode;
-      await _auth.setLanguageCode(systemLocale);
-      await _auth.sendPasswordResetEmail(email: email);
-    } on FirebaseAuthException catch (e) {
-      throw e.message ?? "Can't send password reset email";
+      final HttpsCallable callable = _functions.httpsCallable('resendOtp');
+      final result = await callable.call({
+        'email': email,
+        'lang': _getLanguageCode(),
+      });
+
+      if (result.data['success'] != true) {
+        throw result.data['message'];
+      }
+    } on FirebaseFunctionsException catch (e) {
+      throw e.message ?? "Lỗi gửi lại mã";
+    }
+  }
+
+  Future<void> sendForgotPasswordOtp(String email) async {
+    try {
+      final HttpsCallable callable = _functions.httpsCallable('forgotPassword');
+      final result = await callable.call({
+        'email': email,
+        'lang': _getLanguageCode(),
+      });
+
+      if (result.data['success'] != true) {
+        throw result.data['message'];
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<UserCredential> loginWithCustomAuth(
+    String email,
+    String password,
+  ) async {
+    try {
+      final HttpsCallable callable = _functions.httpsCallable('loginUser');
+      final result = await callable.call({
+        'email': email,
+        'password': password,
+      });
+
+      final String customToken = result.data['customToken'];
+
+      return await _auth.signInWithCustomToken(customToken);
+    } on FirebaseFunctionsException catch (e) {
+      throw e.message ?? "Đăng nhập thất bại";
+    } catch (e) {
+      rethrow;
     }
   }
 
@@ -100,5 +153,4 @@ class AuthService {
     await _googleSignIn.signOut();
     await _auth.signOut();
   }
-
 }

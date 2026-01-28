@@ -195,9 +195,7 @@ class _BudgetPageState extends State<BudgetPage>
                       Positioned(
                         right: 0.w,
                         bottom: _isPremium
-                            ? Platform.isIOS
-                                  ? 50.h
-                                  : 90.h
+                            ? 50.h
                             : Platform.isIOS
                             ? 90.h
                             : 108.h,

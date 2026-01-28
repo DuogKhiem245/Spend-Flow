@@ -14,7 +14,7 @@ class AIService {
     List<CategoryModel> categories,
     String language,
   ) async {
-    try {
+    try { 
       final result = await _functions
           .httpsCallable('analyzeReceiptImage')
           .call({

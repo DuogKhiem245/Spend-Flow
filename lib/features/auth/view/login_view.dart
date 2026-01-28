@@ -1,4 +1,3 @@
-import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,7 @@ import 'package:spend_flow/core/widgets/check_valid/check_valid_widget.dart';
 import 'package:spend_flow/core/widgets/bottom_bar.dart';
 import 'package:spend_flow/features/auth/auth_viewmodel.dart';
 import 'package:spend_flow/features/auth/view/forgot_password_view.dart';
-import 'package:spend_flow/features/auth/view/register/register_view.dart';
+import 'package:spend_flow/features/auth/view/register_view.dart';
 
 class LoginPage extends StatefulWidget {
   final bool fromCreateWallet;
@@ -61,43 +60,42 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     try {
-      final user = await _viewModel.loginWithEmail(email, password);
+      // final user = await _viewModel.loginWithEmail(email, password);
 
-      if (user != null) {
-        if (user.emailVerified) {
-          _navigateToHome();
-        } else {
-          _viewModel.signOut();
-          if (context.mounted) {
-            CheckValidWidget.showIncompleteDetailsSheet(
-              context: context,
-              title: l10n.email_not_verified,
-              description: l10n.please_verify_your_email_to_continue,
-              //haveAction: true,
-              // subtitle_1: l10n.email_not_received,
-              // subtitle_2: l10n.resend,
-              onButtonPressed: () async {
-                await _viewModel.resendVerificationEmail(user);
-                if (context.mounted) {
-                  AdaptiveAlertDialog.show(
-                    context: context,
-                    title: l10n.success,
-                    message: l10n.verification_email_sent,
-                    icon: 'envelope.badge.fill',
-                    actions: [
-                      AlertAction(
-                        title: "OK",
-                        style: AlertActionStyle.primary,
-                        onPressed: () => {},
-                      ),
-                    ],
-                  );
-                }
-              },
-            );
-          }
-        }
-      }
+      // if (user != null) {
+      //   if (user.emailVerified) {
+      //     _navigateToHome();
+      //   } else {
+      //     _viewModel.signOut();
+      //     if (context.mounted) {
+      //       CheckValidWidget.showIncompleteDetailsSheet(
+      //         context: context,
+      //         title: l10n.email_not_verified,
+      //         description: l10n.please_verify_your_email_to_continue,
+      //         //haveAction: true,
+      //         // subtitle_1: l10n.email_not_received,
+      //         // subtitle_2: l10n.resend,
+      //         onButtonPressed: () async {
+      //           if (context.mounted) {
+      //             AdaptiveAlertDialog.show(
+      //               context: context,
+      //               title: l10n.success,
+      //               message: l10n.verification_email_sent,
+      //               icon: 'envelope.badge.fill',
+      //               actions: [
+      //                 AlertAction(
+      //                   title: "OK",
+      //                   style: AlertActionStyle.primary,
+      //                   onPressed: () => {},
+      //                 ),
+      //               ],
+      //             );
+      //           }
+      //         },
+      //       );
+      //     }
+      //   }
+      // }
     } on FirebaseAuthException catch (e) {
       String message = l10n.login_error;
       switch (e.code) {
@@ -201,7 +199,6 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      SizedBox(height: 20.h),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(30.r),
                         child: AnimatedSwitcher(
@@ -229,7 +226,6 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                       ),
                       SizedBox(height: 20.h),
-
                       Container(
                         padding: EdgeInsets.all(15.w),
                         margin: EdgeInsets.symmetric(horizontal: 20.w),
@@ -451,6 +447,9 @@ class _LoginPageState extends State<LoginPage> {
                                         .copyWith(
                                           fontSize: 14.sp,
                                           fontWeight: FontWeight.w600,
+                                          color: CupertinoTheme.of(
+                                            context,
+                                          ).primaryColor,
                                         ),
                                   ),
                                   onPressed: () {

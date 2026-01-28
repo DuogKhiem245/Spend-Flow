@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:spend_flow/core/services/auth_service.dart';
+import 'package:spend_flow/features/auth/view/otp_view.dart';
 
 class AuthViewModel extends ChangeNotifier {
   final AuthService _authService = AuthService();
@@ -13,15 +14,31 @@ class AuthViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<User?> loginWithEmail(String email, String password) async {
+  Future<void> registerWithEmail(
+    BuildContext context,
+    String email,
+    String password,
+  ) async {
     _setLoading(true);
     try {
-      final credential = await _authService.signInWithEmail(
-        email: email,
-        password: password,
+      await _authService.registerWithEmail(email, password);
+      if (!context.mounted) return;
+      Navigator.push(
+        context,
+        CupertinoPageRoute(builder: (context) => OTPPage(email: email)),
       );
+    } catch (e) {
+      debugPrint(e.toString());
+      rethrow;
+    } finally {
+      _setLoading(false);
+    }
+  }
 
-      return credential?.user;
+  Future<void> verifyOtp(String email, String otp) async {
+    _setLoading(true);
+    try {
+      await _authService.verifyOtp(email, otp);
     } catch (e) {
       rethrow;
     } finally {
@@ -29,13 +46,32 @@ class AuthViewModel extends ChangeNotifier {
     }
   }
 
-
-  Future<void> resetPassword(String email) async {
+  Future<void> resendOtp(String email) async {
     _setLoading(true);
     try {
-      await _authService.sendPasswordResetEmail(
-        email,
-      ); 
+      await _authService.resendOtp(email);
+    } catch (e) {
+      rethrow;
+    } finally {
+      _setLoading(false);
+    }
+  }
+
+  Future<UserCredential?> loginWithEmail(String email, String password) async {
+    _setLoading(true);
+    try {
+      return await _authService.loginWithCustomAuth(email, password);
+    } catch (e) {
+      rethrow;
+    } finally {
+      _setLoading(false);
+    }
+  }
+
+  Future<void> sendForgotPasswordOtp(String email) async {
+    _setLoading(true);
+    try {
+      await _authService.sendForgotPasswordOtp(email);
     } catch (e) {
       rethrow;
     } finally {
@@ -46,6 +82,7 @@ class AuthViewModel extends ChangeNotifier {
   Future<UserCredential?> loginWithSocial(
     Future<UserCredential?> Function() method,
   ) async {
+    _setLoading(true);
     try {
       return await method();
     } catch (e) {
@@ -57,18 +94,6 @@ class AuthViewModel extends ChangeNotifier {
     } finally {
       _setLoading(false);
     }
-  }
-
-  Future<void> resendVerificationEmail(User user) async {
-    try {
-      if (!user.emailVerified) {
-        await user.sendEmailVerification();
-      } else {
-        throw Exception("User is null or already verified");
-      }
-    } catch (e) {
-      rethrow;
-    } 
   }
 
   Future<UserCredential?> signInWithGoogle() =>
