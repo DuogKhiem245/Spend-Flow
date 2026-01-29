@@ -1,6 +1,6 @@
 import { onCall } from "firebase-functions/v2/https";
 import { analyzeReceiptImageHandler, analyzeTransactionTextHandler } from "./ai/ai.controller.js";
-import { forgotPasswordHandler, loginHandler, registerHandler, resendOtpHandler, resetPasswordHandler, verifyOtpHandler } from "./auth/auth.controller.js";
+import { forgotPasswordHandler, loginHandler, registerHandler, resendOtpRegisterHandler, resetPasswordHandler, verifyOtpRegisterHandler } from "./auth/auth.controller.js";
 import { getApps, initializeApp } from "firebase-admin/app";
 
 if (getApps().length === 0) {
@@ -15,13 +15,13 @@ export const registerUser = onCall(
     registerHandler
 );
 
-export const verifyOtp = onCall(
-    verifyOtpHandler
+export const verifyOtpRegister = onCall(
+    verifyOtpRegisterHandler
 );
 
-export const resendOtp = onCall(
+export const resendOtpRegister = onCall(
     { secrets: ["GMAIL_APP_PASSWORD"] },
-    resendOtpHandler
+    resendOtpRegisterHandler
 );
 
 export const loginUser = onCall(

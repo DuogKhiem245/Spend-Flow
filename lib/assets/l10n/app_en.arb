@@ -111,6 +111,8 @@
   "are_you_sure_logout": "Are you sure you want to logout?",
   "have_error_occurred": "An error has occurred. Please try again.",
   "user_not_found": "No account found with this email.",
+  "enter_otp_reset_password": "We have sent an OTP code to your email. Please enter the OTP to reset your password.",
+  "not_time_yet_to_resend_otp": "Please wait a moment while we resend the OTP code.",
 
   "welcome_back": "Welcome Back",
   "back_login": "Back to Login",

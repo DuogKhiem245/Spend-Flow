@@ -569,7 +569,7 @@ abstract class AppLocalizations {
   /// No description provided for @we_sent_otp.
   ///
   /// In vi, this message translates to:
-  /// **'Mã xác thực (OTP) đã được gửi đến email của bạn. Vui lòng kiểm tra hộp thư đến (hoặc hòm thư Spam/Quảng cáo) để nhận mã.'**
+  /// **'Mã xác thực (OTP) đã được gửi đến email của bạn. Vui lòng kiểm tra hộp thư đến (hoặc hòm thư Spam/Quảng cáo) để xem mã.'**
   String get we_sent_otp;
 
   /// No description provided for @dont_receive_otp.
@@ -745,6 +745,18 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Không tìm thấy tài khoản với email này.'**
   String get user_not_found;
+
+  /// No description provided for @enter_otp_reset_password.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chúng tôi vừa gửi mã OTP vào email của bạn. Hãy nhập mã OTP để đặt lại mật khẩu.'**
+  String get enter_otp_reset_password;
+
+  /// No description provided for @not_time_yet_to_resend_otp.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng chờ một lát để gửi lại mã OTP.'**
+  String get not_time_yet_to_resend_otp;
 
   /// No description provided for @welcome_back.
   ///

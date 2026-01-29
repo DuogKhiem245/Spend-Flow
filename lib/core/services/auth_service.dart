@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:spend_flow/core/model/user_model.dart';
 import 'package:spend_flow/core/services/general_service/language_service.dart';
 
 class AuthService {
@@ -40,7 +39,9 @@ class AuthService {
 
   Future<void> verifyOtp(String email, String otp) async {
     try {
-      final HttpsCallable callable = _functions.httpsCallable('verifyOtp');
+      final HttpsCallable callable = _functions.httpsCallable(
+        'verifyOtpRegister',
+      );
       final result = await callable.call({
         'email': email,
         'otp': otp,
@@ -57,7 +58,9 @@ class AuthService {
 
   Future<void> resendOtp(String email) async {
     try {
-      final HttpsCallable callable = _functions.httpsCallable('resendOtp');
+      final HttpsCallable callable = _functions.httpsCallable(
+        'resendOtpRegister',
+      );
       final result = await callable.call({
         'email': email,
         'lang': _getLanguageCode(),
@@ -82,8 +85,10 @@ class AuthService {
       if (result.data['success'] != true) {
         throw result.data['message'];
       }
-    } catch (e) {
+    } on FirebaseFunctionsException {
       rethrow;
+    } catch (e) {
+      throw e.toString();
     }
   }
 
@@ -103,10 +108,32 @@ class AuthService {
       UserCredential userCredential = await _auth.signInWithCustomToken(
         customToken,
       );
-      
+
       return userCredential;
     } on FirebaseFunctionsException {
       rethrow;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> resetPassword(
+    String email,
+    String otp,
+    String newPassword,
+  ) async {
+    try {
+      final HttpsCallable callable = _functions.httpsCallable('resetPassword');
+      final result = await callable.call({
+        'email': email,
+        'otp': otp,
+        'newPassword': newPassword,
+        'lang': _getLanguageCode(),
+      });
+
+      if (result.data['success'] != true) {
+        throw result.data['message'];
+      }
     } catch (e) {
       rethrow;
     }

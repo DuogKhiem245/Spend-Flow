@@ -352,6 +352,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get user_not_found => 'No account found with this email.';
 
   @override
+  String get enter_otp_reset_password =>
+      'We have sent an OTP code to your email. Please enter the OTP to reset your password.';
+
+  @override
+  String get not_time_yet_to_resend_otp =>
+      'Please wait a moment while we resend the OTP code.';
+
+  @override
   String get welcome_back => 'Welcome Back';
 
   @override

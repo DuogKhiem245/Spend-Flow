@@ -271,7 +271,7 @@ class _ReportPageState extends State<ReportPage>
             child: Icon(
               CupertinoIcons.calendar_today,
               color: CupertinoColors.activeBlue,
-              size: 24.sp,
+              size: 32.sp,
             ),
           ),
         ],

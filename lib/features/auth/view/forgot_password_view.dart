@@ -1,10 +1,10 @@
-import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/core/widgets/check_valid/check_valid_widget.dart';
 import 'package:spend_flow/features/auth/auth_viewmodel.dart';
+import 'package:spend_flow/features/auth/view/reset_password_view.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -36,31 +36,18 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     setState(() => _isLoading = true);
 
     try {
-      //await _viewModel.resetPassword(widget.email);
-
-      // if (context.mounted) {
-      //   AdaptiveAlertDialog.show(
-      //     context: context,
-      //     title: l10n.success,
-      //     message: l10n.password_reset_email_sent,
-      //     icon: 'paperplane.fill',
-      //     actions: [
-      //       AlertAction(
-      //         title: l10n.ok,
-      //         style: AlertActionStyle.primary,
-      //         onPressed: () {
-      //           
-      //         },
-      //       ),
-      //     ],
-      //   );
-      // }
+      await _viewModel.sendForgotPasswordOtp(email);
+      if (!context.mounted) return;
+      Navigator.pushReplacement(
+        context,
+        CupertinoPageRoute(builder: (_) => ResetPasswordPage(email: email)),
+      );
     } catch (e) {
       if (context.mounted) {
         CheckValidWidget.showIncompleteDetailsSheet(
           context: context,
           title: l10n.error,
-          description: e.toString(),
+          description: _viewModel.cleanErrorMessage(e),
           buttonText: "OK",
         );
       }
@@ -141,7 +128,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               const Spacer(),
 
               CupertinoButton.filled(
-                onPressed: _isLoading ? null : () => _handleResetPassword(context),
+                onPressed: _isLoading
+                    ? null
+                    : () => _handleResetPassword(context),
                 borderRadius: BorderRadius.circular(30.r),
                 child: _isLoading
                     ? CupertinoActivityIndicator(

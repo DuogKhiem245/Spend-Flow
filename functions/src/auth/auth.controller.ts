@@ -47,7 +47,7 @@ export const registerHandler = async (request: CallableRequest) => {
     } catch (error) { throw wrapError(error, "register"); }
 };
 
-export const verifyOtpHandler = async (request: CallableRequest) => {
+export const verifyOtpRegisterHandler = async (request: CallableRequest) => {
     const { email, otp, lang } = request.data;
     const t = getT(lang);
     const db = getFirestore();
@@ -75,7 +75,7 @@ export const verifyOtpHandler = async (request: CallableRequest) => {
     } catch (error) { throw wrapError(error, "verify-otp"); }
 };
 
-export const resendOtpHandler = async (request: CallableRequest) => {
+export const resendOtpRegisterHandler = async (request: CallableRequest) => {
     const { email, lang } = request.data;
     const t = getT(lang);
     const db = getFirestore();

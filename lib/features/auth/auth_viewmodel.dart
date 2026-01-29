@@ -1,4 +1,5 @@
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
@@ -16,6 +17,13 @@ class AuthViewModel extends ChangeNotifier {
   void _setLoading(bool value) {
     _isLoading = value;
     notifyListeners();
+  }
+
+  String cleanErrorMessage(dynamic e) {
+    if (e is FirebaseFunctionsException) {
+      return e.message ?? e.code;
+    }
+    return e.toString();
   }
 
   Future<void> registerWithEmail(
@@ -72,7 +80,7 @@ class AuthViewModel extends ChangeNotifier {
       AdaptiveAlertDialog.show(
         context: context,
         title: l10n.error,
-        message: e.toString(),
+        message: cleanErrorMessage(e),
         icon: 'exclamationmark.triangle.fill',
         actions: [
           AlertAction(
@@ -124,6 +132,79 @@ class AuthViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> resendForgotPasswordOtp(
+    String email,
+    BuildContext context,
+  ) async {
+    _setLoading(true);
+    final l10n = AppLocalizations.of(context)!;
+    try {
+      await _authService.sendForgotPasswordOtp(email);
+      if (!context.mounted) return;
+      AdaptiveAlertDialog.show(
+        context: context,
+        title: "${l10n.resend} OTP",
+        message: l10n.otp_resent,
+        icon: 'antennas.bubble.left.fill',
+        actions: [
+          AlertAction(
+            title: "OK",
+            style: AlertActionStyle.primary,
+            onPressed: () {},
+          ),
+        ],
+      );
+    } catch (e) {
+      AdaptiveAlertDialog.show(
+        context: context,
+        title: l10n.error,
+        message: cleanErrorMessage(e),
+        icon: 'exclamationmark.triangle.fill',
+        actions: [
+          AlertAction(
+            title: "OK",
+            style: AlertActionStyle.primary,
+            onPressed: () {},
+          ),
+        ],
+      );
+      rethrow;
+    } finally {
+      _setLoading(false);
+    }
+  }
+
+  Future<void> resetPassword(
+    String email,
+    String otp,
+    String newPassword,
+    BuildContext context,
+  ) async {
+    _setLoading(true);
+    try {
+      await _authService.resetPassword(email, otp, newPassword);
+    } catch (e) {
+      if (!context.mounted) return;
+      final l10n = AppLocalizations.of(context)!;
+      AdaptiveAlertDialog.show(
+        context: context,
+        title: l10n.error,
+        message: e.toString(),
+        icon: 'exclamationmark.triangle.fill',
+        actions: [
+          AlertAction(
+            title: "OK",
+            style: AlertActionStyle.primary,
+            onPressed: () {},
+          ),
+        ],
+      );
+      rethrow;
+    } finally {
+      _setLoading(false);
+    }
+  }
+
   Future<UserCredential?> loginWithSocial(
     Future<UserCredential?> Function() method,
     BuildContext context,
@@ -136,7 +217,7 @@ class AuthViewModel extends ChangeNotifier {
       AdaptiveAlertDialog.show(
         context: context,
         title: l10n.error,
-        message: e.toString(),
+        message: cleanErrorMessage(e),
         icon: 'exclamationmark.triangle.fill',
         actions: [
           AlertAction(

@@ -81,7 +81,7 @@
   "verify": "Xác thực",
   "no_otp": "Không nhận được mã?",
   "verify_otp": "Xác thực OTP",
-  "we_sent_otp": "Mã xác thực (OTP) đã được gửi đến email của bạn. Vui lòng kiểm tra hộp thư đến (hoặc hòm thư Spam/Quảng cáo) để nhận mã.",
+  "we_sent_otp": "Mã xác thực (OTP) đã được gửi đến email của bạn. Vui lòng kiểm tra hộp thư đến (hoặc hòm thư Spam/Quảng cáo) để xem mã.",
   "dont_receive_otp": "Chưa nhận được OTP?",
   "plese_enter_valid_otp": "Vui lòng nhập mã OTP hợp lệ.",
   "otp_resent": "Mã OTP đã được gửi lại thành công.",
@@ -111,6 +111,8 @@
   "are_you_sure_logout": "Bạn có chắc chắn muốn đăng xuất không?",
   "have_error_occurred": "Đã xảy ra lỗi. Vui lòng thử lại.",
   "user_not_found": "Không tìm thấy tài khoản với email này.",
+  "enter_otp_reset_password": "Chúng tôi vừa gửi mã OTP vào email của bạn. Hãy nhập mã OTP để đặt lại mật khẩu.",
+  "not_time_yet_to_resend_otp": "Vui lòng chờ một lát để gửi lại mã OTP.",
 
   "welcome_back": "Chào mừng trở lại",
   "back_login": "Quay lại đăng nhập",

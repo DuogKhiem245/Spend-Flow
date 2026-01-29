@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
@@ -25,7 +26,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
-  bool _isLoading = false;
 
   String password = '';
   String confirmPassword = '';
@@ -70,8 +70,6 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
 
-    setState(() => _isLoading = true);
-
     try {
       await _viewModel.registerWithEmail(context, email, password);
       if (mounted) {
@@ -91,8 +89,6 @@ class _RegisterPageState extends State<RegisterPage> {
           buttonText: "OK",
         );
       }
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
     }
   }
 
@@ -100,15 +96,39 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
-        padding: EdgeInsetsDirectional.only(end: 10.w),
-        leading: CupertinoNavigationBarBackButton(
-          color: CupertinoTheme.of(context).primaryColor,
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
+    return ListenableBuilder(
+      listenable: _viewModel,
+      builder: (context, child) {
+        return Stack(
+          children: [
+            CupertinoPageScaffold(
+              navigationBar: CupertinoNavigationBar(
+                backgroundColor: CupertinoTheme.of(
+                  context,
+                ).scaffoldBackgroundColor,
+                padding: EdgeInsetsDirectional.only(end: 10.w),
+                leading: CupertinoNavigationBarBackButton(
+                  color: CupertinoTheme.of(context).primaryColor,
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ),
+              child: child!,
+            ),
+            if (_viewModel.isLoading)
+              Positioned.fill(
+                child: Container(
+                  color: Colors.black.withValues(alpha: 0.4),
+                  child: Center(
+                    child: LoadingAnimationWidget.staggeredDotsWave(
+                      color: CupertinoTheme.of(context).primaryColor,
+                      size: 30.w,
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        );
+      },
       child: SafeArea(
         top: true,
         child: GestureDetector(
@@ -214,26 +234,19 @@ class _RegisterPageState extends State<RegisterPage> {
                         SizedBox(height: 24.h),
 
                         CupertinoButton.filled(
-                          onPressed: _isLoading ? null : _handleRegister,
+                          onPressed: _handleRegister,
                           borderRadius: BorderRadius.circular(30.r),
-                          child: _isLoading
-                              ? LoadingAnimationWidget.staggeredDotsWave(
-                                  color: CupertinoTheme.of(
-                                    context,
-                                  ).textTheme.textStyle.color!,
-                                  size: 24.w,
-                                )
-                              : Text(
-                                  l10n.register,
-                                  style: CupertinoTheme.of(context)
-                                      .textTheme
-                                      .textStyle
-                                      .copyWith(
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w600,
-                                        color: CupertinoColors.white,
-                                      ),
+                          child: Text(
+                            l10n.register,
+                            style: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
+                                .copyWith(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: CupertinoColors.white,
                                 ),
+                          ),
                         ),
 
                         SizedBox(height: 10.h),
