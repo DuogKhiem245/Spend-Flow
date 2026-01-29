@@ -120,6 +120,16 @@ export const loginHandler = async (request: CallableRequest) => {
         const isMatch = await bcrypt.compare(password, userData.password);
         if (!isMatch) throw new HttpsError("unauthenticated", t.wrongPassword);
 
+        await db.collection("info_users").doc(userData.userId).set({
+            lastLogin: admin.firestore.FieldValue.serverTimestamp(),
+            email: email
+        }, { merge: true });
+
+        await admin.auth().updateUser(userData.userId, {
+            email: email,
+            emailVerified: true
+        });
+
         const customToken = await admin.auth().createCustomToken(userData.userId);
         return { success: true, customToken, userId: userData.userId };
     } catch (error) { throw wrapError(error, "login"); }

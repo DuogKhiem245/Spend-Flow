@@ -560,6 +560,48 @@ abstract class AppLocalizations {
   /// **'Không nhận được mã?'**
   String get no_otp;
 
+  /// No description provided for @verify_otp.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xác thực OTP'**
+  String get verify_otp;
+
+  /// No description provided for @we_sent_otp.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mã xác thực (OTP) đã được gửi đến email của bạn. Vui lòng kiểm tra hộp thư đến (hoặc hòm thư Spam/Quảng cáo) để nhận mã.'**
+  String get we_sent_otp;
+
+  /// No description provided for @dont_receive_otp.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa nhận được OTP?'**
+  String get dont_receive_otp;
+
+  /// No description provided for @plese_enter_valid_otp.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng nhập mã OTP hợp lệ.'**
+  String get plese_enter_valid_otp;
+
+  /// No description provided for @otp_resent.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mã OTP đã được gửi lại thành công.'**
+  String get otp_resent;
+
+  /// No description provided for @register_successful.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đăng ký thành công!'**
+  String get register_successful;
+
+  /// No description provided for @register_successful_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tài khoản của bạn đã được tạo thành công. Bây giờ bạn có thể đăng nhập bằng thông tin đăng nhập của mình.'**
+  String get register_successful_description;
+
   /// No description provided for @no_account.
   ///
   /// In vi, this message translates to:
@@ -697,6 +739,12 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Đã xảy ra lỗi. Vui lòng thử lại.'**
   String get have_error_occurred;
+
+  /// No description provided for @user_not_found.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không tìm thấy tài khoản với email này.'**
+  String get user_not_found;
 
   /// No description provided for @welcome_back.
   ///

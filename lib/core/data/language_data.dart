@@ -3,7 +3,7 @@ class LanguageData {
     {
       'code': 'en',
       'name': 'English',
-      'nativeName': 'English (US)',
+      'nativeName': 'English',
       'flag': '🇺🇸',
     },
     {

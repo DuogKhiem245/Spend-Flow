@@ -57,7 +57,7 @@ class WalletViewModel extends ChangeNotifier {
       if (user == null) return false;
 
       final snapshot = await FirebaseFirestore.instance
-          .collection('users')
+          .collection('data_sync') // Update, if bug set "users"
           .doc(user.uid)
           .collection('wallets')
           .where('isDeleted', isEqualTo: 0) 

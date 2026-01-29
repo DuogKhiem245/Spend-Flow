@@ -35,7 +35,6 @@ class ProfileViewModel extends ChangeNotifier {
 
       try {
         final userDoc = await _firestoreService.getUser(userAuth.uid);
-
         if (userDoc != null) {
           _userModel = userDoc;
         } else {

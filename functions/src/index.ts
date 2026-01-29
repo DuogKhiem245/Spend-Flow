@@ -4,7 +4,10 @@ import { forgotPasswordHandler, loginHandler, registerHandler, resendOtpHandler,
 import { getApps, initializeApp } from "firebase-admin/app";
 
 if (getApps().length === 0) {
-    initializeApp();
+    initializeApp({
+        projectId: 'spend-flow-82e37',
+        serviceAccountId: 'spend-flow-82e37@appspot.gserviceaccount.com',
+    });
 }
 
 export const registerUser = onCall(
@@ -22,6 +25,9 @@ export const resendOtp = onCall(
 );
 
 export const loginUser = onCall(
+    {
+        serviceAccount: 'spend-flow-82e37@appspot.gserviceaccount.com' 
+    },
     loginHandler
 );
 

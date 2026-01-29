@@ -250,6 +250,29 @@ class AppLocalizationsVi extends AppLocalizations {
   String get no_otp => 'Không nhận được mã?';
 
   @override
+  String get verify_otp => 'Xác thực OTP';
+
+  @override
+  String get we_sent_otp =>
+      'Mã xác thực (OTP) đã được gửi đến email của bạn. Vui lòng kiểm tra hộp thư đến (hoặc hòm thư Spam/Quảng cáo) để nhận mã.';
+
+  @override
+  String get dont_receive_otp => 'Chưa nhận được OTP?';
+
+  @override
+  String get plese_enter_valid_otp => 'Vui lòng nhập mã OTP hợp lệ.';
+
+  @override
+  String get otp_resent => 'Mã OTP đã được gửi lại thành công.';
+
+  @override
+  String get register_successful => 'Đăng ký thành công!';
+
+  @override
+  String get register_successful_description =>
+      'Tài khoản của bạn đã được tạo thành công. Bây giờ bạn có thể đăng nhập bằng thông tin đăng nhập của mình.';
+
+  @override
   String get no_account => 'Chưa có tài khoản?';
 
   @override
@@ -324,6 +347,9 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get have_error_occurred => 'Đã xảy ra lỗi. Vui lòng thử lại.';
+
+  @override
+  String get user_not_found => 'Không tìm thấy tài khoản với email này.';
 
   @override
   String get welcome_back => 'Chào mừng trở lại';

@@ -36,7 +36,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     setState(() => _isLoading = true);
 
     try {
-      // await _viewModel.resetPassword(email);
+      //await _viewModel.resetPassword(widget.email);
 
       // if (context.mounted) {
       //   AdaptiveAlertDialog.show(
@@ -49,7 +49,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       //         title: l10n.ok,
       //         style: AlertActionStyle.primary,
       //         onPressed: () {
-      //           Navigator.pop(context);
+      //           
       //         },
       //       ),
       //     ],

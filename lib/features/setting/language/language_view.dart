@@ -160,17 +160,17 @@ class _LanguageViewState extends State<LanguageView> {
                               ).textTheme.textStyle.color,
                             ),
                       ),
-                      if (lang['name'] != lang['nativeName']) ...[
-                        SizedBox(height: 2.h),
-                        Text(
-                          lang['name']!,
-                          style: CupertinoTheme.of(context).textTheme.textStyle
-                              .copyWith(
-                                fontSize: 14.sp,
-                                color: CupertinoColors.systemGrey,
-                              ),
-                        ),
-                      ],
+                      // if (lang['name'] != lang['nativeName']) ...[
+                      //   SizedBox(height: 2.h),
+                      //   Text(
+                      //     lang['name']!,
+                      //     style: CupertinoTheme.of(context).textTheme.textStyle
+                      //         .copyWith(
+                      //           fontSize: 14.sp,
+                      //           color: CupertinoColors.systemGrey,
+                      //         ),
+                      //   ),
+                      // ],
                     ],
                   ),
                 ),

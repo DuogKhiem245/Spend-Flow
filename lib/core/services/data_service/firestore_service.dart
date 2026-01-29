@@ -4,7 +4,7 @@ import 'package:spend_flow/core/model/user_model.dart';
 class FirestoreService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  final String _collection = 'users';
+  final String _collection = 'info_users';
 
   Future<void> saveUser(UserModel user) async {
     try {
@@ -13,7 +13,7 @@ class FirestoreService {
           .doc(user.uid)
           .set(user.toMap(), SetOptions(merge: true));
     } catch (e) {
-      throw Exception('Lỗi lưu Firestore: $e');
+      throw Exception('$e');
     }
   }
 
@@ -26,7 +26,7 @@ class FirestoreService {
       }
       return null;
     } catch (e) {
-      throw Exception('Lỗi lấy user: $e');
+      throw Exception('$e');
     }
   }
 }

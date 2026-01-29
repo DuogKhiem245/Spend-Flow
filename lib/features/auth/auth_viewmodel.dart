@@ -1,10 +1,14 @@
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/core/model/user_model.dart';
 import 'package:spend_flow/core/services/auth_service.dart';
-import 'package:spend_flow/features/auth/view/otp_view.dart';
+import 'package:spend_flow/core/services/data_service/firestore_service.dart';
 
 class AuthViewModel extends ChangeNotifier {
   final AuthService _authService = AuthService();
+  final FirestoreService _firestoreService = FirestoreService();
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -19,14 +23,10 @@ class AuthViewModel extends ChangeNotifier {
     String email,
     String password,
   ) async {
+    if (_isLoading) return;
     _setLoading(true);
     try {
       await _authService.registerWithEmail(email, password);
-      if (!context.mounted) return;
-      Navigator.push(
-        context,
-        CupertinoPageRoute(builder: (context) => OTPPage(email: email)),
-      );
     } catch (e) {
       debugPrint(e.toString());
       rethrow;
@@ -35,10 +35,12 @@ class AuthViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> verifyOtp(String email, String otp) async {
+  Future<void> verifyOtp(BuildContext context, String email, String otp) async {
+    if (_isLoading) return;
     _setLoading(true);
     try {
       await _authService.verifyOtp(email, otp);
+      if (!context.mounted) return;
     } catch (e) {
       rethrow;
     } finally {
@@ -46,11 +48,40 @@ class AuthViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> resendOtp(String email) async {
+  Future<void> resendOtp(String email, BuildContext context) async {
     _setLoading(true);
+    if (!context.mounted) return;
+    final l10n = AppLocalizations.of(context)!;
     try {
       await _authService.resendOtp(email);
+      if (!context.mounted) return;
+      AdaptiveAlertDialog.show(
+        context: context,
+        title: "${l10n.resend} OTP",
+        message: l10n.otp_resent,
+        icon: 'antennas.bubble.left.fill',
+        actions: [
+          AlertAction(
+            title: "OK",
+            style: AlertActionStyle.primary,
+            onPressed: () {},
+          ),
+        ],
+      );
     } catch (e) {
+      AdaptiveAlertDialog.show(
+        context: context,
+        title: l10n.error,
+        message: e.toString(),
+        icon: 'exclamationmark.triangle.fill',
+        actions: [
+          AlertAction(
+            title: "OK",
+            style: AlertActionStyle.primary,
+            onPressed: () {},
+          ),
+        ],
+      );
       rethrow;
     } finally {
       _setLoading(false);
@@ -60,7 +91,21 @@ class AuthViewModel extends ChangeNotifier {
   Future<UserCredential?> loginWithEmail(String email, String password) async {
     _setLoading(true);
     try {
-      return await _authService.loginWithCustomAuth(email, password);
+      UserCredential userCredential = await _authService.loginWithCustomAuth(
+        email,
+        password,
+      );
+      if (userCredential.user != null) {
+        final updatedUser = UserModel(
+          uid: _authService.currentUser!.uid,
+          email: email,
+          displayName: _authService.currentUser!.displayName ?? "",
+        );
+
+        await _firestoreService.saveUser(updatedUser);
+      }
+
+      return userCredential;
     } catch (e) {
       rethrow;
     } finally {
@@ -81,27 +126,37 @@ class AuthViewModel extends ChangeNotifier {
 
   Future<UserCredential?> loginWithSocial(
     Future<UserCredential?> Function() method,
+    BuildContext context,
   ) async {
     _setLoading(true);
+    final l10n = AppLocalizations.of(context)!;
     try {
       return await method();
     } catch (e) {
-      final err = e.toString();
-      if (err.contains('canceled') || err.contains('kSign')) {
-        return null;
-      }
+      AdaptiveAlertDialog.show(
+        context: context,
+        title: l10n.error,
+        message: e.toString(),
+        icon: 'exclamationmark.triangle.fill',
+        actions: [
+          AlertAction(
+            title: "OK",
+            style: AlertActionStyle.primary,
+            onPressed: () {},
+          ),
+        ],
+      );
       rethrow;
     } finally {
       _setLoading(false);
     }
   }
 
-  Future<UserCredential?> signInWithGoogle() =>
-      loginWithSocial(() => _authService.signInWithGoogle());
+  Future<UserCredential?> signInWithGoogle(BuildContext context) =>
+      loginWithSocial(() => _authService.signInWithGoogle(), context);
 
-  Future<UserCredential?> signInWithApple() =>
-      loginWithSocial(() => _authService.signInWithApple());
-
+  Future<UserCredential?> signInWithApple(BuildContext context) =>
+      loginWithSocial(() => _authService.signInWithApple(), context);
   Future<void> signOut() async {
     await _authService.signOut();
   }

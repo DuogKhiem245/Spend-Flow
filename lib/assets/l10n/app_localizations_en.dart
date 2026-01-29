@@ -250,6 +250,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get no_otp => 'Don\'t receive code?';
 
   @override
+  String get verify_otp => 'Verify OTP';
+
+  @override
+  String get we_sent_otp =>
+      'Please check your email for the OTP code. Don\'t forget to check your Spam or Junk folder if you don\'t see it in your inbox.';
+
+  @override
+  String get dont_receive_otp => 'Didn\'t receive the OTP?';
+
+  @override
+  String get plese_enter_valid_otp => 'Please enter a valid OTP code.';
+
+  @override
+  String get otp_resent => 'OTP code resent successfully.';
+
+  @override
+  String get register_successful => 'Registration successful!';
+
+  @override
+  String get register_successful_description =>
+      'Your account has been created successfully. You can now log in with your credentials.';
+
+  @override
   String get no_account => 'Don\'t have an account?';
 
   @override
@@ -324,6 +347,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get have_error_occurred => 'An error has occurred. Please try again.';
+
+  @override
+  String get user_not_found => 'No account found with this email.';
 
   @override
   String get welcome_back => 'Welcome Back';

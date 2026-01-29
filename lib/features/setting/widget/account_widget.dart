@@ -100,11 +100,13 @@ class AccountWidget extends StatelessWidget {
   }
 
   Widget _buildUserView(AppLocalizations l10n, BuildContext context) {
+    final String? photoUrl = currentUser?.photoURL;
     final String displayName =
         currentUser?.displayName ??
         SettingViewModel().getGreetingMessage(context);
-    final String email = currentUser!.email!;
-    final String? photoUrl = currentUser?.photoURL;
+    final String email = currentUser?.email ?? "";
+
+    debugPrint(currentUser.toString());
 
     return GestureDetector(
       onTap: () {

@@ -75,7 +75,7 @@ class _RegisterPageState extends State<RegisterPage> {
     try {
       await _viewModel.registerWithEmail(context, email, password);
       if (mounted) {
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           CupertinoPageRoute(
             builder: (context) => OTPPage(email: email, password: password),
@@ -83,12 +83,11 @@ class _RegisterPageState extends State<RegisterPage> {
         );
       }
     } catch (e) {
-      debugPrint(e.toString());
       if (mounted) {
         CheckValidWidget.showIncompleteDetailsSheet(
           context: context,
           title: l10n.error,
-          description: l10n.something_went_wrong,
+          description: e.toString(),
           buttonText: "OK",
         );
       }

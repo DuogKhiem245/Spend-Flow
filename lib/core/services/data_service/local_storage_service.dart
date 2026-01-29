@@ -1183,7 +1183,7 @@ class LocalStorageService {
             if (data.containsKey('id')) {
               hasDataToDelete = true;
               final docRef = FirebaseFirestore.instance
-                  .collection('data_users') // Update, if bug set "users"
+                  .collection('data_sync') // Update, if bug set "users"
                   .doc(user.uid)
                   .collection(collections[i])
                   .doc(data['id'].toString());

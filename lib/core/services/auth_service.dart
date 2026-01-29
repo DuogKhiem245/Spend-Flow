@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:spend_flow/core/model/user_model.dart';
 import 'package:spend_flow/core/services/general_service/language_service.dart';
 
 class AuthService {
@@ -24,7 +25,7 @@ class AuthService {
       final result = await callable.call({
         'email': email,
         'password': password,
-        'lang': _getLanguageCode(), 
+        'lang': _getLanguageCode(),
       });
 
       if (result.data['success'] != true) {
@@ -43,8 +44,7 @@ class AuthService {
       final result = await callable.call({
         'email': email,
         'otp': otp,
-        'lang':
-            _getLanguageCode(), // Để nhận thông báo lỗi/thành công đúng ngôn ngữ
+        'lang': _getLanguageCode(),
       });
 
       if (result.data['success'] != true) {
@@ -96,13 +96,17 @@ class AuthService {
       final result = await callable.call({
         'email': email,
         'password': password,
+        'lang': _getLanguageCode(),
       });
 
       final String customToken = result.data['customToken'];
-
-      return await _auth.signInWithCustomToken(customToken);
-    } on FirebaseFunctionsException catch (e) {
-      throw e.message ?? "Đăng nhập thất bại";
+      UserCredential userCredential = await _auth.signInWithCustomToken(
+        customToken,
+      );
+      
+      return userCredential;
+    } on FirebaseFunctionsException {
+      rethrow;
     } catch (e) {
       rethrow;
     }

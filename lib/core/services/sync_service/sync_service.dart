@@ -32,7 +32,7 @@ class SyncService {
   DocumentReference get _userRef {
     final uid = _auth.currentUser?.uid;
     if (uid == null) throw Exception("User not logged in");
-    return _firestore.collection('data_users').doc(uid);
+    return _firestore.collection('data_sync').doc(uid);
   }
 
   Future<void> syncData({bool force = false, bool isAds = false}) async {
