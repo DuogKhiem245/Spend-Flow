@@ -56,12 +56,13 @@ class VoiceInputViewModel extends ChangeNotifier {
   }
 
   Future<bool> _checkPermission(BuildContext context) async {
-    final status = await Permission.microphone.status;
+    var status = await Permission.microphone.status;
     if (status.isGranted) {
       return true;
     }
 
     if (status.isPermanentlyDenied) {
+      debugPrint("Microphone permission permanently denied.");
       if (context.mounted) {
         _showPermissionDialog(context);
       }
@@ -71,12 +72,16 @@ class VoiceInputViewModel extends ChangeNotifier {
     final result = await Permission.microphone.request();
     if (result.isGranted) {
       return true;
-    } else {
+    }
+
+    if (result.isDenied || result.isPermanentlyDenied) {
       if (context.mounted) {
         _showPermissionDialog(context);
       }
       return false;
     }
+
+    return false;
   }
 
   void _showPermissionDialog(BuildContext context) {
@@ -124,7 +129,7 @@ class VoiceInputViewModel extends ChangeNotifier {
           notifyListeners();
         },
         localeId: localeId,
-        listenFor: const Duration(seconds: 45),
+        // listenFor: const Duration(seconds: 45), // Optional: limit listening duration
         listenOptions: SpeechListenOptions(
           cancelOnError: true,
           listenMode: ListenMode.confirmation,
@@ -199,7 +204,7 @@ class VoiceInputViewModel extends ChangeNotifier {
       bool? isSaved = false;
 
       if (parsedTransactions.length == 1) {
-        isSaved = await Navigator.push<bool>(
+        isSaved = await Navigator.pushReplacement(
           context,
           CupertinoPageRoute(
             builder: (context) =>
@@ -207,7 +212,7 @@ class VoiceInputViewModel extends ChangeNotifier {
           ),
         );
       } else {
-        isSaved = await Navigator.push<bool>(
+        isSaved = await Navigator.pushReplacement(
           context,
           CupertinoPageRoute(
             builder: (context) =>
@@ -221,7 +226,6 @@ class VoiceInputViewModel extends ChangeNotifier {
       }
     } catch (e) {
       if (context.mounted) {
-        debugPrint("Error processing voice input: $e");
         _showErrorDialog(context, l10n);
       }
     } finally {

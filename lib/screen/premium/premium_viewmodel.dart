@@ -1,258 +1,159 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:flutter/services.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
-import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
-
-const String _kProductMonthlyId = 'spendflow_premium_monthly';
-const String _kProductYearlyId = 'spendflow_premium_yearly';
-const String _kProductLifetimeId = 'spendflow_premium_lifetime';
+import 'package:spend_flow/core/services/purchase_service.dart';
 
 enum PremiumPlan { monthly, yearly, lifetime }
 
 class PremiumViewModel extends ChangeNotifier {
-  final LocalStorageService _storage = LocalStorageService();
-  final InAppPurchase _iap = InAppPurchase.instance;
-
-  StreamSubscription<List<PurchaseDetails>>? _subscription;
+  final PremiumService _service = PremiumService();
 
   PremiumPlan _selectedPlan = PremiumPlan.monthly;
-  PremiumPlan get selectedPlan => _selectedPlan;
-
   bool _isPremium = false;
   bool _isLoading = false;
-
-  final Map<PremiumPlan, String> _storePrices = {};
-  final Map<PremiumPlan, ProductDetails> _productDetailsMap = {};
-
-  Timer? _timeoutTimer;
   String? _errorMessage;
-  String? get errorMessage => _errorMessage;
 
+  final Map<PremiumPlan, Package> _packagesMap = {};
+  final Map<PremiumPlan, String> _storePrices = {};
+
+  PremiumPlan get selectedPlan => _selectedPlan;
   bool get isPremium => _isPremium;
   bool get isLoading => _isLoading;
-
-  String get priceString => planPrice(_selectedPlan);
-
+  String? get errorMessage => _errorMessage;
   String planPrice(PremiumPlan plan) => _storePrices[plan] ?? '---';
 
-  PremiumViewModel() {
-    _checkStatus();
+  bool _showSuccessDialog = false;
+  bool _showRestoreSuccessDialog = false;
+  
+  bool get showSuccessDialog => _showSuccessDialog;
+  bool get showRestoreSuccessDialog => _showRestoreSuccessDialog;
 
-    _loadProducts();
-
-    final Stream<List<PurchaseDetails>> purchaseUpdated = _iap.purchaseStream;
-    _subscription = purchaseUpdated.listen(
-      (purchaseDetailsList) {
-        _listenToPurchaseUpdated(purchaseDetailsList);
-      },
-      onDone: () {
-        _subscription?.cancel();
-      },
-      onError: (error) {
-        debugPrint("Lỗi Purchase Stream: $error");
-        _isLoading = false;
-        notifyListeners();
-      },
-    );
+  PremiumViewModel(String? userId) {
+    _setup(userId);
   }
 
-  Future<void> _listenToPurchaseUpdated(
-    List<PurchaseDetails> purchaseDetailsList,
-  ) async {
-    for (var purchaseDetails in purchaseDetailsList) {
-      if (purchaseDetails.status == PurchaseStatus.pending) {
-        _isLoading = true;
-        notifyListeners();
-      } else {
-        if (purchaseDetails.status == PurchaseStatus.error) {
-          _cancelTimeout();
-          _isLoading = false;
-          notifyListeners();
-        } else if (purchaseDetails.status == PurchaseStatus.purchased ||
-            purchaseDetails.status == PurchaseStatus.restored) {
-          _cancelTimeout();
-          _errorMessage = null;
-          await _setPremiumSuccess();
-        } else if (purchaseDetails.status == PurchaseStatus.canceled) {
-          _cancelTimeout();
-          _isLoading = false;
-          notifyListeners();
-        }
+  Future<void> _setup(String? userId) async {
+    _isLoading = true;
+    notifyListeners();
 
-        if (purchaseDetails.pendingCompletePurchase) {
-          await _iap.completePurchase(purchaseDetails);
-        }
-      }
+    try {
+      await _service.init(userId);
+
+      _service.setCustomerInfoListener((info) {
+        _isPremium = info.entitlements.all["Spend Flow Premium"]?.isActive ?? false;
+        notifyListeners();
+      });
+
+      await _loadOfferings();
+    } catch (e) {
+      debugPrint("Premium Setup Error: $e");
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
   }
 
-  Future<void> _setPremiumSuccess() async {
-    await _storage.setPremiumStatus(
-      true,
-      DateTime.now().add(const Duration(days: 30)),
-    );
-    _isPremium = true;
-    _isLoading = false;
+  Future<void> _loadOfferings() async {
+    try {
+      final offerings = await _service.getOfferings();
+      if (offerings.current != null) {
+        for (var package in offerings.current!.availablePackages) {
+          final plan = _mapPackageToPlan(package.packageType);
+          if (plan != null) {
+            _packagesMap[plan] = package;
+            _storePrices[plan] = package.storeProduct.priceString;
+          }
+        }
+      }
+    } catch (e) {
+      debugPrint("Load Offerings Error: $e");
+    }
+  }
 
-    notifyListeners();
+  PremiumPlan? _mapPackageToPlan(PackageType type) {
+    switch (type) {
+      case PackageType.monthly:
+        return PremiumPlan.monthly;
+      case PackageType.annual:
+        return PremiumPlan.yearly;
+      case PackageType.lifetime:
+        return PremiumPlan.lifetime;
+      default:
+        return null;
+    }
   }
 
   Future<void> purchasePremium(AppLocalizations l10n) async {
-    final ProductDetails? details = _productDetailsMap[_selectedPlan];
-    if (details == null) {
-      debugPrint("Sản phẩm chưa sẵn sàng cho plan: $_selectedPlan");
-      return;
-    }
+    final package = _packagesMap[_selectedPlan];
+    if (package == null) return;
 
     _isLoading = true;
     _errorMessage = null;
+    _showSuccessDialog = false;
     notifyListeners();
-    _startTimeout(kind: 'purchase', l10n: l10n);
-
-    final PurchaseParam purchaseParam = PurchaseParam(productDetails: details);
 
     try {
-      await _iap.buyNonConsumable(purchaseParam: purchaseParam);
+      final customerInfo = await _service.purchase(package);
+
+      final bool hasPremium =
+          customerInfo?.entitlements.all["Spend Flow Premium"]?.isActive ?? false;
+
+      if (hasPremium) {
+        _isPremium = true;
+        _showSuccessDialog = true; 
+      } else {
+        _errorMessage =
+            "Giao dịch thành công nhưng chưa kích hoạt được quyền lợi.";
+      }
+    } on PlatformException catch (e) {
+      var errorCode = PurchasesErrorHelper.getErrorCode(e);
+
+      if (errorCode == PurchasesErrorCode.purchaseCancelledError) {
+        _errorMessage = l10n.cancel_purchase;
+      } else {
+        _errorMessage = l10n.purchase_failed_description;
+      }
     } catch (e) {
-      _cancelTimeout();
-      _isLoading = false;
       _errorMessage = l10n.purchase_failed_description;
-      notifyListeners();
+    } finally {
+      _isLoading = false;
+      notifyListeners(); 
     }
   }
 
   Future<void> restorePurchase(AppLocalizations l10n) async {
-    _isLoading = true;
+   _isLoading = true;
     _errorMessage = null;
+    _showSuccessDialog = false;
+    _showRestoreSuccessDialog = false;
     notifyListeners();
-    _startTimeout(kind: 'restore', l10n: l10n);
 
     try {
-      // await _iap.restorePurchases();
-      debugFakePurchase(shouldNotify: false).then((_) {
-        _cancelTimeout();
-        _isLoading = false;
-        notifyListeners();
-      });
+      final info = await _service.restore();
+      if (info.entitlements.all["Spend Flow Premium"]?.isActive ?? false) {
+        _isPremium = true;
+        _showRestoreSuccessDialog = true; 
+      } else {
+        _errorMessage = "Không tìm thấy giao dịch nào để khôi phục.";
+      }
     } catch (e) {
-      _cancelTimeout();
-      _isLoading = false;
       _errorMessage = l10n.restore_failed_description;
-      notifyListeners();
-      debugPrint("Lỗi khôi phục: $e");
-    }
-  }
-
-  Future<void> _checkStatus() async {
-    _isPremium = await _storage.getPremiumStatus();
-    notifyListeners();
-  }
-
-  Future<void> _loadProducts() async {
-    try {
-      final bool available = await _iap.isAvailable();
-      if (!available) {
-        notifyListeners();
-        return;
-      }
-
-      const Set<String> kIds = {
-        _kProductMonthlyId,
-        _kProductYearlyId,
-        _kProductLifetimeId,
-      };
-      final ProductDetailsResponse response = await _iap.queryProductDetails(
-        kIds,
-      );
-
-      if (response.notFoundIDs.isNotEmpty) {
-        debugPrint("ID không tồn tại: ${response.notFoundIDs}");
-      }
-
-      PremiumPlan? planFromId(String id) {
-        switch (id) {
-          case _kProductMonthlyId:
-            return PremiumPlan.monthly;
-          case _kProductYearlyId:
-            return PremiumPlan.yearly;
-          case _kProductLifetimeId:
-            return PremiumPlan.lifetime;
-          default:
-            return null;
-        }
-      }
-
-      for (final pd in response.productDetails) {
-        final plan = planFromId(pd.id);
-        if (plan != null) {
-          _productDetailsMap[plan] = pd;
-          _storePrices[plan] = pd.price;
-        }
-      }
-
-      notifyListeners();
-    } catch (e) {
-      debugPrint("Lỗi tải sản phẩm: $e");
+    } finally {
+      _isLoading = false;
       notifyListeners();
     }
-  }
-
-  Future<void> debugFakePurchase({bool shouldNotify = true}) async {
-    _isLoading = true;
-    notifyListeners();
-
-    await Future.delayed(const Duration(seconds: 2));
-
-    await _storage.setPremiumStatus(
-      true,
-      DateTime.now().add(const Duration(days: 30)),
-    );
-    _isPremium = true;
-    _isLoading = false;
-
-    if (shouldNotify) {
-      notifyListeners();
-    }
-  }
-
-  void refreshPremiumStatus() {
-    notifyListeners();
   }
 
   void selectPlan(PremiumPlan plan) {
     _selectedPlan = plan;
-    _errorMessage = null;
     notifyListeners();
   }
 
-  void _startTimeout({required String kind, required AppLocalizations l10n}) {
-    _timeoutTimer?.cancel();
-    _timeoutTimer = Timer(const Duration(seconds: 30), () {
-      if (_isLoading) {
-        _isLoading = false;
-        _errorMessage = kind == 'restore'
-            ? l10n.restore_failed_description
-            : l10n.purchase_failed_description;
-        notifyListeners();
-      }
-    });
-  }
-
-  void _cancelTimeout() {
-    _timeoutTimer?.cancel();
-    _timeoutTimer = null;
-  }
-
-  void clearError() {
+  void clearStatus() {
+    _showSuccessDialog = false;
+    _showRestoreSuccessDialog = false;
     _errorMessage = null;
-    Future.microtask(() => notifyListeners());
-  }
-
-  @override
-  void dispose() {
-    _subscription?.cancel();
-    _timeoutTimer?.cancel();
-    super.dispose();
+    notifyListeners();
   }
 }

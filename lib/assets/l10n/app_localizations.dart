@@ -2648,6 +2648,24 @@ abstract class AppLocalizations {
   /// **'Vui lòng bật quyền truy cập vị trí trong cài đặt để sử dụng các tính năng vị trí.'**
   String get permission_required_location_description;
 
+  /// No description provided for @congratulations.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chúc mừng!'**
+  String get congratulations;
+
+  /// No description provided for @successfully_purchased.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn đã mua thành công gói Premium. Hãy tận hưởng trải nghiệm nâng cao của bạn!'**
+  String get successfully_purchased;
+
+  /// No description provided for @cancel_purchase.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giao dịch đã bị hủy.'**
+  String get cancel_purchase;
+
   /// No description provided for @ai_powered.
   ///
   /// In vi, this message translates to:

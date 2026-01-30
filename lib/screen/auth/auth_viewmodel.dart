@@ -1,5 +1,4 @@
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';

@@ -450,6 +450,9 @@
   "permission_required_voice_input_description": "Please enable microphone access in settings to use voice input.",
   "permission_required_location": "Location access denied",
   "permission_required_location_description": "Please enable location access in settings to use location features.",
+  "congratulations": "Congratulations!",
+  "successfully_purchased": "You have successfully purchased Premium. Enjoy your enhanced experience!",
+  "cancel_purchase": "Cancel Purchase",
 
   "ai_powered": "AI Powered",
   "entries_pending": "Entries Pending",

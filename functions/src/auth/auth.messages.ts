@@ -12,7 +12,10 @@ export const authMessages: Record<string, any> = {
         waitResend: "Vui lòng đợi 60 giây.",
         missingFields: "Thiếu thông tin bắt buộc.",
         reqNotFound: "Yêu cầu không tồn tại hoặc hết hạn.",
-        emailUsedWithSocial: "Email này đã được đăng ký bằng Google hoặc Apple. Vui lòng sử dụng phương thức đăng nhập tương ứng."
+        emailUsedWithGoogle: "Email này đã được đăng ký bằng Google. Vui lòng sử dụng phương thức đăng nhập tương ứng.",
+        emailUsedWithApple: "Email này đã được đăng ký bằng Apple. Vui lòng sử dụng phương thức đăng nhập tương ứng.",
+        emailUsedWithFacebook: "Email này đã được đăng ký bằng Facebook. Vui lòng sử dụng phương thức đăng nhập tương ứng.",
+        emailUsedWithSocial: "Email này đã được đăng ký bằng phương thức khác. Vui lòng sử dụng phương thức khác để đăng nhập.",
     },
     en: {
         otpSent: "OTP code has been sent.",
@@ -27,7 +30,10 @@ export const authMessages: Record<string, any> = {
         waitResend: "Please wait 60 seconds.",
         missingFields: "Missing required fields.",
         reqNotFound: "Request not found or expired.",
-        emailUsedWithSocial: "This email is registered with Google or Apple. Please use the corresponding login method."
+        emailUsedWithGoogle: "This email is already registered with Google. Please use the corresponding sign-in method.",
+        emailUsedWithApple: "This email is already registered with Apple. Please use the corresponding sign-in method.",
+        emailUsedWithFacebook: "This email is already registered with Facebook. Please use the corresponding sign-in method.",
+        emailUsedWithSocial: "This email is already registered with another method. Please use a different method to sign in.",
     }
 };
 

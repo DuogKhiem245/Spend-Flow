@@ -12,38 +12,75 @@ class PremiumView extends StatelessWidget {
   final bool isMaximized;
   const PremiumView({super.key, this.isMaximized = false});
 
+  void _showAdaptiveDialog(
+    BuildContext context, {
+    required String title,
+    required String message,
+    required String icon,
+    bool isSuccess = false,
+  }) {
+    AdaptiveAlertDialog.show(
+      context: context,
+      title: title,
+      message: message,
+      icon: icon,
+      actions: [
+        AlertAction(
+          title: "OK",
+          style: AlertActionStyle.primary,
+          onPressed: () {
+            premiumViewModel.clearStatus();
+            if (isSuccess && context.mounted) Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final viewModel = premiumViewModel;
 
-    if (viewModel.errorMessage != null) {
-      final msg = viewModel.errorMessage!;
-
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        AdaptiveAlertDialog.show(
-          context: context,
-          title: l10n.error,
-          message: msg,
-          icon:
-              'exclamationmark.octagon.fill', 
-          actions: [
-            AlertAction(
-              title: l10n.ok,
-              style: AlertActionStyle.primary,
-              onPressed: () {
-                Navigator.of(context).pop();
-                viewModel.clearError();
-              },
-            ),
-          ],
-        );
-      });
-    }
-
     return ListenableBuilder(
       listenable: viewModel,
       builder: (context, child) {
+        if (viewModel.errorMessage != null) {
+          final msg = viewModel.errorMessage!;
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _showAdaptiveDialog(
+              context,
+              title: l10n.error,
+              message: msg,
+              icon: 'exclamationmark.octagon.fill',
+            );
+          });
+        }
+
+        if (viewModel.showSuccessDialog) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _showAdaptiveDialog(
+              context,
+              title: l10n.congratulations,
+              message: l10n.successfully_purchased,
+              icon: 'checkmark.seal.fill',
+              isSuccess: true,
+            );
+          });
+        }
+
+        if (viewModel.showRestoreSuccessDialog) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _showAdaptiveDialog(
+              context,
+              title: l10n.restore_successful,
+              message: l10n.successfully_purchased,
+              icon: 'arrow.clockwise.icloud.fill',
+              isSuccess: true,
+            );
+          });
+        }
+
         return PopScope(
           canPop: !viewModel.isLoading,
           child: Container(
@@ -447,11 +484,14 @@ class PremiumView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        l10n.continue_with(viewModel.priceString),
+                        l10n.continue_with(
+                          viewModel.planPrice(viewModel.selectedPlan),
+                        ),
                         style: CupertinoTheme.of(context).textTheme.textStyle
                             .copyWith(
                               fontSize: 16.sp,
                               fontWeight: FontWeight.w700,
+                              color: Colors.white,
                             ),
                       ),
                       SizedBox(width: 8.w),

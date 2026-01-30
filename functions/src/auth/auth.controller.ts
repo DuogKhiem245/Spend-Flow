@@ -30,6 +30,15 @@ export const registerHandler = async (request: CallableRequest) => {
         try {
             const authUser = await admin.auth().getUserByEmail(email);
             if (authUser) {
+                const providers = authUser.providerData.map(p => p.providerId);
+
+                if (providers.includes('google.com'))
+                    throw new HttpsError("already-exists", t.emailUsedWithGoogle);
+                else if (providers.includes('apple.com'))
+                    throw new HttpsError("already-exists", t.emailUsedWithApple);
+                else if (providers.includes('facebook.com'))
+                    throw new HttpsError("already-exists", t.emailUsedWithFacebook);
+
                 throw new HttpsError("already-exists", t.emailUsedWithSocial);
             }
         } catch (error: any) {

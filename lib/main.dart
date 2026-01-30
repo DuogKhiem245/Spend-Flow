@@ -22,11 +22,13 @@ import 'config/app_routes.dart';
 
 final languageService = LanguageService();
 final themeService = ThemeService();
-final premiumViewModel = PremiumViewModel();
 final fontViewModel = FontViewModel();
+late PremiumViewModel premiumViewModel;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await dotenv.load(fileName: ".env");
 
   await MobileAds.instance.initialize();
 
@@ -42,6 +44,8 @@ void main() async {
   final bool createFirstWallet = prefs.getBool('create_first_wallet') ?? false;
 
   User? user = FirebaseAuth.instance.currentUser;
+  premiumViewModel = PremiumViewModel(user?.uid ?? "");
+
   try {
     await user?.reload();
     user = FirebaseAuth.instance.currentUser;
@@ -55,8 +59,6 @@ void main() async {
   }
 
   await NotificationService().init();
-
-  await dotenv.load(fileName: ".env");
 
   String publicToken = dotenv.env['MAPBOX_PUBLIC_TOKEN'] ?? '';
 

@@ -1372,6 +1372,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'Please enable location access in settings to use location features.';
 
   @override
+  String get congratulations => 'Congratulations!';
+
+  @override
+  String get successfully_purchased =>
+      'You have successfully purchased Premium. Enjoy your enhanced experience!';
+
+  @override
+  String get cancel_purchase => 'Cancel Purchase';
+
+  @override
   String get ai_powered => 'AI Powered';
 
   @override

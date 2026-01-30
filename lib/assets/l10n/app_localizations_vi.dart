@@ -1370,6 +1370,16 @@ class AppLocalizationsVi extends AppLocalizations {
       'Vui lòng bật quyền truy cập vị trí trong cài đặt để sử dụng các tính năng vị trí.';
 
   @override
+  String get congratulations => 'Chúc mừng!';
+
+  @override
+  String get successfully_purchased =>
+      'Bạn đã mua thành công gói Premium. Hãy tận hưởng trải nghiệm nâng cao của bạn!';
+
+  @override
+  String get cancel_purchase => 'Giao dịch đã bị hủy.';
+
+  @override
   String get ai_powered => 'Hỗ trợ bởi AI';
 
   @override

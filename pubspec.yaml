@@ -60,6 +60,8 @@ dependencies:
   google_fonts: ^8.0.0
   adaptive_platform_ui: ^0.1.100
   email_validator: ^3.0.0
+  purchases_flutter: ^9.10.8
+  purchases_ui_flutter: ^9.10.8
   # google_maps_flutter: ^2.14.0
   # geolocator: ^14.0.2
   
