@@ -8,11 +8,22 @@ import 'package:spend_flow/core/services/general_service/language_service.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFunctions _functions = FirebaseFunctions.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
+  static final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
   final LanguageService _languageService = LanguageService();
+  static bool isInitialize = false;
 
   User? get currentUser => _auth.currentUser;
   Stream<User?> get userChanges => _auth.userChanges();
+
+  static Future<void> initSignIn() async {
+    if (!isInitialize) {
+      await _googleSignIn.initialize(
+        serverClientId:
+            '586343572662-mgcmtajb7p6cak11ml8p88ig63j7f537.apps.googleusercontent.com',
+      );
+    }
+    isInitialize = true;
+  }
 
   String _getLanguageCode() {
     return _languageService.currentLanguageCode;
@@ -141,13 +152,15 @@ class AuthService {
 
   Future<UserCredential?> signInWithGoogle() async {
     try {
-      final GoogleSignInAccount googleUser = await _googleSignIn.authenticate(
+      initSignIn();
+
+      final GoogleSignInAccount googleSignInAccount = await _googleSignIn.authenticate(
         scopeHint: ['email', 'profile'],
       );
 
-      final GoogleSignInAuthentication googleAuth = googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth = googleSignInAccount.authentication;
 
-      final credential = GoogleAuthProvider.credential(
+      final AuthCredential credential = GoogleAuthProvider.credential(
         idToken: googleAuth.idToken,
       );
 

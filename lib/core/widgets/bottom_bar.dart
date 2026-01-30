@@ -7,10 +7,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/widgets/banner_ads_widget.dart';
-import 'package:spend_flow/features/budget/budget_view.dart';
-import 'package:spend_flow/features/home/home_view.dart';
-import 'package:spend_flow/features/report/report_view.dart';
-import 'package:spend_flow/features/setting/setting_view.dart';
+import 'package:spend_flow/screen/budget/budget_view.dart';
+import 'package:spend_flow/screen/home/home_view.dart';
+import 'package:spend_flow/screen/report/report_view.dart';
+import 'package:spend_flow/screen/setting/setting_view.dart';
 import 'package:spend_flow/main.dart';
 
 class BottomNavbar extends StatefulWidget {

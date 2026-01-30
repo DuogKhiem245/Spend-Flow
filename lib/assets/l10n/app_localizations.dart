@@ -758,6 +758,18 @@ abstract class AppLocalizations {
   /// **'Vui lòng chờ một lát để gửi lại mã OTP.'**
   String get not_time_yet_to_resend_otp;
 
+  /// No description provided for @reset_password_successful.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đặt lại mật khẩu thành công'**
+  String get reset_password_successful;
+
+  /// No description provided for @reset_password_successful_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mật khẩu của bạn đã được đặt lại thành công. Bây giờ bạn có thể đăng nhập bằng mật khẩu mới.'**
+  String get reset_password_successful_description;
+
   /// No description provided for @welcome_back.
   ///
   /// In vi, this message translates to:

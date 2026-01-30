@@ -27,6 +27,15 @@ export const registerHandler = async (request: CallableRequest) => {
     validateFields({ email, password }, t);
 
     try {
+        try {
+            const authUser = await admin.auth().getUserByEmail(email);
+            if (authUser) {
+                throw new HttpsError("already-exists", t.emailUsedWithSocial);
+            }
+        } catch (error: any) {
+            if (error.code !== 'auth/user-not-found') throw error;
+        }
+
         const userDoc = await db.collection("users").doc(email).get();
         if (userDoc.exists) throw new HttpsError("already-exists", t.emailExists);
 
@@ -67,7 +76,8 @@ export const verifyOtpRegisterHandler = async (request: CallableRequest) => {
             email: userData.email,
             password: userData.password,
             createdAt: FieldValue.serverTimestamp(),
-            isVerified: true
+            isVerified: true,
+            signInMethod: 'password'
         });
 
         await db.collection("temp_users").doc(email).delete();
@@ -105,7 +115,7 @@ export const resendOtpRegisterHandler = async (request: CallableRequest) => {
 };
 
 export const loginHandler = async (request: CallableRequest) => {
-    const { email, password, lang } = request.data;
+    const { email, password, lang, signInMethod } = request.data;
     const t = getT(lang);
     const db = getFirestore();
 
@@ -115,14 +125,23 @@ export const loginHandler = async (request: CallableRequest) => {
         const userDoc = await db.collection("users").doc(email).get();
         const userData = userDoc.data();
 
-        if (!userDoc.exists || !userData) throw new HttpsError("not-found", t.userNotFound);
+        if (!userDoc.exists || !userData) {
+            try {
+                const authUser = await admin.auth().getUserByEmail(email);
+                if (authUser) throw new HttpsError("already-exists", t.emailUsedWithSocial);
+            } catch (e: any) {
+                if (e.code !== 'auth/user-not-found') throw e;
+            }
+            throw new HttpsError("not-found", t.userNotFound);
+        }
 
         const isMatch = await bcrypt.compare(password, userData.password);
         if (!isMatch) throw new HttpsError("unauthenticated", t.wrongPassword);
 
         await db.collection("info_users").doc(userData.userId).set({
             lastLogin: admin.firestore.FieldValue.serverTimestamp(),
-            email: email
+            email: email,
+            signInMethod: signInMethod || 'password'
         }, { merge: true });
 
         await admin.auth().updateUser(userData.userId, {

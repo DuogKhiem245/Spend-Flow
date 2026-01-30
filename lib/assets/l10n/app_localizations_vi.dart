@@ -360,6 +360,13 @@ class AppLocalizationsVi extends AppLocalizations {
       'Vui lòng chờ một lát để gửi lại mã OTP.';
 
   @override
+  String get reset_password_successful => 'Đặt lại mật khẩu thành công';
+
+  @override
+  String get reset_password_successful_description =>
+      'Mật khẩu của bạn đã được đặt lại thành công. Bây giờ bạn có thể đăng nhập bằng mật khẩu mới.';
+
+  @override
   String get welcome_back => 'Chào mừng trở lại';
 
   @override

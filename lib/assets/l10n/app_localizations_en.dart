@@ -360,6 +360,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Please wait a moment while we resend the OTP code.';
 
   @override
+  String get reset_password_successful => 'Password Reset Successful';
+
+  @override
+  String get reset_password_successful_description =>
+      'Your password has been reset successfully. You can now log in with your new password.';
+
+  @override
   String get welcome_back => 'Welcome Back';
 
   @override

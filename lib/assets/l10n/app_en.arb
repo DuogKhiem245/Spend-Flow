@@ -113,6 +113,8 @@
   "user_not_found": "No account found with this email.",
   "enter_otp_reset_password": "We have sent an OTP code to your email. Please enter the OTP to reset your password.",
   "not_time_yet_to_resend_otp": "Please wait a moment while we resend the OTP code.",
+  "reset_password_successful": "Password Reset Successful",
+  "reset_password_successful_description": "Your password has been reset successfully. You can now log in with your new password.",
 
   "welcome_back": "Welcome Back",
   "back_login": "Back to Login",

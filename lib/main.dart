@@ -15,8 +15,8 @@ import 'package:spend_flow/core/services/general_service/language_service.dart';
 import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 import 'package:spend_flow/core/services/general_service/notification_service.dart';
 import 'package:spend_flow/core/services/general_service/theme_service.dart';
-import 'package:spend_flow/features/premium/premium_viewmodel.dart';
-import 'package:spend_flow/features/setting/font/font_viewmodel.dart';
+import 'package:spend_flow/screen/premium/premium_viewmodel.dart';
+import 'package:spend_flow/screen/setting/font/font_viewmodel.dart';
 import 'package:spend_flow/firebase_options.dart';
 import 'config/app_routes.dart';
 

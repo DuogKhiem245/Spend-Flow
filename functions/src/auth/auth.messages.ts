@@ -11,7 +11,8 @@ export const authMessages: Record<string, any> = {
         wrongPassword: "Sai mật khẩu.",
         waitResend: "Vui lòng đợi 60 giây.",
         missingFields: "Thiếu thông tin bắt buộc.",
-        reqNotFound: "Yêu cầu không tồn tại hoặc hết hạn."
+        reqNotFound: "Yêu cầu không tồn tại hoặc hết hạn.",
+        emailUsedWithSocial: "Email này đã được đăng ký bằng Google hoặc Apple. Vui lòng sử dụng phương thức đăng nhập tương ứng."
     },
     en: {
         otpSent: "OTP code has been sent.",
@@ -25,7 +26,8 @@ export const authMessages: Record<string, any> = {
         wrongPassword: "Wrong password.",
         waitResend: "Please wait 60 seconds.",
         missingFields: "Missing required fields.",
-        reqNotFound: "Request not found or expired."
+        reqNotFound: "Request not found or expired.",
+        emailUsedWithSocial: "This email is registered with Google or Apple. Please use the corresponding login method."
     }
 };
 
