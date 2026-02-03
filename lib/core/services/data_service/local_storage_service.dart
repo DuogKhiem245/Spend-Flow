@@ -57,8 +57,6 @@ class LocalStorageService {
   static const String _kNotificationKey = 'is_notification_enabled';
   static const String _kLocationKey = 'is_location_enabled';
   static const String _kCurrencyCodeKey = 'selected_currency_code';
-  static const String _isPremiumKey = 'is_premium_user';
-  static const String _premiumExpiryKey = 'premium_expiry_date';
 
   Future<bool?> getNotificationStatus() async {
     final prefs = await SharedPreferences.getInstance();
@@ -102,37 +100,7 @@ class LocalStorageService {
 
     return currency;
   }
-
-  Future<bool> getPremiumStatus() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    final bool isPremium = prefs.getBool(_isPremiumKey) ?? false;
-    if (!isPremium) return false;
-
-    final int? expiryTimestamp = prefs.getInt(_premiumExpiryKey);
-
-    if (expiryTimestamp == null) return false;
-
-    final now = DateTime.now().millisecondsSinceEpoch;
-    if (now > expiryTimestamp) {
-      await setPremiumStatus(false, null);
-      return false;
-    }
-
-    return true;
-  }
-
-  Future<void> setPremiumStatus(bool value, DateTime? expiryDate) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_isPremiumKey, value);
-
-    if (value && expiryDate != null) {
-      await prefs.setInt(_premiumExpiryKey, expiryDate.millisecondsSinceEpoch);
-    } else {
-      await prefs.remove(_premiumExpiryKey);
-    }
-  }
-
+  
   // ============================================================
   // 2: PASSCODE
   // ============================================================

@@ -215,6 +215,7 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
           style: AlertActionStyle.destructive,
           onPressed: () async {
             await authService.signOut();
+            await premiumViewModel.handleLogout();
           },
         ),
         AlertAction(

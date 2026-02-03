@@ -410,7 +410,7 @@ class HomeViewModel extends ChangeNotifier {
 
       return null;
     } catch (e) {
-      debugPrint("Lỗi xóa ví: $e");
+      debugPrint("Error deleting wallet: $e");
     }
     return null;
   }

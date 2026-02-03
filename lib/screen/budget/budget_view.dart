@@ -9,10 +9,10 @@ import 'package:intl/intl.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
-import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 import 'package:spend_flow/core/utils/category_helper.dart';
 import 'package:spend_flow/core/widgets/skeleton/skeleton_budget_view.dart';
 import 'package:spend_flow/core/widgets/verify_passcode/verify_passcode_sheet.dart';
+import 'package:spend_flow/main.dart';
 import 'package:spend_flow/screen/budget/add_budget/add_budget_view.dart';
 import '../../core/model/budget_model.dart';
 import 'budget_viewmodel.dart';
@@ -27,6 +27,7 @@ class BudgetPage extends StatefulWidget {
 class _BudgetPageState extends State<BudgetPage>
     with WidgetsBindingObserver, AutomaticKeepAliveClientMixin {
   final BudgetViewModel _viewModel = BudgetViewModel();
+  final _premiumViewModel = premiumViewModel;
 
   bool _isPremium = false;
 
@@ -37,10 +38,8 @@ class _BudgetPageState extends State<BudgetPage>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    LocalStorageService().getPremiumStatus().then((value) {
-      setState(() {
-        _isPremium = value;
-      });
+    setState(() {
+      _isPremium = _premiumViewModel.isPremium;
     });
   }
 

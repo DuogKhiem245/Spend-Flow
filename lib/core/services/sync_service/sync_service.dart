@@ -8,6 +8,7 @@ import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/core/model/wallet_model.dart';
 import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 import 'package:spend_flow/core/services/sync_service/image_sync_service.dart';
+import 'package:spend_flow/main.dart';
 
 class SyncService {
   static final SyncService _instance = SyncService._internal();
@@ -22,6 +23,7 @@ class SyncService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final LocalStorageService _localStorage = LocalStorageService();
   final ImageSyncService _imageService = ImageSyncService();
+  final _premiumViewModel = premiumViewModel;
 
   final ValueNotifier<DateTime?> lastSyncNotifier = ValueNotifier(null);
 
@@ -39,7 +41,7 @@ class SyncService {
     final user = _auth.currentUser;
     if (user == null) return;
 
-    final isPremium = await _localStorage.getPremiumStatus();
+    final isPremium =  _premiumViewModel.isPremium;
     if (!isPremium && isAds == false) {
       return;
     }

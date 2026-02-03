@@ -47,12 +47,17 @@ class PremiumView extends StatelessWidget {
       builder: (context, child) {
         if (viewModel.errorMessage != null) {
           final msg = viewModel.errorMessage!;
+          final isCancelled = msg == l10n.cancel_purchase;
           WidgetsBinding.instance.addPostFrameCallback((_) {
             _showAdaptiveDialog(
               context,
-              title: l10n.error,
+              title: isCancelled
+                  ? l10n.cancel
+                  : l10n.error, 
               message: msg,
-              icon: 'exclamationmark.octagon.fill',
+              icon: isCancelled
+                  ? 'info.circle.fill' 
+                  : 'exclamationmark.octagon.fill', 
             );
           });
         }

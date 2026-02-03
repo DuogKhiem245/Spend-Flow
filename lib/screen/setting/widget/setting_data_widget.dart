@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/ads_service.dart';
-import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 import 'package:spend_flow/core/services/sync_service/sync_service.dart';
 import 'package:spend_flow/core/widgets/custom_option/custom_option_widget.dart';
+import 'package:spend_flow/main.dart';
 import 'package:spend_flow/screen/premium/premium_view.dart';
 import 'package:spend_flow/screen/setting/data_management/export/export_view.dart';
 import 'package:spend_flow/screen/setting/data_management/import/import_view.dart';
@@ -29,6 +29,7 @@ class SettingDataWidget extends StatefulWidget {
 
 class _SettingDataWidgetState extends State<SettingDataWidget> {
   final AdsService _adsService = AdsService();
+  final _premiumViewModel = premiumViewModel;
 
   bool _isLoading = false;
 
@@ -88,7 +89,7 @@ class _SettingDataWidgetState extends State<SettingDataWidget> {
       return;
     }
 
-    final bool isPremium = await LocalStorageService().getPremiumStatus();
+    final bool isPremium = _premiumViewModel.isPremium;
 
     if (isPremium) {
       _startSyncFlow(isAds: false);
@@ -238,13 +239,8 @@ class _SettingDataWidgetState extends State<SettingDataWidget> {
           title: l10n.export_data,
           icon: CupertinoIcons.cloud_download_fill,
           iconBgColor: Color.fromRGBO(77, 85, 98, 1),
-          onTap: () async {
-            final bool isPremium = await LocalStorageService()
-                .getPremiumStatus();
-
-            if (!context.mounted) return;
-
-            if (isPremium) {
+          onTap: () {
+            if (_premiumViewModel.isPremium) {
               Navigator.push(
                 context,
                 CupertinoPageRoute(builder: (context) => const ExportView()),
@@ -263,13 +259,8 @@ class _SettingDataWidgetState extends State<SettingDataWidget> {
           title: l10n.import_data,
           icon: CupertinoIcons.cloud_upload_fill,
           iconBgColor: Color.fromRGBO(85, 181, 166, 1),
-          onTap: () async {
-            final bool isPremium = await LocalStorageService()
-                .getPremiumStatus();
-
-            if (!context.mounted) return;
-
-            if (isPremium) {
+          onTap: () {
+            if (_premiumViewModel.isPremium) {
               Navigator.push(
                 context,
                 CupertinoPageRoute(builder: (context) => const ImportView()),

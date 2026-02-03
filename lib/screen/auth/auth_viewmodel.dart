@@ -6,10 +6,12 @@ import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/model/user_model.dart';
 import 'package:spend_flow/core/services/auth_service.dart';
 import 'package:spend_flow/core/services/data_service/firestore_service.dart';
+import 'package:spend_flow/main.dart';
 
 class AuthViewModel extends ChangeNotifier {
   final AuthService _authService = AuthService();
   final FirestoreService _firestoreService = FirestoreService();
+  final _premiumViewModel = premiumViewModel;
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -120,6 +122,8 @@ class AuthViewModel extends ChangeNotifier {
 
         await _firestoreService.saveUser(updatedUser);
       }
+
+      await _premiumViewModel.handleLogin(_authService.currentUser!.uid);
 
       return userCredential;
     } catch (e) {

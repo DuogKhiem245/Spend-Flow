@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
-import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
+import 'package:spend_flow/main.dart';
 import 'package:spend_flow/screen/premium/premium_view.dart';
 import 'package:spend_flow/screen/setting/security/security_view.dart';
 import 'package:spend_flow/screen/setting/setting_viewmodel.dart';
@@ -76,11 +76,8 @@ class _SettingSecurityWidgetState extends State<SettingSecurityWidget> {
               title: title,
               icon: CupertinoIcons.lock_fill,
               iconBgColor: const Color(0xFF71717A),
-              onTap: () async {
-                final bool isPremium = await LocalStorageService()
-                    .getPremiumStatus();
-                if (!context.mounted) return;
-                if (isPremium) {
+              onTap: () {
+                if (premiumViewModel.isPremium) {
                   Navigator.push(
                     context,
                     CupertinoPageRoute(

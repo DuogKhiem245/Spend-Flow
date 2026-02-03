@@ -62,13 +62,17 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     bool? shouldRefresh = false;
 
     switch (index) {
-      case 2:
-        shouldRefresh = await Navigator.push<bool>(
-          context,
-          CupertinoPageRoute(builder: (context) => const AddTransactionPage()),
-        );
+      case 0:
+        if (_premiumViewModel.isPremium) {
+          shouldRefresh = await Navigator.push<bool>(
+            context,
+            CupertinoPageRoute(builder: (context) => const ScanReceiptView()),
+          );
+        } else {
+          shouldRefresh = await _showLimitOptions(context, isVoice: false);
+        }
         break;
-
+        
       case 1:
         final canUse = await _limitService.canUseVoice();
         if (canUse) {
@@ -83,15 +87,11 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         }
         break;
 
-      case 0:
-        if (_premiumViewModel.isPremium) {
-          shouldRefresh = await Navigator.push<bool>(
-            context,
-            CupertinoPageRoute(builder: (context) => const ScanReceiptView()),
-          );
-        } else {
-          shouldRefresh = await _showLimitOptions(context, isVoice: false);
-        }
+      case 2:
+        shouldRefresh = await Navigator.push<bool>(
+          context,
+          CupertinoPageRoute(builder: (context) => const AddTransactionPage()),
+        );
         break;
     }
 
@@ -236,7 +236,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           style: AlertActionStyle.primary,
           onPressed: () {},
         ),
-      ], 
+      ],
     );
   }
 

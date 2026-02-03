@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
-import 'package:spend_flow/core/services/purchase_service.dart';
+import 'package:spend_flow/core/services/premium_service.dart';
 
 enum PremiumPlan { monthly, yearly, lifetime }
 
@@ -13,6 +13,8 @@ class PremiumViewModel extends ChangeNotifier {
   bool _isPremium = false;
   bool _isLoading = false;
   String? _errorMessage;
+  bool _showSuccessDialog = false;
+  bool _showRestoreSuccessDialog = false;
 
   final Map<PremiumPlan, Package> _packagesMap = {};
   final Map<PremiumPlan, String> _storePrices = {};
@@ -21,13 +23,11 @@ class PremiumViewModel extends ChangeNotifier {
   bool get isPremium => _isPremium;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
-  String planPrice(PremiumPlan plan) => _storePrices[plan] ?? '---';
-
-  bool _showSuccessDialog = false;
-  bool _showRestoreSuccessDialog = false;
-  
   bool get showSuccessDialog => _showSuccessDialog;
   bool get showRestoreSuccessDialog => _showRestoreSuccessDialog;
+  String planPrice(PremiumPlan plan) => _storePrices[plan] ?? '---';
+
+  static const String _premiumEntitlementId = "Spend Flow Premium";
 
   PremiumViewModel(String? userId) {
     _setup(userId);
@@ -40,9 +40,11 @@ class PremiumViewModel extends ChangeNotifier {
     try {
       await _service.init(userId);
 
+      final customerInfo = await Purchases.getCustomerInfo();
+      _updatePremiumStatus(customerInfo);
+
       _service.setCustomerInfoListener((info) {
-        _isPremium = info.entitlements.all["Spend Flow Premium"]?.isActive ?? false;
-        notifyListeners();
+        _updatePremiumStatus(info);
       });
 
       await _loadOfferings();
@@ -50,6 +52,15 @@ class PremiumViewModel extends ChangeNotifier {
       debugPrint("Premium Setup Error: $e");
     } finally {
       _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  void _updatePremiumStatus(CustomerInfo info) {
+    final bool newStatus =
+        info.entitlements.all[_premiumEntitlementId]?.isActive ?? false;
+    if (_isPremium != newStatus) {
+      _isPremium = newStatus;
       notifyListeners();
     }
   }
@@ -96,15 +107,17 @@ class PremiumViewModel extends ChangeNotifier {
     try {
       final customerInfo = await _service.purchase(package);
 
-      final bool hasPremium =
-          customerInfo?.entitlements.all["Spend Flow Premium"]?.isActive ?? false;
+      if (customerInfo != null) {
+        final bool hasPremium =
+            customerInfo.entitlements.all["Spend Flow Premium"]?.isActive ??
+            false;
 
-      if (hasPremium) {
-        _isPremium = true;
-        _showSuccessDialog = true; 
-      } else {
-        _errorMessage =
-            "Giao dịch thành công nhưng chưa kích hoạt được quyền lợi.";
+        if (hasPremium) {
+          _isPremium = true;
+          _showSuccessDialog = true;
+        } else {
+          _errorMessage = l10n.purchase_failed_description;
+        }
       }
     } on PlatformException catch (e) {
       var errorCode = PurchasesErrorHelper.getErrorCode(e);
@@ -118,12 +131,12 @@ class PremiumViewModel extends ChangeNotifier {
       _errorMessage = l10n.purchase_failed_description;
     } finally {
       _isLoading = false;
-      notifyListeners(); 
+      notifyListeners();
     }
   }
 
   Future<void> restorePurchase(AppLocalizations l10n) async {
-   _isLoading = true;
+    _isLoading = true;
     _errorMessage = null;
     _showSuccessDialog = false;
     _showRestoreSuccessDialog = false;
@@ -133,12 +146,38 @@ class PremiumViewModel extends ChangeNotifier {
       final info = await _service.restore();
       if (info.entitlements.all["Spend Flow Premium"]?.isActive ?? false) {
         _isPremium = true;
-        _showRestoreSuccessDialog = true; 
+        _showRestoreSuccessDialog = true;
       } else {
         _errorMessage = "Không tìm thấy giao dịch nào để khôi phục.";
       }
     } catch (e) {
       _errorMessage = l10n.restore_failed_description;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> handleLogin(String userId) async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      await _service.logIn(userId);
+      final customerInfo = await Purchases.getCustomerInfo();
+      _updatePremiumStatus(customerInfo);
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> handleLogout() async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      await _service.logOut();
+      final customerInfo = await _service.restore();
+      _updatePremiumStatus(customerInfo);
     } finally {
       _isLoading = false;
       notifyListeners();
