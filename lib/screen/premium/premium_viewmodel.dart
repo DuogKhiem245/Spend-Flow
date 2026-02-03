@@ -56,15 +56,6 @@ class PremiumViewModel extends ChangeNotifier {
     }
   }
 
-  void _updatePremiumStatus(CustomerInfo info) {
-    final bool newStatus =
-        info.entitlements.all[_premiumEntitlementId]?.isActive ?? false;
-    if (_isPremium != newStatus) {
-      _isPremium = newStatus;
-      notifyListeners();
-    }
-  }
-
   Future<void> _loadOfferings() async {
     try {
       final offerings = await _service.getOfferings();
@@ -148,7 +139,7 @@ class PremiumViewModel extends ChangeNotifier {
         _isPremium = true;
         _showRestoreSuccessDialog = true;
       } else {
-        _errorMessage = "Không tìm thấy giao dịch nào để khôi phục.";
+        _errorMessage = l10n.restore_no_purchase_description;
       }
     } catch (e) {
       _errorMessage = l10n.restore_failed_description;
@@ -158,7 +149,7 @@ class PremiumViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> handleLogin(String userId) async {
+  Future<void> handleLoginPremium(String userId) async {
     _isLoading = true;
     notifyListeners();
     try {
@@ -180,6 +171,15 @@ class PremiumViewModel extends ChangeNotifier {
       _updatePremiumStatus(customerInfo);
     } finally {
       _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  void _updatePremiumStatus(CustomerInfo info) {
+    final bool newStatus =
+        info.entitlements.all[_premiumEntitlementId]?.isActive ?? false;
+    if (_isPremium != newStatus) {
+      _isPremium = newStatus;
       notifyListeners();
     }
   }

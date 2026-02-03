@@ -1380,6 +1380,10 @@ class AppLocalizationsVi extends AppLocalizations {
   String get cancel_purchase => 'Giao dịch đã bị hủy.';
 
   @override
+  String get restore_no_purchase_description =>
+      'Không tìm thấy giao dịch nào để khôi phục.';
+
+  @override
   String get ai_powered => 'Hỗ trợ bởi AI';
 
   @override

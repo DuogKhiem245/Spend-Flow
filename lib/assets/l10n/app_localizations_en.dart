@@ -1382,6 +1382,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancel_purchase => 'Cancel Purchase';
 
   @override
+  String get restore_no_purchase_description =>
+      'No previous purchases were found to restore.';
+
+  @override
   String get ai_powered => 'AI Powered';
 
   @override

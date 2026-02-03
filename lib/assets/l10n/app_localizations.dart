@@ -2666,6 +2666,12 @@ abstract class AppLocalizations {
   /// **'Giao dịch đã bị hủy.'**
   String get cancel_purchase;
 
+  /// No description provided for @restore_no_purchase_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không tìm thấy giao dịch nào để khôi phục.'**
+  String get restore_no_purchase_description;
+
   /// No description provided for @ai_powered.
   ///
   /// In vi, this message translates to:

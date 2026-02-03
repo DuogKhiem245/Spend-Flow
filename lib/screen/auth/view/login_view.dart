@@ -155,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
       if (credential != null && credential.user != null) {
         // await SyncService().syncData();
         //await _viewModel.updateSignInMethod('password');
-        await _premiumViewModel.handleLogin(credential.user!.uid);
+        await _premiumViewModel.handleLoginPremium(credential.user!.uid);
         _navigateToHome();
       }
     } catch (e) {

@@ -452,6 +452,7 @@
   "congratulations": "Chúc mừng!",
   "successfully_purchased": "Bạn đã mua thành công gói Premium. Hãy tận hưởng trải nghiệm nâng cao của bạn!",
   "cancel_purchase": "Giao dịch đã bị hủy.",
+  "restore_no_purchase_description": "Không tìm thấy giao dịch nào để khôi phục.",
 
   "ai_powered": "Hỗ trợ bởi AI",
   "entries_pending": "Mục đang chờ xử lý",

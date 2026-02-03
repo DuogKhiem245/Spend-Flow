@@ -106,8 +106,6 @@ class AccountWidget extends StatelessWidget {
         SettingViewModel().getGreetingMessage(context);
     final String email = currentUser?.email ?? "";
 
-    debugPrint(currentUser.toString());
-
     return GestureDetector(
       onTap: () {
         Navigator.push(

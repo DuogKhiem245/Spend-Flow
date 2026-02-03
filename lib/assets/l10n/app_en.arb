@@ -453,6 +453,7 @@
   "congratulations": "Congratulations!",
   "successfully_purchased": "You have successfully purchased Premium. Enjoy your enhanced experience!",
   "cancel_purchase": "Cancel Purchase",
+  "restore_no_purchase_description": "No previous purchases were found to restore.",
 
   "ai_powered": "AI Powered",
   "entries_pending": "Entries Pending",

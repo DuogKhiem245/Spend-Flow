@@ -123,7 +123,7 @@ class AuthViewModel extends ChangeNotifier {
         await _firestoreService.saveUser(updatedUser);
       }
 
-      await _premiumViewModel.handleLogin(_authService.currentUser!.uid);
+      await _premiumViewModel.handleLoginPremium(_authService.currentUser!.uid);
 
       return userCredential;
     } catch (e) {
