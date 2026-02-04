@@ -10,6 +10,7 @@ import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/ads_service.dart';
 import 'package:spend_flow/core/services/data_service/daily_limit_service.dart';
 import 'package:spend_flow/core/widgets/custom_option/custom_option_widget.dart';
+import 'package:spend_flow/screen/home/widgets/streak_card.dart';
 import 'package:spend_flow/screen/premium/premium_view.dart';
 import 'package:spend_flow/screen/scan_receipt/scran_receipt_view.dart';
 import 'package:spend_flow/screen/transaction/add_transaction/add_transaction_view.dart';

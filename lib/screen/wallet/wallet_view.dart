@@ -102,127 +102,78 @@ class _WalletViewState extends State<WalletView> {
               ),
             ),
           ),
-          child: SafeArea(
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                return SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20.w,
-                    vertical: 20.h,
-                  ),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: constraints.maxHeight - 40.h,
+          child: GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: SafeArea(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return SingleChildScrollView(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 20.w,
+                      vertical: 20.h,
                     ),
-                    child: IntrinsicHeight(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 10.h),
-                          Center(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(24.r),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppColors.primaryColor.withValues(
-                                      alpha: 0.2,
+                    keyboardDismissBehavior:
+                        ScrollViewKeyboardDismissBehavior.onDrag,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: constraints.maxHeight - 10.h,
+                      ),
+                      child: IntrinsicHeight(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 10.h),
+                            Center(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(24.r),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppColors.primaryColor.withValues(
+                                        alpha: 0.2,
+                                      ),
+                                      blurRadius: 20,
+                                      offset: const Offset(0, 10),
                                     ),
-                                    blurRadius: 20,
-                                    offset: const Offset(0, 10),
+                                  ],
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(24.r),
+                                  child: Image.asset(
+                                    isDarkMode
+                                        ? 'lib/assets/images/logoDark.png'
+                                        : 'lib/assets/images/logoLight.png',
+                                    width: 100.w,
+                                    height: 100.w,
+                                    fit: BoxFit.cover,
                                   ),
-                                ],
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(24.r),
-                                child: Image.asset(
-                                  isDarkMode
-                                      ? 'lib/assets/images/logoDark.png'
-                                      : 'lib/assets/images/logoLight.png',
-                                  width: 100.w,
-                                  height: 100.w,
-                                  fit: BoxFit.cover,
                                 ),
                               ),
                             ),
-                          ),
 
-                          SizedBox(height: 16.h),
+                            SizedBox(height: 16.h),
 
-                          Center(
-                            child: Text(
-                              widget.firstWallet
-                                  ? l10n.welcome_create_wallet
-                                  : l10n.add_wallet_description,
-                              textAlign: TextAlign.center,
-                              style: CupertinoTheme.of(context)
-                                  .textTheme
-                                  .textStyle
-                                  .copyWith(
-                                    fontSize: 14.sp,
-                                    color: CupertinoColors.systemGrey,
-                                  ),
-                            ),
-                          ),
-
-                          SizedBox(height: 40.h),
-
-                          Text(
-                            l10n.enter_wallet_name,
-                            style: CupertinoTheme.of(context)
-                                .textTheme
-                                .textStyle
-                                .copyWith(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: CupertinoTheme.of(context)
-                                      .textTheme
-                                      .textStyle
-                                      .color!
-                                      .withValues(alpha: .8),
-                                ),
-                          ),
-
-                          SizedBox(height: 8.h),
-                          CupertinoTextField(
-                            controller: _nameController,
-                            placeholder: l10n.eg_my_wallet,
-                            decoration: BoxDecoration(
-                              color: CupertinoTheme.of(
-                                context,
-                              ).barBackgroundColor,
-                              borderRadius: BorderRadius.circular(30.r),
+                            Center(
+                              child: Text(
+                                widget.firstWallet
+                                    ? l10n.welcome_create_wallet
+                                    : l10n.add_wallet_description,
+                                textAlign: TextAlign.center,
+                                style: CupertinoTheme.of(context)
+                                    .textTheme
+                                    .textStyle
+                                    .copyWith(
+                                      fontSize: 14.sp,
+                                      color: CupertinoColors.systemGrey,
+                                    ),
+                              ),
                             ),
 
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 16.w,
-                              vertical: 16.h,
-                            ),
+                            SizedBox(height: 40.h),
 
-                            placeholderStyle: CupertinoTheme.of(context)
-                                .textTheme
-                                .textStyle
-                                .copyWith(
-                                  fontSize: 16.sp,
-                                  color: CupertinoColors.placeholderText,
-                                ),
-
-                            style: CupertinoTheme.of(context)
-                                .textTheme
-                                .textStyle
-                                .copyWith(
-                                  fontSize: 16.sp,
-                                  color: CupertinoTheme.of(
-                                    context,
-                                  ).textTheme.textStyle.color,
-                                ),
-                          ),
-
-                          SizedBox(height: 24.h),
-
-                          if (widget.firstWallet) ...[
                             Text(
-                              l10n.currency_unit,
+                              l10n.enter_wallet_name,
                               style: CupertinoTheme.of(context)
                                   .textTheme
                                   .textStyle
@@ -236,166 +187,221 @@ class _WalletViewState extends State<WalletView> {
                                         .withValues(alpha: .8),
                                   ),
                             ),
+
                             SizedBox(height: 8.h),
-                            GestureDetector(
-                              onTap: () async {
-                                await Navigator.push(
+                            CupertinoTextField(
+                              controller: _nameController,
+                              placeholder: l10n.eg_my_wallet,
+                              decoration: BoxDecoration(
+                                color: CupertinoTheme.of(
                                   context,
-                                  CupertinoPageRoute(
-                                    builder: (context) => const CurrencyView(),
+                                ).barBackgroundColor,
+                                borderRadius: BorderRadius.circular(30.r),
+                              ),
+
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16.w,
+                                vertical: 16.h,
+                              ),
+
+                              placeholderStyle: CupertinoTheme.of(context)
+                                  .textTheme
+                                  .textStyle
+                                  .copyWith(
+                                    fontSize: 16.sp,
+                                    color: CupertinoColors.placeholderText,
                                   ),
-                                );
-                                _settingViewModel.loadSettings();
-                              },
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 16.w,
-                                  vertical: 14.h,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: CupertinoTheme.of(
+
+                              style: CupertinoTheme.of(context)
+                                  .textTheme
+                                  .textStyle
+                                  .copyWith(
+                                    fontSize: 16.sp,
+                                    color: CupertinoTheme.of(
+                                      context,
+                                    ).textTheme.textStyle.color,
+                                  ),
+                            ),
+
+                            SizedBox(height: 24.h),
+
+                            if (widget.firstWallet) ...[
+                              Text(
+                                l10n.currency_unit,
+                                style: CupertinoTheme.of(context)
+                                    .textTheme
+                                    .textStyle
+                                    .copyWith(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: CupertinoTheme.of(context)
+                                          .textTheme
+                                          .textStyle
+                                          .color!
+                                          .withValues(alpha: .8),
+                                    ),
+                              ),
+                              SizedBox(height: 8.h),
+                              GestureDetector(
+                                onTap: () async {
+                                  await Navigator.push(
                                     context,
-                                  ).barBackgroundColor,
-                                  borderRadius: BorderRadius.circular(30.r),
-                                ),
+                                    CupertinoPageRoute(
+                                      builder: (context) =>
+                                          const CurrencyView(),
+                                    ),
+                                  );
+                                  _settingViewModel.loadSettings();
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 16.w,
+                                    vertical: 14.h,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: CupertinoTheme.of(
+                                      context,
+                                    ).barBackgroundColor,
+                                    borderRadius: BorderRadius.circular(30.r),
+                                  ),
 
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      CupertinoIcons.money_dollar_circle_fill,
-                                      color: AppColors.primaryColor,
-                                      size: 24.sp,
-                                    ),
-                                    SizedBox(width: 10.w),
-                                    Text(
-                                      l10n.currency,
-                                      style: CupertinoTheme.of(context)
-                                          .textTheme
-                                          .textStyle
-                                          .copyWith(
-                                            fontSize: 16.sp,
-                                            color: CupertinoTheme.of(
-                                              context,
-                                            ).textTheme.textStyle.color,
-                                          ),
-                                    ),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        CupertinoIcons.money_dollar_circle_fill,
+                                        color: AppColors.primaryColor,
+                                        size: 24.sp,
+                                      ),
+                                      SizedBox(width: 10.w),
+                                      Text(
+                                        l10n.currency,
+                                        style: CupertinoTheme.of(context)
+                                            .textTheme
+                                            .textStyle
+                                            .copyWith(
+                                              fontSize: 16.sp,
+                                              color: CupertinoTheme.of(
+                                                context,
+                                              ).textTheme.textStyle.color,
+                                            ),
+                                      ),
 
-                                    const Spacer(),
+                                      const Spacer(),
 
-                                    Text(
-                                      _settingViewModel.currentCurrencyCode,
-                                      style: CupertinoTheme.of(context)
-                                          .textTheme
-                                          .textStyle
-                                          .copyWith(
-                                            fontSize: 16.sp,
-                                            fontWeight: FontWeight.w600,
-                                            color: CupertinoColors.systemGrey,
-                                          ),
-                                    ),
-                                    SizedBox(width: 4.w),
-                                    Icon(
-                                      CupertinoIcons.chevron_right,
-                                      size: 16.sp,
-                                      color: CupertinoColors.systemGrey3,
-                                    ),
-                                  ],
+                                      Text(
+                                        _settingViewModel.currentCurrencyCode,
+                                        style: CupertinoTheme.of(context)
+                                            .textTheme
+                                            .textStyle
+                                            .copyWith(
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.w600,
+                                              color: CupertinoColors.systemGrey,
+                                            ),
+                                      ),
+                                      SizedBox(width: 4.w),
+                                      Icon(
+                                        CupertinoIcons.chevron_right,
+                                        size: 16.sp,
+                                        color: CupertinoColors.systemGrey3,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
+                            ],
+
+                            const Spacer(),
+                            SizedBox(height: 20.h),
+
+                            SizedBox(
+                              width: double.infinity,
+                              child: CupertinoButton(
+                                padding: EdgeInsets.symmetric(vertical: 16.h),
+                                color: AppColors.primaryColor,
+                                borderRadius: BorderRadius.circular(30.r),
+                                onPressed: _viewModel.isLoading
+                                    ? null
+                                    : _onConfirm,
+                                child: _viewModel.isLoading
+                                    ? const CupertinoActivityIndicator(
+                                        color: CupertinoColors.white,
+                                      )
+                                    : Text(
+                                        l10n.create_wallet,
+                                        style: CupertinoTheme.of(context)
+                                            .textTheme
+                                            .textStyle
+                                            .copyWith(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 16.sp,
+                                              color: Colors.white,
+                                            ),
+                                      ),
+                              ),
                             ),
-                          ],
-
-                          const Spacer(),
-                          SizedBox(height: 20.h),
-
-                          SizedBox(
-                            width: double.infinity,
-                            child: CupertinoButton(
-                              padding: EdgeInsets.symmetric(vertical: 16.h),
-                              color: AppColors.primaryColor,
-                              borderRadius: BorderRadius.circular(30.r),
-                              onPressed: _viewModel.isLoading
-                                  ? null
-                                  : _onConfirm,
-                              child: _viewModel.isLoading
-                                  ? const CupertinoActivityIndicator(
-                                      color: CupertinoColors.white,
-                                    )
-                                  : Text(
-                                      l10n.create_wallet,
-                                      style: CupertinoTheme.of(context)
-                                          .textTheme
-                                          .textStyle
-                                          .copyWith(
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 16.sp,
-                                            color: Colors.white,
-                                          ),
-                                    ),
-                            ),
-                          ),
-                          if (widget.firstWallet &&
-                              FirebaseAuth.instance.currentUser == null) ...[
-                            SizedBox(height: 10.h),
-                            Center(
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    l10n.have_account,
-                                    style: CupertinoTheme.of(context)
-                                        .textTheme
-                                        .textStyle
-                                        .copyWith(
-                                          fontSize: 14.sp,
-                                          color: CupertinoTheme.of(context)
-                                              .textTheme
-                                              .textStyle
-                                              .color!
-                                              .withValues(alpha: 0.7),
-                                        ),
-                                  ),
-
-                                  CupertinoButton(
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: 8.h,
-                                      horizontal: 4.w,
-                                    ),
-                                    onPressed: _viewModel.isLoading
-                                        ? null
-                                        : () {
-                                            Navigator.push(
-                                              context,
-                                              CupertinoPageRoute(
-                                                builder: (context) =>
-                                                    const LoginPage(
-                                                      haveBack: true,
-                                                    ),
-                                              ),
-                                            );
-                                          },
-                                    child: Text(
-                                      l10n.login,
+                            if (widget.firstWallet &&
+                                FirebaseAuth.instance.currentUser == null) ...[
+                              Center(
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      l10n.have_account,
                                       style: CupertinoTheme.of(context)
                                           .textTheme
                                           .textStyle
                                           .copyWith(
                                             fontSize: 14.sp,
-                                            color: AppColors.primaryColor,
-                                            fontWeight: FontWeight.bold,
+                                            color: CupertinoTheme.of(context)
+                                                .textTheme
+                                                .textStyle
+                                                .color!
+                                                .withValues(alpha: 0.7),
                                           ),
                                     ),
-                                  ),
-                                ],
+
+                                    CupertinoButton(
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: 8.h,
+                                        horizontal: 4.w,
+                                      ),
+                                      onPressed: _viewModel.isLoading
+                                          ? null
+                                          : () {
+                                              Navigator.push(
+                                                context,
+                                                CupertinoPageRoute(
+                                                  builder: (context) =>
+                                                      const LoginPage(
+                                                        haveBack: true,
+                                                      ),
+                                                ),
+                                              );
+                                            },
+                                      child: Text(
+                                        l10n.login,
+                                        style: CupertinoTheme.of(context)
+                                            .textTheme
+                                            .textStyle
+                                            .copyWith(
+                                              fontSize: 14.sp,
+                                              color: AppColors.primaryColor,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
+                            ],
                           ],
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ),
         );

@@ -335,7 +335,7 @@ abstract class AppLocalizations {
   /// No description provided for @welcome_create_wallet.
   ///
   /// In vi, this message translates to:
-  /// **'Chào mừng đến với SpendFlow!\nHãy tạo ví đầu tiên của bạn để bắt đầu.'**
+  /// **'Chào mừng đến với Spend Flow!\nHãy tạo ví đầu tiên của bạn để bắt đầu.'**
   String get welcome_create_wallet;
 
   /// No description provided for @enter_wallet_name.

@@ -58,7 +58,7 @@ dependencies:
   dotted_border: ^3.1.0
   google_mobile_ads: ^7.0.0
   google_fonts: ^8.0.0
-  adaptive_platform_ui: ^0.1.100
+  adaptive_platform_ui: ^0.1.101
   email_validator: ^3.0.0
   purchases_flutter: ^9.10.8
   purchases_ui_flutter: ^9.10.8

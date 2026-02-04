@@ -1502,21 +1502,21 @@ PODS:
   - permission_handler_apple (9.3.0):
     - Flutter
   - PromisesObjC (2.4.0)
-  - purchases_flutter (9.10.8):
+  - purchases_flutter (9.11.0):
     - Flutter
-    - PurchasesHybridCommon (= 17.30.0)
-  - purchases_ui_flutter (9.10.8):
+    - PurchasesHybridCommon (= 17.31.0)
+  - purchases_ui_flutter (9.11.0):
     - Flutter
-    - PurchasesHybridCommonUI (= 17.30.0)
-  - PurchasesHybridCommon (17.30.0):
-    - RevenueCat (= 5.56.0)
-  - PurchasesHybridCommonUI (17.30.0):
-    - PurchasesHybridCommon (= 17.30.0)
-    - RevenueCatUI (= 5.56.0)
+    - PurchasesHybridCommonUI (= 17.31.0)
+  - PurchasesHybridCommon (17.31.0):
+    - RevenueCat (= 5.57.0)
+  - PurchasesHybridCommonUI (17.31.0):
+    - PurchasesHybridCommon (= 17.31.0)
+    - RevenueCatUI (= 5.57.0)
   - RecaptchaInterop (101.0.0)
-  - RevenueCat (5.56.0)
-  - RevenueCatUI (5.56.0):
-    - RevenueCat (= 5.56.0)
+  - RevenueCat (5.57.0)
+  - RevenueCatUI (5.57.0):
+    - RevenueCat (= 5.57.0)
   - SDWebImage (5.21.5):
     - SDWebImage/Core (= 5.21.5)
   - SDWebImage/Core (5.21.5)
@@ -1730,13 +1730,13 @@ SPEC CHECKSUMS:
   package_info_plus: af8e2ca6888548050f16fa2f1938db7b5a5df499
   permission_handler_apple: 4ed2196e43d0651e8ff7ca3483a069d469701f2d
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
-  purchases_flutter: 388ea2288fa901f38661d5b5149cacbca558008e
-  purchases_ui_flutter: 216d7c323bf10f5a0cdbcb325f4b8805ef8c3f98
-  PurchasesHybridCommon: c00f6ce5933b9928e99766a45c9e53c0a5a03240
-  PurchasesHybridCommonUI: 3aed98f646f9f7f6915a12908766d468412be064
+  purchases_flutter: 10a2283136e2c98ddddb78737da5ab8bed457149
+  purchases_ui_flutter: 024c1dccf65953b10dfa9b9c57a873d6f3d45c22
+  PurchasesHybridCommon: 21a11c5d66c8a52cf9aede45cecc2efe1551b98b
+  PurchasesHybridCommonUI: 60fbb660ebbf224df733c90849c4f3b8f6819f4b
   RecaptchaInterop: 11e0b637842dfb48308d242afc3f448062325aba
-  RevenueCat: 9e2a13bead55198a72272ff105a7265e9510cd11
-  RevenueCatUI: 2200b8ec1cadb1c69c6f05452144184f929eadef
+  RevenueCat: 2d8aa56c68fa8e92c0d669e5e797c4a93e284f20
+  RevenueCatUI: 25c86cf10c6cb9e3e9f308c48df55b31bf7fdba5
   SDWebImage: e9c98383c7572d713c1a0d7dd2783b10599b9838
   SDWebImageWebPCoder: 0e06e365080397465cc73a7a9b472d8a3bd0f377
   share_plus: 50da8cb520a8f0f65671c6c6a99b3617ed10a58a

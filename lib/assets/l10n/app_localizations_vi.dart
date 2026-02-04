@@ -130,7 +130,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get welcome_create_wallet =>
-      'Chào mừng đến với SpendFlow!\nHãy tạo ví đầu tiên của bạn để bắt đầu.';
+      'Chào mừng đến với Spend Flow!\nHãy tạo ví đầu tiên của bạn để bắt đầu.';
 
   @override
   String get enter_wallet_name => 'Nhập tên ví';

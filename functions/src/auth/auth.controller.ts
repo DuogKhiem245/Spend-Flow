@@ -80,6 +80,12 @@ export const verifyOtpRegisterHandler = async (request: CallableRequest) => {
         if (userData.otp !== otp) throw new HttpsError("permission-denied", t.invalidOtp);
         if (Date.now() > (userData.expiresAt + 30000)) throw new HttpsError("deadline-exceeded", t.otpExpired);
 
+        await admin.auth().createUser({
+            uid: userData.userId,
+            email: email,
+            emailVerified: true
+        });
+
         await db.collection("users").doc(email).set({
             userId: userData.userId,
             email: userData.email,
@@ -139,7 +145,7 @@ export const loginHandler = async (request: CallableRequest) => {
                 const authUser = await admin.auth().getUserByEmail(email);
                 if (authUser) throw new HttpsError("already-exists", t.emailUsedWithSocial);
             } catch (e: any) {
-                if (e.code !== 'auth/user-not-found') throw e;
+                if (e.code !== 'auth/user-not-found') throw new HttpsError("internal", t.serverError);
             }
             throw new HttpsError("not-found", t.userNotFound);
         }

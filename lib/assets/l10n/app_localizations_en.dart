@@ -130,7 +130,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get welcome_create_wallet =>
-      'Welcome to SpendFlow!\nLet\'s create your first wallet to get started.';
+      'Welcome to Spend Flow!\nLet\'s create your first wallet to get started.';
 
   @override
   String get enter_wallet_name => 'Enter wallet name';
