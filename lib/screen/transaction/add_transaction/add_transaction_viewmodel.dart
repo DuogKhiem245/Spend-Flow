@@ -23,6 +23,8 @@ class AddTransactionViewmodel extends ChangeNotifier {
   String? get selectedAddress => _selectedAddress;
   bool? get isLocationEnabled => _isLocationEnabled;
 
+  Future<void>? _locationTask;
+
   AddTransactionViewmodel() {
     _initialize();
   }
@@ -30,11 +32,39 @@ class AddTransactionViewmodel extends ChangeNotifier {
   Future<void> _initialize() async {
     await _loadCurrency();
     _isLocationEnabled = await _storageService.getLocationStatus();
-    if (_isLocationEnabled == null) {
-      await _locationService.requestPermission();
-    }
-    await getCurrentLocation();
+
+    await _safeLocationInitialization();
+
     notifyListeners();
+  }
+
+  Future<void> _safeLocationInitialization() async {
+    if (_locationTask != null) return _locationTask;
+
+    _locationTask = Future(() async {
+      try {
+        if (_isLocationEnabled == null) {
+          final permissionGranted = await _locationService.requestPermission();
+
+          _isLocationEnabled = permissionGranted;
+          await _storageService.saveLocationStatus(permissionGranted);
+
+          if (permissionGranted) {
+            await getCurrentLocation();
+          } else {
+            notifyListeners();
+          }
+        } else if (_isLocationEnabled == true) {
+          await getCurrentLocation();
+        }
+      } catch (e) {
+        debugPrint('Location Init Error: $e');
+      } finally {
+        _locationTask = null;
+      }
+    });
+    notifyListeners();
+    return _locationTask;
   }
 
   Future<void> _loadCurrency() async {
@@ -55,7 +85,7 @@ class AddTransactionViewmodel extends ChangeNotifier {
     CategoryModel? selectedCategory,
     DateTime? transactionDate,
     String note,
-    LocationModel? location,  
+    LocationModel? location,
   ) async {
     if (selectedCategory == null) return;
 

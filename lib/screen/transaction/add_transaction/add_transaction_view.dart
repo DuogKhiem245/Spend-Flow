@@ -377,20 +377,4 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
       ),
     );
   }
-
-  Widget _buildSegmentItem(String text, bool isSelected) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 12.h),
-      child: Text(
-        text,
-        style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-          fontSize: 16.sp,
-          fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-          color: isSelected
-              ? CupertinoColors.white
-              : CupertinoTheme.of(context).textTheme.textStyle.color,
-        ),
-      ),
-    );
-  }
 }

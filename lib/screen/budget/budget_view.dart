@@ -196,7 +196,7 @@ class _BudgetPageState extends State<BudgetPage>
                         bottom: _isPremium
                             ? 50.h
                             : Platform.isIOS
-                            ? 90.h
+                            ? 98.h
                             : 108.h,
                         child: CupertinoButton(
                           onPressed: _navigateToAddBudget,

@@ -22,7 +22,7 @@ class RootChecker extends StatelessWidget {
 
     final user = FirebaseAuth.instance.currentUser;
 
-    if (user != null && user.emailVerified) {
+    if (user != null) {
       return createFirstWallet
           ? const BottomNavbar()
           : const WalletView(firstWallet: true);

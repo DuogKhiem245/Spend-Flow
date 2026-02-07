@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/core/widgets/check_valid/check_valid_widget.dart';
@@ -14,6 +15,7 @@ import 'package:spend_flow/main.dart';
 import 'package:spend_flow/screen/auth/auth_viewmodel.dart';
 import 'package:spend_flow/screen/auth/view/forgot_password_view.dart';
 import 'package:spend_flow/screen/auth/view/register_view.dart';
+import 'package:spend_flow/screen/wallet/wallet_view.dart';
 
 class LoginPage extends StatefulWidget {
   final bool fromCreateWallet;
@@ -147,7 +149,6 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _handleSocialLogin(
     Future<UserCredential?> Function() method,
     BuildContext context,
-
   ) async {
     final l10n = AppLocalizations.of(context)!;
     try {
@@ -159,6 +160,14 @@ class _LoginPageState extends State<LoginPage> {
         _navigateToHome();
       }
     } catch (e) {
+      final errorString = e.toString().toLowerCase();
+      final bool isUserCanceled =
+          errorString.contains('canceled') ||
+          errorString.contains('user-cancelled');
+
+      if (isUserCanceled) {
+        return;
+      }
       if (context.mounted) {
         CheckValidWidget.showIncompleteDetailsSheet(
           context: context,
@@ -170,7 +179,20 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  void _navigateToHome() {
+  void _navigateToHome() async {
+    final prefs = await SharedPreferences.getInstance();
+    final bool createFirstWallet =
+        prefs.getBool('create_first_wallet') ?? false;
+    if (!createFirstWallet) {
+      if (mounted) {
+        Navigator.pushAndRemoveUntil(
+          context,
+          CupertinoPageRoute(builder: (context) => const WalletView(firstWallet: true)),
+          (route) => false,
+        );
+      }
+      return;
+    }
     if (mounted) {
       Navigator.pushAndRemoveUntil(
         context,
@@ -346,7 +368,6 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         SizedBox(height: 20.h),
-
                         _buildSocialButton(
                           context: context,
                           imageAsset: 'lib/assets/images/google.png',
@@ -356,19 +377,17 @@ class _LoginPageState extends State<LoginPage> {
                             context,
                           ),
                         ),
-
-                        SizedBox(height: 12.h),
-
-                        _buildSocialButton(
-                          context: context,
-                          icon: FontAwesomeIcons.apple,
-                          label: l10n.sign_in_with('Apple'),
-                          isApple: true,
-                          onTap: () => _handleSocialLogin(
-                            _viewModel.signInWithApple,
-                            context,
-                          ),
-                        ),
+                        // SizedBox(height: 12.h),
+                        // _buildSocialButton(
+                        //   context: context,
+                        //   icon: FontAwesomeIcons.apple,
+                        //   label: l10n.sign_in_with('Apple'),
+                        //   isApple: true,
+                        //   onTap: () => _handleSocialLogin(
+                        //     _viewModel.signInWithApple,
+                        //     context,
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

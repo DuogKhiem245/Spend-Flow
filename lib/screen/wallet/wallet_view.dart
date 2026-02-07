@@ -394,6 +394,8 @@ class _WalletViewState extends State<WalletView> {
                                   ],
                                 ),
                               ),
+                            ] else ...[
+                              SizedBox(height: 15.h),
                             ],
                           ],
                         ),
