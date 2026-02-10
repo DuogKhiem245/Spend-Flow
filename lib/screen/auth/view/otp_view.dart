@@ -119,8 +119,8 @@ class _OTPPageState extends State<OTPPage> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(30.r),
                     child: SizedBox(
-                      width: 100.w,
-                      height: 100.w,
+                       width: 125.w,
+                      height: 125.w,
                       child: Image.asset(
                         CupertinoTheme.of(context).brightness == Brightness.dark
                             ? 'lib/assets/images/logoDark.png'

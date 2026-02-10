@@ -260,8 +260,8 @@ class _LoginPageState extends State<LoginPage> {
                             ? 'lib/assets/images/logoDark.png'
                             : 'lib/assets/images/logoLight.png',
                         key: ValueKey(CupertinoTheme.of(context).brightness),
-                        width: 100.w,
-                        height: 100.w,
+                        width: 125.w,
+                        height: 125.w,
                       ),
                     ),
                   ),

@@ -125,29 +125,15 @@ class _WalletViewState extends State<WalletView> {
                           children: [
                             SizedBox(height: 10.h),
                             Center(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(24.r),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: AppColors.primaryColor.withValues(
-                                        alpha: 0.2,
-                                      ),
-                                      blurRadius: 20,
-                                      offset: const Offset(0, 10),
-                                    ),
-                                  ],
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(24.r),
-                                  child: Image.asset(
-                                    isDarkMode
-                                        ? 'lib/assets/images/logoDark.png'
-                                        : 'lib/assets/images/logoLight.png',
-                                    width: 100.w,
-                                    height: 100.w,
-                                    fit: BoxFit.cover,
-                                  ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(30.r),
+                                child: Image.asset(
+                                  isDarkMode
+                                      ? 'lib/assets/images/logoDark.png'
+                                      : 'lib/assets/images/logoLight.png',
+                                  width: 125.w,
+                                  height: 125.w,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
                             ),
