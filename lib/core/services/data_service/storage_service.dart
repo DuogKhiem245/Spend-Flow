@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 
 class StorageService {
   final FirebaseStorage _storage = FirebaseStorage.instance;
@@ -15,6 +16,7 @@ class StorageService {
       final String downloadUrl = await snapshot.ref.getDownloadURL();
       return downloadUrl;
     } catch (e) {
+      debugPrint('Lỗi upload ảnh: $e');
       throw Exception('Lỗi upload ảnh: $e');
     }
   }
