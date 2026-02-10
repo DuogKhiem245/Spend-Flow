@@ -32,7 +32,7 @@ class _FontViewState extends State<FontView> {
 
     'JetBrains Mono',
     'Space Grotesk',
-    'Space Mono',
+    // 'Space Mono',
   ];
 
   @override

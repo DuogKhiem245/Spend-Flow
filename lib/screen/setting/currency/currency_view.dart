@@ -59,11 +59,11 @@ class _CurrencyViewState extends State<CurrencyView> {
                 horizontal: 12.w,
                 vertical: 10.h,
               ),
+              borderRadius: BorderRadius.circular(30.r),
               controller: _searchController,
               placeholderStyle: CupertinoTheme.of(context).textTheme.textStyle
                   .copyWith(color: CupertinoColors.systemGrey, fontSize: 16.sp),
               style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                color: CupertinoColors.black,
                 fontSize: 16.sp,
               ),
               itemColor: CupertinoColors.systemGrey,
