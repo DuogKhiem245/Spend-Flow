@@ -109,6 +109,8 @@ class _AddCategoryViewState extends State<AddCategoryView> {
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
+        backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
+        border: null,
         padding: EdgeInsetsDirectional.only(end: 10.w),
         leading: CupertinoNavigationBarBackButton(
           color: primaryColor,

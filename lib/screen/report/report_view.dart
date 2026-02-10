@@ -539,13 +539,12 @@ class _ReportPageState extends State<ReportPage>
         AlertAction(
           title: l10n.cancel,
           style: AlertActionStyle.cancel,
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => {},
         ),
         AlertAction(
           title: l10n.delete,
           style: AlertActionStyle.destructive,
           onPressed: () async {
-            Navigator.pop(context);
             await _viewModel.deleteTransaction(tx.id);
           },
         ),

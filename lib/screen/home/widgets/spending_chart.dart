@@ -220,7 +220,7 @@ class _SpendingChartState extends State<SpendingChart>
               ),
             ],
           ),
-          SizedBox(height: 15.h),
+          SizedBox(height: 25.h),
           SizedBox(
             height: 200.h,
             child: Stack(
