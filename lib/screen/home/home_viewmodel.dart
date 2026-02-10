@@ -13,7 +13,6 @@ import 'package:spend_flow/core/services/data_service/local_storage_service.dart
 import 'package:spend_flow/core/model/category_model.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/core/services/general_service/notification_service.dart';
-import 'package:spend_flow/core/services/sync_service/sync_service.dart';
 import 'package:spend_flow/core/utils/category_helper.dart';
 import 'package:spend_flow/screen/home/home_model.dart';
 
@@ -95,7 +94,7 @@ class HomeViewModel extends ChangeNotifier {
         _fetchChartData(walletId),
         _fetchRecentTransactions(walletId),
       ]);
-      SyncService().syncData();
+      //SyncService().syncData();
     } catch (e) {
       debugPrint("Error reloading data: $e");
     } finally {

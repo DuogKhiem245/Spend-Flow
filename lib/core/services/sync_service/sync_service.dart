@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:spend_flow/core/model/budget_model.dart';
 import 'package:spend_flow/core/model/category_model.dart';
@@ -37,23 +38,31 @@ class SyncService {
     return _firestore.collection('data_sync').doc(uid);
   }
 
-  Future<void> syncData({bool force = false, bool isAds = false}) async {
-    final user = _auth.currentUser;
-    if (user == null) return;
-
-    final isPremium =  _premiumViewModel.isPremium;
-    if (!isPremium && isAds == false) {
-      return;
-    }
-
+  Future<String?> syncData({bool isAds = false}) async {
     if (_isSyncing) {
-      return;
+      return "sync_in_progress";
     }
 
-    if (!force && _lastRunTime != null) {
+    final isPremium = _premiumViewModel.isPremium;
+    final now = DateTime.now();
+    if (!isPremium && isAds == false) {
+      if (_lastRunTime != null) {
+        final isSameDay =
+            _lastRunTime!.year == now.year &&
+            _lastRunTime!.month == now.month &&
+            _lastRunTime!.day == now.day;
+
+        if (isSameDay) {
+          return "premium_required"; 
+        }
+      }
+    }
+
+    if (_lastRunTime != null) {
       final difference = DateTime.now().difference(_lastRunTime!);
       if (difference < _syncCooldown) {
-        return;
+        final remaining = _syncCooldown.inSeconds - difference.inSeconds;
+        return "cooldown:$remaining";
       }
     }
 
@@ -83,8 +92,10 @@ class SyncService {
         DateTime.now().millisecondsSinceEpoch,
       );
       lastSyncNotifier.value = _lastRunTime;
+
+      return null; 
     } catch (e) {
-      debugPrint("Error Sync: $e");
+      return "error:${e.toString()}"; 
     } finally {
       _isSyncing = false;
     }

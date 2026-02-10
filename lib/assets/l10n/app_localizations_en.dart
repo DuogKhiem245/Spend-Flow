@@ -836,6 +836,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get error_uploading_avatar => 'Error uploading avatar.';
 
   @override
+  String get require_premium_to_edit_avatar =>
+      'You need to upgrade to Premium or watch ads to edit your avatar.';
+
+  @override
+  String get edit_avatar => 'Edit Avatar';
+
+  @override
   String get upgrade_premium => 'Upgrade to Premium!';
 
   @override
@@ -1209,6 +1216,27 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get never_synced => 'Never Synced';
+
+  @override
+  String get unauthenticated =>
+      'Please log in to sync your data across devices.';
+
+  @override
+  String sync_error(Object error) {
+    return 'Sync error: $error';
+  }
+
+  @override
+  String get premium_required_to_sync =>
+      'You need to upgrade to Premium or watch ads to sync data.';
+
+  @override
+  String get sync_in_progress => 'Sync in progress, please wait.';
+
+  @override
+  String cooldown(Object seconds) {
+    return 'You\'re acting too quickly. Please wait $seconds seconds before syncing again.';
+  }
 
   @override
   String get accepted_formats => 'Accepted Formats';

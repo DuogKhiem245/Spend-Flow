@@ -1670,6 +1670,18 @@ abstract class AppLocalizations {
   /// **'Lỗi khi tải lên ảnh đại diện.'**
   String get error_uploading_avatar;
 
+  /// No description provided for @require_premium_to_edit_avatar.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn cần nâng cấp lên Premium hoặc xem quảng cáo để chỉnh sửa ảnh đại diện.'**
+  String get require_premium_to_edit_avatar;
+
+  /// No description provided for @edit_avatar.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chỉnh sửa ảnh đại diện'**
+  String get edit_avatar;
+
   /// No description provided for @upgrade_premium.
   ///
   /// In vi, this message translates to:
@@ -2359,6 +2371,36 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Chưa đồng bộ'**
   String get never_synced;
+
+  /// No description provided for @unauthenticated.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng đăng nhập để đồng bộ dữ liệu của bạn trên các thiết bị.'**
+  String get unauthenticated;
+
+  /// No description provided for @sync_error.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lỗi đồng bộ hóa: {error}'**
+  String sync_error(Object error);
+
+  /// No description provided for @premium_required_to_sync.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn cần nâng cấp lên Premium hoặc xem quảng cáo để đồng bộ dữ liệu.'**
+  String get premium_required_to_sync;
+
+  /// No description provided for @sync_in_progress.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hệ thống đang đồng bộ, vui lòng đợi.'**
+  String get sync_in_progress;
+
+  /// No description provided for @cooldown.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn thao tác quá nhanh. Vui lòng đợi {seconds} giây để đồng bộ lại.'**
+  String cooldown(Object seconds);
 
   /// No description provided for @accepted_formats.
   ///

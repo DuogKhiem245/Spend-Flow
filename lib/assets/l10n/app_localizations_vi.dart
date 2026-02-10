@@ -834,6 +834,13 @@ class AppLocalizationsVi extends AppLocalizations {
   String get error_uploading_avatar => 'Lỗi khi tải lên ảnh đại diện.';
 
   @override
+  String get require_premium_to_edit_avatar =>
+      'Bạn cần nâng cấp lên Premium hoặc xem quảng cáo để chỉnh sửa ảnh đại diện.';
+
+  @override
+  String get edit_avatar => 'Chỉnh sửa ảnh đại diện';
+
+  @override
   String get upgrade_premium => 'Nâng cấp lên Premium!';
 
   @override
@@ -1207,6 +1214,27 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get never_synced => 'Chưa đồng bộ';
+
+  @override
+  String get unauthenticated =>
+      'Vui lòng đăng nhập để đồng bộ dữ liệu của bạn trên các thiết bị.';
+
+  @override
+  String sync_error(Object error) {
+    return 'Lỗi đồng bộ hóa: $error';
+  }
+
+  @override
+  String get premium_required_to_sync =>
+      'Bạn cần nâng cấp lên Premium hoặc xem quảng cáo để đồng bộ dữ liệu.';
+
+  @override
+  String get sync_in_progress => 'Hệ thống đang đồng bộ, vui lòng đợi.';
+
+  @override
+  String cooldown(Object seconds) {
+    return 'Bạn thao tác quá nhanh. Vui lòng đợi $seconds giây để đồng bộ lại.';
+  }
 
   @override
   String get accepted_formats => 'Chấp nhận các định dạng';

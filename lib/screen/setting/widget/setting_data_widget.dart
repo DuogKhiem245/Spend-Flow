@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/ads_service.dart';
 import 'package:spend_flow/core/services/sync_service/sync_service.dart';
+import 'package:spend_flow/core/widgets/check_valid/check_valid_widget.dart';
 import 'package:spend_flow/core/widgets/custom_option/custom_option_widget.dart';
 import 'package:spend_flow/main.dart';
 import 'package:spend_flow/screen/premium/premium_view.dart';
@@ -100,15 +101,48 @@ class _SettingDataWidgetState extends State<SettingDataWidget> {
   }
 
   Future<void> _startSyncFlow({bool isAds = false}) async {
+    final l10n = AppLocalizations.of(context)!;
     setState(() => _isLoading = true);
+
     try {
-      await SyncService().syncData(force: true, isAds: isAds);
-      widget.onSyncSuccess();
+      final String? result = await SyncService().syncData(isAds: isAds);
+
+      if (result == null) {
+        widget.onSyncSuccess();
+      } else {
+        if (mounted) {
+          _showSyncMessage(result, l10n);
+        }
+      }
     } catch (e) {
-      debugPrint("Sync Error: $e");
+      if (mounted) {
+        _showSyncMessage("error", l10n);
+      }
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
+  }
+
+  void _showSyncMessage(String code, AppLocalizations l10n) {
+    String title = l10n.error;
+    String description = l10n.have_error_occurred;
+
+    if (code == "sync_in_progress") {
+      description = l10n.sync_in_progress;
+    } else if (code.startsWith("cooldown")) {
+      final seconds = code.split(":")[1];
+      description = l10n.cooldown(seconds);
+    } else if (code.startsWith("error")) {
+      final errorMessage = code.replaceFirst("error:", "");
+      description = l10n.sync_error(errorMessage);
+    }
+
+    CheckValidWidget.showIncompleteDetailsSheet(
+      context: context,
+      title: title,
+      description: description,
+      buttonText: "OK",
+    );
   }
 
   void _showLimitOptions() {
