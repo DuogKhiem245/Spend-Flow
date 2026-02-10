@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:csv/csv.dart';
 import 'package:excel/excel.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -201,55 +202,55 @@ class ImportViewModel extends ChangeNotifier {
     BuildContext context,
     AppLocalizations l10n,
   ) async {
-    //try {
-    //   FilePickerResult? result = await FilePicker.pickFiles(
-    //     type: FileType.custom,
-    //     allowedExtensions: ['csv', 'json'],
-    //   );
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['csv', 'json'],
+      );
 
-    //   if (result == null) return;
+      if (result == null) return;
 
-    //   _status = ImportStatus.loading;
-    //   notifyListeners();
+      _status = ImportStatus.loading;
+      notifyListeners();
 
-    //   final file = File(result.files.first.path!);
-    //   final extension = result.files.first.extension?.toLowerCase();
+      final file = File(result.files.first.path!);
+      final extension = result.files.first.extension?.toLowerCase();
 
-    //   bool success = await _processFileContent(file, extension!);
+      bool success = await _processFileContent(file, extension!);
 
-    //   if (success) {
-    //     await _recordImportHistory(result.files.first.name, extension);
-    //     _status = ImportStatus.success;
+      if (success) {
+        await _recordImportHistory(result.files.first.name, extension);
+        _status = ImportStatus.success;
 
-    //     if (context.mounted) {
-    //       final l10n = AppLocalizations.of(context)!;
+        if (context.mounted) {
+          final l10n = AppLocalizations.of(context)!;
 
-    //       AdaptiveAlertDialog.show(
-    //         context: context,
-    //         title: l10n.import_success,
-    //         message: l10n.import_success_description(_recentImportCount!),
-    //         icon: 'arrow.down.doc.fill',
-    //         actions: [
-    //           AlertAction(
-    //             title: l10n.ok,
-    //             style: AlertActionStyle.primary,
-    //             onPressed: () {},
-    //           ),
-    //         ],
-    //       );
-    //     }
-    //   } else {
-    //     throw Exception(l10n.invalid_format);
-    //   }
-    // } catch (e) {
-    //   _status = ImportStatus.error;
-    //   _errorMessage = e.toString();
-    //   if (context.mounted) {
-    //     _showErrorAlert(context, l10n, e.toString());
-    //   }
-    // } finally {
-    //   notifyListeners();
-    // }
+          AdaptiveAlertDialog.show(
+            context: context,
+            title: l10n.import_success,
+            message: l10n.import_success_description(_recentImportCount!),
+            icon: 'arrow.down.doc.fill',
+            actions: [
+              AlertAction(
+                title: l10n.ok,
+                style: AlertActionStyle.primary,
+                onPressed: () {},
+              ),
+            ],
+          );
+        }
+      } else {
+        throw Exception(l10n.invalid_format);
+      }
+    } catch (e) {
+      _status = ImportStatus.error;
+      _errorMessage = e.toString();
+      if (context.mounted) {
+        _showErrorAlert(context, l10n, e.toString());
+      }
+    } finally {
+      notifyListeners();
+    }
   }
 
   Future<bool> _processFileContent(File file, String extension) async {
