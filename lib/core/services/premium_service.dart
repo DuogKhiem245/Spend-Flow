@@ -1,20 +1,24 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 class PremiumService {
+  String androidApiKey = dotenv.env['PURCHASES_API_KEY_ANDROID'] ?? '';
+  String iosApiKey = dotenv.env['PURCHASES_API_KEY_IOS'] ?? '';
+
   Future<void> init(String? userId) async {
     await Purchases.setLogLevel(LogLevel.debug);
 
     PurchasesConfiguration configuration;
     if (Platform.isAndroid) {
       configuration = PurchasesConfiguration(
-        "test_NGmuOndCaRRGaFJHPInPDiWCKAk",
+        androidApiKey
       );
     } else {
       configuration = PurchasesConfiguration(
-        "test_NGmuOndCaRRGaFJHPInPDiWCKAk",
+        iosApiKey
       );
     }
 
