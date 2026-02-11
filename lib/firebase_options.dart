@@ -64,7 +64,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '586343572662',
     projectId: 'spend-flow-82e37',
     storageBucket: 'spend-flow-82e37.firebasestorage.app',
-    iosBundleId: 'com.example.spendFlow.test',
+    iosBundleId: 'com.dk24labs.spendFlow.test',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -73,7 +73,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '586343572662',
     projectId: 'spend-flow-82e37',
     storageBucket: 'spend-flow-82e37.firebasestorage.app',
-    iosBundleId: 'com.example.spendFlow',
+    iosBundleId: 'com.dk24labs.spendFlow',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
