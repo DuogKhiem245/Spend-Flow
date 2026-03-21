@@ -230,6 +230,12 @@ abstract class AppLocalizations {
   /// **'Tháng'**
   String get month;
 
+  /// No description provided for @life_time.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trọn đời'**
+  String get life_time;
+
   /// No description provided for @today.
   ///
   /// In vi, this message translates to:
@@ -1727,7 +1733,7 @@ abstract class AppLocalizations {
   /// No description provided for @continue_with.
   ///
   /// In vi, this message translates to:
-  /// **'Tiếp tục với {price} / tháng'**
+  /// **'Tiếp tục với {price}'**
   String continue_with(Object price);
 
   /// No description provided for @biometric_authentication.

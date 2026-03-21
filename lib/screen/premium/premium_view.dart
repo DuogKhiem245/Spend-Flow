@@ -51,13 +51,11 @@ class PremiumView extends StatelessWidget {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             _showAdaptiveDialog(
               context,
-              title: isCancelled
-                  ? l10n.cancel
-                  : l10n.error, 
+              title: isCancelled ? l10n.cancel : l10n.error,
               message: msg,
               icon: isCancelled
-                  ? 'info.circle.fill' 
-                  : 'exclamationmark.octagon.fill', 
+                  ? 'info.circle.fill'
+                  : 'exclamationmark.octagon.fill',
             );
           });
         }
@@ -489,9 +487,11 @@ class PremiumView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        l10n.continue_with(
-                          viewModel.planPrice(viewModel.selectedPlan),
-                        ),
+                        "${l10n.continue_with(viewModel.planPrice(viewModel.selectedPlan))} ${viewModel.selectedPlan == PremiumPlan.monthly
+                            ? "/ ${l10n.month}"
+                            : viewModel.selectedPlan == PremiumPlan.yearly
+                            ? "/ ${l10n.year}"
+                            : ""}",
                         style: CupertinoTheme.of(context).textTheme.textStyle
                             .copyWith(
                               fontSize: 16.sp,

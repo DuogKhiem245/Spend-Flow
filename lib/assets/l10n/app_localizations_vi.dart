@@ -75,6 +75,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get month => 'Tháng';
 
   @override
+  String get life_time => 'Trọn đời';
+
+  @override
   String get today => 'Hôm nay';
 
   @override
@@ -865,7 +868,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String continue_with(Object price) {
-    return 'Tiếp tục với $price / tháng';
+    return 'Tiếp tục với $price';
   }
 
   @override

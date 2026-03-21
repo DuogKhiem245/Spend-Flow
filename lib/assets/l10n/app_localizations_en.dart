@@ -75,6 +75,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get month => 'Month';
 
   @override
+  String get life_time => 'Lifetime';
+
+  @override
   String get today => 'Today';
 
   @override
@@ -866,7 +869,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String continue_with(Object price) {
-    return 'Continue with $price / month';
+    return 'Continue with $price';
   }
 
   @override
