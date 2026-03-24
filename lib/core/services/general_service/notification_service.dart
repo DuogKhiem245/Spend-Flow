@@ -33,6 +33,22 @@ class NotificationService {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
+    const AndroidNotificationChannel channel = AndroidNotificationChannel(
+      'daily_reminder_channel', 
+      'Daily Reminders',
+      description: 'Daily reminders to log your expenses',
+      importance: Importance.max,
+    );
+
+    final androidPlugin = flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >();
+
+    if (androidPlugin != null) {
+      await androidPlugin.createNotificationChannel(channel);
+    }
+
     const DarwinInitializationSettings initializationSettingsDarwin =
         DarwinInitializationSettings(
           requestSoundPermission: false,
@@ -53,40 +69,36 @@ class NotificationService {
     bool? isAndroidGranted = false;
     bool? isIOSGranted = false;
 
-    final androidImplementation = flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin
-        >();
+    if (Platform.isAndroid) {
+      final androidImplementation = flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin
+          >();
 
-    if (androidImplementation != null) {
       isAndroidGranted = await androidImplementation
-          .requestNotificationsPermission();
+          ?.requestNotificationsPermission();
+
+      await _storage.saveNotificationStatus(isAndroidGranted ?? false);
+      return isAndroidGranted ?? false;
     }
 
-    final iosImplementation = flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-          IOSFlutterLocalNotificationsPlugin
-        >();
+    if (Platform.isIOS) {
+      final iosImplementation = flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin
+          >();
 
-    if (iosImplementation != null) {
-      isIOSGranted = await iosImplementation.requestPermissions(
+      isIOSGranted = await iosImplementation?.requestPermissions(
         alert: true,
         badge: true,
         sound: true,
       );
+
+      await _storage.saveNotificationStatus(isIOSGranted ?? false);
+      return isIOSGranted ?? false;
     }
 
-    if (Platform.isAndroid) {
-      if (await _storage.getNotificationStatus() == null) {
-        await _storage.saveNotificationStatus((isAndroidGranted ?? false));
-      }
-      return isAndroidGranted ?? false;
-    }
-
-    if (await _storage.getNotificationStatus() == null) {
-      await _storage.saveNotificationStatus((isIOSGranted ?? false));
-    }
-    return isIOSGranted ?? false;
+    return false;
   }
 
   Future<void> scheduleDailyNotification(BuildContext context) async {
@@ -116,7 +128,8 @@ class NotificationService {
         ),
         iOS: DarwinNotificationDetails(),
       ),
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      //androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       matchDateTimeComponents: DateTimeComponents.time,
     );
   }
