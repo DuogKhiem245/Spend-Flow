@@ -1208,12 +1208,12 @@ PODS:
   - BoringSSL-GRPC/Interface (0.0.37)
   - camera_avfoundation (0.0.1):
     - Flutter
-  - cloud_firestore (6.1.2):
-    - Firebase/Firestore (= 12.8.0)
+  - cloud_firestore (6.3.0):
+    - Firebase/Firestore (= 12.12.0)
     - firebase_core
     - Flutter
-  - cloud_functions (6.0.6):
-    - Firebase/Functions (= 12.8.0)
+  - cloud_functions (6.2.0):
+    - Firebase/Functions (= 12.12.0)
     - firebase_core
     - Flutter
   - cupertino_native (0.0.1):
@@ -1255,56 +1255,56 @@ PODS:
   - file_picker (0.0.1):
     - DKImagePickerController/PhotoGallery
     - Flutter
-  - Firebase/Auth (12.8.0):
+  - Firebase/Auth (12.12.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (~> 12.8.0)
-  - Firebase/CoreOnly (12.8.0):
-    - FirebaseCore (~> 12.8.0)
-  - Firebase/Firestore (12.8.0):
+    - FirebaseAuth (~> 12.12.0)
+  - Firebase/CoreOnly (12.12.0):
+    - FirebaseCore (~> 12.12.0)
+  - Firebase/Firestore (12.12.0):
     - Firebase/CoreOnly
-    - FirebaseFirestore (~> 12.8.0)
-  - Firebase/Functions (12.8.0):
+    - FirebaseFirestore (~> 12.12.0)
+  - Firebase/Functions (12.12.0):
     - Firebase/CoreOnly
-    - FirebaseFunctions (~> 12.8.0)
-  - Firebase/Storage (12.8.0):
+    - FirebaseFunctions (~> 12.12.0)
+  - Firebase/Storage (12.12.0):
     - Firebase/CoreOnly
-    - FirebaseStorage (~> 12.8.0)
-  - firebase_auth (6.1.4):
-    - Firebase/Auth (= 12.8.0)
+    - FirebaseStorage (~> 12.12.0)
+  - firebase_auth (6.4.0):
+    - Firebase/Auth (= 12.12.0)
     - firebase_core
     - Flutter
-  - firebase_core (4.4.0):
-    - Firebase/CoreOnly (= 12.8.0)
+  - firebase_core (4.7.0):
+    - Firebase/CoreOnly (= 12.12.0)
     - Flutter
-  - firebase_storage (13.0.6):
-    - Firebase/Storage (= 12.8.0)
+  - firebase_storage (13.3.0):
+    - Firebase/Storage (= 12.12.0)
     - firebase_core
     - Flutter
-  - FirebaseAppCheckInterop (12.8.0)
-  - FirebaseAuth (12.8.0):
-    - FirebaseAppCheckInterop (~> 12.8.0)
-    - FirebaseAuthInterop (~> 12.8.0)
-    - FirebaseCore (~> 12.8.0)
-    - FirebaseCoreExtension (~> 12.8.0)
+  - FirebaseAppCheckInterop (12.12.0)
+  - FirebaseAuth (12.12.0):
+    - FirebaseAppCheckInterop (~> 12.12.0)
+    - FirebaseAuthInterop (~> 12.12.0)
+    - FirebaseCore (~> 12.12.0)
+    - FirebaseCoreExtension (~> 12.12.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 8.1)
     - GoogleUtilities/Environment (~> 8.1)
     - GTMSessionFetcher/Core (< 6.0, >= 3.4)
     - RecaptchaInterop (~> 101.0)
-  - FirebaseAuthInterop (12.8.0)
-  - FirebaseCore (12.8.0):
-    - FirebaseCoreInternal (~> 12.8.0)
+  - FirebaseAuthInterop (12.12.0)
+  - FirebaseCore (12.12.1):
+    - FirebaseCoreInternal (~> 12.12.0)
     - GoogleUtilities/Environment (~> 8.1)
     - GoogleUtilities/Logger (~> 8.1)
-  - FirebaseCoreExtension (12.8.0):
-    - FirebaseCore (~> 12.8.0)
-  - FirebaseCoreInternal (12.8.0):
+  - FirebaseCoreExtension (12.12.0):
+    - FirebaseCore (~> 12.12.0)
+  - FirebaseCoreInternal (12.12.0):
     - "GoogleUtilities/NSData+zlib (~> 8.1)"
-  - FirebaseFirestore (12.8.0):
-    - FirebaseCore (~> 12.8.0)
-    - FirebaseCoreExtension (~> 12.8.0)
-    - FirebaseFirestoreInternal (~> 12.8.0)
-    - FirebaseSharedSwift (~> 12.8.0)
-  - FirebaseFirestoreInternal (12.8.0):
+  - FirebaseFirestore (12.12.0):
+    - FirebaseCore (~> 12.12.0)
+    - FirebaseCoreExtension (~> 12.12.0)
+    - FirebaseFirestoreInternal (~> 12.12.0)
+    - FirebaseSharedSwift (~> 12.12.0)
+  - FirebaseFirestoreInternal (12.12.0):
     - abseil/algorithm (~> 1.20240722.0)
     - abseil/base (~> 1.20240722.0)
     - abseil/container/flat_hash_map (~> 1.20240722.0)
@@ -1313,27 +1313,27 @@ PODS:
     - abseil/strings/strings (~> 1.20240722.0)
     - abseil/time (~> 1.20240722.0)
     - abseil/types (~> 1.20240722.0)
-    - FirebaseAppCheckInterop (~> 12.8.0)
-    - FirebaseCore (~> 12.8.0)
+    - FirebaseAppCheckInterop (~> 12.12.0)
+    - FirebaseCore (~> 12.12.0)
     - "gRPC-C++ (~> 1.69.0)"
     - gRPC-Core (~> 1.69.0)
     - leveldb-library (~> 1.22)
     - nanopb (~> 3.30910.0)
-  - FirebaseFunctions (12.8.0):
-    - FirebaseAppCheckInterop (~> 12.8.0)
-    - FirebaseAuthInterop (~> 12.8.0)
-    - FirebaseCore (~> 12.8.0)
-    - FirebaseCoreExtension (~> 12.8.0)
-    - FirebaseMessagingInterop (~> 12.8.0)
-    - FirebaseSharedSwift (~> 12.8.0)
+  - FirebaseFunctions (12.12.0):
+    - FirebaseAppCheckInterop (~> 12.12.0)
+    - FirebaseAuthInterop (~> 12.12.0)
+    - FirebaseCore (~> 12.12.0)
+    - FirebaseCoreExtension (~> 12.12.0)
+    - FirebaseMessagingInterop (~> 12.12.0)
+    - FirebaseSharedSwift (~> 12.12.0)
     - GTMSessionFetcher/Core (< 6.0, >= 3.4)
-  - FirebaseMessagingInterop (12.8.0)
-  - FirebaseSharedSwift (12.8.0)
-  - FirebaseStorage (12.8.0):
-    - FirebaseAppCheckInterop (~> 12.8.0)
-    - FirebaseAuthInterop (~> 12.8.0)
-    - FirebaseCore (~> 12.8.0)
-    - FirebaseCoreExtension (~> 12.8.0)
+  - FirebaseMessagingInterop (12.12.0)
+  - FirebaseSharedSwift (12.12.0)
+  - FirebaseStorage (12.12.1):
+    - FirebaseAppCheckInterop (~> 12.12.0)
+    - FirebaseAuthInterop (~> 12.12.0)
+    - FirebaseCore (~> 12.12.0)
+    - FirebaseCoreExtension (~> 12.12.0)
     - GoogleUtilities/Environment (~> 8.1)
     - GTMSessionFetcher/Core (< 6.0, >= 3.4)
   - Flutter (1.0.0)
@@ -1514,17 +1514,17 @@ PODS:
   - Mantle (2.2.0):
     - Mantle/extobjc (= 2.2.0)
   - Mantle/extobjc (2.2.0)
-  - mapbox_maps_flutter (2.18.0):
+  - mapbox_maps_flutter (2.21.1):
     - Flutter
-    - MapboxMaps (= 11.18.0)
+    - MapboxMaps (= 11.21.1)
     - Turf (= 4.0.0)
-  - MapboxCommon (24.18.0):
+  - MapboxCommon (24.21.1):
     - Turf (= 4.0.0)
-  - MapboxCoreMaps (11.18.0):
-    - MapboxCommon (= 24.18.0)
-  - MapboxMaps (11.18.0):
-    - MapboxCommon (= 24.18.0)
-    - MapboxCoreMaps (= 11.18.0)
+  - MapboxCoreMaps (11.21.1):
+    - MapboxCommon (= 24.21.1)
+  - MapboxMaps (11.21.1):
+    - MapboxCommon (= 24.21.1)
+    - MapboxCoreMaps (= 11.21.1)
     - Turf (= 4.0.0)
   - nanopb (3.30910.0):
     - nanopb/decode (= 3.30910.0)
@@ -1536,24 +1536,24 @@ PODS:
   - permission_handler_apple (9.3.0):
     - Flutter
   - PromisesObjC (2.4.0)
-  - purchases_flutter (9.11.0):
+  - purchases_flutter (9.16.1):
     - Flutter
-    - PurchasesHybridCommon (= 17.31.0)
-  - purchases_ui_flutter (9.11.0):
+    - PurchasesHybridCommon (= 17.55.1)
+  - purchases_ui_flutter (9.16.1):
     - Flutter
-    - PurchasesHybridCommonUI (= 17.31.0)
-  - PurchasesHybridCommon (17.31.0):
-    - RevenueCat (= 5.57.0)
-  - PurchasesHybridCommonUI (17.31.0):
-    - PurchasesHybridCommon (= 17.31.0)
-    - RevenueCatUI (= 5.57.0)
+    - PurchasesHybridCommonUI (= 17.55.1)
+  - PurchasesHybridCommon (17.55.1):
+    - RevenueCat (= 5.67.1)
+  - PurchasesHybridCommonUI (17.55.1):
+    - PurchasesHybridCommon (= 17.55.1)
+    - RevenueCatUI (= 5.67.1)
   - RecaptchaInterop (101.0.0)
-  - RevenueCat (5.57.0)
-  - RevenueCatUI (5.57.0):
-    - RevenueCat (= 5.57.0)
-  - SDWebImage (5.21.5):
-    - SDWebImage/Core (= 5.21.5)
-  - SDWebImage/Core (5.21.5)
+  - RevenueCat (5.67.1)
+  - RevenueCatUI (5.67.1):
+    - RevenueCat (= 5.67.1)
+  - SDWebImage (5.21.7):
+    - SDWebImage/Core (= 5.21.7)
+  - SDWebImage/Core (5.21.7)
   - SDWebImageWebPCoder (0.15.0):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.17)
@@ -1721,30 +1721,30 @@ SPEC CHECKSUMS:
   AppCheckCore: cc8fd0a3a230ddd401f326489c99990b013f0c4f
   BoringSSL-GRPC: dded2a44897e45f28f08ae87a55ee4bcd19bc508
   camera_avfoundation: 5675ca25298b6f81fa0a325188e7df62cc217741
-  cloud_firestore: 4bd00c3464706d9e09dabac0bb8e9610456109f5
-  cloud_functions: 20f0d60aa8a30d7bb3dc3c796665e2d9de828b61
+  cloud_firestore: 51d1815d5406b0122715a861bb4eaa0f3ad850a9
+  cloud_functions: 953301e62f7dd357afe772ccafa9f99c85ab78e7
   cupertino_native: 1db0611c94f9a9ea28433ed16a344dcb996370b5
   CwlCatchException: 7acc161b299a6de7f0a46a6ed741eae2c8b4d75a
   CwlCatchExceptionSupport: 54ccab8d8c78907b57f99717fb19d4cc3bce02dc
   DKImagePickerController: 946cec48c7873164274ecc4624d19e3da4c1ef3c
   DKPhotoGallery: b3834fecb755ee09a593d7c9e389d8b5d6deed60
   file_picker: a0560bc09d61de87f12d246fc47d2119e6ef37be
-  Firebase: 9a58fdbc9d8655ed7b79a19cf9690bb007d3d46d
-  firebase_auth: e9031a1dbe04a90d98e8d11ff2302352a1c6d9e8
-  firebase_core: ee30637e6744af8e0c12a6a1e8a9718506ec2398
-  firebase_storage: 74ebe330dac8084b22991cd1e1abd4a49bc14daf
-  FirebaseAppCheckInterop: ba3dc604a89815379e61ec2365101608d365cf7d
-  FirebaseAuth: 4c289b1a43f5955283244a55cf6bd616de344be5
-  FirebaseAuthInterop: 95363fe96493cb4f106656666a0768b420cba090
-  FirebaseCore: 0dbad74bda10b8fb9ca34ad8f375fb9dd3ebef7c
-  FirebaseCoreExtension: 6605938d51f765d8b18bfcafd2085276a252bee2
-  FirebaseCoreInternal: fe5fa466aeb314787093a7dce9f0beeaad5a2a21
-  FirebaseFirestore: 67f23000ca238ccbab79127ed59636a9a2689e74
-  FirebaseFirestoreInternal: a0e7382af3d208898dcd1d4d52d8a7870632e881
-  FirebaseFunctions: 65f773056cb7f654626e5fa4894b1d6539cb5feb
-  FirebaseMessagingInterop: e27b8f42f682efdb101318a53c3f5316ce3402e6
-  FirebaseSharedSwift: f57ed48f4542b2d7eb4738f4f23ba443f78b3780
-  FirebaseStorage: 7c37558dc72731aa5f0a1a2401d8c6de10a513f5
+  Firebase: aa154fee4e9b8eac17aa42344988865b3e857d33
+  firebase_auth: b0aa0a5964e23fba1bf7f32603437edc33b889c4
+  firebase_core: 9156a152117c843440b0b990c785aa0259bc5447
+  firebase_storage: ef547439afc96fe8ee856de3878ed28e1c5a88e8
+  FirebaseAppCheckInterop: c63ae0d003274f145174849c545ab861593beaf9
+  FirebaseAuth: bcfebbc0ca055a6335f2252a90e57363d7ea5e65
+  FirebaseAuthInterop: 917aa3a17ecf144d5f1823b51ef372da06909a4b
+  FirebaseCore: 86241206e656f5c80c995e370e6c975913b9b284
+  FirebaseCoreExtension: ff6fd42eb5287e71d3e160450de6509733d9ead7
+  FirebaseCoreInternal: 7c12fc3011d889085e765e317d7b9fd1cef97af9
+  FirebaseFirestore: 01e964d312cf17e56925c955b19798848775a7fd
+  FirebaseFirestoreInternal: 9d9fd7eadbe0f19310fd7df06470a04baeaf3f36
+  FirebaseFunctions: 63768746c276d799807347fdb8f0b057898a5792
+  FirebaseMessagingInterop: bcf56f6a07054150163621d62676e34edab5d5eb
+  FirebaseSharedSwift: bccaff90721d14bafc14be34f28b77fdd7c91dc9
+  FirebaseStorage: b3682c96ae7016420c1f6eb43d45057a0e909c9f
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   flutter_image_compress_common: 1697a328fd72bfb335507c6bca1a65fa5ad87df1
   flutter_local_notifications: a5a732f069baa862e728d839dd2ebb904737effb
@@ -1766,22 +1766,22 @@ SPEC CHECKSUMS:
   libwebp: 02b23773aedb6ff1fd38cec7a77b81414c6842a8
   local_auth_darwin: c3ee6cce0a8d56be34c8ccb66ba31f7f180aaebb
   Mantle: c5aa8794a29a022dfbbfc9799af95f477a69b62d
-  mapbox_maps_flutter: 2ebdee9cbabc4c093fecbdeca179f9e01cbabfd6
-  MapboxCommon: 7dc22ef3ccd162e54b28ddf97e9a6a293a72875c
-  MapboxCoreMaps: fa266f524b2ab0c4d4c76d94db6411b243969b37
-  MapboxMaps: e8a15728a4600e9fef4e11a29bc21c4bf9c4cbc3
+  mapbox_maps_flutter: 8196a4536acbf6ac3f7dc6d3fbc069d195cb8223
+  MapboxCommon: fc6014c7d70a4a3eee71d51d9b688dff33f6bb19
+  MapboxCoreMaps: 1d35e2c89c1986cc8c09846f31652a2e8c5366c0
+  MapboxMaps: 49755f2eef16af8664ed0d4d288c891ed5c001a9
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   package_info_plus: af8e2ca6888548050f16fa2f1938db7b5a5df499
   permission_handler_apple: 4ed2196e43d0651e8ff7ca3483a069d469701f2d
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
-  purchases_flutter: 10a2283136e2c98ddddb78737da5ab8bed457149
-  purchases_ui_flutter: 024c1dccf65953b10dfa9b9c57a873d6f3d45c22
-  PurchasesHybridCommon: 21a11c5d66c8a52cf9aede45cecc2efe1551b98b
-  PurchasesHybridCommonUI: 60fbb660ebbf224df733c90849c4f3b8f6819f4b
+  purchases_flutter: b44fcb4ff5e68a4dfe53fd0c339683803b04dd2c
+  purchases_ui_flutter: 64afab2a2adc79a73ed5ca77f416c8d360a12734
+  PurchasesHybridCommon: ecd9d7c586287625f1225b8de5e24c1021502270
+  PurchasesHybridCommonUI: 3056a3d261529f6adb8f74ecc3ab7f1cc0d3fab4
   RecaptchaInterop: 11e0b637842dfb48308d242afc3f448062325aba
-  RevenueCat: 2d8aa56c68fa8e92c0d669e5e797c4a93e284f20
-  RevenueCatUI: 25c86cf10c6cb9e3e9f308c48df55b31bf7fdba5
-  SDWebImage: e9c98383c7572d713c1a0d7dd2783b10599b9838
+  RevenueCat: 9357239a9f0978285e68983637b8a602e65c94f0
+  RevenueCatUI: 6f9291da540f98baf405b5bdfc46b2d5547b704a
+  SDWebImage: e9fc87c1aab89a8ab1bbd74eba378c6f53be8abf
   SDWebImageWebPCoder: 0e06e365080397465cc73a7a9b472d8a3bd0f377
   share_plus: 50da8cb520a8f0f65671c6c6a99b3617ed10a58a
   shared_preferences_foundation: 7036424c3d8ec98dfe75ff1667cb0cd531ec82bb
