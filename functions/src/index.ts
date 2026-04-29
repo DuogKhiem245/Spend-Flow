@@ -10,17 +10,14 @@ if (getApps().length === 0) {
     });
 }
 
-export const registerUser = onCall(
-    { secrets: ["GMAIL_APP_PASSWORD"] },
-    registerHandler
-);
+export const registerUser = onCall({ secrets: ["RESEND_API_KEY"] }, registerHandler);
 
 export const verifyOtpRegister = onCall(
     verifyOtpRegisterHandler
 );
 
 export const resendOtpRegister = onCall(
-    { secrets: ["GMAIL_APP_PASSWORD"] },
+    { secrets: ["RESEND_API_KEY"] },
     resendOtpRegisterHandler
 );
 
@@ -32,7 +29,7 @@ export const loginUser = onCall(
 );
 
 export const forgotPassword = onCall(
-    { secrets: ["GMAIL_APP_PASSWORD"] },
+    { secrets: ["RESEND_API_KEY"] },
     forgotPasswordHandler
 );
 

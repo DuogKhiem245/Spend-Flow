@@ -1,7 +1,5 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 interface EmailContent {
   title: string;
   subjectRegister: string;
@@ -44,6 +42,11 @@ export const sendOTPEmail = async (
   type: "REGISTER" | "RESET",
   lang: string = "en",
 ) => {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error("RESEND_API_KEY is not defined in environment variables");
+  }
+  const resend = new Resend(apiKey);
   const t = translations[lang] || translations["en"];
   const isRegister = type === "REGISTER";
   const subjectPrefix = isRegister ? t.subjectRegister : t.subjectReset;
