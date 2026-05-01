@@ -789,7 +789,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get about => 'Giới thiệu';
 
   @override
-  String get terms => 'Điều khoản & Điều kiện';
+  String get terms_of_service => 'Điều khoản dịch vụ';
 
   @override
   String get privacy_policy => 'Chính sách quyền riêng tư';
@@ -1029,6 +1029,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get year => 'Năm';
 
   @override
+  String get subscription_auto_renews => 'Đăng ký tự động gia hạn';
+
+  @override
   String get accept_terms_conditions =>
       'Đăng ký tự động gia hạn. Bằng cách tiếp tục, bạn đồng ý với Điều khoản Dịch vụ và Chính sách Quyền riêng tư của chúng tôi.';
 
@@ -1107,6 +1110,14 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get purchase_canceled_description =>
       'Giao dịch của bạn đã bị hủy. Vui lòng thử lại nếu bạn muốn nâng cấp lên Premium.';
+
+  @override
+  String get premium_sync_account =>
+      'Tài khoản Premium của bạn sẽ được đồng bộ với tài khoản mà bạn đăng nhập vào. Hãy đảm bảo đăng nhập bằng cùng một tài khoản trên tất cả thiết bị của bạn để tận hưởng trải nghiệm Premium liền mạch.';
+
+  @override
+  String get premium_sync_warning =>
+      'Lưu ý: Nếu bạn đã mua gói Premium trên một tài khoản khác, vui lòng đăng nhập vào tài khoản đó để khôi phục quyền truy cập Premium của bạn. Nếu bạn đang sử dụng cùng một tài khoản, hãy thử khôi phục mua hàng để đồng bộ hóa quyền truy cập Premium của bạn.';
 
   @override
   String get select_language => 'Chọn ngôn ngữ';
@@ -1465,4 +1476,97 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get require_premium_to_sync =>
       'Bạn cần nâng cấp lên Premium hoặc xem quảng cáo để đồng bộ dữ liệu.';
+
+  @override
+  String get information_and_support => 'Thông tin & Hỗ trợ';
+
+  @override
+  String get contact_support => 'Liên hệ hỗ trợ';
+
+  @override
+  String get send_email => 'Gửi email hỗ trợ';
+
+  @override
+  String get describe_issue => 'Mô tả vấn đề của bạn ở đây...';
+
+  @override
+  String get feedback => 'Góp ý';
+
+  @override
+  String get feedback_description =>
+      'Chúng tôi rất muốn nghe ý kiến của bạn! Hãy chia sẻ suy nghĩ, đề xuất hoặc bất kỳ vấn đề nào bạn gặp phải để chúng tôi có thể cải thiện ứng dụng.';
+
+  @override
+  String get submit_feedback => 'Gửi góp ý';
+
+  @override
+  String get report_issue => 'Báo cáo sự cố';
+
+  @override
+  String get report_issue_description =>
+      'Nếu bạn gặp phải bất kỳ lỗi nào hoặc có vấn đề với ứng dụng, vui lòng cho chúng tôi biết. Mô tả chi tiết vấn đề của bạn để chúng tôi có thể giải quyết nó nhanh chóng.';
+
+  @override
+  String get submit_issue => 'Gửi báo cáo sự cố';
+
+  @override
+  String get thank_you_feedback =>
+      'Cảm ơn bạn đã gửi góp ý! Chúng tôi đánh giá cao phản hồi của bạn và sẽ xem xét nó để cải thiện ứng dụng.';
+
+  @override
+  String get thank_you_issue =>
+      'Cảm ơn bạn đã báo cáo sự cố! Chúng tôi đánh giá cao phản hồi của bạn và sẽ xem xét nó để giải quyết vấn đề bạn gặp phải.';
+
+  @override
+  String get request_delete_account => 'Yêu cầu xóa tài khoản';
+
+  @override
+  String get delete_account_description =>
+      'Nếu bạn muốn xóa tài khoản của mình, vui lòng cho chúng tôi biết taị sao bạn muốn xóa tài khoản. Chúng tôi sẽ xử lý yêu cầu của bạn trong thời gian sớm nhất có thể.';
+
+  @override
+  String get submit_delete_request => 'Gửi yêu cầu xóa tài khoản';
+
+  @override
+  String get select_subject => 'Chọn chủ đề';
+
+  @override
+  String get please_enter_content => 'Vui lòng nhập nội dung';
+
+  @override
+  String get subject => 'Chủ đề';
+
+  @override
+  String get content => 'Nội dung';
+
+  @override
+  String get send_contact_success =>
+      'Gửi liên hệ thành công! Chúng tôi sẽ liên hệ lại với bạn sớm nhất có thể.';
+
+  @override
+  String get send_contact_error => 'Lỗi khi gửi liên hệ. Vui lòng thử lại.';
+
+  @override
+  String get contact_info => 'Thông tin liên hệ';
+
+  @override
+  String get email_placeholder => 'Nhập email của bạn';
+
+  @override
+  String get name_placeholder => 'Nhập tên của bạn';
+
+  @override
+  String get invalid_name => 'Vui lòng nhập tên của bạn.';
+
+  @override
+  String get mrs => 'Bà';
+
+  @override
+  String get mr => 'Ông';
+
+  @override
+  String get ms => 'Cô';
+
+  @override
+  String get salutation => 'Danh xưng';
 }

@@ -59,25 +59,25 @@ class _LanguageViewState extends State<LanguageView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildSectionHeader(l10n.suggested.toUpperCase()),
-                    SizedBox(height: 8.h),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: CupertinoTheme.of(context).barBackgroundColor,
-                        borderRadius: BorderRadius.circular(30.r),
-                      ),
-                      child: Column(
-                        children: List.generate(suggestedLangs.length, (index) {
-                          final lang = suggestedLangs[index];
-                          return _buildLanguageItem(
-                            lang,
-                            isLast: index == suggestedLangs.length - 1,
-                          );
-                        }),
-                      ),
-                    ),
+                    // _buildSectionHeader(l10n.suggested.toUpperCase()),
+                    // SizedBox(height: 8.h),
+                    // Container(
+                    //   decoration: BoxDecoration(
+                    //     color: CupertinoTheme.of(context).barBackgroundColor,
+                    //     borderRadius: BorderRadius.circular(30.r),
+                    //   ),
+                    //   child: Column(
+                    //     children: List.generate(suggestedLangs.length, (index) {
+                    //       final lang = suggestedLangs[index];
+                    //       return _buildLanguageItem(
+                    //         lang,
+                    //         isLast: index == suggestedLangs.length - 1,
+                    //       );
+                    //     }),
+                    //   ),
+                    // ),
 
-                    SizedBox(height: 24.h),
+                    // SizedBox(height: 24.h),
 
                     _buildSectionHeader(l10n.all_languages.toUpperCase()),
                     SizedBox(height: 8.h),

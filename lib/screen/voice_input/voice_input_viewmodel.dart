@@ -23,6 +23,7 @@ class VoiceInputViewModel extends ChangeNotifier {
   String _lastWords = '';
 
   bool _isProcessing = false;
+  bool _isDisposed = false;
 
   List<double> heights = List.filled(7, 20.0);
   Timer? _waveTimer;
@@ -40,16 +41,16 @@ class VoiceInputViewModel extends ChangeNotifier {
           if (status == 'done' || status == 'notListening') {
             _isListening = false;
             _stopWaveAnimation();
-            notifyListeners();
+            _safeNotifyListeners();
           }
         },
         onError: (errorNotification) {
           _isListening = false;
           _stopWaveAnimation();
-          notifyListeners();
+          _safeNotifyListeners();
         },
       );
-      notifyListeners();
+      _safeNotifyListeners();
     } catch (e) {
       debugPrint("Error initializing speech: $e");
     }
@@ -60,6 +61,8 @@ class VoiceInputViewModel extends ChangeNotifier {
     if (status.isGranted) {
       return true;
     }
+
+    debugPrint("Microphone permission status: $status");
 
     if (status.isPermanentlyDenied) {
       debugPrint("Microphone permission permanently denied.");
@@ -121,12 +124,12 @@ class VoiceInputViewModel extends ChangeNotifier {
       _isListening = true;
       _lastWords = '';
       _startWaveAnimation();
-      notifyListeners();
+      _safeNotifyListeners();
 
       await _speechToText.listen(
         onResult: (result) {
           _lastWords = result.recognizedWords;
-          notifyListeners();
+          _safeNotifyListeners();
         },
         localeId: localeId,
         // listenFor: const Duration(seconds: 45), // Optional: limit listening duration
@@ -151,7 +154,7 @@ class VoiceInputViewModel extends ChangeNotifier {
     _isListening = false;
     _stopWaveAnimation();
     await _speechToText.stop();
-    notifyListeners();
+    _safeNotifyListeners();
   }
 
   Future<void> processVoiceInput(BuildContext context) async {
@@ -160,7 +163,7 @@ class VoiceInputViewModel extends ChangeNotifier {
 
     try {
       _isProcessing = true;
-      notifyListeners();
+      _safeNotifyListeners();
 
       final categories = CategoryData.getAll();
       final currentLanguage = LanguageService().locale.languageCode;
@@ -230,7 +233,7 @@ class VoiceInputViewModel extends ChangeNotifier {
       }
     } finally {
       _isProcessing = false;
-      notifyListeners();
+      _safeNotifyListeners();
     }
   }
 
@@ -260,18 +263,25 @@ class VoiceInputViewModel extends ChangeNotifier {
       for (int i = 0; i < heights.length; i++) {
         heights[i] = 20.0 + _random.nextInt(50).toDouble();
       }
-      notifyListeners();
+      _safeNotifyListeners();
     });
   }
 
   void _stopWaveAnimation() {
     _waveTimer?.cancel();
     heights = List.filled(7, 20.0);
-    notifyListeners();
+    _safeNotifyListeners();
+  }
+
+  void _safeNotifyListeners() {
+    if (!_isDisposed) {
+      notifyListeners();
+    }
   }
 
   @override
   void dispose() {
+    _isDisposed = true;
     _waveTimer?.cancel();
     _speechToText.cancel();
     super.dispose();

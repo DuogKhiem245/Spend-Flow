@@ -104,6 +104,14 @@ class PremiumView extends StatelessWidget {
                       children: [
                         SizedBox(height: 20.h),
                         _buildMainContent(l10n, context, viewModel),
+                        SizedBox(height: 12.h),
+                        Text(
+                          l10n.premium_sync_account,
+                          textAlign: TextAlign.center,
+                          style: CupertinoTheme.of(
+                            context,
+                          ).textTheme.textStyle.copyWith(fontSize: 11.sp),
+                        ),
                       ],
                     ),
                   ),
@@ -506,7 +514,7 @@ class PremiumView extends StatelessWidget {
           ),
           SizedBox(height: 12.h),
           Text(
-            l10n.accept_terms_conditions,
+            l10n.subscription_auto_renews,
             textAlign: TextAlign.center,
             style: CupertinoTheme.of(
               context,
@@ -566,35 +574,36 @@ class PremiumView extends StatelessWidget {
   }) {
     return GestureDetector(
       onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: EdgeInsets.all(16.w),
-        decoration: BoxDecoration(
-          color: isSelected
-              ? AppColors.primaryColor.withValues(alpha: .05)
-              : CupertinoTheme.of(context).scaffoldBackgroundColor,
-          borderRadius: BorderRadius.circular(20.r),
-          border: Border.all(
-            color: isSelected
-                ? AppColors.primaryColor
-                : Colors.grey.withValues(alpha: .2),
-            width: isSelected ? 2 : 1,
-          ),
-        ),
-        child: Row(
-          children: [
-            Icon(
-              isSelected
-                  ? CupertinoIcons.checkmark_alt_circle_fill
-                  : CupertinoIcons.circle,
-              color: isSelected ? AppColors.primaryColor : Colors.grey,
+      child: Stack(
+        children: [
+          // 1. Thân Card chính
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            padding: EdgeInsets.all(16.w),
+            decoration: BoxDecoration(
+              color: isSelected
+                  ? AppColors.primaryColor.withValues(alpha: .05)
+                  : CupertinoTheme.of(context).scaffoldBackgroundColor,
+              borderRadius: BorderRadius.circular(20.r),
+              border: Border.all(
+                color: isSelected
+                    ? AppColors.primaryColor
+                    : Colors.grey.withValues(alpha: .2),
+                width: isSelected ? 2 : 1,
+              ),
             ),
-            SizedBox(width: 12.w),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+            child: Row(
+              children: [
+                Icon(
+                  isSelected
+                      ? CupertinoIcons.checkmark_alt_circle_fill
+                      : CupertinoIcons.circle,
+                  color: isSelected ? AppColors.primaryColor : Colors.grey,
+                ),
+                SizedBox(width: 12.w),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         title,
@@ -604,50 +613,51 @@ class PremiumView extends StatelessWidget {
                               fontSize: 16.sp,
                             ),
                       ),
-                      if (tag != null) ...[
-                        SizedBox(width: 8.w),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 8.w,
-                            vertical: 2.h,
-                          ),
-                          decoration: BoxDecoration(
-                            color: AppColors.primaryColor,
-                            borderRadius: BorderRadius.circular(10.r),
-                          ),
-                          child: Text(
-                            tag,
-                            style: CupertinoTheme.of(context)
-                                .textTheme
-                                .textStyle
-                                .copyWith(
-                                  color: Colors.white,
-                                  fontSize: 9.sp,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                          ),
+                      if (description != null) ...[
+                        SizedBox(height: 4.h), // Thêm khoảng cách nhỏ cho đẹp
+                        Text(
+                          description,
+                          style: CupertinoTheme.of(context).textTheme.textStyle
+                              .copyWith(fontSize: 12.sp, color: Colors.grey),
                         ),
                       ],
                     ],
                   ),
-                  if (description != null)
-                    Text(
-                      description,
-                      style: CupertinoTheme.of(context).textTheme.textStyle
-                          .copyWith(fontSize: 12.sp, color: Colors.grey),
-                    ),
-                ],
+                ),
+                Text(
+                  price,
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(fontWeight: FontWeight.w800, fontSize: 16.sp),
+                ),
+              ],
+            ),
+          ),
+
+          if (tag != null)
+            Positioned(
+              top: 0,
+              right: 0,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                decoration: BoxDecoration(
+                  color: AppColors.primaryColor,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(18.r),
+                    bottomLeft: Radius.circular(10.r), 
+                  ),
+                ),
+                child: Text(
+                  tag,
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(
+                        color: Colors.white,
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w800,
+                      ),
+                ),
               ),
             ),
-            Text(
-              price,
-              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                fontWeight: FontWeight.w800,
-                fontSize: 16.sp,
-              ),
-            ),
-          ],
-        ),
+        ],
       ),
     );
   }

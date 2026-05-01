@@ -98,16 +98,20 @@ class _AIPreviewOverviewViewState extends State<AIPreviewOverviewView> {
         padding: EdgeInsetsDirectional.only(end: 10.w),
         border: null,
         backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
-        leading: CupertinoNavigationBarBackButton(
-          color: CupertinoTheme.of(context).primaryColor,
-          onPressed: () => Navigator.pop(context),
-        ),
-        middle: Text(
-          l10n.preview_results,
-          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-            fontSize: 20.sp,
-            fontWeight: FontWeight.w600,
-          ),
+        leading: Row(
+          children: [
+            CupertinoNavigationBarBackButton(
+              color: CupertinoTheme.of(context).primaryColor,
+              onPressed: () => Navigator.pop(context),
+            ),
+            Text(
+              l10n.preview_results,
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+                fontSize: 20.sp,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
         ),
         trailing: Container(
           padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),

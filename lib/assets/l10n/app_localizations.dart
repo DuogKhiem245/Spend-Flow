@@ -1580,11 +1580,11 @@ abstract class AppLocalizations {
   /// **'Giới thiệu'**
   String get about;
 
-  /// No description provided for @terms.
+  /// No description provided for @terms_of_service.
   ///
   /// In vi, this message translates to:
-  /// **'Điều khoản & Điều kiện'**
-  String get terms;
+  /// **'Điều khoản dịch vụ'**
+  String get terms_of_service;
 
   /// No description provided for @privacy_policy.
   ///
@@ -2036,6 +2036,12 @@ abstract class AppLocalizations {
   /// **'Năm'**
   String get year;
 
+  /// No description provided for @subscription_auto_renews.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đăng ký tự động gia hạn'**
+  String get subscription_auto_renews;
+
   /// No description provided for @accept_terms_conditions.
   ///
   /// In vi, this message translates to:
@@ -2173,6 +2179,18 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Giao dịch của bạn đã bị hủy. Vui lòng thử lại nếu bạn muốn nâng cấp lên Premium.'**
   String get purchase_canceled_description;
+
+  /// No description provided for @premium_sync_account.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tài khoản Premium của bạn sẽ được đồng bộ với tài khoản mà bạn đăng nhập vào. Hãy đảm bảo đăng nhập bằng cùng một tài khoản trên tất cả thiết bị của bạn để tận hưởng trải nghiệm Premium liền mạch.'**
+  String get premium_sync_account;
+
+  /// No description provided for @premium_sync_warning.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lưu ý: Nếu bạn đã mua gói Premium trên một tài khoản khác, vui lòng đăng nhập vào tài khoản đó để khôi phục quyền truy cập Premium của bạn. Nếu bạn đang sử dụng cùng một tài khoản, hãy thử khôi phục mua hàng để đồng bộ hóa quyền truy cập Premium của bạn.'**
+  String get premium_sync_warning;
 
   /// No description provided for @select_language.
   ///
@@ -2809,6 +2827,180 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Bạn cần nâng cấp lên Premium hoặc xem quảng cáo để đồng bộ dữ liệu.'**
   String get require_premium_to_sync;
+
+  /// No description provided for @information_and_support.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thông tin & Hỗ trợ'**
+  String get information_and_support;
+
+  /// No description provided for @contact_support.
+  ///
+  /// In vi, this message translates to:
+  /// **'Liên hệ hỗ trợ'**
+  String get contact_support;
+
+  /// No description provided for @send_email.
+  ///
+  /// In vi, this message translates to:
+  /// **'Gửi email hỗ trợ'**
+  String get send_email;
+
+  /// No description provided for @describe_issue.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mô tả vấn đề của bạn ở đây...'**
+  String get describe_issue;
+
+  /// No description provided for @feedback.
+  ///
+  /// In vi, this message translates to:
+  /// **'Góp ý'**
+  String get feedback;
+
+  /// No description provided for @feedback_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chúng tôi rất muốn nghe ý kiến của bạn! Hãy chia sẻ suy nghĩ, đề xuất hoặc bất kỳ vấn đề nào bạn gặp phải để chúng tôi có thể cải thiện ứng dụng.'**
+  String get feedback_description;
+
+  /// No description provided for @submit_feedback.
+  ///
+  /// In vi, this message translates to:
+  /// **'Gửi góp ý'**
+  String get submit_feedback;
+
+  /// No description provided for @report_issue.
+  ///
+  /// In vi, this message translates to:
+  /// **'Báo cáo sự cố'**
+  String get report_issue;
+
+  /// No description provided for @report_issue_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nếu bạn gặp phải bất kỳ lỗi nào hoặc có vấn đề với ứng dụng, vui lòng cho chúng tôi biết. Mô tả chi tiết vấn đề của bạn để chúng tôi có thể giải quyết nó nhanh chóng.'**
+  String get report_issue_description;
+
+  /// No description provided for @submit_issue.
+  ///
+  /// In vi, this message translates to:
+  /// **'Gửi báo cáo sự cố'**
+  String get submit_issue;
+
+  /// No description provided for @thank_you_feedback.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cảm ơn bạn đã gửi góp ý! Chúng tôi đánh giá cao phản hồi của bạn và sẽ xem xét nó để cải thiện ứng dụng.'**
+  String get thank_you_feedback;
+
+  /// No description provided for @thank_you_issue.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cảm ơn bạn đã báo cáo sự cố! Chúng tôi đánh giá cao phản hồi của bạn và sẽ xem xét nó để giải quyết vấn đề bạn gặp phải.'**
+  String get thank_you_issue;
+
+  /// No description provided for @request_delete_account.
+  ///
+  /// In vi, this message translates to:
+  /// **'Yêu cầu xóa tài khoản'**
+  String get request_delete_account;
+
+  /// No description provided for @delete_account_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nếu bạn muốn xóa tài khoản của mình, vui lòng cho chúng tôi biết taị sao bạn muốn xóa tài khoản. Chúng tôi sẽ xử lý yêu cầu của bạn trong thời gian sớm nhất có thể.'**
+  String get delete_account_description;
+
+  /// No description provided for @submit_delete_request.
+  ///
+  /// In vi, this message translates to:
+  /// **'Gửi yêu cầu xóa tài khoản'**
+  String get submit_delete_request;
+
+  /// No description provided for @select_subject.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn chủ đề'**
+  String get select_subject;
+
+  /// No description provided for @please_enter_content.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng nhập nội dung'**
+  String get please_enter_content;
+
+  /// No description provided for @subject.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chủ đề'**
+  String get subject;
+
+  /// No description provided for @content.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nội dung'**
+  String get content;
+
+  /// No description provided for @send_contact_success.
+  ///
+  /// In vi, this message translates to:
+  /// **'Gửi liên hệ thành công! Chúng tôi sẽ liên hệ lại với bạn sớm nhất có thể.'**
+  String get send_contact_success;
+
+  /// No description provided for @send_contact_error.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lỗi khi gửi liên hệ. Vui lòng thử lại.'**
+  String get send_contact_error;
+
+  /// No description provided for @contact_info.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thông tin liên hệ'**
+  String get contact_info;
+
+  /// No description provided for @email_placeholder.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập email của bạn'**
+  String get email_placeholder;
+
+  /// No description provided for @name_placeholder.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập tên của bạn'**
+  String get name_placeholder;
+
+  /// No description provided for @invalid_name.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng nhập tên của bạn.'**
+  String get invalid_name;
+
+  /// No description provided for @mrs.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bà'**
+  String get mrs;
+
+  /// No description provided for @mr.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ông'**
+  String get mr;
+
+  /// No description provided for @ms.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cô'**
+  String get ms;
+
+  /// No description provided for @salutation.
+  ///
+  /// In vi, this message translates to:
+  /// **'Danh xưng'**
+  String get salutation;
 }
 
 class _AppLocalizationsDelegate

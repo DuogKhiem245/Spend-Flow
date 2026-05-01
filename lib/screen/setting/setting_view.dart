@@ -11,6 +11,7 @@ import 'package:spend_flow/screen/setting/setting_viewmodel.dart';
 import 'package:spend_flow/screen/setting/widget/account_widget.dart';
 import 'package:spend_flow/screen/setting/widget/setting_data_widget.dart';
 import 'package:spend_flow/screen/setting/widget/setting_general_widget.dart';
+import 'package:spend_flow/screen/setting/widget/setting_info_widget.dart';
 import 'package:spend_flow/screen/setting/widget/setting_security_widget.dart';
 import 'package:spend_flow/screen/setting/widget/upgrade_premium_widget.dart';
 import 'package:spend_flow/main.dart';
@@ -145,6 +146,9 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
                           lastSyncText: _lastSyncText,
                           onSyncSuccess: _loadLastSyncTime,
                         ),
+                        SizedBox(height: 10.h),
+
+                        const SettingInfoWidget(),
                         SizedBox(height: 30.h),
 
                         isLoggedIn

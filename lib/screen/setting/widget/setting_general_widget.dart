@@ -84,7 +84,7 @@ class _SettingGeneralWidgetState extends State<SettingGeneralWidget> {
         SettingItem(
           title: l10n.dark_mode,
           icon: CupertinoIcons.moon_fill,
-          iconBgColor: const Color(0xFF3B82F6),
+          iconBgColor: const Color(0xFF1C1C1E),
           trailing: CNSwitch(
             value: isDark,
             onChanged: (v) => themeService.setTheme(v),

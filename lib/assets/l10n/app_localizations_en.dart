@@ -791,7 +791,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get about => 'About';
 
   @override
-  String get terms => 'Terms & Conditions';
+  String get terms_of_service => 'Terms of Service';
 
   @override
   String get privacy_policy => 'Privacy Policy';
@@ -1030,6 +1030,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get year => 'Year';
 
   @override
+  String get subscription_auto_renews => 'Subscription auto-renews.';
+
+  @override
   String get accept_terms_conditions =>
       'Subscription auto-renews. By continuing, you agree to our Terms of Service and Privacy Policy.';
 
@@ -1108,6 +1111,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get purchase_canceled_description =>
       'The transaction was canceled. No changes were made to your account.';
+
+  @override
+  String get premium_sync_account =>
+      'Your Premium account will be synced with the account you sign in to. Please ensure you sign in with the same account on all your devices for a seamless Premium experience.';
+
+  @override
+  String get premium_sync_warning =>
+      'Note: If you purchased a Premium package on a different account, please sign in to that account to restore your Premium access. If you are using the same account, try restoring your purchase to sync your Premium access.';
 
   @override
   String get select_language => 'Select Language';
@@ -1467,4 +1478,98 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get require_premium_to_sync =>
       'You need to upgrade to Premium or watch ads to sync data.';
+
+  @override
+  String get information_and_support => 'Information & Support';
+
+  @override
+  String get contact_support => 'Contact Support';
+
+  @override
+  String get send_email => 'Send Email';
+
+  @override
+  String get describe_issue =>
+      'Describe your issue or question in detail. Our support team will get back to you as soon as possible.';
+
+  @override
+  String get feedback => 'Feedback';
+
+  @override
+  String get feedback_description =>
+      'We\'d love to hear your thoughts and suggestions to help us improve SpendFlow. Please share your feedback with us!';
+
+  @override
+  String get submit_feedback => 'Submit Feedback';
+
+  @override
+  String get report_issue => 'Report Issue';
+
+  @override
+  String get report_issue_description =>
+      'If you encounter any bugs or issues, please report them here. Your input helps us improve the app for everyone.';
+
+  @override
+  String get submit_issue => 'Submit Issue';
+
+  @override
+  String get thank_you_feedback => 'Thank you for your feedback!';
+
+  @override
+  String get thank_you_issue =>
+      'Thank you for reporting the issue! We will look into it as soon as possible.';
+
+  @override
+  String get request_delete_account => 'Request Account Deletion';
+
+  @override
+  String get delete_account_description =>
+      'If you wish to delete your account, please let us know why you want to delete it. We will process your request as soon as possible.';
+
+  @override
+  String get submit_delete_request => 'Submit Request';
+
+  @override
+  String get select_subject => 'Select Subject';
+
+  @override
+  String get please_enter_content => 'Please enter content';
+
+  @override
+  String get subject => 'Subject';
+
+  @override
+  String get content => 'Content';
+
+  @override
+  String get send_contact_success =>
+      'Your message has been sent successfully! We will get back to you as soon as possible.';
+
+  @override
+  String get send_contact_error =>
+      'An error occurred while sending your message. Please try again.';
+
+  @override
+  String get contact_info => 'Contact Information';
+
+  @override
+  String get email_placeholder => 'Enter your email';
+
+  @override
+  String get name_placeholder => 'Enter your name';
+
+  @override
+  String get invalid_name => 'Please enter a valid name.';
+
+  @override
+  String get mrs => 'Mrs.';
+
+  @override
+  String get mr => 'Mr.';
+
+  @override
+  String get ms => 'Ms.';
+
+  @override
+  String get salutation => 'Salutation';
 }

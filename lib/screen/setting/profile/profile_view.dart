@@ -270,7 +270,7 @@ class _ProfileViewState extends State<ProfileView> {
                 middle: Text(
                   l10n.edit_profile,
                   style: CupertinoTheme.of(context).textTheme.textStyle
-                      .copyWith(fontWeight: FontWeight.w600, fontSize: 20.sp),
+                      .copyWith(fontWeight: FontWeight.w600, fontSize: 18.sp),
                 ),
               ),
               child: SafeArea(
