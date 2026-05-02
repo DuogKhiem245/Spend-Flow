@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:http/http.dart' as http;
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
@@ -381,33 +385,49 @@ class _ContactViewState extends State<ContactView> {
     });
 
     try {
-      await Future.delayed(const Duration(milliseconds: 1500));
+      final baseUrl = dotenv.env['CONTACT_URL_API'] ?? '';
+      final url = Uri.parse(baseUrl);
 
-      if (!mounted) return;
-
-      _contentController.clear();
-      if (!_isLoggedIn) {
-        _emailController.clear();
-        _nameController.clear();
-      } else if (!_hasInitialName) {
-        _nameController.clear();
-      }
-
-      AdaptiveAlertDialog.show(
-        context: context,
-        title: l10n.success,
-        message: l10n.send_contact_success,
-        actions: [
-          AlertAction(
-            title: l10n.close,
-            style: AlertActionStyle.primary,
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'salutation': _getSalutationText(_selectedSalutation, l10n),
+          'name': name,
+          'email': email,
+          'subject': _getSubjectText(_selectedSubject, l10n),
+          'content': content,
+        }),
       );
+
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        if (!mounted) return;
+
+        _contentController.clear();
+        if (!_isLoggedIn) {
+          _emailController.clear();
+          _nameController.clear();
+        } else if (!_hasInitialName) {
+          _nameController.clear();
+        }
+
+        AdaptiveAlertDialog.show(
+          context: context,
+          title: l10n.success,
+          message: l10n.send_contact_success,
+          actions: [
+            AlertAction(
+              title: l10n.close,
+              style: AlertActionStyle.primary,
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        );
+      } else {
+        throw Exception('Server returned ${response.statusCode}');
+      }
     } catch (e) {
+      debugPrint('Error submitting contact form: $e');
       if (!mounted) return;
       AdaptiveAlertDialog.show(
         context: context,
@@ -835,7 +855,6 @@ class _ContactViewState extends State<ContactView> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 16.h),
                   ],
                 ),
               ),

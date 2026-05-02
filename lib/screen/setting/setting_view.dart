@@ -149,7 +149,6 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
                         SizedBox(height: 10.h),
 
                         const SettingInfoWidget(),
-                        SizedBox(height: 30.h),
 
                         isLoggedIn
                             ? Column(
