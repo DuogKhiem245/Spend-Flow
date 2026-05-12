@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:focus_detector/focus_detector.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/ads_service.dart';
@@ -40,7 +41,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _viewModel.initData();
-    _adsService.loadAllRewardedAds();
+     _adsService.loadRewardedAd(RewardedAdType.scanReceipt);
+    _adsService.loadRewardedAd(RewardedAdType.voiceInput);
   }
 
   @override
@@ -59,17 +61,16 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   Future<void> _handleMenuSelection(int index) async {
     HapticFeedback.heavyImpact();
-    bool? shouldRefresh = false;
 
     switch (index) {
       case 0:
         if (_premiumViewModel.isPremium) {
-          shouldRefresh = await Navigator.push<bool>(
+          await Navigator.push(
             context,
             CupertinoPageRoute(builder: (context) => const ScanReceiptView()),
           );
         } else {
-          shouldRefresh = await _showLimitOptions(context, isVoice: false);
+          await _showLimitOptions(context, isVoice: false);
         }
         break;
 
@@ -77,27 +78,22 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         final canUse = await _limitService.canUseVoice();
         if (canUse) {
           if (!mounted) return;
-          shouldRefresh = await Navigator.push<bool>(
+          await Navigator.push(
             context,
             CupertinoPageRoute(builder: (context) => const VoiceInputView()),
           );
         } else {
           if (!mounted) return;
-          shouldRefresh = await _showLimitOptions(context, isVoice: true);
+          await _showLimitOptions(context, isVoice: true);
         }
         break;
 
       case 2:
-        shouldRefresh = await Navigator.push(
+        await Navigator.push(
           context,
           CupertinoPageRoute(builder: (context) => const AddTransactionPage()),
         );
-        shouldRefresh = true;
         break;
-    }
-
-    if (shouldRefresh == true) {
-      await _viewModel.reloadData();
     }
   }
 
@@ -246,82 +242,89 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
-    return ListenableBuilder(
-      listenable: _viewModel,
-      builder: (context, child) {
-        return CupertinoPageScaffold(
-          child: _viewModel.isLoading
-              ? const SkeletonHomeView()
-              : Stack(
-                  children: [
-                    Column(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).padding.top + 10.h,
-                            left: 16.w,
-                            right: 16.w,
-                            bottom: 10.h,
-                          ),
-                          color: CupertinoTheme.of(
-                            context,
-                          ).scaffoldBackgroundColor,
-                          child: HomeHeader(viewModel: _viewModel),
-                        ),
-                        Expanded(
-                          child: SingleChildScrollView(
+    return FocusDetector(
+      onFocusGained: () async {
+        if (mounted) {
+          await _viewModel.reloadData();
+        }
+      },
+      child: ListenableBuilder(
+        listenable: _viewModel,
+        builder: (context, child) {
+          return CupertinoPageScaffold(
+            child: _viewModel.isLoading
+                ? const SkeletonHomeView()
+                : Stack(
+                    children: [
+                      Column(
+                        children: [
+                          Container(
                             padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).padding.top + 10.h,
                               left: 16.w,
                               right: 16.w,
-                              top: 10.h,
-                              bottom: 100.h,
+                              bottom: 10.h,
                             ),
-                            child: Column(
-                              children: [
-                                BalanceCard(
-                                  income: _viewModel.income,
-                                  expenses: _viewModel.expenses,
-                                  balance: _viewModel.balance,
-                                  viewModel: _viewModel,
-                                ),
-                                SizedBox(height: 15.h),
-                                // StreakCard(),
-                                // SizedBox(height: 15.h),
-                                SpendingChart(
-                                  chartData: _viewModel.chartData,
-                                  viewModel: _viewModel,
-                                ),
-                                SizedBox(height: 15.h),
-                                RecentTransaction(
-                                  transactions: _viewModel.recentTransactions,
-                                  viewModel: _viewModel,
-                                ),
-                                SizedBox(
-                                  height: _premiumViewModel.isPremium == false
-                                      ? 120.h
-                                      : 80.h,
-                                ),
-                              ],
+                            color: CupertinoTheme.of(
+                              context,
+                            ).scaffoldBackgroundColor,
+                            child: HomeHeader(viewModel: _viewModel),
+                          ),
+                          Expanded(
+                            child: SingleChildScrollView(
+                              padding: EdgeInsets.only(
+                                left: 16.w,
+                                right: 16.w,
+                                top: 10.h,
+                                bottom: 100.h,
+                              ),
+                              child: Column(
+                                children: [
+                                  BalanceCard(
+                                    income: _viewModel.income,
+                                    expenses: _viewModel.expenses,
+                                    balance: _viewModel.balance,
+                                    viewModel: _viewModel,
+                                  ),
+                                  SizedBox(height: 15.h),
+                                  // StreakCard(),
+                                  // SizedBox(height: 15.h),
+                                  SpendingChart(
+                                    chartData: _viewModel.chartData,
+                                    viewModel: _viewModel,
+                                  ),
+                                  SizedBox(height: 15.h),
+                                  RecentTransaction(
+                                    transactions: _viewModel.recentTransactions,
+                                    viewModel: _viewModel,
+                                  ),
+                                  SizedBox(
+                                    height: _premiumViewModel.isPremium == false
+                                        ? 120.h
+                                        : 80.h,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Positioned(
-                      right: 20.w,
-                      bottom: _premiumViewModel.isPremium
-                          ? Platform.isIOS
-                                ? 100.h
-                                : 95.h
-                          : Platform.isIOS
-                          ? 150.h
-                          : 125.h,
-                      child: _buildFloatingButton(l10n),
-                    ),
-                  ],
-                ),
-        );
-      },
+                        ],
+                      ),
+                      Positioned(
+                        right: 20.w,
+                        bottom: _premiumViewModel.isPremium
+                            ? Platform.isIOS
+                                  ? 100.h
+                                  : 95.h
+                            : Platform.isIOS
+                            ? 150.h
+                            : 125.h,
+                        child: _buildFloatingButton(l10n),
+                      ),
+                    ],
+                  ),
+          );
+        },
+      ),
     );
   }
 

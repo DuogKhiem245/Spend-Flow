@@ -1569,4 +1569,23 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get salutation => 'Danh xưng';
+
+  @override
+  String get delete_account => 'Xóa tài khoản';
+
+  @override
+  String get delete_account_confirmation =>
+      'Bạn có chắc chắn muốn xóa tài khoản của mình không? Hành động này không thể hoàn tác và sẽ xóa tất cả dữ liệu của bạn.';
+
+  @override
+  String get failed_to_send_deletion_request =>
+      'Lỗi khi gửi yêu cầu xóa tài khoản. Vui lòng thử lại.';
+
+  @override
+  String get requires_recent_login_description =>
+      'Vì lý do bảo mật, vui lòng đăng xuất và đăng nhập lại sau đó thử lại yêu cầu xóa tài khoản của bạn.';
+
+  @override
+  String get delete_account_failed =>
+      'Đã xảy ra lỗi khi xoá tài khoản của bạn. Vui lòng thử lại.';
 }

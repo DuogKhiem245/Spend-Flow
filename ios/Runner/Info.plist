@@ -15,7 +15,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>spend_flow</string>
+	<string>Spend Flow</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -29,7 +29,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.586343572662-4q9i3jgonlmp7ediebtoo4416d52eec5</string>
+				<string>com.googleusercontent.apps.586343572662-gc1bldt5e1cg1g1p1mjpuqise9qec33e</string>
 			</array>
 		</dict>
 	</array>

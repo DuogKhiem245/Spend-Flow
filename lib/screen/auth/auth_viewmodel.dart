@@ -211,7 +211,22 @@ class AuthViewModel extends ChangeNotifier {
   ) async {
     _setLoading(true);
     try {
-      return await method();
+      UserCredential? userCredential = await method();
+
+      if (userCredential != null && userCredential.user != null) {
+        final user = userCredential.user!;
+
+        final updatedUser = UserModel(
+          uid: user.uid,
+          email: user.email ?? "",
+          displayName: user.displayName ?? "User",
+        );
+
+        await _firestoreService.saveUser(updatedUser);
+        await _premiumViewModel.handleLoginPremium(user.uid);
+      }
+
+      return userCredential;
     } catch (e) {
       rethrow;
     } finally {

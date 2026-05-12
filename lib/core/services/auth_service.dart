@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:http/http.dart' as http;
+import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/general_service/language_service.dart';
 
 class AuthService {
@@ -174,20 +178,12 @@ class AuthService {
 
   Future<UserCredential?> signInWithApple() async {
     try {
-      final AuthorizationCredentialAppleID appleCredential =
-          await SignInWithApple.getAppleIDCredential(
-            scopes: [
-              AppleIDAuthorizationScopes.email,
-              AppleIDAuthorizationScopes.fullName,
-            ],
-          );
+      final appleProvider = AppleAuthProvider();
 
-      final OAuthCredential credential = OAuthProvider('apple.com').credential(
-        idToken: appleCredential.identityToken,
-        accessToken: appleCredential.authorizationCode,
-      );
+      appleProvider.addScope('email');
+      appleProvider.addScope('name');
 
-      return await _auth.signInWithCredential(credential);
+      return await _auth.signInWithProvider(appleProvider);
     } catch (e) {
       debugPrint("Error signing in with Apple: $e");
       throw e.toString();
@@ -197,5 +193,63 @@ class AuthService {
   Future<void> signOut() async {
     await _googleSignIn.signOut();
     await _auth.signOut();
+  }
+
+  Future<void> deleteAccount(AppLocalizations l10n) async {
+    final user = currentUser;
+    if (user != null) {
+      try {
+        final baseUrl = dotenv.env['CONTACT_URL_API'] ?? '';
+        final url = Uri.parse(baseUrl);
+
+        final response = await http.post(
+          url,
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({
+            'salutation': "",
+            'name': "User ${user.uid}",
+            'email': user.email ?? "",
+            'subject': "Yêu cầu xoá tài khoản",
+            'content':
+                "Người dùng với email ${user.email} và UID ${user.uid} yêu cầu xoá tài khoản.",
+          }),
+        );
+
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          bool isAppleSignIn = user.providerData.any(
+            (provider) => provider.providerId == 'apple.com',
+          );
+
+          if (isAppleSignIn) {
+            final appleProvider = AppleAuthProvider();
+            appleProvider.addScope('email');
+            appleProvider.addScope('name');
+
+            final UserCredential credential = await user
+                .reauthenticateWithProvider(appleProvider);
+
+            final authCode = credential.additionalUserInfo?.authorizationCode;
+            if (authCode != null) {
+              await _auth.revokeTokenWithAuthorizationCode(authCode);
+            }
+          }
+
+          await user.delete();
+          await _googleSignIn.signOut();
+        } else {
+          debugPrint(
+            "Failed to send account deletion request. Status code: ${response.statusCode}, Response body: ${response.body}",
+          );
+          throw l10n.failed_to_send_deletion_request;
+        }
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'requires-recent-login') {
+          throw l10n.requires_recent_login_description;
+        }
+        throw e.message ?? l10n.delete_account_failed;
+      } catch (e) {
+        throw e.toString();
+      }
+    }
   }
 }

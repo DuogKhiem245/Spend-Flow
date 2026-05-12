@@ -3001,6 +3001,36 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Danh xưng'**
   String get salutation;
+
+  /// No description provided for @delete_account.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xóa tài khoản'**
+  String get delete_account;
+
+  /// No description provided for @delete_account_confirmation.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn có chắc chắn muốn xóa tài khoản của mình không? Hành động này không thể hoàn tác và sẽ xóa tất cả dữ liệu của bạn.'**
+  String get delete_account_confirmation;
+
+  /// No description provided for @failed_to_send_deletion_request.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lỗi khi gửi yêu cầu xóa tài khoản. Vui lòng thử lại.'**
+  String get failed_to_send_deletion_request;
+
+  /// No description provided for @requires_recent_login_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vì lý do bảo mật, vui lòng đăng xuất và đăng nhập lại sau đó thử lại yêu cầu xóa tài khoản của bạn.'**
+  String get requires_recent_login_description;
+
+  /// No description provided for @delete_account_failed.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã xảy ra lỗi khi xoá tài khoản của bạn. Vui lòng thử lại.'**
+  String get delete_account_failed;
 }
 
 class _AppLocalizationsDelegate

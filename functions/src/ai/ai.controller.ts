@@ -2,7 +2,7 @@ import { CallableRequest, HttpsError } from "firebase-functions/v2/https";
 import { getAIModel, getLanguageLabel } from "./ai.service.js";
 import * as logger from "firebase-functions/logger";
 
-const cleanAIResponse = (response: string) => {
+const cleanAIResponse = (response : string) => {
   let cleanStr = response
     .replace(/```json/gi, "")
     .replace(/```/g, "")
@@ -34,6 +34,9 @@ export const analyzeReceiptImageHandler = async (request: CallableRequest) => {
         User categories: ${categoriesJson}
         Today: ${new Date().toISOString()}
 
+        IRRELEVANT CONTENT RULE:
+        If the image is NOT a receipt, bill, invoice, or related to financial transactions (e.g., a selfie, a landscape, random objects), you MUST return an empty results array: {"results": []} and stop processing.
+
         QUANTITY & CALCULATION RULES:
         1. For each item, identify the QUANTITY and UNIT PRICE.
         2. Set "amount" as the TOTAL for that line item (Quantity * Unit Price).
@@ -53,7 +56,7 @@ export const analyzeReceiptImageHandler = async (request: CallableRequest) => {
         - title: Item name (e.g., "Coca Cola", "Apple").
         - amount: Total cost for this item (Number only).
         - address: Full street address, Store Name, or null.
-        - isIncome: Classify the transaction. Set to "false" if it's a purchase/expense receipt (most common). Set to "true" ONLY if it's clearly a receipt for receiving money/refund.
+        - isIncome: Classify the transaction. Set to "false" if it's a purchase/expense receipt. Set to "true" ONLY if it's clearly a receipt for receiving money/refund.
 
         Output plain JSON ONLY (No Markdown, no extra text):
         {
@@ -109,11 +112,14 @@ export const analyzeTransactionTextHandler = async (
         Categories: ${categoriesJson}
         Today: ${new Date().toISOString()}
 
+        IRRELEVANT CONTENT RULE:
+        If the text is casual conversation, non-financial, or does NOT contain any intent about spending, receiving, or managing money, you MUST return an empty results array: {"results": []} and stop processing.
+
         TASKS:
         1. Identify ALL individual transactions mentioned in the text.
         2. amount: Extract the numerical value.
         3. title: Brief summary (e.g., "Lunch", "Salary").
-        4. isIncome: Analyze the intent. Set "true" if the user is receiving money (e.g., salary, gift, getting paid). Set "false" if the user is spending money (e.g., shopping, eating, paying).
+        4. isIncome: Analyze the intent. Set "true" if the user is receiving money. Set "false" if the user is spending money.
         5. note: Add context like payment method or people involved.
         6. date: Extract the date of the transaction. If not mentioned, use today's date.
 

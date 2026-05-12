@@ -1572,4 +1572,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get salutation => 'Salutation';
+
+  @override
+  String get delete_account => 'Delete Account';
+
+  @override
+  String get delete_account_confirmation =>
+      'Are you sure you want to delete your account? This action cannot be undone and will delete all your data.';
+
+  @override
+  String get failed_to_send_deletion_request =>
+      'Failed to send account deletion request. Please try again.';
+
+  @override
+  String get requires_recent_login_description =>
+      'For security reasons, please sign out and sign back in before attempting to delete your account.';
+
+  @override
+  String get delete_account_failed =>
+      'An error occurred while deleting your account. Please try again.';
 }

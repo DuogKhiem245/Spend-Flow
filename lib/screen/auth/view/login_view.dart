@@ -377,17 +377,17 @@ class _LoginPageState extends State<LoginPage> {
                             context,
                           ),
                         ),
-                        // SizedBox(height: 12.h),
-                        // _buildSocialButton(
-                        //   context: context,
-                        //   icon: FontAwesomeIcons.apple,
-                        //   label: l10n.sign_in_with('Apple'),
-                        //   isApple: true,
-                        //   onTap: () => _handleSocialLogin(
-                        //     _viewModel.signInWithApple,
-                        //     context,
-                        //   ),
-                        // ),
+                        SizedBox(height: 12.h),
+                        _buildSocialButton(
+                          context: context,
+                          icon: FontAwesomeIcons.apple,
+                          label: l10n.sign_in_with('Apple'),
+                          isApple: true,
+                          onTap: () => _handleSocialLogin(
+                            _viewModel.signInWithApple,
+                            context,
+                          ),
+                        ),
                       ],
                     ),
                   ),

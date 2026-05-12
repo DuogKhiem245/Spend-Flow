@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum RewardedAdType { scanReceipt, voiceInput, syncData, importExportData }
+// enum RewardedAdType { scanReceipt, voiceInput, syncData, importExportData }
+enum RewardedAdType { scanReceipt, voiceInput, syncData }
 
 class AdsService {
   InterstitialAd? _interstitialAd;
@@ -40,10 +41,10 @@ class AdsService {
           return Platform.isAndroid
               ? 'ca-app-pub-5260847065768800/4459124955'
               : 'ca-app-pub-5260847065768800/2589463911';
-        case RewardedAdType.importExportData:
-          return Platform.isAndroid
-              ? 'ca-app-pub-5260847065768800/8100205653'
-              : 'ca-app-pub-5260847065768800/1084810551';
+        // case RewardedAdType.importExportData:
+        //   return Platform.isAndroid
+        //       ? 'ca-app-pub-5260847065768800/8100205653'
+        //       : 'ca-app-pub-5260847065768800/1084810551';
       }
     }
   }
