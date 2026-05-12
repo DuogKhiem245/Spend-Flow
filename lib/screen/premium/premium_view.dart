@@ -668,8 +668,8 @@ class PremiumView extends StatelessWidget {
     BuildContext context,
   ) {
     return GestureDetector(
-      onTap: () {
-        viewModel.restorePurchase(l10n);
+      onTap: () async {
+        await viewModel.restorePurchase(l10n);
       },
       child: Text(
         l10n.restore,

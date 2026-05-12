@@ -134,8 +134,8 @@ class PremiumViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final info = await _service.restore();
-      if (info.entitlements.all["Spend Flow Premium"]?.isActive ?? false) {
+      final isRestored = await _service.restorePurchases();
+      if (isRestored) {
         _isPremium = true;
         _showRestoreSuccessDialog = true;
       } else {
@@ -167,7 +167,7 @@ class PremiumViewModel extends ChangeNotifier {
     notifyListeners();
     try {
       await _service.logOut();
-      final customerInfo = await _service.restore();
+      final customerInfo = await Purchases.getCustomerInfo();
       _updatePremiumStatus(customerInfo);
     } finally {
       _isLoading = false;

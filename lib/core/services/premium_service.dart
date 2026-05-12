@@ -13,13 +13,9 @@ class PremiumService {
 
     PurchasesConfiguration configuration;
     if (Platform.isAndroid) {
-      configuration = PurchasesConfiguration(
-        androidApiKey
-      );
+      configuration = PurchasesConfiguration(androidApiKey);
     } else {
-      configuration = PurchasesConfiguration(
-        iosApiKey
-      );
+      configuration = PurchasesConfiguration(iosApiKey);
     }
 
     if (userId != null && userId.isNotEmpty) {
@@ -56,9 +52,14 @@ class PremiumService {
     }
   }
 
-  Future<CustomerInfo> restore() async {
-    final info = await Purchases.restorePurchases();
-    return info;
+  Future<bool> restorePurchases() async {
+    try {
+      CustomerInfo customerInfo = await Purchases.restorePurchases();
+      return customerInfo.entitlements.all["Spend Flow Premium"]?.isActive == true;
+    } on PlatformException catch (e) {
+      debugPrint("Failed to restore purchases: ${e.message}");
+      return false;
+    }
   }
 
   Future<void> logIn(String userId) async {
@@ -66,8 +67,9 @@ class PremiumService {
   }
 
   Future<void> logOut() async {
+    // CHỈ ĐĂNG XUẤT. Tuyệt đối không gọi restorePurchases() ở đây
+    // để tránh bị cướp quyền qua tài khoản ẩn danh.
     await Purchases.logOut();
-    await Purchases.restorePurchases();
   }
 
   void setCustomerInfoListener(Function(CustomerInfo) onUpdate) {
