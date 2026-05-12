@@ -12,7 +12,7 @@ class AdsService {
   final Map<RewardedAdType, RewardedAd?> _rewardedAds = {};
 
   static const String _adCounterKey = 'interstitial_ad_counter';
-  static const bool isTestMode = true;
+  static const bool isTestMode = false;
 
   final String interstitialAdUnitId = isTestMode
       ? (Platform.isAndroid
