@@ -17,7 +17,7 @@ class AuthService {
 
   static Future<void> initSignIn() async {
     if (!isInitialize) {
-      await _googleSignIn.initialize( 
+      await _googleSignIn.initialize(
         serverClientId:
             '586343572662-mgcmtajb7p6cak11ml8p88ig63j7f537.apps.googleusercontent.com',
       );
@@ -154,11 +154,11 @@ class AuthService {
     try {
       initSignIn();
 
-      final GoogleSignInAccount googleSignInAccount = await _googleSignIn.authenticate(
-        scopeHint: ['email', 'profile'],
-      );
+      final GoogleSignInAccount googleSignInAccount = await _googleSignIn
+          .authenticate(scopeHint: ['email', 'profile']);
 
-      final GoogleSignInAuthentication googleAuth = googleSignInAccount.authentication;
+      final GoogleSignInAuthentication googleAuth =
+          googleSignInAccount.authentication;
 
       final AuthCredential credential = GoogleAuthProvider.credential(
         idToken: googleAuth.idToken,
@@ -166,6 +166,7 @@ class AuthService {
 
       return await _auth.signInWithCredential(credential);
     } catch (e) {
+      await signOut();
       debugPrint("Error signing in with Google: $e");
       throw e.toString();
     }

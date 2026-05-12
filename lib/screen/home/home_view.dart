@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _viewModel.initData();
-    _adsService.loadRewardedAd();
+    _adsService.loadAllRewardedAds();
   }
 
   @override
@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           shouldRefresh = await _showLimitOptions(context, isVoice: false);
         }
         break;
-        
+
       case 1:
         final canUse = await _limitService.canUseVoice();
         if (canUse) {
@@ -88,10 +88,11 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         break;
 
       case 2:
-        shouldRefresh = await Navigator.push<bool>(
+        shouldRefresh = await Navigator.push(
           context,
           CupertinoPageRoute(builder: (context) => const AddTransactionPage()),
         );
+        shouldRefresh = true;
         break;
     }
 
@@ -102,6 +103,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   void _handleRewardAdFlow({required bool isVoice}) {
     _adsService.showRewardedAd(
+      type: isVoice ? RewardedAdType.voiceInput : RewardedAdType.scanReceipt,
       onRewardEarned: () async {
         await _limitService.grantAdReward();
 

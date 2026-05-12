@@ -142,7 +142,7 @@ class ExportViewModel extends ChangeNotifier {
           TextCellValue(cat.name),
           TextCellValue(cat.l10nKey ?? ""),
           TextCellValue(cat.iconKey),
-          IntCellValue(cat.color.value),
+          IntCellValue(cat.color.toARGB32()),
           IntCellValue(cat.isCustom ? 1 : 0),
           IntCellValue(cat.updatedAt),
         ]);
@@ -157,7 +157,9 @@ class ExportViewModel extends ChangeNotifier {
       final file = File('${directory.path}/$fileName');
       await file.writeAsBytes(fileBytes!);
 
-      await Share.shareXFiles([XFile(file.path)], subject: 'Excel Report');
+      await SharePlus.instance.share(
+        ShareParams(files: [XFile(file.path)], subject: 'Excel Report'),
+      );
     } catch (e) {
       if (context.mounted) {
         _showError(context, "Lỗi xuất Excel: $e");
@@ -234,9 +236,11 @@ class ExportViewModel extends ChangeNotifier {
       final file = File('${directory.path}/$fileName');
       await file.writeAsString(jsonEncode(cleanData));
 
-      await Share.shareXFiles([XFile(file.path)], subject: 'JSON Backup');
+      await SharePlus.instance.share(
+        ShareParams(files: [XFile(file.path)], subject: 'JSON Backup'),
+      );
     } catch (e) {
-      if (context.mounted){
+      if (context.mounted) {
         _showError(context, "Lỗi xuất JSON: $e");
       }
     } finally {
@@ -260,9 +264,9 @@ class ExportViewModel extends ChangeNotifier {
 
       await file.writeAsString(content);
 
-      await Share.shareXFiles([
-        XFile(file.path),
-      ], subject: 'SpendFlow Export Data');
+      await SharePlus.instance.share(
+        ShareParams(files: [XFile(file.path)], subject: 'SpendFlow Export Data'),
+      );
     } catch (e) {
       if (context.mounted) {
         _showError(context, "Lỗi xuất file: $e");
@@ -284,10 +288,9 @@ class ExportViewModel extends ChangeNotifier {
 
     AdaptiveAlertDialog.show(
       context: context,
-      title: l10n.error, 
+      title: l10n.error,
       message: message,
-      icon:
-          'exclamationmark.circle.fill', 
+      icon: 'exclamationmark.circle.fill',
       actions: [
         AlertAction(
           title: "OK",

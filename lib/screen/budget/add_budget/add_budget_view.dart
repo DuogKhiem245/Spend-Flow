@@ -216,7 +216,6 @@ class _AddBudgetViewState extends State<AddBudgetView> {
                         return;
                       } else {
                         await _adsService.showInterstitialWithFrequency(
-                          () {},
                           isPremium: _premiumViewModel.isPremium,
                           onAdClosed: () {
                             Navigator.pop(context, true);

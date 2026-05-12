@@ -166,7 +166,6 @@ class _AddCategoryViewState extends State<AddCategoryView> {
                 });
               } else {
                 await _adsService.showInterstitialWithFrequency(
-                  () {},
                   isPremium: _premiumViewModel.isPremium,
                   onAdClosed: () {
                     Navigator.pop(context, {

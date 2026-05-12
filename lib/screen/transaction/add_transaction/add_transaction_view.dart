@@ -340,7 +340,6 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                                   } else {
                                     await _adsService
                                         .showInterstitialWithFrequency(
-                                          () {},
                                           isPremium:
                                               _premiumViewModel.isPremium,
                                           onAdClosed: () {

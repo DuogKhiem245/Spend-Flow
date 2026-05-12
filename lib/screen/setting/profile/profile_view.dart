@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
-import 'package:spend_flow/core/services/ads_service.dart';
 import 'package:spend_flow/core/utils/date_helper.dart';
 import 'package:spend_flow/core/widgets/custom_option/custom_option_widget.dart';
 import 'package:spend_flow/core/widgets/loading_overlay.dart';
@@ -24,7 +23,6 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   final ProfileViewModel _viewModel = ProfileViewModel();
-  final AdsService _adsService = AdsService();
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -182,7 +180,7 @@ class _ProfileViewState extends State<ProfileView> {
               icon: CupertinoIcons.play_circle_fill,
               label: l10n.watch_ad_continue,
               color: CupertinoTheme.of(context).primaryColor,
-              onTap: () => {_handleRewardAdFlow()},
+              onTap: () async => await _viewModel.pickAvatar(),
             ),
             SizedBox(height: 12.h),
             CustomOptionWidget(
@@ -209,38 +207,6 @@ class _ProfileViewState extends State<ProfileView> {
       isScrollControlled: true,
       backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
       builder: (context) => const PremiumView(),
-    );
-  }
-
-  void _handleRewardAdFlow() {
-    Navigator.pop(context, false);
-    _adsService.showRewardedAd(
-      onRewardEarned: () async {
-        await _viewModel.pickAvatar();
-      },
-      onAdFailed: () {
-        if (mounted) {
-          _showAdErrorDialog(context);
-        }
-      },
-    );
-  }
-
-  void _showAdErrorDialog(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-
-    AdaptiveAlertDialog.show(
-      context: context,
-      title: l10n.error,
-      message: l10n.ads_loading,
-      icon: 'antennas.bubble.left.fill',
-      actions: [
-        AlertAction(
-          title: "OK",
-          style: AlertActionStyle.primary,
-          onPressed: () {},
-        ),
-      ],
     );
   }
 

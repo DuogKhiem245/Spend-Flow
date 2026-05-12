@@ -334,14 +334,14 @@ class PremiumView extends StatelessWidget {
 
         _buildComparisonRow(l10n.no_ads, "ads", "check", context: context),
 
-        Divider(height: 24.h),
+        // Divider(height: 24.h),
 
-        _buildComparisonRow(
-          l10n.transaction_locking,
-          "ads",
-          "check",
-          context: context,
-        ),
+        // _buildComparisonRow(
+        //   l10n.transaction_locking,
+        //   "ads",
+        //   "check",
+        //   context: context,
+        // ),
 
         Divider(height: 24.h),
 

@@ -228,6 +228,7 @@ class VoiceInputViewModel extends ChangeNotifier {
         Navigator.pop(context, true);
       }
     } catch (e) {
+      debugPrint("Error processing voice input: $e");
       if (context.mounted) {
         _showErrorDialog(context, l10n);
       }

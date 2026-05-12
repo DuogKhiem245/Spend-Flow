@@ -1,10 +1,7 @@
 import 'package:cupertino_native/components/switch.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
-import 'package:spend_flow/main.dart';
-import 'package:spend_flow/screen/premium/premium_view.dart';
 import 'package:spend_flow/screen/setting/security/security_view.dart';
 import 'package:spend_flow/screen/setting/setting_viewmodel.dart';
 import 'package:spend_flow/screen/setting/widget/setting_item_widget.dart';
@@ -18,15 +15,6 @@ class SettingSecurityWidget extends StatefulWidget {
 
 class _SettingSecurityWidgetState extends State<SettingSecurityWidget> {
   final SettingViewModel _viewModel = SettingViewModel();
-
-  void _showPremiumModal(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
-      builder: (context) => const PremiumView(),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,16 +65,12 @@ class _SettingSecurityWidgetState extends State<SettingSecurityWidget> {
               icon: CupertinoIcons.lock_fill,
               iconBgColor: const Color(0xFF71717A),
               onTap: () {
-                if (premiumViewModel.isPremium) {
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                      builder: (context) => const SecurityView(),
-                    ),
-                  );
-                } else {
-                  _showPremiumModal(context);
-                }
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) => const SecurityView(),
+                  ),
+                );
               },
               trailing: Icon(
                 CupertinoIcons.chevron_right,

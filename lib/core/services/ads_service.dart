@@ -1,20 +1,52 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+enum RewardedAdType { scanReceipt, voiceInput, syncData, importExportData }
+
 class AdsService {
   InterstitialAd? _interstitialAd;
-  RewardedAd? _rewardedAd;
+
+  final Map<RewardedAdType, RewardedAd?> _rewardedAds = {};
 
   static const String _adCounterKey = 'interstitial_ad_counter';
+  static const bool isTestMode = true;
 
-  final String interstitialAdUnitId = Platform.isAndroid
-      ? 'ca-app-pub-3940256099942544/1033173712' 
-      : 'ca-app-pub-3940256099942544/4411468910';
+  final String interstitialAdUnitId = isTestMode
+      ? (Platform.isAndroid
+            ? 'ca-app-pub-3940256099942544/1033173712'
+            : 'ca-app-pub-3940256099942544/4411468910')
+      : (Platform.isAndroid
+            ? 'ca-app-pub-5260847065768800/4944164516'
+            : 'ca-app-pub-5260847065768800/1989258729');
 
-  final String rewardedAdUnitId = Platform.isAndroid
-      ? 'ca-app-pub-3940256099942544/5224354917'
-      : 'ca-app-pub-3940256099942544/1712485313';
+  String getRewardedAdUnitId(RewardedAdType type) {
+    if (isTestMode) {
+      return Platform.isAndroid
+          ? 'ca-app-pub-3940256099942544/5224354917'
+          : 'ca-app-pub-3940256099942544/1712485313';
+    } else {
+      switch (type) {
+        case RewardedAdType.scanReceipt:
+          return Platform.isAndroid
+              ? 'ca-app-pub-5260847065768800/7566458429'
+              : 'ca-app-pub-5260847065768800/2697275128';
+        case RewardedAdType.voiceInput:
+          return Platform.isAndroid
+              ? 'ca-app-pub-5260847065768800/3039450667'
+              : 'ca-app-pub-5260847065768800/7841790594';
+        case RewardedAdType.syncData:
+          return Platform.isAndroid
+              ? 'ca-app-pub-5260847065768800/4459124955'
+              : 'ca-app-pub-5260847065768800/2589463911';
+        case RewardedAdType.importExportData:
+          return Platform.isAndroid
+              ? 'ca-app-pub-5260847065768800/8100205653'
+              : 'ca-app-pub-5260847065768800/1084810551';
+      }
+    }
+  }
 
   void loadInterstitialAd() {
     InterstitialAd.load(
@@ -27,20 +59,32 @@ class AdsService {
     );
   }
 
-  void loadRewardedAd() {
+  void loadRewardedAd(RewardedAdType type) {
+    debugPrint("Loading rewarded ad for type: $type");
     RewardedAd.load(
-      adUnitId: rewardedAdUnitId,
+      adUnitId: getRewardedAdUnitId(type),
       request: const AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
-        onAdLoaded: (ad) => _rewardedAd = ad,
+        onAdLoaded: (ad) {
+          _rewardedAds[type] = ad;
+        },
         onAdFailedToLoad: (error) {
-          _rewardedAd = null;
+          _rewardedAds[type] = null;
         },
       ),
     );
   }
 
-  Future<void> showInterstitialWithFrequency(Null Function() param0, {required bool isPremium, required Function onAdClosed}) async {
+  void loadAllRewardedAds() {
+    for (var type in RewardedAdType.values) {
+      loadRewardedAd(type);
+    }
+  }
+
+  Future<void> showInterstitialWithFrequency({
+    required bool isPremium,
+    required Function onAdClosed,
+  }) async {
     if (isPremium) {
       onAdClosed();
       return;
@@ -71,30 +115,33 @@ class AdsService {
   }
 
   void showRewardedAd({
+    required RewardedAdType type,
     required Function onRewardEarned,
     required Function onAdFailed,
   }) {
-    if (_rewardedAd != null) {
-      _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
-        onAdDismissedFullScreenContent: (ad) {
-          ad.dispose();
-          loadRewardedAd(); 
+    final ad = _rewardedAds[type];
+
+    if (ad != null) {
+      ad.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (dismissedAd) {
+          dismissedAd.dispose();
+          loadRewardedAd(type);
         },
-        onAdFailedToShowFullScreenContent: (ad, error) {
-          ad.dispose();
-          loadRewardedAd();
+        onAdFailedToShowFullScreenContent: (failedAd, error) {
+          failedAd.dispose();
+          loadRewardedAd(type);
           onAdFailed();
         },
       );
 
-      _rewardedAd!.show(
-        onUserEarnedReward: (ad, reward) {
-          onRewardEarned(); 
+      ad.show(
+        onUserEarnedReward: (adInfo, reward) {
+          onRewardEarned();
         },
       );
-      _rewardedAd = null;
+      _rewardedAds[type] = null;
     } else {
-      loadRewardedAd();
+      loadRewardedAd(type);
       onAdFailed();
     }
   }

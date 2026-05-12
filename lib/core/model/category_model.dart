@@ -61,7 +61,7 @@ class CategoryModel {
       'name': name,
       'l10nKey': l10nKey,
       'iconKey': iconKey,
-      'colorValue': color.value,
+      'colorValue': color.toARGB32(),
       'count': count,
       'isCustom': isCustom ? 1 : 0,
       'remoteIconUrl': remoteIconUrl,

@@ -37,7 +37,7 @@ class _SettingDataWidgetState extends State<SettingDataWidget> {
   @override
   void initState() {
     super.initState();
-    _adsService.loadRewardedAd();
+    _adsService.loadRewardedAd(RewardedAdType.syncData);
   }
 
   void _showPremiumModal(BuildContext context) {
@@ -224,6 +224,7 @@ class _SettingDataWidgetState extends State<SettingDataWidget> {
   void _handleRewardAdFlow() {
     Navigator.pop(context, false);
     _adsService.showRewardedAd(
+      type: RewardedAdType.syncData,
       onRewardEarned: () async {
         await _startSyncFlow(isAds: true);
       },

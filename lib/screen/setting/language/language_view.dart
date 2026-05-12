@@ -29,9 +29,9 @@ class _LanguageViewState extends State<LanguageView> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    final suggestedLangs = _allLanguages
-        .where((l) => ['en', 'vi'].contains(l['code']))
-        .toList();
+    // final suggestedLangs = _allLanguages
+    //     .where((l) => ['en', 'vi'].contains(l['code']))
+    //     .toList();
     final otherLangs = _allLanguages.toList();
 
     return CupertinoPageScaffold(

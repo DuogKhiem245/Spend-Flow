@@ -74,11 +74,14 @@ class _MyMapWidgetState extends State<MyMapWidget> {
     }
 
     _cameraDebounce = Timer(const Duration(milliseconds: 800), () async {
+      if (!mounted) return;
       setState(() => _isMapMoving = false);
 
       if (_mapboxMap != null) {
         final cameraState = await _mapboxMap!.getCameraState();
         final center = cameraState.center;
+
+        if (!mounted) return;
 
         _reverseGeocode(
           center.coordinates.lat.toDouble(),
@@ -137,6 +140,14 @@ class _MyMapWidgetState extends State<MyMapWidget> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    if (_cameraDebounce?.isActive ?? false) {
+      _cameraDebounce!.cancel();
+    }
+    super.dispose();
   }
 
   @override
