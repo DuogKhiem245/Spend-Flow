@@ -217,7 +217,18 @@ class _SpendingDetailViewState extends State<SpendingDetailView>
                         else if (_chartData.isEmpty)
                           SizedBox(
                             height: 250.h,
-                            child: Center(child: Text(l10n.no_transactions)),
+                            child: Center(
+                              child: Text(
+                                l10n.no_transactions,
+                                style: CupertinoTheme.of(context)
+                                    .textTheme
+                                    .textStyle
+                                    .copyWith(
+                                      color: CupertinoColors.systemGrey,
+                                      fontSize: 14.sp,
+                                    ),
+                              ),
+                            ),
                           )
                         else
                           SizedBox(
@@ -294,55 +305,60 @@ class _SpendingDetailViewState extends State<SpendingDetailView>
 
                         SizedBox(height: 20.h),
 
-                        Wrap(
-                          spacing: 15.w,
-                          runSpacing: 10.h,
-                          alignment: WrapAlignment.center,
-                          children: _chartData.map((item) {
-                            return Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  width: 10.w,
-                                  height: 10.w,
-                                  decoration: BoxDecoration(
-                                    color: item.color,
-                                    shape: BoxShape.circle,
+                        Center(
+                          child: Wrap(
+                            spacing: 15.w,
+                            runSpacing: 10.h,
+                            alignment: WrapAlignment.center,
+                            children: _chartData.map((item) {
+                              return Row(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 10.w,
+                                    height: 10.w,
+                                    decoration: BoxDecoration(
+                                      color: item.color,
+                                      shape: BoxShape.circle,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(width: 6.w),
-                                Text(
-                                  item.originalCategory != null
-                                      ? CategoryHelper.getTranslatedName(
-                                          context,
-                                          item.originalCategory!,
-                                        )
-                                      : (item.category.toLowerCase() == "other"
-                                            ? l10n.other
-                                            : item.category),
+                                  SizedBox(width: 6.w),
+                                  Text(
+                                    item.originalCategory != null
+                                        ? CategoryHelper.getTranslatedName(
+                                            context,
+                                            item.originalCategory!,
+                                          )
+                                        : (item.category.toLowerCase() ==
+                                                  "other"
+                                              ? l10n.other
+                                              : item.category),
 
-                                  style: CupertinoTheme.of(context)
-                                      .textTheme
-                                      .textStyle
-                                      .copyWith(
-                                        fontSize: 12.sp,
-                                        color: CupertinoColors.systemGrey,
-                                      ),
-                                ),
-                                Text(
-                                  "(${(item.amount / totalSpent * 100).toStringAsFixed(0)}%)",
-                                  style: CupertinoTheme.of(context)
-                                      .textTheme
-                                      .textStyle
-                                      .copyWith(
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w600,
-                                        color: CupertinoColors.systemGrey,
-                                      ),
-                                ),
-                              ],
-                            );
-                          }).toList(),
+                                    style: CupertinoTheme.of(context)
+                                        .textTheme
+                                        .textStyle
+                                        .copyWith(
+                                          fontSize: 12.sp,
+                                          color: CupertinoColors.systemGrey,
+                                        ),
+                                  ),
+                                  Text(
+                                    "(${(item.amount / totalSpent * 100).toStringAsFixed(0)}%)",
+                                    style: CupertinoTheme.of(context)
+                                        .textTheme
+                                        .textStyle
+                                        .copyWith(
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.w600,
+                                          color: CupertinoColors.systemGrey,
+                                        ),
+                                  ),
+                                ],
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ],
                     ),
@@ -364,7 +380,9 @@ class _SpendingDetailViewState extends State<SpendingDetailView>
   Widget _buildFilterTabs(AppLocalizations l10n) {
     final Set<String> categories = {l10n.all};
     for (var tx in _allTransactions) {
-      categories.add(CategoryHelper.getTranslatedName(context, tx.category));
+      if (!tx.isIncome) {
+        categories.add(CategoryHelper.getTranslatedName(context, tx.category));
+      }
     }
 
     return SingleChildScrollView(
@@ -426,7 +444,9 @@ class _SpendingDetailViewState extends State<SpendingDetailView>
     final filteredList = _allTransactions.where((t) {
       if (t.isIncome) return false;
 
-      if (_selectedCategory != null && t.category.name != _selectedCategory) {
+      if (_selectedCategory != null &&
+          CategoryHelper.getTranslatedName(context, t.category) !=
+              _selectedCategory) {
         return false;
       }
 

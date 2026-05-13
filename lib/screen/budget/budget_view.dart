@@ -504,11 +504,12 @@ class _BudgetPageState extends State<BudgetPage>
 
   void _onDeleteBudget(BudgetModel budget, BuildContext context) async {
     final l10n = AppLocalizations.of(context)!;
+    final String categoryName = CategoryHelper.getTranslatedName(context, budget.category);
 
     AdaptiveAlertDialog.show(
       context: context,
       title: l10n.delete_budget,
-      message: l10n.are_you_sure_delete_budget(budget.category.name),
+      message: l10n.are_you_sure_delete_budget(categoryName),
       icon: 'trash.fill',
       actions: [
         AlertAction(
