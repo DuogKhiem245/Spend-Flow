@@ -3,7 +3,7 @@ description: "A new Flutter project."
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.1+10
+version: 1.1.0+11
 
 environment:
   sdk: ^3.10.1
@@ -29,7 +29,7 @@ dependencies:
   camera: ^0.11.3
   speech_to_text: ^7.3.0
   permission_handler: ^12.0.1
-  uuid: ^4.5.2
+  uuid: ^4.5.2 
   local_auth: ^3.0.0
   flutter_slidable: ^4.0.3
   flutter_local_notifications: ^19.5.0
@@ -49,7 +49,7 @@ dependencies:
   file_picker: ^10.3.10
   csv: ^6.0.0
   excel: ^4.0.6
-  in_app_purchase: ^3.2.3
+  # in_app_purchase: ^3.2.3
   http: ^1.6.0
   mapbox_maps_flutter: ^2.17.0
   flutter_dotenv: ^6.0.0
@@ -60,11 +60,9 @@ dependencies:
   adaptive_platform_ui: ^0.1.101
   email_validator: ^3.0.0
   purchases_flutter: ^9.10.8
-  purchases_ui_flutter: ^9.10.8
+  # purchases_ui_flutter: ^9.10.8
   flutter_markdown_plus: ^1.0.7
   focus_detector: ^2.0.1
-  # google_maps_flutter: ^2.14.0
-  # geolocator: ^14.0.2
   
 dev_dependencies:
   flutter_test:
