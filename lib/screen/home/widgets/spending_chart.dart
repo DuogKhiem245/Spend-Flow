@@ -93,51 +93,10 @@ class _SpendingChartState extends State<SpendingChart>
 
     final symbol = widget.viewModel.currencySymbol;
 
+    final bool isTablet = MediaQuery.of(context).size.width >= 600;
+
     if (widget.chartData.isEmpty) {
-      return Container(
-        width: double.infinity,
-        padding: EdgeInsets.all(20.w),
-        decoration: BoxDecoration(
-          color: CupertinoTheme.of(context).barBackgroundColor,
-          borderRadius: BorderRadius.circular(30.r),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.boxShadow,
-              blurRadius: 10.r,
-              offset: Offset(0, 4.h),
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            Text(
-              l10n.spending_this_month,
-              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.bold,
-                color: CupertinoTheme.of(context).textTheme.textStyle.color,
-              ),
-            ),
-            SizedBox(height: 20.h),
-            Icon(
-              CupertinoIcons.chart_pie,
-              size: 120.w,
-              color: CupertinoTheme.of(
-                context,
-              ).textTheme.textStyle.color?.withValues(alpha: .5),
-            ),
-            SizedBox(height: 10.h),
-            Text(
-              l10n.no_transactions,
-              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                color: CupertinoTheme.of(
-                  context,
-                ).textTheme.textStyle.color?.withValues(alpha: .6),
-              ),
-            ),
-          ],
-        ),
-      );
+      return _buildEmptyState(context, l10n);
     }
 
     return Container(
@@ -157,236 +116,315 @@ class _SpendingChartState extends State<SpendingChart>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Text(
-                  l10n.spending_this_month,
-                  style: CupertinoTheme.of(context).textTheme.textStyle
-                      .copyWith(fontSize: 20.sp, fontWeight: FontWeight.w700),
-                  softWrap: true,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+          _buildHeader(l10n, context),
+          SizedBox(height: 25.h),
+
+          if (isTablet)
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: _buildChart(
+                    sections,
+                    l10n,
+                    context,
+                    symbol,
+                    totalSpent,
+                    isTablet,
+                  ),
                 ),
-              ),
-              GestureDetector(
-                onTap: () async {
-                  if (widget.viewModel.isLocked) {
-                    final unlocked = await _handleUnlock();
-                    if (unlocked && context.mounted) {
-                      Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                          builder: (context) =>
-                              SpendingDetailView(viewModel: widget.viewModel),
-                        ),
-                      );
-                    }
-                  } else {
-                    Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (context) =>
-                            SpendingDetailView(viewModel: widget.viewModel),
-                      ),
-                    );
-                  }
-                },
+                SizedBox(width: 30.w),
+                Expanded(
+                  flex: 1,
+                  child: _buildLegendList(l10n, symbol, context),
+                ),
+              ],
+            )
+          else ...[
+            _buildChart(sections, l10n, context, symbol, totalSpent, isTablet),
+            _buildLegendList(l10n, symbol, context),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Container _buildEmptyState(BuildContext context, AppLocalizations l10n) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(20.w),
+      decoration: BoxDecoration(
+        color: CupertinoTheme.of(context).barBackgroundColor,
+        borderRadius: BorderRadius.circular(30.r),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.boxShadow,
+            blurRadius: 10.r,
+            offset: Offset(0, 4.h),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Text(
+            l10n.spending_this_month,
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+              fontSize: 20.sp,
+              fontWeight: FontWeight.bold,
+              color: CupertinoTheme.of(context).textTheme.textStyle.color,
+            ),
+          ),
+          SizedBox(height: 20.h),
+          Icon(
+            CupertinoIcons.chart_pie,
+            size: 120.w,
+            color: CupertinoTheme.of(
+              context,
+            ).textTheme.textStyle.color?.withValues(alpha: .5),
+          ),
+          SizedBox(height: 10.h),
+          Text(
+            l10n.no_transactions,
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+              color: CupertinoTheme.of(
+                context,
+              ).textTheme.textStyle.color?.withValues(alpha: .6),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Stack _buildLegendList(
+    AppLocalizations l10n,
+    String symbol,
+    BuildContext context,
+  ) {
+    return Stack(
+      children: [
+        ImageFiltered(
+          imageFilter: ImageFilter.blur(
+            sigmaX: widget.viewModel.isLocked ? 7.0 : 0.0,
+            sigmaY: widget.viewModel.isLocked ? 7.0 : 0.0,
+          ),
+          child: ListView.builder(
+            padding: EdgeInsets.symmetric(vertical: 20.h),
+            itemCount: widget.chartData.length,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final item = widget.chartData[index];
+              return Padding(
+                padding: EdgeInsets.only(top: 10.h),
                 child: Row(
-                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (widget.viewModel.hasSecurity) ...[
-                      Icon(
-                        widget.viewModel.isLocked
-                            ? CupertinoIcons.lock_fill
-                            : null,
-                        size: 14.sp,
+                    Container(
+                      width: 16.w,
+                      height: 16.w,
+                      decoration: BoxDecoration(
+                        color: item.color,
+                        shape: BoxShape.circle,
                       ),
-                      SizedBox(width: 8.w),
-                    ],
+                    ),
+                    SizedBox(width: 8.w),
+
                     Text(
-                      l10n.view_all,
+                      item.originalCategory != null
+                          ? CategoryHelper.getTranslatedName(
+                              context,
+                              item.originalCategory!,
+                            )
+                          : (item.category.toLowerCase() == "other"
+                                ? l10n.other
+                                : item.category),
+
                       style: CupertinoTheme.of(context).textTheme.textStyle
                           .copyWith(
-                            fontSize: 14.sp,
-                            color: AppColors.primaryColor,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.w500,
                           ),
                     ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 25.h),
-          SizedBox(
-            height: 200.h,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                AnimatedBuilder(
-                  animation: _animation,
-                  builder: (context, child) {
-                    final double startAngle =
-                        -90 + (180 * (1 - _animation.value));
 
-                    return PieChart(
-                      PieChartData(
-                        pieTouchData: PieTouchData(
-                          touchCallback:
-                              (FlTouchEvent event, pieTouchResponse) {
-                                setState(() {
-                                  if (!event.isInterestedForInteractions ||
-                                      pieTouchResponse == null ||
-                                      pieTouchResponse.touchedSection == null) {
-                                    touchedIndex = -1;
-                                    return;
-                                  }
-                                  touchedIndex = pieTouchResponse
-                                      .touchedSection!
-                                      .touchedSectionIndex;
-                                });
-                              },
-                        ),
-                        sections: sections,
-                        centerSpaceRadius: 80.w,
-                        sectionsSpace: 0,
-                        startDegreeOffset: startAngle,
-                      ),
-                      duration: Duration.zero,
-                    );
-                  },
-                ),
-
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
+                    Spacer(),
                     Text(
-                      l10n.total_spent,
+                      "$symbol ${widget.viewModel.formatCurrency(item.amount)}",
                       style: CupertinoTheme.of(context).textTheme.textStyle
                           .copyWith(
-                            color: CupertinoColors.systemGrey,
-                            fontSize: 14.sp,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w700,
                           ),
-                    ),
-                    SizedBox(height: 4.h),
-                    ScaleTransition(
-                      scale: _animation,
-                      child: Text(
-                        "$symbol ${widget.viewModel.formatCompactCurrency(totalSpent)}",
-                        style: CupertinoTheme.of(context).textTheme.textStyle
-                            .copyWith(
-                              fontSize: 28.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
                     ),
                   ],
                 ),
-              ],
-            ),
+              );
+            },
           ),
-          Stack(
-            children: [
-              ImageFiltered(
-                imageFilter: ImageFilter.blur(
-                  sigmaX: widget.viewModel.isLocked ? 7.0 : 0.0,
-                  sigmaY: widget.viewModel.isLocked ? 7.0 : 0.0,
-                ),
-                child: ListView.builder(
-                  padding: EdgeInsets.symmetric(vertical: 20.h),
-                  itemCount: widget.chartData.length,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    final item = widget.chartData[index];
-                    return Padding(
-                      padding: EdgeInsets.only(top: 10.h),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 16.w,
-                            height: 16.w,
-                            decoration: BoxDecoration(
-                              color: item.color,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                          SizedBox(width: 8.w),
-
-                          Text(
-                            item.originalCategory != null
-                                ? CategoryHelper.getTranslatedName(
-                                    context,
-                                    item.originalCategory!,
-                                  )
-                                : (item.category.toLowerCase() == "other"
-                                      ? l10n.other
-                                      : item.category),
-
-                            style: CupertinoTheme.of(context)
-                                .textTheme
-                                .textStyle
-                                .copyWith(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                          ),
-
-                          Spacer(),
-                          Text(
-                            "$symbol ${widget.viewModel.formatCurrency(item.amount)}",
-                            style: CupertinoTheme.of(context)
-                                .textTheme
-                                .textStyle
-                                .copyWith(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
+        ),
+        if (widget.viewModel.isLocked)
+          Positioned.fill(
+            child: Container(
+              color: Colors.transparent,
+              alignment: Alignment.center,
+              child: CupertinoButton(
+                onPressed: _handleUnlock,
+                color: CupertinoTheme.of(
+                  context,
+                ).barBackgroundColor.withValues(alpha: .8),
+                borderRadius: BorderRadius.circular(50.r),
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(CupertinoIcons.eye_slash_fill, size: 20.sp),
+                    SizedBox(width: 8.w),
+                    Text(
+                      l10n.click_to_unlock,
+                      style: CupertinoTheme.of(
+                        context,
+                      ).textTheme.textStyle.copyWith(fontSize: 14.sp),
+                    ),
+                  ],
                 ),
               ),
-              if (widget.viewModel.isLocked)
-                Positioned.fill(
-                  child: Container(
-                    color: Colors.transparent,
-                    alignment: Alignment.center,
-                    child: CupertinoButton(
-                      onPressed: _handleUnlock,
-                      color: CupertinoTheme.of(
-                        context,
-                      ).barBackgroundColor.withValues(alpha: .8),
-                      borderRadius: BorderRadius.circular(50.r),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 20.w,
-                        vertical: 10.h,
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(CupertinoIcons.eye_slash_fill, size: 20.sp),
-                          SizedBox(width: 8.w),
-                          Text(
-                            l10n.click_to_unlock,
-                            style: CupertinoTheme.of(
-                              context,
-                            ).textTheme.textStyle.copyWith(fontSize: 14.sp),
-                          ),
-                        ],
-                      ),
-                    ),
+            ),
+          ),
+      ],
+    );
+  }
+
+  SizedBox _buildChart(
+    List<PieChartSectionData> sections,
+    AppLocalizations l10n,
+    BuildContext context,
+    String symbol,
+    double totalSpent,
+    bool isTablet,
+  ) {
+    return SizedBox(
+      height: isTablet ? 300.h : 200.h,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          AnimatedBuilder(
+            animation: _animation,
+            builder: (context, child) {
+              final double startAngle = -90 + (180 * (1 - _animation.value));
+              return PieChart(
+                PieChartData(
+                  pieTouchData: PieTouchData(
+                    touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                      setState(() {
+                        if (!event.isInterestedForInteractions ||
+                            pieTouchResponse == null ||
+                            pieTouchResponse.touchedSection == null) {
+                          touchedIndex = -1;
+                          return;
+                        }
+                        touchedIndex = pieTouchResponse
+                            .touchedSection!
+                            .touchedSectionIndex;
+                      });
+                    },
                   ),
+                  sections: sections,
+                  centerSpaceRadius: 80.w,
+                  sectionsSpace: 0,
+                  startDegreeOffset: startAngle,
                 ),
+                duration: Duration.zero,
+              );
+            },
+          ),
+
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                l10n.total_spent,
+                style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+                  color: CupertinoColors.systemGrey,
+                  fontSize: 14.sp,
+                ),
+              ),
+              SizedBox(height: 4.h),
+              ScaleTransition(
+                scale: _animation,
+                child: Text(
+                  "$symbol ${widget.viewModel.formatCompactCurrency(totalSpent)}",
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(fontSize: 28.sp, fontWeight: FontWeight.bold),
+                ),
+              ),
             ],
           ),
         ],
       ),
+    );
+  }
+
+  Row _buildHeader(AppLocalizations l10n, BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Text(
+            l10n.spending_this_month,
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+              fontSize: 20.sp,
+              fontWeight: FontWeight.w700,
+            ),
+            softWrap: true,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        GestureDetector(
+          onTap: () async {
+            if (widget.viewModel.isLocked) {
+              final unlocked = await _handleUnlock();
+              if (unlocked && context.mounted) {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) =>
+                        SpendingDetailView(viewModel: widget.viewModel),
+                  ),
+                );
+              }
+            } else {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) =>
+                      SpendingDetailView(viewModel: widget.viewModel),
+                ),
+              );
+            }
+          },
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (widget.viewModel.hasSecurity) ...[
+                Icon(
+                  widget.viewModel.isLocked ? CupertinoIcons.lock_fill : null,
+                  size: 14.sp,
+                ),
+                SizedBox(width: 8.w),
+              ],
+              Text(
+                l10n.view_all,
+                style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+                  fontSize: 14.sp,
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
