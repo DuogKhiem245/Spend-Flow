@@ -1,15 +1,11 @@
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/core/utils/date_helper.dart';
-import 'package:spend_flow/core/widgets/custom_option/custom_option_widget.dart';
 import 'package:spend_flow/core/widgets/loading_overlay.dart';
-import 'package:spend_flow/main.dart';
-import 'package:spend_flow/screen/premium/premium_view.dart';
 import 'package:spend_flow/screen/setting/profile/profile_viewmodel.dart';
 import 'package:spend_flow/screen/setting/profile/widget/profile_avatar_view.dart';
 import 'package:spend_flow/screen/setting/profile/widget/profile_info_item_view.dart';
@@ -28,8 +24,6 @@ class _ProfileViewState extends State<ProfileView> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   DateTime _selectedDob = DateTime(1900, 1, 1);
-
-  final _premiumViewModel = premiumViewModel;
 
   @override
   void initState() {
@@ -90,10 +84,10 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   Future<void> _handleAvatarEdit() async {
-    if (!_premiumViewModel.isPremium) {
-      _showLimitOptions();
-      return;
-    }
+    // if (!_premiumViewModel.isPremium) {
+    //   _showLimitOptions();
+    //   return;
+    // }
 
     await _viewModel.pickAvatar();
   }
@@ -125,90 +119,90 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 
-  void _showLimitOptions() {
-    final l10n = AppLocalizations.of(context)!;
+  // void _showLimitOptions() {
+  //   final l10n = AppLocalizations.of(context)!;
 
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
-      builder: (context) => Container(
-        padding: EdgeInsets.fromLTRB(24.w, 4.h, 24.w, 24.h),
-        decoration: BoxDecoration(
-          color: CupertinoTheme.of(context).scaffoldBackgroundColor,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(30.r)),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                width: 40.w,
-                height: 5.h,
-                decoration: BoxDecoration(
-                  color: CupertinoTheme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-            SizedBox(height: 10.h),
-            Icon(
-              CupertinoIcons.person_crop_circle_fill_badge_plus,
-              size: 50.sp,
-              color: CupertinoTheme.of(context).primaryColor,
-            ),
-            SizedBox(height: 12.h),
-            Text(
-              l10n.edit_avatar,
-              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 8.h),
-            Text(
-              l10n.require_premium_to_edit_avatar,
-              textAlign: TextAlign.center,
-              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                fontSize: 14.sp,
-                color: CupertinoColors.systemGrey,
-              ),
-            ),
-            SizedBox(height: 24.h),
-            CustomOptionWidget(
-              context: context,
-              icon: CupertinoIcons.play_circle_fill,
-              label: l10n.watch_ad_continue,
-              color: CupertinoTheme.of(context).primaryColor,
-              onTap: () async => await _viewModel.pickAvatar(),
-            ),
-            SizedBox(height: 12.h),
-            CustomOptionWidget(
-              context: context,
-              icon: CupertinoIcons.star_fill,
-              label: l10n.upgrade_premium,
-              color: const Color(0xFF9C2CF3),
-              isGradient: true,
-              onTap: () {
-                Navigator.pop(context, false);
-                _showPremiumModal(context);
-              },
-            ),
-            SizedBox(height: 20.h),
-          ],
-        ),
-      ),
-    );
-  }
+  //   showModalBottomSheet(
+  //     context: context,
+  //     backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
+  //     builder: (context) => Container(
+  //       padding: EdgeInsets.fromLTRB(24.w, 4.h, 24.w, 24.h),
+  //       decoration: BoxDecoration(
+  //         color: CupertinoTheme.of(context).scaffoldBackgroundColor,
+  //         borderRadius: BorderRadius.vertical(top: Radius.circular(30.r)),
+  //       ),
+  //       child: Column(
+  //         mainAxisSize: MainAxisSize.min,
+  //         children: [
+  //           Align(
+  //             alignment: Alignment.topCenter,
+  //             child: Container(
+  //               width: 40.w,
+  //               height: 5.h,
+  //               decoration: BoxDecoration(
+  //                 color: CupertinoTheme.of(context).primaryColor,
+  //                 borderRadius: BorderRadius.circular(10),
+  //               ),
+  //             ),
+  //           ),
+  //           SizedBox(height: 10.h),
+  //           Icon(
+  //             CupertinoIcons.person_crop_circle_fill_badge_plus,
+  //             size: 50.sp,
+  //             color: CupertinoTheme.of(context).primaryColor,
+  //           ),
+  //           SizedBox(height: 12.h),
+  //           Text(
+  //             l10n.edit_avatar,
+  //             style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+  //               fontSize: 20.sp,
+  //               fontWeight: FontWeight.bold,
+  //             ),
+  //           ),
+  //           SizedBox(height: 8.h),
+  //           Text(
+  //             l10n.require_premium_to_edit_avatar,
+  //             textAlign: TextAlign.center,
+  //             style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+  //               fontSize: 14.sp,
+  //               color: CupertinoColors.systemGrey,
+  //             ),
+  //           ),
+  //           SizedBox(height: 24.h),
+  //           CustomOptionWidget(
+  //             context: context,
+  //             icon: CupertinoIcons.play_circle_fill,
+  //             label: l10n.watch_ad_continue,
+  //             color: CupertinoTheme.of(context).primaryColor,
+  //             onTap: () async => await _viewModel.pickAvatar(),
+  //           ),
+  //           SizedBox(height: 12.h),
+  //           CustomOptionWidget(
+  //             context: context,
+  //             icon: CupertinoIcons.star_fill,
+  //             label: l10n.upgrade_premium,
+  //             color: const Color(0xFF9C2CF3),
+  //             isGradient: true,
+  //             onTap: () {
+  //               Navigator.pop(context, false);
+  //               _showPremiumModal(context);
+  //             },
+  //           ),
+  //           SizedBox(height: 20.h),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  void _showPremiumModal(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
-      builder: (context) => const PremiumView(),
-    );
-  }
+  // void _showPremiumModal(BuildContext context) {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     isScrollControlled: true,
+  //     backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
+  //     builder: (context) => const PremiumView(),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
