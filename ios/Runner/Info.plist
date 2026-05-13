@@ -49,6 +49,8 @@
 	<string>This app uses Face ID to securely authenticate and protect your financial data.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs access to your location to display maps and local transactions.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>The app needs access to your location to help you automatically link your location to your spending transactions.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We need access to the microphone for voice commands and video recording.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

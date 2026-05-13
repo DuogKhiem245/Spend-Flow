@@ -45,40 +45,43 @@ Future<void> initATTAndAds() async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await dotenv.load(fileName: ".env");
-
-  await initATTAndAds();
-
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Future.wait([
+    dotenv.load(fileName: ".env"),
+    Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
+  ]);
 
   final storage = LocalStorageService();
-  await storage.initializeData();
+  late SharedPreferences prefs;
 
-  await fontViewModel.init();
+  await Future.wait([
+    storage.initializeData(),
+    fontViewModel.init(),
+    SharedPreferences.getInstance().then((value) => prefs = value),
+  ]);
 
-  final prefs = await SharedPreferences.getInstance();
   final bool onboardDone = prefs.getBool('onboard_done') ?? false;
   final bool createFirstWallet = prefs.getBool('create_first_wallet') ?? false;
 
   User? user = FirebaseAuth.instance.currentUser;
   premiumViewModel = PremiumViewModel(user?.uid ?? "");
 
-  try {
-    await user?.reload();
-    user = FirebaseAuth.instance.currentUser;
-
-    if (user != null && user.emailVerified) {
-    } else {
-      await FirebaseAuth.instance.signOut();
-    }
-  } catch (e) {
-    await FirebaseAuth.instance.signOut();
+  if (user != null) {
+    user
+        .reload()
+        .then((_) {
+          final updatedUser = FirebaseAuth.instance.currentUser;
+          if (updatedUser != null && !updatedUser.emailVerified) {
+            FirebaseAuth.instance.signOut();
+          }
+        })
+        .catchError((_) {
+          FirebaseAuth.instance.signOut();
+        });
   }
 
-  await NotificationService().init();
+  NotificationService().init();
 
   String publicToken = dotenv.env['MAPBOX_PUBLIC_TOKEN'] ?? '';
-
   MapboxOptions.setAccessToken(publicToken);
 
   SystemChrome.setPreferredOrientations([
@@ -91,7 +94,7 @@ void main() async {
   });
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   final bool onboardDone;
   final bool createFirstWallet;
 
@@ -100,6 +103,20 @@ class MyApp extends StatelessWidget {
     required this.onboardDone,
     required this.createFirstWallet,
   });
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      initATTAndAds();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -173,11 +190,11 @@ class MyApp extends StatelessWidget {
                 GlobalCupertinoLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,
               ],
-              supportedLocales: [Locale('en'), Locale('vi')],
+              supportedLocales: [const Locale('en'), const Locale('vi')],
               initialRoute: AppRoutes.main,
               routes: AppRoutes.getRoutes(
-                onboardDone: onboardDone,
-                createFirstWallet: createFirstWallet,
+                onboardDone: widget.onboardDone,
+                createFirstWallet: widget.createFirstWallet,
               ),
             );
           },
