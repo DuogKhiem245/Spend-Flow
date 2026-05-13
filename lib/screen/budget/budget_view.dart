@@ -520,7 +520,6 @@ class _BudgetPageState extends State<BudgetPage>
           title: l10n.delete,
           style: AlertActionStyle.destructive,
           onPressed: () async {
-            Navigator.pop(context);
             await _viewModel.deleteBudget(budget);
           },
         ),
