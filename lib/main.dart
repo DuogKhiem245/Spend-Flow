@@ -1,3 +1,4 @@
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +13,7 @@ import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart' hide Size;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_theme.dart';
+import 'package:spend_flow/core/services/ads_service.dart';
 import 'package:spend_flow/core/services/general_service/language_service.dart';
 import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 import 'package:spend_flow/core/services/general_service/notification_service.dart';
@@ -26,12 +28,26 @@ final themeService = ThemeService();
 final fontViewModel = FontViewModel();
 late PremiumViewModel premiumViewModel;
 
+Future<void> initATTAndAds() async {
+  try {
+    final status = await AppTrackingTransparency.trackingAuthorizationStatus;
+    if (status == TrackingStatus.notDetermined) {
+      await AppTrackingTransparency.requestTrackingAuthorization();
+    }
+  } catch (e) {
+    debugPrint("🚨 Lỗi khi xin quyền ATT: $e");
+  } finally {
+    await MobileAds.instance.initialize();
+    AdsService().loadAllRewardedAds();
+  }
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await dotenv.load(fileName: ".env");
 
-  await MobileAds.instance.initialize();
+  await initATTAndAds();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 

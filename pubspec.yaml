@@ -63,6 +63,7 @@ dependencies:
   # purchases_ui_flutter: ^9.10.8
   flutter_markdown_plus: ^1.0.7
   focus_detector: ^2.0.1
+  app_tracking_transparency: ^2.0.6+1
   
 dev_dependencies:
   flutter_test:

@@ -41,6 +41,8 @@
 	<string>586343572662-ob8mh8pjd5hda6mr73hh30runl9v9ssk.apps.googleusercontent.com</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>This identifier will be used to deliver personalized ads to you.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>We need access to the camera to scan receipts and capture profile photos.</string>
 	<key>NSFaceIDUsageDescription</key>

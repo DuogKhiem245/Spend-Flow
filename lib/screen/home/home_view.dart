@@ -58,6 +58,96 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       _viewModel.lockApp();
     }
   }
+  
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
+    return FocusDetector(
+      onFocusGained: () async {
+        if (mounted) {
+          await _viewModel.reloadData();
+        }
+      },
+      child: ListenableBuilder(
+        listenable: _viewModel,
+        builder: (context, child) {
+          return CupertinoPageScaffold(
+            child: _viewModel.isLoading
+                ? const SkeletonHomeView()
+                : Stack(
+                    children: [
+                      Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).padding.top + 10.h,
+                              left: 16.w,
+                              right: 16.w,
+                              bottom: 10.h,
+                            ),
+                            color: CupertinoTheme.of(
+                              context,
+                            ).scaffoldBackgroundColor,
+                            child: HomeHeader(viewModel: _viewModel),
+                          ),
+                          Expanded(
+                            child: SingleChildScrollView(
+                              padding: EdgeInsets.only(
+                                left: 16.w,
+                                right: 16.w,
+                                top: 10.h,
+                                bottom: 100.h,
+                              ),
+                              child: Column(
+                                children: [
+                                  BalanceCard(
+                                    income: _viewModel.income,
+                                    expenses: _viewModel.expenses,
+                                    balance: _viewModel.balance,
+                                    viewModel: _viewModel,
+                                  ),
+                                  SizedBox(height: 15.h),
+                                  // StreakCard(),
+                                  // SizedBox(height: 15.h),
+                                  SpendingChart(
+                                    chartData: _viewModel.chartData,
+                                    viewModel: _viewModel,
+                                  ),
+                                  SizedBox(height: 15.h),
+                                  RecentTransaction(
+                                    transactions: _viewModel.recentTransactions,
+                                    viewModel: _viewModel,
+                                  ),
+                                  SizedBox(
+                                    height: _premiumViewModel.isPremium == false
+                                        ? 120.h
+                                        : 80.h,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Positioned(
+                        right: 20.w,
+                        bottom: _premiumViewModel.isPremium
+                            ? Platform.isIOS
+                                  ? 100.h
+                                  : 95.h
+                            : Platform.isIOS
+                            ? 150.h
+                            : 125.h,
+                        child: _buildFloatingButton(l10n),
+                      ),
+                    ],
+                  ),
+          );
+        },
+      ),
+    );
+  }
 
   Future<void> _handleMenuSelection(int index) async {
     HapticFeedback.heavyImpact();
@@ -235,96 +325,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           onPressed: () {},
         ),
       ],
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-
-    return FocusDetector(
-      onFocusGained: () async {
-        if (mounted) {
-          await _viewModel.reloadData();
-        }
-      },
-      child: ListenableBuilder(
-        listenable: _viewModel,
-        builder: (context, child) {
-          return CupertinoPageScaffold(
-            child: _viewModel.isLoading
-                ? const SkeletonHomeView()
-                : Stack(
-                    children: [
-                      Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).padding.top + 10.h,
-                              left: 16.w,
-                              right: 16.w,
-                              bottom: 10.h,
-                            ),
-                            color: CupertinoTheme.of(
-                              context,
-                            ).scaffoldBackgroundColor,
-                            child: HomeHeader(viewModel: _viewModel),
-                          ),
-                          Expanded(
-                            child: SingleChildScrollView(
-                              padding: EdgeInsets.only(
-                                left: 16.w,
-                                right: 16.w,
-                                top: 10.h,
-                                bottom: 100.h,
-                              ),
-                              child: Column(
-                                children: [
-                                  BalanceCard(
-                                    income: _viewModel.income,
-                                    expenses: _viewModel.expenses,
-                                    balance: _viewModel.balance,
-                                    viewModel: _viewModel,
-                                  ),
-                                  SizedBox(height: 15.h),
-                                  // StreakCard(),
-                                  // SizedBox(height: 15.h),
-                                  SpendingChart(
-                                    chartData: _viewModel.chartData,
-                                    viewModel: _viewModel,
-                                  ),
-                                  SizedBox(height: 15.h),
-                                  RecentTransaction(
-                                    transactions: _viewModel.recentTransactions,
-                                    viewModel: _viewModel,
-                                  ),
-                                  SizedBox(
-                                    height: _premiumViewModel.isPremium == false
-                                        ? 120.h
-                                        : 80.h,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Positioned(
-                        right: 20.w,
-                        bottom: _premiumViewModel.isPremium
-                            ? Platform.isIOS
-                                  ? 100.h
-                                  : 95.h
-                            : Platform.isIOS
-                            ? 150.h
-                            : 125.h,
-                        child: _buildFloatingButton(l10n),
-                      ),
-                    ],
-                  ),
-          );
-        },
-      ),
     );
   }
 

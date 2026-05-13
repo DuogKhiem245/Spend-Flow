@@ -822,7 +822,14 @@ class LocalStorageService {
     final db = await database;
 
     final finder = Finder(
-      filter: Filter.equals('walletId', walletId),
+      filter: Filter.and([
+        Filter.equals('walletId', walletId),
+        Filter.or([
+          Filter.equals('isDeleted', 0),
+          Filter.equals('isDeleted', false),
+          Filter.isNull('isDeleted'),
+        ]),
+      ]),
       sortOrders: [SortOrder('date', false)],
     );
 
