@@ -75,8 +75,6 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
 
     final maxWidth = MediaQuery.of(context).size.width;
 
-    debugPrint("Building SettingPage with maxWidth: $maxWidth");
-
     return CupertinoPageScaffold(
       child: LoadingOverlay(
         isLoading: _isDeleting,
@@ -234,10 +232,7 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
                                         ],
                                       ),
                                     ),
-                                    if (maxWidth < 450)
-                                      SizedBox(height: 120.h)
-                                    else
-                                      SizedBox(height: 180.h),
+                                    SizedBox(height: 180.h)
                                   ],
                                 )
                               : SizedBox(height: 80.h),
