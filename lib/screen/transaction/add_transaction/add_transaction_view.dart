@@ -56,7 +56,9 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
 
     if (widget.transactionData != null) {
       final t = widget.transactionData!;
-      _amountController.text = t.amount.toString();
+      _amountController.text = widget.transactionData!.amount.toStringAsFixed(
+        0,
+      );
       _nameController.text = t.title;
       _noteController.text = t.note;
       _selectedCategory = t.category;
@@ -277,11 +279,15 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                                 }
 
                                 if (widget.isFromAI) {
-                                  String rawAmount = _amountController.text
-                                      .replaceAll(RegExp(r'[^0-9]'), '');
-
                                   double finalAmount =
-                                      double.tryParse(rawAmount) ?? 0;
+                                      double.tryParse(
+                                        _amountController.text.replaceAll(
+                                          '.',
+                                          '',
+                                        ),
+                                      ) ??
+                                      0;
+
                                   final updatedTransaction = widget
                                       .transactionData
                                       ?.copyWith(

@@ -91,10 +91,6 @@ class SettingViewModel extends ChangeNotifier {
       final granted = await _locationService.requestPermission();
       _isLocationEnabled = granted;
       await _localStorage.saveLocationStatus(granted);
-
-      if (!granted && context.mounted) {
-        _showOpenSettingsDialog(context);
-      }
     } else {
       _isLocationEnabled = false;
       await _localStorage.saveLocationStatus(false);

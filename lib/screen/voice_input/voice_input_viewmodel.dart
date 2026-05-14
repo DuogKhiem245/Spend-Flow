@@ -62,10 +62,7 @@ class VoiceInputViewModel extends ChangeNotifier {
       return true;
     }
 
-    debugPrint("Microphone permission status: $status");
-
     if (status.isPermanentlyDenied) {
-      debugPrint("Microphone permission permanently denied.");
       if (context.mounted) {
         _showPermissionDialog(context);
       }
@@ -73,16 +70,17 @@ class VoiceInputViewModel extends ChangeNotifier {
     }
 
     final result = await Permission.microphone.request();
+
     if (result.isGranted) {
       return true;
     }
 
-    if (result.isDenied || result.isPermanentlyDenied) {
-      if (context.mounted) {
-        _showPermissionDialog(context);
-      }
-      return false;
-    }
+    // if (result.isDenied || result.isPermanentlyDenied) {
+    //   if (context.mounted) {
+    //     _showPermissionDialog(context);
+    //   }
+    //   return false;
+    // }
 
     return false;
   }

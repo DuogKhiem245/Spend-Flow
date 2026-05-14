@@ -37,9 +37,10 @@ class AIPreviewOverviewViewmodel extends ChangeNotifier {
       notifyListeners();
 
       for (var transaction in transactions) {
+        final String cleanAmount = transaction.amount.toStringAsFixed(0);
         if (transaction.isIncome) {
           await _addTransactionViewmodel.addIncomeTransaction(
-            transaction.amount.toString(),
+            cleanAmount,
             transaction.title ,
             transaction.category,
             transaction.date,
@@ -48,7 +49,7 @@ class AIPreviewOverviewViewmodel extends ChangeNotifier {
           );
         } else {
           await _addTransactionViewmodel.addExpenseTransaction(
-            transaction.amount.toString(),
+            cleanAmount,
             transaction.title,
             transaction.category,
             transaction.date,

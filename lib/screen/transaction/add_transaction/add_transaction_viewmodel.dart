@@ -122,7 +122,7 @@ class AddTransactionViewmodel extends ChangeNotifier {
     String note,
     LocationModel? location,
   ) async {
-    if (selectedCategory == null) return;
+    if (selectedCategory == null) return;    
 
     final double value = _parseAmount(amount);
     if (value == 0) return;

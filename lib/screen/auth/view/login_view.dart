@@ -161,9 +161,11 @@ class _LoginPageState extends State<LoginPage> {
       }
     } catch (e) {
       final errorString = e.toString().toLowerCase();
+      debugPrint("Social login error: $errorString");
       final bool isUserCanceled =
           errorString.contains('canceled') ||
-          errorString.contains('user-cancelled');
+          errorString.contains('user cancelled') ||
+          errorString.contains('[firebase_auth/canceled]');
 
       if (isUserCanceled) {
         return;
@@ -187,7 +189,9 @@ class _LoginPageState extends State<LoginPage> {
       if (mounted) {
         Navigator.pushAndRemoveUntil(
           context,
-          CupertinoPageRoute(builder: (context) => const WalletView(firstWallet: true)),
+          CupertinoPageRoute(
+            builder: (context) => const WalletView(firstWallet: true),
+          ),
           (route) => false,
         );
       }
