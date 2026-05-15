@@ -7,6 +7,7 @@ import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/screen/premium/premium_viewmodel.dart';
 import 'package:spend_flow/main.dart';
+import 'package:spend_flow/screen/setting/markdown/markdown_doc_screen.dart';
 
 class PremiumView extends StatelessWidget {
   final bool isMaximized;
@@ -87,7 +88,7 @@ class PremiumView extends StatelessWidget {
         return PopScope(
           canPop: !viewModel.isLoading,
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.9,
+            height: MediaQuery.of(context).size.height * 0.92,
             decoration: BoxDecoration(
               color: CupertinoTheme.of(context).scaffoldBackgroundColor,
               borderRadius: BorderRadius.vertical(top: Radius.circular(30.r)),
@@ -342,7 +343,6 @@ class PremiumView extends StatelessWidget {
         //   "check",
         //   context: context,
         // ),
-
         Divider(height: 24.h),
 
         _buildComparisonRow(
@@ -512,13 +512,86 @@ class PremiumView extends StatelessWidget {
                     ],
                   ),
           ),
-          SizedBox(height: 12.h),
+          SizedBox(height: 6.h),
           Text(
             l10n.subscription_auto_renews,
             textAlign: TextAlign.center,
-            style: CupertinoTheme.of(
-              context,
-            ).textTheme.textStyle.copyWith(fontSize: 11.sp),
+            style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+              fontSize: 12.sp,
+              color: CupertinoTheme.of(
+                context,
+              ).textTheme.textStyle.color!.withValues(alpha: .8),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CupertinoButton(
+                padding: EdgeInsets.zero,
+                minimumSize: Size.zero,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => MarkdownDocScreen(
+                        title: l10n.privacy_policy,
+                        filename: "policy.md",
+                      ),
+                    ),
+                  );
+                },
+                child: Text(
+                  l10n.privacy_policy,
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(
+                        fontSize: 12.sp,
+                        color: CupertinoTheme.of(
+                          context,
+                        ).textTheme.textStyle.color!.withValues(alpha: .8),
+                        decoration: TextDecoration.underline,
+                      ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                child: Text(
+                  "•",
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(
+                        fontSize: 12.sp,
+                        color: CupertinoTheme.of(
+                          context,
+                        ).textTheme.textStyle.color!.withValues(alpha: .8),
+                      ),
+                ),
+              ),
+              CupertinoButton(
+                padding: EdgeInsets.zero,
+                minimumSize: Size.zero,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => MarkdownDocScreen(
+                        title: l10n.terms_of_service,
+                        filename: "terms.md",
+                      ),
+                    ),
+                  );
+                },
+                child: Text(
+                  l10n.terms_of_service,
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(
+                        fontSize: 12.sp,
+                        color: CupertinoTheme.of(
+                          context,
+                        ).textTheme.textStyle.color!.withValues(alpha: .8),
+                        decoration: TextDecoration.underline,
+                      ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -643,7 +716,7 @@ class PremiumView extends StatelessWidget {
                   color: AppColors.primaryColor,
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(18.r),
-                    bottomLeft: Radius.circular(10.r), 
+                    bottomLeft: Radius.circular(10.r),
                   ),
                 ),
                 child: Text(
