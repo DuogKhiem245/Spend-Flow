@@ -34,6 +34,11 @@ export const analyzeReceiptImageHandler = async (request: CallableRequest) => {
         User categories: ${categoriesJson}
         Today: ${new Date().toISOString()}
 
+        DATE LOGIC RULES:
+        1. Extract the date from the receipt.
+        2. STRICT RULE: The "date" field MUST NOT be in the future relative to "Today".
+        3. If the date on the receipt appears to be in the future (due to OCR error or pre-dating), you MUST use "Today" as the value for "date".
+
         IRRELEVANT CONTENT RULE:
         If the image is NOT a receipt, bill, invoice, or related to financial transactions (e.g., a selfie, a landscape, random objects), you MUST return an empty results array: {"results": []} and stop processing.
 
@@ -121,7 +126,9 @@ export const analyzeTransactionTextHandler = async (
         3. title: Brief summary (e.g., "Lunch", "Salary").
         4. isIncome: Analyze the intent. Set "true" if the user is receiving money. Set "false" if the user is spending money.
         5. note: Add context like payment method or people involved.
-        6. date: Extract the date of the transaction. If not mentioned, use today's date.
+        6. date: Extract the date. If not mentioned, use Today. 
+           STRICT RULE: If the extracted date is in the future relative to "Today" (${new Date().toISOString()}), you MUST override it and use "Today" instead. 
+           The transaction date can NEVER be later than Today.
 
         Output plain JSON ONLY with an array of results (No Markdown, no extra text):
         {
