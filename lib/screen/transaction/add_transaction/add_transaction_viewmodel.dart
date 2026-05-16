@@ -25,8 +25,13 @@ class AddTransactionViewmodel extends ChangeNotifier {
 
   Future<void>? _locationTask;
 
-  AddTransactionViewmodel() {
-    _initialize();
+  AddTransactionViewmodel({bool initialize = true}) {
+    if (initialize) {
+      _initialize();
+    } else {
+      _loadCurrency();
+      notifyListeners();
+    }
   }
 
   Future<void> _initialize() async {

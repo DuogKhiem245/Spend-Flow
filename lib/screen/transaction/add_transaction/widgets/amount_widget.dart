@@ -22,7 +22,7 @@ class AmountWidget extends StatefulWidget {
 }
 
 class _AmountWidgetState extends State<AmountWidget> {
-  final AddTransactionViewmodel _viewModel = AddTransactionViewmodel();
+  final AddTransactionViewmodel _viewModel = AddTransactionViewmodel(initialize: false);
 
   @override
   Widget build(BuildContext context) {

@@ -154,12 +154,15 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     switch (index) {
       case 0:
-        if (_premiumViewModel.isPremium) {
+        final canUse = await _limitService.canUseScan();
+        if (canUse) {
+          if (!mounted) return;
           await Navigator.push(
             context,
             CupertinoPageRoute(builder: (context) => const ScanReceiptView()),
           );
         } else {
+          if (!mounted) return;
           await _showLimitOptions(context, isVoice: false);
         }
         break;
@@ -191,7 +194,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     _adsService.showRewardedAd(
       type: isVoice ? RewardedAdType.voiceInput : RewardedAdType.scanReceipt,
       onRewardEarned: () async {
-        await _limitService.grantAdReward();
+        await _limitService.grantAdReward(isVoice);
 
         if (!mounted) return;
 

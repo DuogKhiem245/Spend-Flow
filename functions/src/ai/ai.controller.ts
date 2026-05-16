@@ -22,34 +22,36 @@ export const analyzeReceiptImageHandler = async (request: CallableRequest) => {
 
   const { imageBase64, categories, language } = request.data;
   const targetLang = getLanguageLabel(language);
-
-  try {
-    const model = getAIModel(process.env.GEMINI_API_KEY);
-    const categoriesJson = JSON.stringify(categories);
-
-    const prompt = `
+  const categoriesJson = JSON.stringify(categories);
+  const systemInstruction = `
         You are an AI financial expert. Analyze the receipt image.
         
         IMPORTANT: All text fields in the output MUST be in ${targetLang}.
         User categories: ${categoriesJson}
-        Today: ${new Date().toISOString()}
 
         DATE LOGIC RULES:
         1. Extract the date from the receipt.
         2. STRICT RULE: The "date" field MUST NOT be in the future relative to "Today".
-        3. If the date on the receipt appears to be in the future (due to OCR error or pre-dating), you MUST use "Today" as the value for "date".
+        3. If the date on the receipt appears to be in the future, you MUST use "Today" as the value for "date".
 
         IRRELEVANT CONTENT RULE:
-        If the image is NOT a receipt, bill, invoice, or related to financial transactions (e.g., a selfie, a landscape, random objects), you MUST return an empty results array: {"results": []} and stop processing.
+        If the image is NOT a receipt, bill, invoice, or related to financial transactions, you MUST return an empty results array: {"results": []} and stop processing.
+
+        DISCOUNT & PROMOTION HANDLING (CRITICAL):
+        1. If you see a discount, promotion, voucher, or negative amount (e.g., -9,000) directly under or next to an item, you MUST SUBTRACT that discount from the parent item's amount.
+        2. DO NOT create separate transactions for negative amounts or discounts.
+        3. If an item is listed and immediately followed by a discount that makes its final cost 0 (e.g., "Trân châu 9k" followed by "Khuyến mãi -9k"), IGNORE that item entirely. Do not include it in the results.
+        4. The final "amount" for any transaction MUST be greater than 0.
 
         QUANTITY & CALCULATION RULES:
         1. For each item, identify the QUANTITY and UNIT PRICE.
-        2. Set "amount" as the TOTAL for that line item (Quantity * Unit Price).
+        2. Set "amount" as the FINAL TOTAL for that line item (Quantity * Unit Price - Discounts).
         3. In the "note" field, follow this format: "[Store Name] - [Qty] x [Unit Price]".
         
         STRICT RULES TO AVOID DOUBLE COUNTING:
-        1. List individual items ONLY. DO NOT include "Total", "Tax", or "Change".
-        2. If items are unclear, provide one single transaction for the Grand Total.
+        1. List individual items ONLY. DO NOT include "Total", "Tax", "Change", or "Cash rendered".
+        2. Read rows carefully. Do not split a single purchased item into multiple transactions.
+        3. If individual items are unclear or too messy, provide one single transaction for the Grand Total.
         
         ADDRESS LOGIC:
         1. Try to extract the full physical address of the store.
@@ -59,9 +61,9 @@ export const analyzeReceiptImageHandler = async (request: CallableRequest) => {
         REQUIREMENTS:
         - Map each item to the best categoryId.
         - title: Item name (e.g., "Coca Cola", "Apple").
-        - amount: Total cost for this item (Number only).
+        - amount: Total final cost for this item (Number only, must be > 0).
         - address: Full street address, Store Name, or null.
-        - isIncome: Classify the transaction. Set to "false" if it's a purchase/expense receipt. Set to "true" ONLY if it's clearly a receipt for receiving money/refund.
+        - isIncome: Set to false (purchases/expenses). Set to true ONLY if it's clearly a receipt for receiving money/refund.
 
         Output plain JSON ONLY (No Markdown, no extra text):
         {
@@ -80,7 +82,12 @@ export const analyzeReceiptImageHandler = async (request: CallableRequest) => {
                 }
             ]
         }
-        `;
+    `;
+
+  try {
+    const model = getAIModel(process.env.GEMINI_API_KEY, systemInstruction);
+
+    const prompt = `const prompt = Today is: ${new Date().toISOString()}. Analyze this receipt image.`;
 
     const imagePart = {
       inlineData: { data: imageBase64, mimeType: "image/jpeg" },
@@ -105,14 +112,9 @@ export const analyzeTransactionTextHandler = async (
 
   const { text, categories, language } = request.data;
   const targetLang = getLanguageLabel(language);
-
-  try {
-    const model = getAIModel(process.env.GEMINI_API_KEY);
-    const categoriesJson = JSON.stringify(categories);
-
-    const prompt = `
-        You are an intelligent financial assistant. Analyze this text: "${text}"
-        
+  const categoriesJson = JSON.stringify(categories);
+  const systemInstruction = `
+      You are an intelligent financial assistant.
         IMPORTANT: All text fields MUST be in ${targetLang}.
         Categories: ${categoriesJson}
         Today: ${new Date().toISOString()}
@@ -146,7 +148,12 @@ export const analyzeTransactionTextHandler = async (
                 }
             ]
         }
-        `;
+    `;
+
+  try {
+    const model = getAIModel(process.env.GEMINI_API_KEY, systemInstruction);
+
+    const prompt = `Analyze this text: "${text}"`;
 
     const result = await model.generateContent(prompt);
     const cleanJson = cleanAIResponse(result.response.text());
