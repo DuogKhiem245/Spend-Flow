@@ -322,7 +322,7 @@ class PremiumView extends StatelessWidget {
 
         _buildComparisonRow(
           l10n.unlimited_scans,
-          "ads",
+          "1/${l10n.day}",
           "check",
           context: context,
         ),
