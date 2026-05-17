@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/core/services/ads_service.dart';
 import 'package:spend_flow/core/widgets/banner_ads_widget.dart';
 import 'package:spend_flow/screen/budget/budget_view.dart';
 import 'package:spend_flow/screen/home/home_view.dart';
@@ -56,9 +57,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
                     }
 
                     return BannerAdWidget(
-                      adUnitId: Platform.isAndroid
-                          ? 'ca-app-pub-3940256099942544/6300978111'
-                          : 'ca-app-pub-3940256099942544/2934735716',
+                      adUnitId: AdsService().bannerAdUnitId,
                     );
                   },
                 ),

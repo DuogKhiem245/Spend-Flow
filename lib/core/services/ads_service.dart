@@ -22,6 +22,18 @@ class AdsService {
             ? 'ca-app-pub-5260847065768800/4944164516'
             : 'ca-app-pub-5260847065768800/1989258729');
 
+  String get bannerAdUnitId {
+    if (isTestMode) {
+      return Platform.isAndroid
+          ? 'ca-app-pub-3940256099942544/6300978111'
+          : 'ca-app-pub-3940256099942544/2934735716';
+    } else {
+      return Platform.isAndroid
+          ? 'ca-app-pub-5260847065768800/4944164516'
+          : 'ca-app-pub-5260847065768800/1989258729';
+    }
+  }
+
   String getRewardedAdUnitId(RewardedAdType type) {
     if (isTestMode) {
       return Platform.isAndroid
