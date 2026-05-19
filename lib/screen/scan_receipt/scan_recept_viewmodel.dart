@@ -7,12 +7,14 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/data/category_data.dart';
 import 'package:spend_flow/core/model/location_model.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/core/services/ai_service.dart';
 import 'package:spend_flow/core/model/category_model.dart';
+import 'package:spend_flow/core/services/data_service/daily_limit_service.dart';
 import 'package:spend_flow/core/services/general_service/language_service.dart';
 import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 import 'package:spend_flow/screen/ai_preview/ai_preview_overview_view.dart';
@@ -35,6 +37,9 @@ class ScanReceiptViewModel extends ChangeNotifier {
   bool _isScanning = false;
   bool get isScanning => _isScanning;
 
+  bool _isCameraPermissionDenied = false;
+  bool get isCameraPermissionDenied => _isCameraPermissionDenied;
+
   void setCategories(List<CategoryModel> categories) {
     this.categories = categories;
   }
@@ -45,7 +50,31 @@ class ScanReceiptViewModel extends ChangeNotifier {
     super.dispose();
   }
 
-  Future<void> initCamera() async {
+  Future<void> initCamera(BuildContext context) async {
+    var status = await Permission.camera.status;
+
+    if (status.isPermanentlyDenied) {
+      _isCameraPermissionDenied = true;
+      notifyListeners();
+
+      if (context.mounted) {
+        _showPermissionDialog(context);
+      }
+      return;
+    }
+
+    if (!status.isGranted) {
+      status = await Permission.camera.request();
+      if (!status.isGranted) {
+        _isCameraPermissionDenied = true;
+        notifyListeners();
+        return;
+      }
+    }
+
+    _isCameraPermissionDenied = false;
+    notifyListeners();
+
     try {
       final cameras = await availableCameras();
       if (cameras.isEmpty) return;
@@ -83,9 +112,15 @@ class ScanReceiptViewModel extends ChangeNotifier {
       await initializeControllerFuture;
       final image = await controller!.takePicture();
 
+      await controller!.pausePreview();
+
       if (!context.mounted) return;
 
       await _processAndAnalyzeImage(context, image.path);
+
+      if (controller != null && controller!.value.isInitialized) {
+        await controller!.resumePreview();
+      }
     } catch (e) {
       debugPrint("Error taking picture: $e");
     } finally {
@@ -174,7 +209,7 @@ class ScanReceiptViewModel extends ChangeNotifier {
               coords = locationCache[addr];
             } else {
               coords = await getCoordinatesFromAddress(addr);
-              locationCache[addr] = coords; 
+              locationCache[addr] = coords;
             }
 
             if (coords != null) {
@@ -223,6 +258,9 @@ class ScanReceiptViewModel extends ChangeNotifier {
       }
     } catch (e) {
       HapticFeedback.vibrate();
+
+      await DailyLimitService().refundScanCount();
+
       if (context.mounted) {
         _showErrorDialog(context);
       }
@@ -236,7 +274,7 @@ class ScanReceiptViewModel extends ChangeNotifier {
     if (address.isEmpty) return null;
 
     final apiKey = dotenv.env['GOONG_API_KEY'] ?? '';
- 
+
     final encodedAddress = Uri.encodeComponent(address);
     final langCode = LanguageService().currentLanguageCode;
 
@@ -262,15 +300,14 @@ class ScanReceiptViewModel extends ChangeNotifier {
     return null;
   }
 
- void _showErrorDialog(BuildContext context) {
+  void _showErrorDialog(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
     AdaptiveAlertDialog.show(
       context: context,
       title: l10n.error,
-      message:
-          l10n.scan_receipt_error,
-      icon: 'doc.text.viewfinder', 
+      message: l10n.scan_receipt_error,
+      icon: 'doc.text.viewfinder',
       actions: [
         AlertAction(
           title: l10n.close,
@@ -293,7 +330,7 @@ class ScanReceiptViewModel extends ChangeNotifier {
     }
   }
 
-  void handleLifecycleChange(AppLifecycleState state) {
+  void handleLifecycleChange(AppLifecycleState state, BuildContext context) {
     final CameraController? cameraController = controller;
     if (cameraController == null || !cameraController.value.isInitialized) {
       return;
@@ -301,7 +338,32 @@ class ScanReceiptViewModel extends ChangeNotifier {
     if (state == AppLifecycleState.inactive) {
       cameraController.dispose();
     } else if (state == AppLifecycleState.resumed) {
-      initCamera();
+      initCamera(context);
     }
+  }
+
+  void _showPermissionDialog(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    AdaptiveAlertDialog.show(
+      context: context,
+      title: l10n.permission_required_camera,
+      message: l10n.permission_required_camera_description,
+      icon: 'camera.fill',
+      actions: [
+        AlertAction(
+          title: l10n.cancel,
+          style: AlertActionStyle.cancel,
+          onPressed: () => {},
+        ),
+        AlertAction(
+          title: l10n.settings,
+          style: AlertActionStyle.primary,
+          onPressed: () {
+            openAppSettings();
+          },
+        ),
+      ],
+    );
   }
 }

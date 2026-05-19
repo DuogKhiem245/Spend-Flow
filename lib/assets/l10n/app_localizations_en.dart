@@ -1372,6 +1372,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Please enable notification access in settings to receive reminders.';
 
   @override
+  String get permission_required_camera => 'Camera access denied';
+
+  @override
+  String get permission_required_camera_description =>
+      'Please enable camera access in settings to use receipt scanning feature.';
+
+  @override
   String get voice_input_error => 'Voice input error. Please try again.';
 
   @override

@@ -56,4 +56,16 @@ class DailyLimitService {
       await prefs.setInt(_keyScanCount, 0);
     }
   }
+
+  Future<void> refundScanCount() async {
+    if (_premiumViewModel.isPremium) return; 
+
+    final prefs = await SharedPreferences.getInstance();
+    final currentCount = prefs.getInt(_keyScanCount) ?? 0;
+
+    // Nếu số lượt đang > 0 thì trừ đi 1 để hoàn lại
+    if (currentCount > 0) {
+      await prefs.setInt(_keyScanCount, currentCount - 1);
+    }
+  }
 }

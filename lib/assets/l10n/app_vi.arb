@@ -447,6 +447,8 @@
   "location_permission_denied_description": "Vui lòng bật quyền truy cập vị trí trong cài đặt.",
   "notification_permission_denied": "Nhận thông báo bị từ chối.",
   "notification_permission_denied_description": "Vui lòng bật thông báo trong cài đặt để nhận nhắc nhở.",
+  "permission_required_camera": "Quyền truy cập camera bị từ chối",
+  "permission_required_camera_description": "Vui lòng bật quyền truy cập camera trong cài đặt để sử dụng tính năng quét hóa đơn.",
 
   "voice_input_error": "Lỗi nhập giọng nói. Vui lòng thử lại.",
   "voice_input_not_recognized": "Không nhận diện được giọng nói. Vui lòng thử lại.",

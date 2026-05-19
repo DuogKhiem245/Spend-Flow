@@ -448,6 +448,8 @@
   "location_permission_denied_description": "Please enable location access in settings.",
   "notification_permission_denied": "Notification permission denied.",
   "notification_permission_denied_description": "Please enable notification access in settings to receive reminders.",
+  "permission_required_camera": "Camera access denied",
+  "permission_required_camera_description": "Please enable camera access in settings to use receipt scanning feature.",
 
   "voice_input_error": "Voice input error. Please try again.",
   "voice_input_not_recognized": "Voice input not recognized. Please try again.",

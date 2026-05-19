@@ -2642,6 +2642,18 @@ abstract class AppLocalizations {
   /// **'Vui lòng bật thông báo trong cài đặt để nhận nhắc nhở.'**
   String get notification_permission_denied_description;
 
+  /// No description provided for @permission_required_camera.
+  ///
+  /// In vi, this message translates to:
+  /// **'Quyền truy cập camera bị từ chối'**
+  String get permission_required_camera;
+
+  /// No description provided for @permission_required_camera_description.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng bật quyền truy cập camera trong cài đặt để sử dụng tính năng quét hóa đơn.'**
+  String get permission_required_camera_description;
+
   /// No description provided for @voice_input_error.
   ///
   /// In vi, this message translates to:

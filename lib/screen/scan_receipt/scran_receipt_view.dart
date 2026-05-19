@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
@@ -22,7 +23,9 @@ class _ScanReceiptViewState extends State<ScanReceiptView>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _viewModel.initCamera();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _viewModel.initCamera(context);
+    });
   }
 
   @override
@@ -34,7 +37,7 @@ class _ScanReceiptViewState extends State<ScanReceiptView>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    _viewModel.handleLifecycleChange(state);
+    _viewModel.handleLifecycleChange(state, context);
   }
 
   @override
@@ -69,7 +72,7 @@ class _ScanReceiptViewState extends State<ScanReceiptView>
                 children: [
                   const Spacer(),
 
-                  _buildScanFrame(),
+                  _buildScanFrame(_viewModel.isCameraPermissionDenied, l10n),
 
                   SizedBox(height: 20.h),
 
@@ -147,7 +150,7 @@ class _ScanReceiptViewState extends State<ScanReceiptView>
     );
   }
 
-  Widget _buildScanFrame() {
+  Widget _buildScanFrame(bool isCameraPermissionDenied, AppLocalizations l10n) {
     return Container(
       width: 300.w,
       height: 450.h,
@@ -161,10 +164,20 @@ class _ScanReceiptViewState extends State<ScanReceiptView>
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
             return Center(
-              child: LoadingAnimationWidget.staggeredDotsWave(
-                color: CupertinoTheme.of(context).primaryColor,
-                size: 30.w,
-              ),
+              child: isCameraPermissionDenied
+                  ? Text(
+                      l10n.permission_required_camera,
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            color: Colors.white,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                    )
+                  : LoadingAnimationWidget.staggeredDotsWave(
+                      color: CupertinoTheme.of(context).primaryColor,
+                      size: 30.w,
+                    ),
             );
           }
           return const SizedBox.shrink();

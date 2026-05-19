@@ -1369,6 +1369,13 @@ class AppLocalizationsVi extends AppLocalizations {
       'Vui lòng bật thông báo trong cài đặt để nhận nhắc nhở.';
 
   @override
+  String get permission_required_camera => 'Quyền truy cập camera bị từ chối';
+
+  @override
+  String get permission_required_camera_description =>
+      'Vui lòng bật quyền truy cập camera trong cài đặt để sử dụng tính năng quét hóa đơn.';
+
+  @override
   String get voice_input_error => 'Lỗi nhập giọng nói. Vui lòng thử lại.';
 
   @override

@@ -3,10 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// enum RewardedAdType { scanReceipt, voiceInput, syncData, importExportData }
 enum RewardedAdType { scanReceipt, voiceInput, syncData }
 
 class AdsService {
+  static final AdsService _instance = AdsService._internal();
+
+  factory AdsService() {
+    return _instance;
+  }
+
+  AdsService._internal();
+
   InterstitialAd? _interstitialAd;
 
   final Map<RewardedAdType, RewardedAd?> _rewardedAds = {};
@@ -19,8 +26,8 @@ class AdsService {
             ? 'ca-app-pub-3940256099942544/1033173712'
             : 'ca-app-pub-3940256099942544/4411468910')
       : (Platform.isAndroid
-            ? 'ca-app-pub-5260847065768800/4944164516'
-            : 'ca-app-pub-5260847065768800/1989258729');
+            ? 'ca-app-pub-5260847065768800/7346643173'
+            : 'ca-app-pub-5260847065768800/3407398163');
 
   String get bannerAdUnitId {
     if (isTestMode) {
@@ -53,10 +60,6 @@ class AdsService {
           return Platform.isAndroid
               ? 'ca-app-pub-5260847065768800/4459124955'
               : 'ca-app-pub-5260847065768800/2589463911';
-        // case RewardedAdType.importExportData:
-        //   return Platform.isAndroid
-        //       ? 'ca-app-pub-5260847065768800/8100205653'
-        //       : 'ca-app-pub-5260847065768800/1084810551';
       }
     }
   }
@@ -73,6 +76,8 @@ class AdsService {
   }
 
   void loadRewardedAd(RewardedAdType type) {
+    if (_rewardedAds[type] != null) return;
+
     debugPrint("Loading rewarded ad for type: $type");
     RewardedAd.load(
       adUnitId: getRewardedAdUnitId(type),

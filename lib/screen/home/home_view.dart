@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _viewModel.initData();
-     _adsService.loadRewardedAd(RewardedAdType.scanReceipt);
+    _adsService.loadRewardedAd(RewardedAdType.scanReceipt);
     _adsService.loadRewardedAd(RewardedAdType.voiceInput);
   }
 
