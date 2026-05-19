@@ -42,10 +42,15 @@ class DailyLimitService {
     final currentCount = prefs.getInt(_keyScanCount) ?? 0;
 
     if (currentCount < 1) {
-      await prefs.setInt(_keyScanCount, currentCount + 1);
       return true;
     }
     return false;
+  }
+
+  Future<void> plusScan() async {
+    final prefs = await SharedPreferences.getInstance();
+    final currentCount = prefs.getInt(_keyScanCount) ?? 0;
+    await prefs.setInt(_keyScanCount, currentCount + 1);
   }
 
   Future<void> grantAdReward(bool isVoice, {bool resetCompletely = false}) async {

@@ -138,7 +138,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                   : 95.h
                             : Platform.isIOS
                             ? 150.h
-                            : 125.h,
+                            : 150.h, 
                         child: _buildFloatingButton(l10n),
                       ),
                     ],

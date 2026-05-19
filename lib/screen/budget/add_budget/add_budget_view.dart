@@ -200,7 +200,6 @@ class _AddBudgetViewState extends State<AddBudgetView> {
                         _showNoWalletAlert(context);
                         return;
                       }
-                      if (!mounted) return;
 
                       await _viewModel.saveBudget(
                         idToUpdate: widget.budgetToEdit?.id,

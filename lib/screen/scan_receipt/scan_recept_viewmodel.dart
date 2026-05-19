@@ -172,6 +172,8 @@ class ScanReceiptViewModel extends ChangeNotifier {
         currentLanguage,
       );
 
+      await DailyLimitService().refundScanCount();
+
       final fullMap = Map<String, dynamic>.from(rawResponse);
       final List results = fullMap['results'] ?? [];
 
