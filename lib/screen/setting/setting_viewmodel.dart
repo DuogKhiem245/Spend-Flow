@@ -82,7 +82,7 @@ class SettingViewModel extends ChangeNotifier {
     if (permission == LocationPermission.deniedForever && value == true) {
       if (!context.mounted) return;
       _showOpenSettingsDialog(context);
-      _isLocationEnabled = false;
+      _isLocationEnabled = false; 
       notifyListeners();
       return;
     }

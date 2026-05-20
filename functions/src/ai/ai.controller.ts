@@ -1,5 +1,5 @@
 import { CallableRequest, HttpsError } from "firebase-functions/v2/https";
-import { getAIModel, getLanguageLabel } from "./ai.service.js";
+import { getAIModelFlashLite, getAIModelFlash, getLanguageLabel } from "./ai.service.js";
 import * as logger from "firebase-functions/logger";
 
 const cleanAIResponse = (response : string) => {
@@ -85,7 +85,7 @@ export const analyzeReceiptImageHandler = async (request: CallableRequest) => {
     `;
 
   try {
-    const model = getAIModel(process.env.GEMINI_API_KEY, systemInstruction);
+    const model = getAIModelFlash(process.env.GEMINI_API_KEY, systemInstruction);
 
     const prompt = `const prompt = Today is: ${new Date().toISOString()}. Analyze this receipt image.`;
 
@@ -151,7 +151,7 @@ export const analyzeTransactionTextHandler = async (
     `;
 
   try {
-    const model = getAIModel(process.env.GEMINI_API_KEY, systemInstruction);
+    const model = getAIModelFlashLite(process.env.GEMINI_API_KEY, systemInstruction);
 
     const prompt = `Analyze this text: "${text}"`;
 

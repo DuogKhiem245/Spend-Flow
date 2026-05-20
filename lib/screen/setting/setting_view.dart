@@ -73,8 +73,6 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    final maxWidth = MediaQuery.of(context).size.width;
-
     return CupertinoPageScaffold(
       child: LoadingOverlay(
         isLoading: _isDeleting,

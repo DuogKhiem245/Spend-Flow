@@ -8,6 +8,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/data/category_data.dart';
 import 'package:spend_flow/core/model/location_model.dart';
@@ -52,8 +53,11 @@ class ScanReceiptViewModel extends ChangeNotifier {
 
   Future<void> initCamera(BuildContext context) async {
     var status = await Permission.camera.status;
+    final prefs = await SharedPreferences.getInstance();
 
-    if (status.isPermanentlyDenied) {
+    bool hasDeniedOnce = prefs.getBool('camera_denied_once') ?? false;
+
+    if (status.isPermanentlyDenied || (!status.isGranted && hasDeniedOnce)) {
       _isCameraPermissionDenied = true;
       notifyListeners();
 
@@ -65,13 +69,17 @@ class ScanReceiptViewModel extends ChangeNotifier {
 
     if (!status.isGranted) {
       status = await Permission.camera.request();
+
       if (!status.isGranted) {
+        await prefs.setBool('camera_denied_once', true);
+
         _isCameraPermissionDenied = true;
         notifyListeners();
         return;
       }
     }
 
+    await prefs.setBool('camera_denied_once', false);
     _isCameraPermissionDenied = false;
     notifyListeners();
 

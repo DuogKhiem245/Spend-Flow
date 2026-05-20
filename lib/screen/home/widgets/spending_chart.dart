@@ -117,8 +117,9 @@ class _SpendingChartState extends State<SpendingChart>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildHeader(l10n, context),
-          SizedBox(height: 25.h),
 
+          SizedBox(height: 30.h),
+          
           if (isTablet)
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,

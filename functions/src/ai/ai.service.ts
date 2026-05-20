@@ -12,7 +12,24 @@ export const getLanguageLabel = (langCode: string | number): string => {
     return (supportedLangs[String(langCode) as keyof typeof supportedLangs] || "English");
 };
 
-export const getAIModel = (apiKey: string | undefined, systemInstruction: string) => {
+export const getAIModelFlash = (
+  apiKey: string | undefined,
+  systemInstruction: string,
+) => {
+  if (!apiKey) {
+    throw new HttpsError(
+      "failed-precondition",
+      "GEMINI_API_KEY is not configured.",
+    );
+  }
+  const genAI = new GoogleGenerativeAI(apiKey);
+  return genAI.getGenerativeModel({
+    model: "gemini-2.5-flash",
+    systemInstruction,
+  });
+};
+
+export const getAIModelFlashLite = (apiKey: string | undefined, systemInstruction: string) => {
     if (!apiKey) {
         throw new HttpsError("failed-precondition", "GEMINI_API_KEY is not configured.");
     }

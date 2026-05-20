@@ -17,6 +17,7 @@ class AdsService {
   InterstitialAd? _interstitialAd;
 
   final Map<RewardedAdType, RewardedAd?> _rewardedAds = {};
+  final Map<RewardedAdType, bool> _isRewardedAdLoading = {};
 
   static const String _adCounterKey = 'interstitial_ad_counter';
   static const bool isTestMode = false;
@@ -76,18 +77,24 @@ class AdsService {
   }
 
   void loadRewardedAd(RewardedAdType type) {
-    if (_rewardedAds[type] != null) return;
+    if (_rewardedAds[type] != null || _isRewardedAdLoading[type] == true) {
+      return;
+    }
 
-    debugPrint("Loading rewarded ad for type: $type");
+    _isRewardedAdLoading[type] = true;
+
     RewardedAd.load(
       adUnitId: getRewardedAdUnitId(type),
       request: const AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
         onAdLoaded: (ad) {
           _rewardedAds[type] = ad;
+          _isRewardedAdLoading[type] = false;
         },
         onAdFailedToLoad: (error) {
           _rewardedAds[type] = null;
+          _isRewardedAdLoading[type] = false;
+          debugPrint("Lỗi load quảng cáo $type: ${error.message}");
         },
       ),
     );

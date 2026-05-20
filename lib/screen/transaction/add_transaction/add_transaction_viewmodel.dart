@@ -55,12 +55,12 @@ class AddTransactionViewmodel extends ChangeNotifier {
           await _storageService.saveLocationStatus(permissionGranted);
 
           if (permissionGranted) {
-            await getCurrentLocation();
+            await getCurrentLocation(isAutoInit: true);
           } else {
             notifyListeners();
           }
         } else if (_isLocationEnabled == true) {
-          await getCurrentLocation();
+          await getCurrentLocation(isAutoInit: true);
         }
       } catch (e) {
         debugPrint('Location Init Error: $e');
@@ -154,12 +154,18 @@ class AddTransactionViewmodel extends ChangeNotifier {
     await _storageService.addTransaction(transaction);
   }
 
-  Future<Position?> getCurrentLocation() async {
+  Future<Position?> getCurrentLocation({bool isAutoInit = false}) async {
     if (isLocationEnabled == false) {
       return null;
     }
     final geoPos = await _locationService.getCurrentPosition();
+
+    if (isAutoInit && _currentPosition != null) {
+      return _currentPosition;
+    }
+
     if (geoPos != null) {
+      if (!isAutoInit) _selectedAddress = null;
       return _currentPosition = Position(geoPos.longitude, geoPos.latitude);
     } else {
       LocationPermission permission = await Geolocator.checkPermission();

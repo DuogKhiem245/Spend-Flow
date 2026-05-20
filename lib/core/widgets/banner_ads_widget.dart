@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -12,34 +11,61 @@ class BannerAdWidget extends StatefulWidget {
   State<BannerAdWidget> createState() => _BannerAdWidgetState();
 }
 
-class _BannerAdWidgetState extends State<BannerAdWidget> {
+// THÊM WidgetsBindingObserver VÀO ĐÂY ĐỂ LẮNG NGHE VÒNG ĐỜI APP
+class _BannerAdWidgetState extends State<BannerAdWidget>
+    with WidgetsBindingObserver {
   BannerAd? _bannerAd;
   bool _isLoaded = false;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this); 
     _loadAd();
   }
 
   void _loadAd() {
+    _bannerAd?.dispose();
+
+    setState(() {
+      _isLoaded = false;
+    });
+
     _bannerAd = BannerAd(
       adUnitId: widget.adUnitId,
       request: const AdRequest(),
       size: AdSize.banner,
       listener: BannerAdListener(
         onAdLoaded: (ad) {
-          setState(() => _isLoaded = true);
+          if (mounted) {
+            setState(() => _isLoaded = true);
+          }
         },
         onAdFailedToLoad: (ad, error) {
+          debugPrint('BannerAd lỗi tải: ${error.message}');
           ad.dispose();
+          _bannerAd = null; 
+          if (mounted) {
+            setState(() => _isLoaded = false);
+          }
         },
       ),
     )..load();
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      if (!_isLoaded) {
+        debugPrint('Tự động tải lại BannerAd do đang trống...');
+        _loadAd();
+      }
+    }
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this); 
     _bannerAd?.dispose();
     super.dispose();
   }
