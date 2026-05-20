@@ -156,6 +156,7 @@ class AdsService {
           failedAd.dispose();
           loadRewardedAd(type);
           onAdFailed();
+          debugPrint("Lỗi hiển thị quảng cáo $type: ${error.message}");
         },
       );
 

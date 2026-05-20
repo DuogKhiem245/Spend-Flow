@@ -180,7 +180,7 @@ class ScanReceiptViewModel extends ChangeNotifier {
         currentLanguage,
       );
 
-      await DailyLimitService().refundScanCount();
+      await DailyLimitService().plusScan();
 
       final fullMap = Map<String, dynamic>.from(rawResponse);
       final List results = fullMap['results'] ?? [];
