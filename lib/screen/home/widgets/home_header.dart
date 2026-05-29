@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pull_down_button/pull_down_button.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/screen/home/home_viewmodel.dart';
@@ -92,157 +91,230 @@ class HomeHeader extends StatelessWidget {
             ),
             SizedBox(width: 10.w),
 
-            PullDownButton(
-              itemBuilder: (context) {
-                List<PullDownMenuEntry> items = [];
-                for (var wallet in viewModel.wallets) {
-                  final isSelected = wallet.id == viewModel.currentWalletId;
-                  items.add(
-                    PullDownMenuItem(
-                      title: wallet.name,
-                      onTap: () => viewModel.switchWallet(wallet.id),
-                      icon: isSelected
-                          ? CupertinoIcons.checkmark_circle_fill
-                          : CupertinoIcons.creditcard,
-                      iconColor: isSelected ? AppColors.primaryColor : null,
-                      itemTheme: PullDownMenuItemTheme(
-                        textStyle: CupertinoTheme.of(context)
-                            .textTheme
-                            .textStyle
+            GestureDetector(
+              onTap: () => _showCustomWalletMenu(context, isDarkMode, l10n),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
+                decoration: BoxDecoration(
+                  color: isDarkMode
+                      ? CupertinoColors.systemGrey6.resolveFrom(context)
+                      : AppColors.primaryColor.withValues(alpha: .1),
+                  borderRadius: BorderRadius.circular(20.r),
+                  border: Border.all(
+                    color: isDarkMode
+                        ? Colors.white.withValues(alpha: .1)
+                        : AppColors.primaryColor.withValues(alpha: .2),
+                    width: 1,
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      CupertinoIcons.creditcard_fill,
+                      size: 18.sp,
+                      color: isDarkMode
+                          ? CupertinoColors.white
+                          : AppColors.primaryColor,
+                    ),
+                    SizedBox(width: 8.w),
+                    Container(
+                      constraints: BoxConstraints(maxWidth: 100.w),
+                      child: Text(
+                        viewModel.currentWalletName(l10n),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: CupertinoTheme.of(context).textTheme.textStyle
                             .copyWith(
-                              fontSize: 16.sp,
-                              fontWeight: isSelected
-                                  ? FontWeight.w600
-                                  : FontWeight.w500,
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.w600,
                               color: CupertinoTheme.of(
                                 context,
                               ).textTheme.textStyle.color,
                             ),
                       ),
                     ),
-                  );
-                }
-                if (items.isNotEmpty) {
-                  items.add(const PullDownMenuDivider.large());
-                }
-                items.add(
-                  PullDownMenuItem(
-                    title: l10n.add_wallet,
-                    icon: CupertinoIcons.add_circled,
-                    itemTheme: PullDownMenuItemTheme(
-                      textStyle: CupertinoTheme.of(context)
-                          .textTheme
-                          .textStyle
-                          .copyWith(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w500,
-                            color: CupertinoTheme.of(
-                              context,
-                            ).textTheme.textStyle.color,
-                          ),
-                    ),
-                    onTap: () async {
-                      await Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                          builder: (context) =>
-                              const WalletView(firstWallet: false),
-                        ),
-                      );
-                      await viewModel.refreshWallets();
-                    },
-                  ),
-                );
-                items.add(
-                  PullDownMenuItem(
-                    title: l10n.delete_wallet,
-                    icon: CupertinoIcons.trash,
-                    isDestructive: true,
-                    onTap: () => _showManageWalletDialog(context, isDarkMode),
-                    itemTheme: PullDownMenuItemTheme(
-                      textStyle: CupertinoTheme.of(context).textTheme.textStyle
-                          .copyWith(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w500,
-                            color: CupertinoTheme.of(
-                              context,
-                            ).textTheme.textStyle.color,
-                          ),
-                    ),
-                  ),
-                );
-                return items;
-              },
-
-              buttonBuilder: (context, showMenu) => CupertinoButton(
-                onPressed: showMenu,
-                padding: EdgeInsets.zero,
-                child: Material(
-                  color: Colors.transparent,
-                  child: Ink(
-                    decoration: BoxDecoration(
+                    SizedBox(width: 6.w),
+                    Icon(
+                      CupertinoIcons.chevron_down,
+                      size: 14.sp,
                       color: isDarkMode
-                          ? CupertinoColors.systemGrey6.resolveFrom(context)
-                          : AppColors.primaryColor.withValues(alpha: .1),
-                      borderRadius: BorderRadius.circular(20.r),
-                      border: Border.all(
-                        color: isDarkMode
-                            ? Colors.white.withValues(alpha: .1)
-                            : AppColors.primaryColor.withValues(alpha: .2),
-                        width: 1,
-                      ),
+                          ? CupertinoColors.systemGrey2
+                          : AppColors.primaryColor.withValues(alpha: .6),
                     ),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 14.w,
-                        vertical: 10.h,
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            CupertinoIcons.creditcard_fill,
-                            size: 18.sp,
-                            color: isDarkMode
-                                ? CupertinoColors.white
-                                : AppColors.primaryColor,
-                          ),
-                          SizedBox(width: 8.w),
-                          Flexible(
-                            child: Text(
-                              viewModel.currentWalletName(l10n),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: CupertinoTheme.of(context)
-                                  .textTheme
-                                  .textStyle
-                                  .copyWith(
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: CupertinoTheme.of(
-                                      context,
-                                    ).textTheme.textStyle.color,
-                                  ),
-                            ),
-                          ),
-                          SizedBox(width: 6.w),
-                          Icon(
-                            CupertinoIcons.chevron_down,
-                            size: 14.sp,
-                            color: isDarkMode
-                                ? CupertinoColors.systemGrey2
-                                : AppColors.primaryColor.withValues(alpha: .6),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  ],
                 ),
               ),
             ),
           ],
         );
       },
+    );
+  }
+
+  void _showCustomWalletMenu(
+    BuildContext context,
+    bool isDarkMode,
+    AppLocalizations l10n,
+  ) {
+    final textColor = CupertinoTheme.of(context).textTheme.textStyle.color;
+
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: 'WalletMenu',
+      barrierColor: CupertinoColors.black.withValues(alpha: 0.15),
+      transitionDuration: const Duration(milliseconds: 200),
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return SafeArea(
+          child: Align(
+            alignment: Alignment.topRight,
+            child: Padding(
+              padding: EdgeInsets.only(top: 65.h, right: 16.w),
+              child: Material(
+                color: Colors.transparent,
+                child: Container(
+                  width: 250.w,
+                  decoration: BoxDecoration(
+                    color: CupertinoTheme.of(context).barBackgroundColor,
+                    borderRadius: BorderRadius.circular(24.r),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(height: 8.h),
+                      ...viewModel.wallets.map((wallet) {
+                        final isSelected =
+                            wallet.id == viewModel.currentWalletId;
+                        return _buildMenuItem(
+                          context: context,
+                          icon: isSelected
+                              ? CupertinoIcons.creditcard_fill
+                              : CupertinoIcons.creditcard,
+                          label: wallet.name,
+                          iconColor: isSelected
+                              ? AppColors.primaryColor
+                              : textColor,
+                          textColor: isSelected
+                              ? AppColors.primaryColor
+                              : textColor,
+                          fontWeight: isSelected
+                              ? FontWeight.w600
+                              : FontWeight.w500,
+                          trailingIcon: isSelected
+                              ? CupertinoIcons.checkmark_alt
+                              : null,
+                          trailingIconColor: AppColors.primaryColor,
+                          onTap: () {
+                            Navigator.pop(context);
+                            viewModel.switchWallet(wallet.id);
+                          },
+                        );
+                      }),
+                      if (viewModel.wallets.isNotEmpty)
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16.w),
+                          child: Divider(
+                            height: 16.h,
+                            color: CupertinoColors.systemGrey4.resolveFrom(
+                              context,
+                            ),
+                          ),
+                        ),
+                      _buildMenuItem(
+                        context: context,
+                        icon: CupertinoIcons.add_circled,
+                        label: l10n.add_wallet,
+                        iconColor: textColor,
+                        textColor: textColor,
+                        fontWeight: FontWeight.w500,
+                        onTap: () async {
+                          Navigator.pop(context);
+                          await Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) =>
+                                  const WalletView(firstWallet: false),
+                            ),
+                          );
+                          await viewModel.refreshWallets();
+                        },
+                      ),
+                      _buildMenuItem(
+                        context: context,
+                        icon: CupertinoIcons.trash,
+                        label: l10n.delete_wallet,
+                        iconColor: CupertinoColors.destructiveRed,
+                        textColor: CupertinoColors.destructiveRed,
+                        fontWeight: FontWeight.w500,
+                        onTap: () {
+                          Navigator.pop(context);
+                          _showManageWalletDialog(context, isDarkMode);
+                        },
+                      ),
+                      SizedBox(height: 8.h),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: ScaleTransition(
+            scale: Tween<double>(begin: 0.95, end: 1.0).animate(
+              CurvedAnimation(parent: animation, curve: Curves.easeOutCubic),
+            ),
+            alignment: Alignment.topRight,
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildMenuItem({
+    required BuildContext context,
+    required IconData icon,
+    required String label,
+    required Color? iconColor,
+    required Color? textColor,
+    required FontWeight fontWeight,
+    required VoidCallback onTap,
+    IconData? trailingIcon,
+    Color? trailingIconColor,
+  }) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+        child: Row(
+          children: [
+            Icon(icon, size: 20.sp, color: iconColor),
+            SizedBox(width: 12.w),
+            Expanded(
+              child: Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+                  fontSize: 16.sp,
+                  fontWeight: fontWeight,
+                  color: textColor,
+                ),
+              ),
+            ),
+            if (trailingIcon != null) ...[
+              SizedBox(width: 8.w),
+              Icon(trailingIcon, size: 20.sp, color: trailingIconColor),
+            ],
+          ],
+        ),
+      ),
     );
   }
 
@@ -406,21 +478,19 @@ class HomeHeader extends StatelessWidget {
       actions: [
         AlertAction(
           title: l10n.cancel,
-          style: AlertActionStyle.cancel, 
+          style: AlertActionStyle.cancel,
           onPressed: () => {},
         ),
         AlertAction(
           title: l10n.delete,
-          style: AlertActionStyle.destructive, 
+          style: AlertActionStyle.destructive,
           onPressed: () async {
             final error = await viewModel.deleteWallet(walletId, context);
             if (context.mounted) {
               if (error != null) {
                 _showErrorDialog(context, error);
               } else {
-                Navigator.pop(
-                  context,
-                ); 
+                Navigator.pop(context);
               }
             }
           },
@@ -436,7 +506,7 @@ class HomeHeader extends StatelessWidget {
       context: context,
       title: l10n.error,
       message: message,
-      icon: 'exclamationmark.triangle.fill', 
+      icon: 'exclamationmark.triangle.fill',
       actions: [
         AlertAction(
           title: "OK",

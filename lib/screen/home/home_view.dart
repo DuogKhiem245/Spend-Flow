@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:focus_detector/focus_detector.dart';
-import 'package:pull_down_button/pull_down_button.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/ads_service.dart';
 import 'package:spend_flow/core/services/data_service/daily_limit_service.dart';
@@ -35,6 +34,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   final DailyLimitService _limitService = DailyLimitService();
   final AdsService _adsService = AdsService();
   final _premiumViewModel = premiumViewModel;
+
+  bool _isMenuOpen = false;
 
   @override
   void initState() {
@@ -332,58 +333,135 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   Widget _buildFloatingButton(AppLocalizations? l10n) {
-    return PullDownButton(
-      itemBuilder: (context) => [
-        PullDownMenuItem(
-          onTap: () => _handleMenuSelection(2),
-          title: l10n!.add_manually,
-          icon: CupertinoIcons.pencil_outline,
-          itemTheme: PullDownMenuItemTheme(
-            textStyle: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-              fontSize: 16.sp,
-              color: CupertinoTheme.of(context).textTheme.textStyle.color,
+    final primaryColor = CupertinoTheme.of(context).primaryColor;
+    final textColor = CupertinoTheme.of(context).textTheme.textStyle.color;
+    final barColor = CupertinoTheme.of(context).barBackgroundColor;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeInOut,
+          height: _isMenuOpen ? 180.h : 0,
+          child: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                _buildSubMenuButton(
+                  icon: CupertinoIcons.pencil_outline,
+                  label: l10n!.add_manually,
+                  textColor: textColor,
+                  backgroundColor: barColor,
+                  onTap: () => _handleMenuSelection(2),
+                ),
+                SizedBox(height: 12.h),
+                _buildSubMenuButton(
+                  icon: CupertinoIcons.mic,
+                  label: l10n.add_via_voice,
+                  textColor: textColor,
+                  backgroundColor: barColor,
+                  onTap: () => _handleMenuSelection(1),
+                ),
+                SizedBox(height: 12.h),
+                _buildSubMenuButton(
+                  icon: CupertinoIcons.doc_text_viewfinder,
+                  label: l10n.scan_receipt,
+                  textColor: textColor,
+                  backgroundColor: barColor,
+                  onTap: () => _handleMenuSelection(0),
+                ),
+                SizedBox(height: 15.h),
+              ],
             ),
           ),
         ),
-        PullDownMenuItem(
-          onTap: () => _handleMenuSelection(1),
-          title: l10n.add_via_voice,
-          icon: CupertinoIcons.mic,
-          itemTheme: PullDownMenuItemTheme(
-            textStyle: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-              fontSize: 16.sp,
-              color: CupertinoTheme.of(context).textTheme.textStyle.color,
+
+        CupertinoButton(
+          padding: EdgeInsets.zero,
+          onPressed: () => setState(() => _isMenuOpen = !_isMenuOpen),
+          child: Container(
+            width: 60.w,
+            height: 60.w,
+            decoration: BoxDecoration(
+              color: primaryColor,
+              shape: BoxShape.circle,
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 10,
+                  offset: Offset(0, 4),
+                ),
+              ],
             ),
-          ),
-        ),
-        PullDownMenuItem(
-          onTap: () => _handleMenuSelection(0),
-          title: l10n.scan_receipt,
-          icon: CupertinoIcons.doc_text_viewfinder,
-          itemTheme: PullDownMenuItemTheme(
-            textStyle: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-              fontSize: 16.sp,
-              color: CupertinoTheme.of(context).textTheme.textStyle.color,
+            child: AnimatedRotation(
+              duration: const Duration(milliseconds: 200),
+              turns: _isMenuOpen
+                  ? 0.375
+                  : 0, // Xoay đúng 135 độ để biến thành dấu x
+              child: Icon(
+                CupertinoIcons.add,
+                color: CupertinoColors.white,
+                size: 30.sp,
+              ),
             ),
           ),
         ),
       ],
-      buttonBuilder: (context, showMenu) => CupertinoButton(
-        padding: EdgeInsets.zero,
-        onPressed: showMenu,
-        child: Container(
-          width: 60.w,
-          height: 60.w,
-          decoration: BoxDecoration(
-            color: CupertinoTheme.of(context).primaryColor,
-            shape: BoxShape.circle,
+    );
+  }
+
+  // Widget con cấu trúc các nút nhỏ khi xòe ra
+  Widget _buildSubMenuButton({
+    required IconData icon,
+    required String label,
+    required Color? textColor,
+    required Color backgroundColor,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: () {
+        setState(() => _isMenuOpen = false); // Tự đóng menu lại sau khi chọn
+        onTap();
+      },
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              borderRadius: BorderRadius.circular(12.r),
+              boxShadow: const [
+                BoxShadow(color: Colors.black12, blurRadius: 4),
+              ],
+            ),
+            child: Text(
+              label,
+              style: CupertinoTheme.of(
+                context,
+              ).textTheme.textStyle.copyWith(fontSize: 14.sp, color: textColor),
+            ),
           ),
-          child: Icon(
-            CupertinoIcons.add,
-            color: CupertinoColors.white,
-            size: 30.sp,
+          SizedBox(width: 10.w),
+          Container(
+            width: 45.w,
+            height: 45.w,
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(color: Colors.black12, blurRadius: 4),
+              ],
+            ),
+            child: Icon(
+              icon,
+              color: CupertinoTheme.of(context).primaryColor,
+              size: 22.sp,
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
