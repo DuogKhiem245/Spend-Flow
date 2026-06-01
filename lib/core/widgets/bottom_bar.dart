@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:cupertino_native/components/tab_bar.dart';
 import 'package:cupertino_native/style/sf_symbol.dart';
 import 'package:flutter/cupertino.dart';
@@ -62,9 +61,11 @@ class _BottomNavbarState extends State<BottomNavbar> {
                   },
                 ),
 
-                Platform.isIOS
-                    ? _buildIOSTabBar(context)
-                    : _buildAndroidTabBar(context),
+                _buildAndroidTabBar(context)
+
+                // Platform.isIOS
+                //     ? _buildIOSTabBar(context)
+                //     : _buildAndroidTabBar(context),
               ],
             ),
           ),

@@ -37,7 +37,7 @@ Future<void> initATTAndAds() async {
   } catch (e) {
     debugPrint("🚨 Lỗi khi xin quyền ATT: $e");
   } finally {
-    await MobileAds.instance.initialize();
+    // await MobileAds.instance.initialize();
     AdsService().loadAllRewardedAds();
   }
 }
@@ -48,6 +48,7 @@ void main() async {
   await Future.wait([
     dotenv.load(fileName: ".env"),
     Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
+    MobileAds.instance.initialize(),
   ]);
 
   final storage = LocalStorageService();
