@@ -1,7 +1,7 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:spend_flow/config/ad_config.dart';
 
 enum RewardedAdType { scanReceipt, voiceInput, syncData }
 
@@ -20,49 +20,13 @@ class AdsService {
   final Map<RewardedAdType, bool> _isRewardedAdLoading = {};
 
   static const String _adCounterKey = 'interstitial_ad_counter';
-  static const bool isTestMode = false;
 
-  final String interstitialAdUnitId = isTestMode
-      ? (Platform.isAndroid
-            ? 'ca-app-pub-3940256099942544/1033173712'
-            : 'ca-app-pub-3940256099942544/4411468910')
-      : (Platform.isAndroid
-            ? 'ca-app-pub-5260847065768800/7346643173'
-            : 'ca-app-pub-5260847065768800/3407398163');
+  String get interstitialAdUnitId => AdConfig.interstitialAdUnitId;
 
-  String get bannerAdUnitId {
-    if (isTestMode) {
-      return Platform.isAndroid
-          ? 'ca-app-pub-3940256099942544/6300978111'
-          : 'ca-app-pub-3940256099942544/2934735716';
-    } else {
-      return Platform.isAndroid
-          ? 'ca-app-pub-5260847065768800/4944164516'
-          : 'ca-app-pub-5260847065768800/1989258729';
-    }
-  }
+  String get bannerAdUnitId => AdConfig.bannerAdUnitId;
 
   String getRewardedAdUnitId(RewardedAdType type) {
-    if (isTestMode) {
-      return Platform.isAndroid
-          ? 'ca-app-pub-3940256099942544/5224354917'
-          : 'ca-app-pub-3940256099942544/1712485313';
-    } else {
-      switch (type) {
-        case RewardedAdType.scanReceipt:
-          return Platform.isAndroid
-              ? 'ca-app-pub-5260847065768800/7566458429'
-              : 'ca-app-pub-5260847065768800/2697275128';
-        case RewardedAdType.voiceInput:
-          return Platform.isAndroid
-              ? 'ca-app-pub-5260847065768800/3039450667'
-              : 'ca-app-pub-5260847065768800/7841790594';
-        case RewardedAdType.syncData:
-          return Platform.isAndroid
-              ? 'ca-app-pub-5260847065768800/4459124955'
-              : 'ca-app-pub-5260847065768800/2589463911';
-      }
-    }
+    return AdConfig.getRewardedAdUnitId(type.name);
   }
 
   void loadInterstitialAd() {
