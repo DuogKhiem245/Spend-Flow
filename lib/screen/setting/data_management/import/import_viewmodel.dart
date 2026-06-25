@@ -156,7 +156,7 @@ class ImportViewModel extends ChangeNotifier {
       ],
     ];
 
-    String csv = const ListToCsvConverter().convert(rows);
+    String csv = Csv().encode(rows);
     final directory = await getTemporaryDirectory();
     final file = File('${directory.path}/sample_transactions.csv');
     await file.writeAsString(csv);
@@ -203,7 +203,7 @@ class ImportViewModel extends ChangeNotifier {
     AppLocalizations l10n,
   ) async {
     try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
+      FilePickerResult? result = await FilePicker.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['csv', 'json'],
       );
@@ -269,7 +269,7 @@ class ImportViewModel extends ChangeNotifier {
           content = latin1.decode(bytes);
         }
 
-        final fields = const CsvToListConverter().convert(content);
+        final fields = Csv().decode(content);
         for (var row in fields.skip(1)) {
           if (row.isNotEmpty) {
             rawLines.add(row.join(" "));

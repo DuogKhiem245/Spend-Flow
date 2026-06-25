@@ -558,7 +558,7 @@ class _LoginPageState extends State<LoginPage> {
     required BuildContext context,
     required String label,
     required VoidCallback onTap,
-    IconData? icon,
+    FaIconData? icon,
     String? imageAsset,
     Color? iconColor,
     bool isApple = false,

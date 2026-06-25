@@ -204,7 +204,7 @@ class ExportViewModel extends ChangeNotifier {
           tx['walletId'] ?? "",
         ]);
       }
-      return const ListToCsvConverter().convert(rows);
+      return Csv().encode(rows);
     });
   }
 

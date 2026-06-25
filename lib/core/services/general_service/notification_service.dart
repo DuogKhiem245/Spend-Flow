@@ -62,7 +62,7 @@ class NotificationService {
           iOS: initializationSettingsDarwin,
         );
 
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    await flutterLocalNotificationsPlugin.initialize(settings: initializationSettings);
   }
 
   Future<bool> requestPermissions() async {
@@ -114,11 +114,11 @@ class NotificationService {
 
     final l10n = AppLocalizations.of(context)!;
     await flutterLocalNotificationsPlugin.zonedSchedule(
-      0,
-      l10n.reminder_title,
-      l10n.reminder_body,
-      _nextInstanceOf8PM(),
-      const NotificationDetails(
+      id: 0,
+      title: l10n.reminder_title,
+      body: l10n.reminder_body,
+      scheduledDate: _nextInstanceOf8PM(),
+      notificationDetails: const NotificationDetails(
         android: AndroidNotificationDetails(
           'daily_reminder_channel',
           'Daily Reminders',
