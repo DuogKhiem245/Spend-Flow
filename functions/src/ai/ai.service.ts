@@ -1,41 +1,56 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { HttpsError } from "firebase-functions/v2/https";
+import { GoogleGenAI } from "@google/genai";
 
 export const getLanguageLabel = (langCode: string | number): string => {
-    const supportedLangs = {
-        vi: "Tiếng Việt (Vietnamese)",
-        en: "English",
-        // ja: "Japanese",
-        // ko: "Korean",
-        // fr: "French",
-    };
-    return (supportedLangs[String(langCode) as keyof typeof supportedLangs] || "English");
+  const supportedLangs = {
+    vi: "Tiếng Việt (Vietnamese)",
+    en: "English",
+    // ja: "Japanese",
+    // ko: "Korean",
+    // fr: "French",
+  };
+  return (
+    supportedLangs[String(langCode) as keyof typeof supportedLangs] || "English"
+  );
 };
 
-export const getAIModelFlash = (
-  apiKey: string | undefined,
-  systemInstruction: string,
-) => {
+export const getAIClient = (apiKey: string | undefined): GoogleGenAI => {
   if (!apiKey) {
     throw new HttpsError(
       "failed-precondition",
       "GEMINI_API_KEY is not configured.",
     );
   }
-  const genAI = new GoogleGenerativeAI(apiKey);
-  return genAI.getGenerativeModel({
-    model: "gemini-3.1-flash",
-    systemInstruction,
+  return new GoogleGenAI({ apiKey });
+};
+
+export const generateContentFlash = async (
+  apiKey: string | undefined,
+  systemInstruction: string,
+  contents: any,
+) => {
+  const ai = getAIClient(apiKey);
+  return ai.models.generateContent({
+    model: "gemini-2.5-flash",
+    contents,
+    config: {
+      systemInstruction,
+    },
   });
 };
 
-export const getAIModelFlashLite = (apiKey: string | undefined, systemInstruction: string) => {
-    if (!apiKey) {
-        throw new HttpsError("failed-precondition", "GEMINI_API_KEY is not configured.");
-    }
-    const genAI = new GoogleGenerativeAI(apiKey);
-    return genAI.getGenerativeModel({
-        model: "gemini-3.1-flash-lite",
-        systemInstruction
-    });
+export const generateContentFlashLite = async (
+  apiKey: string | undefined,
+  systemInstruction: string,
+  contents: any,
+) => {
+  const ai = getAIClient(apiKey);
+  return ai.models.generateContent({
+    model: "gemini-2.5-flash-lite",
+    contents,
+    config: {
+      systemInstruction,
+    },
+  });
 };
+

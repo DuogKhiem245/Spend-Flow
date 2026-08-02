@@ -1,5 +1,5 @@
 import { CallableRequest, HttpsError } from "firebase-functions/v2/https";
-import { getAIModelFlashLite, getAIModelFlash, getLanguageLabel } from "./ai.service.js";
+import { generateContentFlashLite, generateContentFlash, getLanguageLabel } from "./ai.service.js";
 import * as logger from "firebase-functions/logger";
 
 const cleanAIResponse = (response : string) => {
@@ -85,16 +85,18 @@ export const analyzeReceiptImageHandler = async (request: CallableRequest) => {
     `;
 
   try {
-    const model = getAIModelFlash(process.env.GEMINI_API_KEY, systemInstruction);
-
-    const prompt = `const prompt = Today is: ${new Date().toISOString()}. Analyze this receipt image.`;
+    const prompt = `Today is: ${new Date().toISOString()}. Analyze this receipt image.`;
 
     const imagePart = {
       inlineData: { data: imageBase64, mimeType: "image/jpeg" },
     };
 
-    const result = await model.generateContent([prompt, imagePart]);
-    const cleanJson = cleanAIResponse(result.response.text());
+    const response = await generateContentFlash(
+      process.env.GEMINI_API_KEY,
+      systemInstruction,
+      [prompt, imagePart],
+    );
+    const cleanJson = cleanAIResponse(response.text ?? "");
 
     return { success: true, result: JSON.parse(cleanJson) };
   } catch (error) {
@@ -151,12 +153,14 @@ export const analyzeTransactionTextHandler = async (
     `;
 
   try {
-    const model = getAIModelFlashLite(process.env.GEMINI_API_KEY, systemInstruction);
-
     const prompt = `Analyze this text: "${text}"`;
 
-    const result = await model.generateContent(prompt);
-    const cleanJson = cleanAIResponse(result.response.text());
+    const response = await generateContentFlashLite(
+      process.env.GEMINI_API_KEY,
+      systemInstruction,
+      prompt,
+    );
+    const cleanJson = cleanAIResponse(response.text ?? "");
 
     return { success: true, result: JSON.parse(cleanJson) };
   } catch (e) {
