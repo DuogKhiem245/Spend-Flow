@@ -24,7 +24,7 @@ export const getAIModelFlash = (
   }
   const genAI = new GoogleGenerativeAI(apiKey);
   return genAI.getGenerativeModel({
-    model: "gemini-2.5-flash",
+    model: "gemini-3.1-flash",
     systemInstruction,
   });
 };
@@ -35,7 +35,7 @@ export const getAIModelFlashLite = (apiKey: string | undefined, systemInstructio
     }
     const genAI = new GoogleGenerativeAI(apiKey);
     return genAI.getGenerativeModel({
-        model: "gemini-2.5-flash-lite",
+        model: "gemini-3.1-flash-lite",
         systemInstruction
     });
 };
