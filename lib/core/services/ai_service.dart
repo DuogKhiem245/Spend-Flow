@@ -22,7 +22,6 @@ class AIService {
             'categories': _formatCategories(categories),
             'language': language,
           });
-
       return Map<String, dynamic>.from(result.data['result']);
     } catch (e) {
       rethrow;

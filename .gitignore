@@ -35,10 +35,11 @@ functions/.firebase/
 **/ios/**/Runner/GoogleService-Info.plist
 **/ios/**/Pods/
 ios/Runner/GoogleService-Info.plist
-
+**/GoogleService-Info.plist
 
 # Android files
 **/android/**/local.properties
 **/android/**/app/google-services.json
 **/android/**/gradle.properties
 android/app/google-services.json
+**/google-services.json
