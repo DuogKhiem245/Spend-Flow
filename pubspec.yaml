@@ -3,7 +3,7 @@ description: "A new Flutter project."
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.4.0+23
+version: 1.4.0+24
 
 environment:
   sdk: ^3.10.1
@@ -37,7 +37,6 @@ dependencies:
   timezone: ^0.11.0
   font_awesome_flutter: ^11.0.0
   
-  # ĐÃ CẬP NHẬT ĐỒNG BỘ Ở ĐÂY
   firebase_core: ^4.11.0
   firebase_auth: ^6.5.4
   google_sign_in: ^7.2.0
