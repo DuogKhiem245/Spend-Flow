@@ -1,523 +1,2049 @@
 {
   "@@locale": "en",
   "app_name": "SpendFlow",
+  "@app_name": {
+    "description": "App name"
+  },
   "ok": "OK",
+  "@ok": {
+    "description": "Ok"
+  },
   "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel"
+  },
   "skip": "Skip",
+  "@skip": {
+    "description": "Skip"
+  },
   "next": "Next",
+  "@next": {
+    "description": "Next"
+  },
   "confirm": "Confirm",
+  "@confirm": {
+    "description": "Confirm"
+  },
   "save": "Save",
+  "@save": {
+    "description": "Save"
+  },
   "edit": "Edit",
+  "@edit": {
+    "description": "Edit"
+  },
   "delete": "Delete",
+  "@delete": {
+    "description": "Delete"
+  },
   "yes": "Yes",
+  "@yes": {
+    "description": "Yes"
+  },
   "no": "No",
+  "@no": {
+    "description": "No"
+  },
   "done": "Done",
+  "@done": {
+    "description": "Done"
+  },
   "close": "Close",
+  "@close": {
+    "description": "Close"
+  },
   "back": "Back",
+  "@back": {
+    "description": "Back"
+  },
   "start": "Start",
+  "@start": {
+    "description": "Start"
+  },
   "continueAction": "Continue",
+  "@continueAction": {
+    "description": "Continueaction"
+  },
   "view_all": "View All",
+  "@view_all": {
+    "description": "View all"
+  },
   "see_all": "See All",
+  "@see_all": {
+    "description": "See all"
+  },
   "amount": "Amount",
+  "@amount": {
+    "description": "Amount"
+  },
   "name": "Name",
+  "@name": {
+    "description": "Name"
+  },
   "date": "Date",
+  "@date": {
+    "description": "Date"
+  },
   "month": "Month",
+  "@month": {
+    "description": "Month"
+  },
   "life_time": "Lifetime",
+  "@life_time": {
+    "description": "Life time"
+  },
   "today": "Today",
+  "@today": {
+    "description": "Today"
+  },
   "other": "Other",
+  "@other": {
+    "description": "Other"
+  },
   "home": "Home",
+  "@home": {
+    "description": "Home"
+  },
   "reports": "Reports",
+  "@reports": {
+    "description": "Reports"
+  },
   "budgets": "Budgets",
+  "@budgets": {
+    "description": "Budgets"
+  },
   "all": "All",
+  "@all": {
+    "description": "All"
+  },
   "error": "Error",
+  "@error": {
+    "description": "Error"
+  },
   "user": "User",
+  "@user": {
+    "description": "User"
+  },
   "success": "Success",
+  "@success": {
+    "description": "Success"
+  },
   "loading": "Loading...",
-  
+  "@loading": {
+    "description": "Loading"
+  },
   "onboard_step1_title": "Record in a Snap",
+  "@onboard_step1_title": {
+    "description": "Onboard step1 title"
+  },
   "onboard_step1_message": "Automatically detect spending locations for faster logging. Never wonder where your money went again.",
+  "@onboard_step1_message": {
+    "description": "Onboard step1 message"
+  },
   "onboard_step2_title": "Master Your Wallet",
+  "@onboard_step2_title": {
+    "description": "Onboard step2 title"
+  },
   "onboard_step2_message": "Set spending limits for each category. We’ll keep you on track with your financial goals",
+  "@onboard_step2_message": {
+    "description": "Onboard step2 message"
+  },
   "onboard_step3_title": "Build Healthy Habits",
+  "@onboard_step3_title": {
+    "description": "Onboard step3 title"
+  },
   "onboard_step3_message": "Get daily reminders so you never miss a transaction. Consistency is the key to financial freedom.",
-
+  "@onboard_step3_message": {
+    "description": "Onboard step3 message"
+  },
   "create_first_wallet": "Create Your First Wallet",
+  "@create_first_wallet": {
+    "description": "Create first wallet"
+  },
   "welcome_create_wallet": "Welcome to Spend Flow!\nLet's create your first wallet to get started.",
+  "@welcome_create_wallet": {
+    "description": "Welcome create wallet"
+  },
   "enter_wallet_name": "Enter wallet name",
+  "@enter_wallet_name": {
+    "description": "Enter wallet name"
+  },
   "eg_my_wallet": "e.g., My Wallet, Cash, Credit Card",
+  "@eg_my_wallet": {
+    "description": "Eg my wallet"
+  },
   "currency_unit": "Currency unit",
+  "@currency_unit": {
+    "description": "Currency unit"
+  },
   "create_wallet": "Create Wallet",
+  "@create_wallet": {
+    "description": "Create wallet"
+  },
   "please_enter_wallet_name": "Please enter wallet name.",
+  "@please_enter_wallet_name": {
+    "description": "Please enter wallet name"
+  },
   "add_wallet": "Add New Wallet",
+  "@add_wallet": {
+    "description": "Add wallet"
+  },
   "wallet_name": "Wallet Name",
+  "@wallet_name": {
+    "description": "Wallet name"
+  },
   "add_wallet_description": "Add more wallets to manage and track your finances more effectively.",
+  "@add_wallet_description": {
+    "description": "Add wallet description"
+  },
   "cannot_delete_last_wallet": "You cannot delete the last wallet.",
+  "@cannot_delete_last_wallet": {
+    "description": "Cannot delete last wallet"
+  },
   "delete_wallet": "Delete Wallet",
+  "@delete_wallet": {
+    "description": "Delete wallet"
+  },
   "delete_wallet_confirmation": "Are you sure you want to delete the wallet '{walletName}'? This action cannot be undone.",
+  "@delete_wallet_confirmation": {
+    "description": "Delete wallet confirmation",
+    "placeholders": {
+      "walletName": {
+        "type": "String"
+      }
+    }
+  },
   "in_use": "In Use",
+  "@in_use": {
+    "description": "In use"
+  },
   "incomplete_details": "Incomplete Details",
+  "@incomplete_details": {
+    "description": "Incomplete details"
+  },
   "please_fill_required_fields": "Please fill out the following required fields to proceed:",
+  "@please_fill_required_fields": {
+    "description": "Please fill required fields"
+  },
   "select_wallet": "Select Wallet",
+  "@select_wallet": {
+    "description": "Select wallet"
+  },
   "please_create_wallet_first": "You need to create a wallet before adding a transaction.",
+  "@please_create_wallet_first": {
+    "description": "Please create wallet first"
+  },
   "create_now": "Create Now",
+  "@create_now": {
+    "description": "Create now"
+  },
   "no_wallets_yet": "No wallets yet",
-
+  "@no_wallets_yet": {
+    "description": "No wallets yet"
+  },
   "login": "Login",
+  "@login": {
+    "description": "Login"
+  },
   "register": "Register",
+  "@register": {
+    "description": "Register"
+  },
   "logout": "Logout",
+  "@logout": {
+    "description": "Logout"
+  },
   "email": "Email",
+  "@email": {
+    "description": "Email"
+  },
   "password": "Password",
+  "@password": {
+    "description": "Password"
+  },
   "new_password": "New password",
+  "@new_password": {
+    "description": "New password"
+  },
   "enter_email": "Enter your email",
+  "@enter_email": {
+    "description": "Enter email"
+  },
   "enter_your_password": "Enter your password",
+  "@enter_your_password": {
+    "description": "Enter your password"
+  },
   "confirm_password": "Confirm Password",
+  "@confirm_password": {
+    "description": "Confirm password"
+  },
   "confirm_your_password": "Confirm your password",
+  "@confirm_your_password": {
+    "description": "Confirm your password"
+  },
   "passwords_match": "Passwords match.",
+  "@passwords_match": {
+    "description": "Passwords match"
+  },
   "passwords_mismatch": "Passwords do not match.",
+  "@passwords_mismatch": {
+    "description": "Passwords mismatch"
+  },
   "forgot_password": "Forgot Password?",
+  "@forgot_password": {
+    "description": "Forgot password"
+  },
   "description_forgot_password": "Enter the email associated with your account to reset your password.",
+  "@description_forgot_password": {
+    "description": "Description forgot password"
+  },
   "send_otp": "Send OTP",
+  "@send_otp": {
+    "description": "Send otp"
+  },
   "enter_otp": "Enter OTP",
+  "@enter_otp": {
+    "description": "Enter otp"
+  },
   "resend": "Resend",
+  "@resend": {
+    "description": "Resend"
+  },
   "verify": "Verify",
+  "@verify": {
+    "description": "Verify"
+  },
   "no_otp": "Don't receive code?",
+  "@no_otp": {
+    "description": "No otp"
+  },
   "verify_otp": "Verify OTP",
+  "@verify_otp": {
+    "description": "Verify otp"
+  },
   "we_sent_otp": "Please check your email for the OTP code. Don't forget to check your Spam or Junk folder if you don't see it in your inbox.",
+  "@we_sent_otp": {
+    "description": "We sent otp"
+  },
   "dont_receive_otp": "Didn't receive the OTP?",
+  "@dont_receive_otp": {
+    "description": "Dont receive otp"
+  },
   "plese_enter_valid_otp": "Please enter a valid OTP code.",
+  "@plese_enter_valid_otp": {
+    "description": "Plese enter valid otp"
+  },
   "otp_resent": "OTP code resent successfully.",
+  "@otp_resent": {
+    "description": "Otp resent"
+  },
   "register_successful": "Registration successful!",
+  "@register_successful": {
+    "description": "Register successful"
+  },
   "register_successful_description": "Your account has been created successfully. You can now log in with your credentials.",
+  "@register_successful_description": {
+    "description": "Register successful description"
+  },
   "no_account": "Don't have an account?",
+  "@no_account": {
+    "description": "No account"
+  },
   "have_account": "Already have an account?",
+  "@have_account": {
+    "description": "Have account"
+  },
   "login_error": "Invalid email or password",
+  "@login_error": {
+    "description": "Login error"
+  },
   "register_error": "Registration failed",
+  "@register_error": {
+    "description": "Register error"
+  },
   "create_account": "Create an Account",
+  "@create_account": {
+    "description": "Create account"
+  },
   "create_password": "Create New Password",
+  "@create_password": {
+    "description": "Create password"
+  },
   "create_new_password": "Almost there! Create your new password.",
+  "@create_new_password": {
+    "description": "Create new password"
+  },
   "or_continue_with": "Or continue with",
+  "@or_continue_with": {
+    "description": "Or continue with"
+  },
   "sign_in_with": "Sign in with {provider}",
+  "@sign_in_with": {
+    "description": "Sign in with",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
   "check_your_mail": "Check your mail",
+  "@check_your_mail": {
+    "description": "Check your mail"
+  },
   "we_have_sent_mail": "We have sent an email to:",
+  "@we_have_sent_mail": {
+    "description": "We have sent mail"
+  },
   "please_check_your_mail_to_verify_account": "Please check your email to verify your account before logging in.",
+  "@please_check_your_mail_to_verify_account": {
+    "description": "Please check your mail to verify account"
+  },
   "register_failed": "Registration failed",
+  "@register_failed": {
+    "description": "Register failed"
+  },
   "please_fill_all_fields": "Please fill in all fields.",
-  "please_enter_email_and_password" : "Please enter both email and password.",
+  "@please_fill_all_fields": {
+    "description": "Please fill all fields"
+  },
+  "please_enter_email_and_password": "Please enter both email and password.",
+  "@please_enter_email_and_password": {
+    "description": "Please enter email and password"
+  },
   "incorrect_email_or_password": "Incorrect email or password.",
+  "@incorrect_email_or_password": {
+    "description": "Incorrect email or password"
+  },
   "invalid_email_format": "Invalid email format.",
+  "@invalid_email_format": {
+    "description": "Invalid email format"
+  },
   "this_account_has_been_disabled": "This account has been disabled.",
+  "@this_account_has_been_disabled": {
+    "description": "This account has been disabled"
+  },
   "too_many_requests_please_try_later": "Too many requests. Please try again later.",
+  "@too_many_requests_please_try_later": {
+    "description": "Too many requests please try later"
+  },
   "email_not_verified": "Email Not Verified",
+  "@email_not_verified": {
+    "description": "Email not verified"
+  },
   "please_verify_your_email_to_continue": "Please verify your email to continue.",
+  "@please_verify_your_email_to_continue": {
+    "description": "Please verify your email to continue"
+  },
   "are_you_sure_logout": "Are you sure you want to logout?",
+  "@are_you_sure_logout": {
+    "description": "Are you sure logout"
+  },
   "have_error_occurred": "An error has occurred. Please try again.",
+  "@have_error_occurred": {
+    "description": "Have error occurred"
+  },
   "user_not_found": "No account found with this email.",
+  "@user_not_found": {
+    "description": "User not found"
+  },
   "enter_otp_reset_password": "We have sent an OTP code to your email. Please enter the OTP to reset your password.",
+  "@enter_otp_reset_password": {
+    "description": "Enter otp reset password"
+  },
   "not_time_yet_to_resend_otp": "Please wait a moment while we resend the OTP code.",
+  "@not_time_yet_to_resend_otp": {
+    "description": "Not time yet to resend otp"
+  },
   "reset_password_successful": "Password Reset Successful",
+  "@reset_password_successful": {
+    "description": "Reset password successful"
+  },
   "reset_password_successful_description": "Your password has been reset successfully. You can now log in with your new password.",
-
+  "@reset_password_successful_description": {
+    "description": "Reset password successful description"
+  },
   "welcome_back": "Welcome Back",
+  "@welcome_back": {
+    "description": "Welcome back"
+  },
   "back_login": "Back to Login",
+  "@back_login": {
+    "description": "Back login"
+  },
   "description_create_account": "Take control of your finances today",
+  "@description_create_account": {
+    "description": "Description create account"
+  },
   "label_weak": "Weak",
+  "@label_weak": {
+    "description": "Label weak"
+  },
   "label_fair": "Fair",
+  "@label_fair": {
+    "description": "Label fair"
+  },
   "label_good": "Good",
+  "@label_good": {
+    "description": "Label good"
+  },
   "label_strong": "Strong",
+  "@label_strong": {
+    "description": "Label strong"
+  },
   "low_pass": "Must be at least 8 characters, with a number and a symbol.",
+  "@low_pass": {
+    "description": "Low pass"
+  },
   "weak_pass": "Too short. Please add more characters.",
+  "@weak_pass": {
+    "description": "Weak pass"
+  },
   "fair_pass": "Better. Try adding numbers and symbols!",
+  "@fair_pass": {
+    "description": "Fair pass"
+  },
   "good_pass_char": "Almost there! Add a special character to make it stronger.",
+  "@good_pass_char": {
+    "description": "Good pass char"
+  },
   "good_pass_num": "Almost there! Add a number to make it stronger.",
+  "@good_pass_num": {
+    "description": "Good pass num"
+  },
   "good_pass_special": "Almost there! Add any character to make it stronger.",
+  "@good_pass_special": {
+    "description": "Good pass special"
+  },
   "strong_pass": "Great! Your password is secure.",
+  "@strong_pass": {
+    "description": "Strong pass"
+  },
   "password_reset_email_sent": "We have sent a password reset link to your email.",
+  "@password_reset_email_sent": {
+    "description": "Password reset email sent"
+  },
   "forgot_password_description": "Enter the email associated with your account to reset your password.",
+  "@forgot_password_description": {
+    "description": "Forgot password description"
+  },
   "send_email_reset": "Send Email Reset",
+  "@send_email_reset": {
+    "description": "Send email reset"
+  },
   "password_weak_password": "The password provided is too weak.",
+  "@password_weak_password": {
+    "description": "Password weak password"
+  },
   "please_edit_fields": "Please edit the following fields to proceed:",
+  "@please_edit_fields": {
+    "description": "Please edit fields"
+  },
   "something_went_wrong": "Something went wrong. Please try again.",
+  "@something_went_wrong": {
+    "description": "Something went wrong"
+  },
   "email_already_in_use": "The email address is already in use by another account.",
+  "@email_already_in_use": {
+    "description": "Email already in use"
+  },
   "invalid_email": "The email address is not valid.",
+  "@invalid_email": {
+    "description": "Invalid email"
+  },
   "operation_not_allowed": "Operation not allowed. Please contact support.",
+  "@operation_not_allowed": {
+    "description": "Operation not allowed"
+  },
   "network_error": "Network error. Please check your connection and try again.",
+  "@network_error": {
+    "description": "Network error"
+  },
   "reset_password": "Reset Password",
+  "@reset_password": {
+    "description": "Reset password"
+  },
   "email_not_received": "Email not received?",
+  "@email_not_received": {
+    "description": "Email not received"
+  },
   "verification_email_sent": "Verification Email Sent",
-  
+  "@verification_email_sent": {
+    "description": "Verification email sent"
+  },
   "good_morning": "Good Morning",
+  "@good_morning": {
+    "description": "Good morning"
+  },
   "good_afternoon": "Good Afternoon",
+  "@good_afternoon": {
+    "description": "Good afternoon"
+  },
   "good_evening": "Good Evening",
+  "@good_evening": {
+    "description": "Good evening"
+  },
   "hello": "Hello",
+  "@hello": {
+    "description": "Hello"
+  },
   "income": "Income",
+  "@income": {
+    "description": "Income"
+  },
   "expenses": "Expenses",
+  "@expenses": {
+    "description": "Expenses"
+  },
   "balance": "Balance",
+  "@balance": {
+    "description": "Balance"
+  },
   "total_balance": "Total Balance",
+  "@total_balance": {
+    "description": "Total balance"
+  },
   "spending_this_month": "Spending This Month",
+  "@spending_this_month": {
+    "description": "Spending this month"
+  },
   "total_spent": "Total Spent",
+  "@total_spent": {
+    "description": "Total spent"
+  },
   "recent_transactions": "Recent Transactions",
+  "@recent_transactions": {
+    "description": "Recent transactions"
+  },
   "add_transaction": "Add Transaction",
+  "@add_transaction": {
+    "description": "Add transaction"
+  },
   "no_transactions": "No data available",
+  "@no_transactions": {
+    "description": "No transactions"
+  },
   "enter_transaction_name": "Enter transaction name",
+  "@enter_transaction_name": {
+    "description": "Enter transaction name"
+  },
   "suggested_category": "Suggested Category",
+  "@suggested_category": {
+    "description": "Suggested category"
+  },
   "category": "Category",
+  "@category": {
+    "description": "Category"
+  },
   "categories": "Categories",
+  "@categories": {
+    "description": "Categories"
+  },
   "select_category": "Select Category",
+  "@select_category": {
+    "description": "Select category"
+  },
   "edit_category": "Edit Category",
+  "@edit_category": {
+    "description": "Edit category"
+  },
   "are_you_sure_delete_category": "Are you sure you want to delete {categoryName}?",
+  "@are_you_sure_delete_category": {
+    "description": "Are you sure delete category",
+    "placeholders": {
+      "categoryName": {
+        "type": "String"
+      }
+    }
+  },
   "system_category": "System categories cannot be deleted.",
+  "@system_category": {
+    "description": "System category"
+  },
   "system_category_description": "You cannot edit or delete this default category.",
-
+  "@system_category_description": {
+    "description": "System category description"
+  },
   "category_food": "Food",
+  "@category_food": {
+    "description": "Category food"
+  },
   "category_transport": "Transport",
+  "@category_transport": {
+    "description": "Category transport"
+  },
   "category_salary": "Salary",
+  "@category_salary": {
+    "description": "Category salary"
+  },
   "category_shopping": "Shopping",
+  "@category_shopping": {
+    "description": "Category shopping"
+  },
   "category_game": "Game",
+  "@category_game": {
+    "description": "Category game"
+  },
   "category_house": "House",
+  "@category_house": {
+    "description": "Category house"
+  },
   "category_gift": "Gift",
+  "@category_gift": {
+    "description": "Category gift"
+  },
   "category_health": "Health",
+  "@category_health": {
+    "description": "Category health"
+  },
   "category_entertainment": "Entertainment",
+  "@category_entertainment": {
+    "description": "Category entertainment"
+  },
   "category_bill": "Bills",
+  "@category_bill": {
+    "description": "Category bill"
+  },
   "category_insurance": "Insurance",
+  "@category_insurance": {
+    "description": "Category insurance"
+  },
   "category_education": "Education",
+  "@category_education": {
+    "description": "Category education"
+  },
   "category_pet": "Pet",
+  "@category_pet": {
+    "description": "Category pet"
+  },
   "category_travel": "Travel",
+  "@category_travel": {
+    "description": "Category travel"
+  },
   "category_savings": "Savings",
+  "@category_savings": {
+    "description": "Category savings"
+  },
   "category_phone": "Phone",
+  "@category_phone": {
+    "description": "Category phone"
+  },
   "category_internet": "Internet",
+  "@category_internet": {
+    "description": "Category internet"
+  },
   "category_water": "Water",
+  "@category_water": {
+    "description": "Category water"
+  },
   "category_electricity": "Electricity",
+  "@category_electricity": {
+    "description": "Category electricity"
+  },
   "category_gas": "Gas",
+  "@category_gas": {
+    "description": "Category gas"
+  },
   "category_cleaning": "Cleaning",
+  "@category_cleaning": {
+    "description": "Category cleaning"
+  },
   "category_beauty": "Beauty",
+  "@category_beauty": {
+    "description": "Category beauty"
+  },
   "category_baby": "Baby",
+  "@category_baby": {
+    "description": "Category baby"
+  },
   "category_sport": "Sport",
+  "@category_sport": {
+    "description": "Category sport"
+  },
   "category_music": "Music",
+  "@category_music": {
+    "description": "Category music"
+  },
   "category_repair": "Repair",
+  "@category_repair": {
+    "description": "Category repair"
+  },
   "category_tax": "Tax",
+  "@category_tax": {
+    "description": "Category tax"
+  },
   "note": "Note (optional)",
+  "@note": {
+    "description": "Note"
+  },
   "enter_note": "Enter note",
+  "@enter_note": {
+    "description": "Enter note"
+  },
   "add_income": "Add Income",
+  "@add_income": {
+    "description": "Add income"
+  },
   "add_expense": "Add Expense",
+  "@add_expense": {
+    "description": "Add expense"
+  },
   "search_category": "Search Category",
+  "@search_category": {
+    "description": "Search category"
+  },
   "no_category_found": "No category found",
+  "@no_category_found": {
+    "description": "No category found"
+  },
   "most_used": "Most Used",
+  "@most_used": {
+    "description": "Most used"
+  },
   "category_suggestions": "Category Suggestions",
+  "@category_suggestions": {
+    "description": "Category suggestions"
+  },
   "all_categories": "All Categories",
+  "@all_categories": {
+    "description": "All categories"
+  },
   "new_category": "New Category",
+  "@new_category": {
+    "description": "New category"
+  },
   "category_name": "Category Name",
+  "@category_name": {
+    "description": "Category name"
+  },
   "category_color": "Category Color",
+  "@category_color": {
+    "description": "Category color"
+  },
   "category_icon": "Category Icon",
+  "@category_icon": {
+    "description": "Category icon"
+  },
   "vs_last_month": "vs Last Month",
+  "@vs_last_month": {
+    "description": "Vs last month"
+  },
   "transaction": "Transaction",
+  "@transaction": {
+    "description": "Transaction"
+  },
   "delete_transaction": "Delete Transaction",
+  "@delete_transaction": {
+    "description": "Delete transaction"
+  },
   "delete_transaction_confirmation": "Are you sure you want to delete this transaction?",
+  "@delete_transaction_confirmation": {
+    "description": "Delete transaction confirmation"
+  },
   "transaction_details": "Transaction Details",
+  "@transaction_details": {
+    "description": "Transaction details"
+  },
   "spending_trend": "Spending Trend",
+  "@spending_trend": {
+    "description": "Spending trend"
+  },
   "spending_last_7_days": "Spending in the Last 7 Days",
+  "@spending_last_7_days": {
+    "description": "Spending last 7 days"
+  },
   "note_2": "Note",
-
+  "@note_2": {
+    "description": "Note 2"
+  },
   "scan_receipt": "Scan Receipt",
+  "@scan_receipt": {
+    "description": "Scan receipt"
+  },
   "add_via_voice": "Add via Voice",
+  "@add_via_voice": {
+    "description": "Add via voice"
+  },
   "add_manually": "Add Manually",
+  "@add_manually": {
+    "description": "Add manually"
+  },
   "limit_reached": "Limit Reached",
+  "@limit_reached": {
+    "description": "Limit reached"
+  },
   "limit_reached_description": "You have used {featureName} {limit} times today.\nPlease come back tomorrow or upgrade to Premium.",
-
+  "@limit_reached_description": {
+    "description": "Limit reached description",
+    "placeholders": {
+      "featureName": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
   "align_receipt": "Align your receipt",
-
+  "@align_receipt": {
+    "description": "Align receipt"
+  },
   "listening": "Listening...",
+  "@listening": {
+    "description": "Listening"
+  },
   "voice_example": "e.g., I spent 50 dollars on groceries",
+  "@voice_example": {
+    "description": "Voice example"
+  },
   "tap_to_stop": "Tap to Stop",
+  "@tap_to_stop": {
+    "description": "Tap to stop"
+  },
   "tap_to_listen": "Tap to Listen",
-
+  "@tap_to_listen": {
+    "description": "Tap to listen"
+  },
   "yesterday": "Yesterday",
-
+  "@yesterday": {
+    "description": "Yesterday"
+  },
   "your_monthly_budget": "Your Monthly Budget",
+  "@your_monthly_budget": {
+    "description": "Your monthly budget"
+  },
   "spent": "Spent ",
+  "@spent": {
+    "description": "Spent"
+  },
   "out_of": " out of ",
+  "@out_of": {
+    "description": "Out of"
+  },
   "left_to_spend": "left to spend",
+  "@left_to_spend": {
+    "description": "Left to spend"
+  },
   "add_budget": "Add Budget",
+  "@add_budget": {
+    "description": "Add budget"
+  },
   "no_budgets_yet": "No budgets yet",
+  "@no_budgets_yet": {
+    "description": "No budgets yet"
+  },
   "create_budget_description": "Tap + to create a spending limit",
+  "@create_budget_description": {
+    "description": "Create budget description"
+  },
   "edit_budget": "Edit Budget",
+  "@edit_budget": {
+    "description": "Edit budget"
+  },
   "are_you_sure_delete_budget": "Are you sure you want to delete \n {budgetName}?",
+  "@are_you_sure_delete_budget": {
+    "description": "Are you sure delete budget",
+    "placeholders": {
+      "budgetName": {
+        "type": "String"
+      }
+    }
+  },
   "delete_budget": "Delete Budget",
-
+  "@delete_budget": {
+    "description": "Delete budget"
+  },
   "settings": "Settings",
+  "@settings": {
+    "description": "Settings"
+  },
   "settings_description": "Keep your finance data synced across all your devices",
+  "@settings_description": {
+    "description": "Settings description"
+  },
   "sign_in_now": "Sign in now",
+  "@sign_in_now": {
+    "description": "Sign in now"
+  },
   "get_started": "Get Started",
+  "@get_started": {
+    "description": "Get started"
+  },
   "welcome": "Welcome !",
+  "@welcome": {
+    "description": "Welcome"
+  },
   "general": "General",
+  "@general": {
+    "description": "General"
+  },
   "security": "Security",
+  "@security": {
+    "description": "Security"
+  },
   "privacy_and_security": "Privacy & Security",
+  "@privacy_and_security": {
+    "description": "Privacy and security"
+  },
   "support": "Support",
+  "@support": {
+    "description": "Support"
+  },
   "profile": "Profile",
+  "@profile": {
+    "description": "Profile"
+  },
   "language": "Language",
+  "@language": {
+    "description": "Language"
+  },
   "dark_mode": "Dark Mode",
+  "@dark_mode": {
+    "description": "Dark mode"
+  },
   "notifications": "Notifications",
+  "@notifications": {
+    "description": "Notifications"
+  },
   "appearance": "Appearance",
+  "@appearance": {
+    "description": "Appearance"
+  },
   "currency": "Currency",
+  "@currency": {
+    "description": "Currency"
+  },
   "about": "About",
+  "@about": {
+    "description": "About"
+  },
   "terms_of_service": "Terms of Service",
+  "@terms_of_service": {
+    "description": "Terms of service"
+  },
   "privacy_policy": "Privacy Policy",
+  "@privacy_policy": {
+    "description": "Privacy policy"
+  },
   "version": "Version",
+  "@version": {
+    "description": "Version"
+  },
   "edit_profile": "Edit Profile",
+  "@edit_profile": {
+    "description": "Edit profile"
+  },
   "full_name": "Full Name",
+  "@full_name": {
+    "description": "Full name"
+  },
   "enter_full_name": "Enter full name",
+  "@enter_full_name": {
+    "description": "Enter full name"
+  },
   "email_address": "Email Address",
+  "@email_address": {
+    "description": "Email address"
+  },
   "enter_email_address": "Enter email address",
+  "@enter_email_address": {
+    "description": "Enter email address"
+  },
   "phone_number": "Phone Number",
+  "@phone_number": {
+    "description": "Phone number"
+  },
   "enter_phone_number": "Enter phone number",
+  "@enter_phone_number": {
+    "description": "Enter phone number"
+  },
   "day_of_birth": "Date of Birth",
+  "@day_of_birth": {
+    "description": "Day of birth"
+  },
   "select_day_of_birth": "Select date of birth",
+  "@select_day_of_birth": {
+    "description": "Select day of birth"
+  },
   "save_changes": "Save Changes",
+  "@save_changes": {
+    "description": "Save changes"
+  },
   "profile_updated_success": "Profile updated successfully!",
+  "@profile_updated_success": {
+    "description": "Profile updated success"
+  },
   "error_updating_profile": "Error updating profile.",
+  "@error_updating_profile": {
+    "description": "Error updating profile"
+  },
   "error_uploading_avatar": "Error uploading avatar.",
+  "@error_uploading_avatar": {
+    "description": "Error uploading avatar"
+  },
   "require_premium_to_edit_avatar": "You need to upgrade to Premium or watch ads to edit your avatar.",
+  "@require_premium_to_edit_avatar": {
+    "description": "Require premium to edit avatar"
+  },
   "edit_avatar": "Edit Avatar",
-
+  "@edit_avatar": {
+    "description": "Edit avatar"
+  },
   "upgrade_premium": "Upgrade to Premium!",
+  "@upgrade_premium": {
+    "description": "Upgrade premium"
+  },
   "upgrade_premium_description": "Unlock exclusive features and enhance your experience.",
+  "@upgrade_premium_description": {
+    "description": "Upgrade premium description"
+  },
   "upgrade_now": "Upgrade Now",
+  "@upgrade_now": {
+    "description": "Upgrade now"
+  },
   "you_are_premium": "You're All Set, Premium User!",
+  "@you_are_premium": {
+    "description": "You are premium"
+  },
   "you_are_premium_description": "Enjoy your enhanced experience.",
+  "@you_are_premium_description": {
+    "description": "You are premium description"
+  },
   "import_export_data": "Import/Export Data",
+  "@import_export_data": {
+    "description": "Import export data"
+  },
   "sync_data": "Sync Data",
+  "@sync_data": {
+    "description": "Sync data"
+  },
   "continue_with": "Continue with {price}",
+  "@continue_with": {
+    "description": "Continue with",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
   "biometric_authentication": "Biometric Authentication",
+  "@biometric_authentication": {
+    "description": "Biometric authentication"
+  },
   "password_security": "Password Security",
+  "@password_security": {
+    "description": "Password security"
+  },
   "face_id_description": "Unlock your app with a glance. Face ID offers convenient and secure access using your unique facial features.",
+  "@face_id_description": {
+    "description": "Face id description"
+  },
   "touch_id_description": "Unlock your app with a touch. Touch ID provides quick and secure access using your fingerprint.",
+  "@touch_id_description": {
+    "description": "Touch id description"
+  },
   "pass_code_description": "Add an extra layer of protection. A passcode ensures only you can access your financial data, even if your device is compromised.",
+  "@pass_code_description": {
+    "description": "Pass code description"
+  },
   "passcode": "Passcode",
+  "@passcode": {
+    "description": "Passcode"
+  },
   "change_passcode": "Change Passcode",
+  "@change_passcode": {
+    "description": "Change passcode"
+  },
   "old_passcode": "Old Passcode",
+  "@old_passcode": {
+    "description": "Old passcode"
+  },
   "enter_old_passcode": "Enter old passcode",
+  "@enter_old_passcode": {
+    "description": "Enter old passcode"
+  },
   "new_passcode": "New Passcode",
+  "@new_passcode": {
+    "description": "New passcode"
+  },
   "enter_new_passcode": "Enter new passcode",
+  "@enter_new_passcode": {
+    "description": "Enter new passcode"
+  },
   "confirm_new_passcode": "Confirm New Passcode",
+  "@confirm_new_passcode": {
+    "description": "Confirm new passcode"
+  },
   "enter_confirm_new_passcode": "Enter confirm new passcode",
+  "@enter_confirm_new_passcode": {
+    "description": "Enter confirm new passcode"
+  },
   "turnOffPasscode": "Turn Off Passcode",
+  "@turnOffPasscode": {
+    "description": "Turnoffpasscode"
+  },
   "createPasscode": "Create Passcode",
+  "@createPasscode": {
+    "description": "Createpasscode"
+  },
   "changePasscode": "Change Passcode",
+  "@changePasscode": {
+    "description": "Changepasscode"
+  },
   "removePasscode": "Remove Passcode",
+  "@removePasscode": {
+    "description": "Removepasscode"
+  },
   "updatePasscode": "Update Passcode",
+  "@updatePasscode": {
+    "description": "Updatepasscode"
+  },
   "description_create_passcode": "Protect your account by regularly updating your 6-digit passcode.",
+  "@description_create_passcode": {
+    "description": "Description create passcode"
+  },
   "description_remove_passcode": "Enter your current passcode to disable security.",
+  "@description_remove_passcode": {
+    "description": "Description remove passcode"
+  },
   "currentPasscode": "Current Passcode",
+  "@currentPasscode": {
+    "description": "Currentpasscode"
+  },
   "enterCurrentPin": "Enter current PIN",
+  "@enterCurrentPin": {
+    "description": "Entercurrentpin"
+  },
   "passcode_turn_off_success": "Passcode turned off successfully!",
+  "@passcode_turn_off_success": {
+    "description": "Passcode turn off success"
+  },
   "passcode_update_success": "Passcode updated successfully!",
+  "@passcode_update_success": {
+    "description": "Passcode update success"
+  },
   "passcode_create_success": "Passcode created successfully!",
+  "@passcode_create_success": {
+    "description": "Passcode create success"
+  },
   "currentPasscodeIncorrect": "Current passcode is incorrect.",
+  "@currentPasscodeIncorrect": {
+    "description": "Currentpasscodeincorrect"
+  },
   "errorSavingData": "Error saving data.",
+  "@errorSavingData": {
+    "description": "Errorsavingdata"
+  },
   "newPasscodeMustBe6Digits": "New passcode must be 6 digits.",
+  "@newPasscodeMustBe6Digits": {
+    "description": "Newpasscodemustbe6digits"
+  },
   "passcodesDoNotMatch": "Passcodes do not match.",
+  "@passcodesDoNotMatch": {
+    "description": "Passcodesdonotmatch"
+  },
   "enter_passcode": "Enter Passcode",
+  "@enter_passcode": {
+    "description": "Enter passcode"
+  },
   "incorrect_passcode": "Incorrect passcode.",
+  "@incorrect_passcode": {
+    "description": "Incorrect passcode"
+  },
   "face": "Face ID",
+  "@face": {
+    "description": "Face"
+  },
   "fingerprint": "Fingerprint",
-
+  "@fingerprint": {
+    "description": "Fingerprint"
+  },
   "report_locked": " Locked Content",
+  "@report_locked": {
+    "description": "Report locked"
+  },
   "unlock": "Unlock",
+  "@unlock": {
+    "description": "Unlock"
+  },
   "click_to_unlock": "Click to Unlock",
-
+  "@click_to_unlock": {
+    "description": "Click to unlock"
+  },
   "unlock_untilimited_access": "Unlock Unlimited Access",
+  "@unlock_untilimited_access": {
+    "description": "Unlock untilimited access"
+  },
   "unlock_untilimited_access_description": "Upgrade to Premium to remove all limits and access advanced features.",
+  "@unlock_untilimited_access_description": {
+    "description": "Unlock untilimited access description"
+  },
   "daily_input_cap_reached": "Daily Input Cap Reached",
+  "@daily_input_cap_reached": {
+    "description": "Daily input cap reached"
+  },
   "daily_input_cap_reached_description": "You've hit your daily limit for invoice scans and voice entries. Upgrade now to continue.",
+  "@daily_input_cap_reached_description": {
+    "description": "Daily input cap reached description"
+  },
   "feature_comparison": "Feature Comparison",
+  "@feature_comparison": {
+    "description": "Feature comparison"
+  },
   "feature": "Feature",
+  "@feature": {
+    "description": "Feature"
+  },
   "free": "Free",
+  "@free": {
+    "description": "Free"
+  },
   "premium": "Premium",
+  "@premium": {
+    "description": "Premium"
+  },
   "no_ads": "No Ads",
+  "@no_ads": {
+    "description": "No ads"
+  },
   "transaction_locking": "Transaction Locking",
+  "@transaction_locking": {
+    "description": "Transaction locking"
+  },
   "unlimited_scans": "Unlimited Invoice Scans",
+  "@unlimited_scans": {
+    "description": "Unlimited scans"
+  },
   "unlimited_voice_entries": "Unlimited Voice Entries",
+  "@unlimited_voice_entries": {
+    "description": "Unlimited voice entries"
+  },
   "day": "day",
+  "@day": {
+    "description": "Day"
+  },
   "year": "Year",
+  "@year": {
+    "description": "Year"
+  },
   "subscription_auto_renews": "Subscription auto-renews.",
+  "@subscription_auto_renews": {
+    "description": "Subscription auto renews"
+  },
   "accept_terms_conditions": "Subscription auto-renews. By continuing, you agree to our Terms of Service and Privacy Policy.",
+  "@accept_terms_conditions": {
+    "description": "Accept terms conditions"
+  },
   "restore": "Restore",
+  "@restore": {
+    "description": "Restore"
+  },
   "used_up_daily_limit": "You've used up your voice input limit for today. Watch an ad to get {value} more uses or upgrade to Premium.",
+  "@used_up_daily_limit": {
+    "description": "Used up daily limit",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
   "monthly_plan": "Monthly Plan",
+  "@monthly_plan": {
+    "description": "Monthly plan"
+  },
   "yearly_plan": "Yearly Plan",
+  "@yearly_plan": {
+    "description": "Yearly plan"
+  },
   "lifetime_plan": "Lifetime Plan",
+  "@lifetime_plan": {
+    "description": "Lifetime plan"
+  },
   "pay_once_enjoy_forever": "Pay once, enjoy forever",
+  "@pay_once_enjoy_forever": {
+    "description": "Pay once enjoy forever"
+  },
   "yearly_discount": "Save 20% with Yearly Plan",
+  "@yearly_discount": {
+    "description": "Yearly discount"
+  },
   "best_value": "BEST VALUE",
+  "@best_value": {
+    "description": "Best value"
+  },
   "transaction_cancelled": "Transaction cancelled.",
+  "@transaction_cancelled": {
+    "description": "Transaction cancelled"
+  },
   "purchase_successful": "Purchase Successful!",
+  "@purchase_successful": {
+    "description": "Purchase successful"
+  },
   "purchase_successful_description": "Thank you for upgrading to Premium! Enjoy your enhanced experience.",
+  "@purchase_successful_description": {
+    "description": "Purchase successful description"
+  },
   "restore_successful": "Restore Successful!",
+  "@restore_successful": {
+    "description": "Restore successful"
+  },
   "restore_successful_description": "Your previous purchase has been restored. Enjoy your Premium features!",
+  "@restore_successful_description": {
+    "description": "Restore successful description"
+  },
   "nothing_to_restore": "Nothing to Restore",
+  "@nothing_to_restore": {
+    "description": "Nothing to restore"
+  },
   "nothing_to_restore_description": "No previous purchases were found to restore.",
+  "@nothing_to_restore_description": {
+    "description": "Nothing to restore description"
+  },
   "restore_failed": "Restore Failed",
+  "@restore_failed": {
+    "description": "Restore failed"
+  },
   "restore_failed_description": "An error occurred while restoring your purchase. Please try again.",
+  "@restore_failed_description": {
+    "description": "Restore failed description"
+  },
   "purchase_failed": "Purchase Failed",
+  "@purchase_failed": {
+    "description": "Purchase failed"
+  },
   "purchase_failed_description": "An error occurred during the transaction. Please try again.",
+  "@purchase_failed_description": {
+    "description": "Purchase failed description"
+  },
   "purchase_canceled": "Purchase Canceled",
+  "@purchase_canceled": {
+    "description": "Purchase canceled"
+  },
   "purchase_canceled_description": "The transaction was canceled. No changes were made to your account.",
+  "@purchase_canceled_description": {
+    "description": "Purchase canceled description"
+  },
   "premium_sync_account": "Your Premium account will be synced with the account you sign in to. Please ensure you sign in with the same account on all your devices for a seamless Premium experience.",
+  "@premium_sync_account": {
+    "description": "Premium sync account"
+  },
   "premium_sync_warning": "Note: If you purchased a Premium package on a different account, please sign in to that account to restore your Premium access. If you are using the same account, try restoring your purchase to sync your Premium access.",
-
+  "@premium_sync_warning": {
+    "description": "Premium sync warning"
+  },
   "select_language": "Select Language",
+  "@select_language": {
+    "description": "Select language"
+  },
   "suggested": "Suggested",
+  "@suggested": {
+    "description": "Suggested"
+  },
   "all_languages": "All Languages",
+  "@all_languages": {
+    "description": "All languages"
+  },
   "apply_changes": "Apply Changes",
-
+  "@apply_changes": {
+    "description": "Apply changes"
+  },
   "select_currency": "Select Currency",
+  "@select_currency": {
+    "description": "Select currency"
+  },
   "search_currency": "Search currency or country...",
+  "@search_currency": {
+    "description": "Search currency"
+  },
   "popular": "Popular",
+  "@popular": {
+    "description": "Popular"
+  },
   "all_currencies": "All Currencies",
+  "@all_currencies": {
+    "description": "All currencies"
+  },
   "currency_change_warning": "Changing currency will only update the display symbol. Past transaction rates will not be recalculated.",
+  "@currency_change_warning": {
+    "description": "Currency change warning"
+  },
   "see_ads": "See Ads (+{additionalUses} uses)",
+  "@see_ads": {
+    "description": "See ads",
+    "placeholders": {
+      "additionalUses": {
+        "type": "String"
+      }
+    }
+  },
   "ads_loading": "Ads Loading...",
-
+  "@ads_loading": {
+    "description": "Ads loading"
+  },
   "data_management": "Data Management",
+  "@data_management": {
+    "description": "Data management"
+  },
   "select_format": "Select Format",
+  "@select_format": {
+    "description": "Select format"
+  },
   "export_data": "Export Data",
+  "@export_data": {
+    "description": "Export data"
+  },
   "export_data_description": "Export your financial data for backup or analysis.",
+  "@export_data_description": {
+    "description": "Export data description"
+  },
   "confirm_export": "Confirm Export",
+  "@confirm_export": {
+    "description": "Confirm export"
+  },
   "import_data": "Import Data",
+  "@import_data": {
+    "description": "Import data"
+  },
   "import_data_title": "Let's get your ",
+  "@import_data_title": {
+    "description": "Import data title"
+  },
   "data": "data",
+  "@data": {
+    "description": "Data"
+  },
   "import_data_title_2": " in.",
+  "@import_data_title_2": {
+    "description": "Import data title 2"
+  },
   "import_data_description": "Import financial data from external sources to synchronize with the application.",
+  "@import_data_description": {
+    "description": "Import data description"
+  },
   "confirm_import": "Confirm Import",
+  "@confirm_import": {
+    "description": "Confirm import"
+  },
   "csv_format": "CSV Format",
+  "@csv_format": {
+    "description": "Csv format"
+  },
   "csv_description": "Export data in CSV format, compatible with most spreadsheet applications.",
+  "@csv_description": {
+    "description": "Csv description"
+  },
   "json_format": "JSON Format",
+  "@json_format": {
+    "description": "Json format"
+  },
   "json_description": "Export data in JSON format, suitable for developers and advanced users.",
+  "@json_description": {
+    "description": "Json description"
+  },
   "excel_format": "Excel Format",
+  "@excel_format": {
+    "description": "Excel format"
+  },
   "excel_description": "Export data in Excel format, ideal for detailed financial analysis.",
+  "@excel_description": {
+    "description": "Excel description"
+  },
   "select_file": "Select File",
+  "@select_file": {
+    "description": "Select file"
+  },
   "no_file_selected": "No file selected.",
+  "@no_file_selected": {
+    "description": "No file selected"
+  },
   "import_successful": "Import Successful",
+  "@import_successful": {
+    "description": "Import successful"
+  },
   "error_importing_data": "Error importing data. Please ensure the file format is correct.",
+  "@error_importing_data": {
+    "description": "Error importing data"
+  },
   "sync_data_now": "Sync Now",
+  "@sync_data_now": {
+    "description": "Sync data now"
+  },
   "last_synced": "Last Synced: \n{time}",
+  "@last_synced": {
+    "description": "Last synced",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "syncing": "Syncing...",
+  "@syncing": {
+    "description": "Syncing"
+  },
   "never_synced": "Never Synced",
+  "@never_synced": {
+    "description": "Never synced"
+  },
   "unauthenticated": "Please log in to sync your data across devices.",
+  "@unauthenticated": {
+    "description": "Unauthenticated"
+  },
   "sync_error": "Sync error: {error}",
+  "@sync_error": {
+    "description": "Sync error",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "premium_required_to_sync": "You need to upgrade to Premium or watch ads to sync data.",
+  "@premium_required_to_sync": {
+    "description": "Premium required to sync"
+  },
   "sync_in_progress": "Sync in progress, please wait.",
-  "cooldown":"You're acting too quickly. Please wait {seconds} seconds before syncing again.",
+  "@sync_in_progress": {
+    "description": "Sync in progress"
+  },
+  "cooldown": "You're acting too quickly. Please wait {seconds} seconds before syncing again.",
+  "@cooldown": {
+    "description": "Cooldown",
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
   "accepted_formats": "Accepted Formats",
+  "@accepted_formats": {
+    "description": "Accepted formats"
+  },
   "select_file_to_import": "Select a file to import",
+  "@select_file_to_import": {
+    "description": "Select file to import"
+  },
   "tap_to_browse": "Tap to browse your device or cloud\nstorage for files.",
-  "protected" : "Protected",
-  "protected_description" : "Your data never leaves your device and is processed locally.",
+  "@tap_to_browse": {
+    "description": "Tap to browse"
+  },
+  "protected": "Protected",
+  "@protected": {
+    "description": "Protected"
+  },
+  "protected_description": "Your data never leaves your device and is processed locally.",
+  "@protected_description": {
+    "description": "Protected description"
+  },
   "recent_imports": "Recent Imports",
+  "@recent_imports": {
+    "description": "Recent imports"
+  },
   "no_recent_imports": "No recent data imports",
+  "@no_recent_imports": {
+    "description": "No recent imports"
+  },
   "invalid_format": "Invalid file format.",
+  "@invalid_format": {
+    "description": "Invalid format"
+  },
   "import_success": "Imported successfully!",
+  "@import_success": {
+    "description": "Import success"
+  },
   "import_success_description": "Imported successfully {count} transactions from the file.",
+  "@import_success_description": {
+    "description": "Import success description",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
   "file_format_template": "File Format Template",
+  "@file_format_template": {
+    "description": "File format template"
+  },
   "download_sample_file": "Download Sample File {format}",
-
+  "@download_sample_file": {
+    "description": "Download sample file",
+    "placeholders": {
+      "format": {
+        "type": "String"
+      }
+    }
+  },
   "card": "Card",
-
+  "@card": {
+    "description": "Card"
+  },
   "font_selection": "Font Selection",
+  "@font_selection": {
+    "description": "Font selection"
+  },
   "select_font": "Select font",
+  "@select_font": {
+    "description": "Select font"
+  },
   "font": "Font",
+  "@font": {
+    "description": "Font"
+  },
   "font_description": "A transaction a day keeps the 'Broke Month' away.",
-
+  "@font_description": {
+    "description": "Font description"
+  },
   "reminder_title": "Daily Expense Reminder",
+  "@reminder_title": {
+    "description": "Reminder title"
+  },
   "reminder_body": "Have you logged your expenses for today? 💸",
-
+  "@reminder_body": {
+    "description": "Reminder body"
+  },
   "defaultTransactionTitle": "New Transaction",
+  "@defaultTransactionTitle": {
+    "description": "Defaulttransactiontitle"
+  },
   "invoice_analysis": "Analyzing invoices...",
-
+  "@invoice_analysis": {
+    "description": "Invoice analysis"
+  },
   "mapbox_error": "Map loading error. Please check your Mapbox token configuration.",
+  "@mapbox_error": {
+    "description": "Mapbox error"
+  },
   "location": "Location",
+  "@location": {
+    "description": "Location"
+  },
   "current_location": "Current Location",
+  "@current_location": {
+    "description": "Current location"
+  },
   "select_location": "Select Location",
+  "@select_location": {
+    "description": "Select location"
+  },
   "no_location_selected": "No location selected",
+  "@no_location_selected": {
+    "description": "No location selected"
+  },
   "search_location": "Search location...",
+  "@search_location": {
+    "description": "Search location"
+  },
   "tap_to_change_location": "Tap to change location",
+  "@tap_to_change_location": {
+    "description": "Tap to change location"
+  },
   "search_results": "Search Results",
+  "@search_results": {
+    "description": "Search results"
+  },
   "no_location_found": "No location found",
+  "@no_location_found": {
+    "description": "No location found"
+  },
   "recent_locations": "Recent Locations",
+  "@recent_locations": {
+    "description": "Recent locations"
+  },
   "location_access_error": "Location access error",
+  "@location_access_error": {
+    "description": "Location access error"
+  },
   "location_permission_denied": "Location permission denied.",
+  "@location_permission_denied": {
+    "description": "Location permission denied"
+  },
   "location_permission_denied_description": "Please enable location access in settings.",
+  "@location_permission_denied_description": {
+    "description": "Location permission denied description"
+  },
   "notification_permission_denied": "Notification permission denied.",
+  "@notification_permission_denied": {
+    "description": "Notification permission denied"
+  },
   "notification_permission_denied_description": "Please enable notification access in settings to receive reminders.",
+  "@notification_permission_denied_description": {
+    "description": "Notification permission denied description"
+  },
   "permission_required_camera": "Camera access denied",
+  "@permission_required_camera": {
+    "description": "Permission required camera"
+  },
   "permission_required_camera_description": "Please enable camera access in settings to use receipt scanning feature.",
-
+  "@permission_required_camera_description": {
+    "description": "Permission required camera description"
+  },
   "voice_input_error": "Voice input error. Please try again.",
+  "@voice_input_error": {
+    "description": "Voice input error"
+  },
   "voice_input_not_recognized": "Voice input not recognized. Please try again.",
+  "@voice_input_not_recognized": {
+    "description": "Voice input not recognized"
+  },
   "voice_input_permission_denied": "Voice input permission denied. Please enable microphone access in settings.",
+  "@voice_input_permission_denied": {
+    "description": "Voice input permission denied"
+  },
   "error_ai_request": "The AI ​​cannot recognize this request. Please try to be more specific.",
+  "@error_ai_request": {
+    "description": "Error ai request"
+  },
   "voice_analysis": "Analyzing voice input...",
+  "@voice_analysis": {
+    "description": "Voice analysis"
+  },
   "scan_receipt_error": "Receipt scanning error. Please try again.",
+  "@scan_receipt_error": {
+    "description": "Scan receipt error"
+  },
   "requires_premium": "This feature requires watching ads to use or upgrading to Premium.",
+  "@requires_premium": {
+    "description": "Requires premium"
+  },
   "watch_ad_continue": "Watch Ad to Continue",
+  "@watch_ad_continue": {
+    "description": "Watch ad continue"
+  },
   "permission_required_voice_input": "Microphone access denied",
+  "@permission_required_voice_input": {
+    "description": "Permission required voice input"
+  },
   "permission_required_voice_input_description": "Please enable microphone access in settings to use voice input.",
+  "@permission_required_voice_input_description": {
+    "description": "Permission required voice input description"
+  },
   "permission_required_location": "Location access denied",
+  "@permission_required_location": {
+    "description": "Permission required location"
+  },
   "permission_required_location_description": "Please enable location access in settings to use location features.",
+  "@permission_required_location_description": {
+    "description": "Permission required location description"
+  },
   "congratulations": "Congratulations!",
+  "@congratulations": {
+    "description": "Congratulations"
+  },
   "successfully_purchased": "You have successfully purchased Premium. Enjoy your enhanced experience!",
+  "@successfully_purchased": {
+    "description": "Successfully purchased"
+  },
   "cancel_purchase": "Cancel Purchase",
+  "@cancel_purchase": {
+    "description": "Cancel purchase"
+  },
   "restore_no_purchase_description": "No previous purchases were found to restore.",
-
+  "@restore_no_purchase_description": {
+    "description": "Restore no purchase description"
+  },
   "ai_powered": "AI Powered",
+  "@ai_powered": {
+    "description": "Ai powered"
+  },
   "entries_pending": "Entries Pending",
+  "@entries_pending": {
+    "description": "Entries pending"
+  },
   "confirm_selected_entries": "Add selected entries",
+  "@confirm_selected_entries": {
+    "description": "Confirm selected entries"
+  },
   "preview_results": "Preview results",
+  "@preview_results": {
+    "description": "Preview results"
+  },
   "clear_all": "Clear all",
+  "@clear_all": {
+    "description": "Clear all"
+  },
   "select_all": "Select all",
+  "@select_all": {
+    "description": "Select all"
+  },
   "fail_to_save_transactions": "Failed to save transactions. Please try again.",
-
+  "@fail_to_save_transactions": {
+    "description": "Fail to save transactions"
+  },
   "tap_to_check_in": "Tap to check in",
+  "@tap_to_check_in": {
+    "description": "Tap to check in"
+  },
   "keep_your_streak": "Keep your streak!",
+  "@keep_your_streak": {
+    "description": "Keep your streak"
+  },
   "keep_your_streak_day": "Keep your {streak}-day streak!",
+  "@keep_your_streak_day": {
+    "description": "Keep your streak day",
+    "placeholders": {
+      "streak": {
+        "type": "String"
+      }
+    }
+  },
   "streak": "Streak",
+  "@streak": {
+    "description": "Streak"
+  },
   "streak_days": "{days} days",
-
+  "@streak_days": {
+    "description": "Streak days",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
   "not_logined": "Not Logged In",
+  "@not_logined": {
+    "description": "Not logined"
+  },
   "please_login_to_sync_data": "Please log in to sync your data across devices.",
+  "@please_login_to_sync_data": {
+    "description": "Please login to sync data"
+  },
   "require_premium_to_sync": "You need to upgrade to Premium or watch ads to sync data.",
-
+  "@require_premium_to_sync": {
+    "description": "Require premium to sync"
+  },
   "information_and_support": "Information & Support",
+  "@information_and_support": {
+    "description": "Information and support"
+  },
   "contact_support": "Contact Support",
+  "@contact_support": {
+    "description": "Contact support"
+  },
   "send_email": "Send Email",
+  "@send_email": {
+    "description": "Send email"
+  },
   "describe_issue": "Describe your issue or question in detail. Our support team will get back to you as soon as possible.",
+  "@describe_issue": {
+    "description": "Describe issue"
+  },
   "feedback": "Feedback",
+  "@feedback": {
+    "description": "Feedback"
+  },
   "feedback_description": "We'd love to hear your thoughts and suggestions to help us improve SpendFlow. Please share your feedback with us!",
+  "@feedback_description": {
+    "description": "Feedback description"
+  },
   "thank_you_feedback": "Thank you for your feedback!",
+  "@thank_you_feedback": {
+    "description": "Thank you feedback"
+  },
   "submit_feedback": "Submit Feedback",
+  "@submit_feedback": {
+    "description": "Submit feedback"
+  },
   "report_issue": "Report Issue",
+  "@report_issue": {
+    "description": "Report issue"
+  },
   "submit_issue": "Submit Issue",
+  "@submit_issue": {
+    "description": "Submit issue"
+  },
   "report_issue_description": "If you encounter any bugs or issues, please report them here. Your input helps us improve the app for everyone.",
+  "@report_issue_description": {
+    "description": "Report issue description"
+  },
   "thank_you_issue": "Thank you for reporting the issue! We will look into it as soon as possible.",
+  "@thank_you_issue": {
+    "description": "Thank you issue"
+  },
   "request_delete_account": "Request Account Deletion",
+  "@request_delete_account": {
+    "description": "Request delete account"
+  },
   "delete_account_description": "If you wish to delete your account, please let us know why you want to delete it. We will process your request as soon as possible.",
+  "@delete_account_description": {
+    "description": "Delete account description"
+  },
   "submit_delete_request": "Submit Request",
+  "@submit_delete_request": {
+    "description": "Submit delete request"
+  },
   "select_subject": "Select Subject",
+  "@select_subject": {
+    "description": "Select subject"
+  },
   "please_enter_content": "Please enter content",
+  "@please_enter_content": {
+    "description": "Please enter content"
+  },
   "subject": "Subject",
+  "@subject": {
+    "description": "Subject"
+  },
   "content": "Content",
+  "@content": {
+    "description": "Content"
+  },
   "send_contact_success": "Your message has been sent successfully! We will get back to you as soon as possible.",
+  "@send_contact_success": {
+    "description": "Send contact success"
+  },
   "send_contact_error": "An error occurred while sending your message. Please try again.",
+  "@send_contact_error": {
+    "description": "Send contact error"
+  },
   "contact_info": "Contact Information",
+  "@contact_info": {
+    "description": "Contact info"
+  },
   "email_placeholder": "Enter your email",
+  "@email_placeholder": {
+    "description": "Email placeholder"
+  },
   "name_placeholder": "Enter your name",
+  "@name_placeholder": {
+    "description": "Name placeholder"
+  },
   "invalid_name": "Please enter a valid name.",
+  "@invalid_name": {
+    "description": "Invalid name"
+  },
   "mrs": "Mrs.",
+  "@mrs": {
+    "description": "Mrs"
+  },
   "mr": "Mr.",
+  "@mr": {
+    "description": "Mr"
+  },
   "ms": "Ms.",
+  "@ms": {
+    "description": "Ms"
+  },
   "salutation": "Salutation",
+  "@salutation": {
+    "description": "Salutation"
+  },
   "delete_account": "Delete Account",
+  "@delete_account": {
+    "description": "Delete account"
+  },
   "delete_account_confirmation": "Are you sure you want to delete your account? This action cannot be undone and will delete all your data.",
+  "@delete_account_confirmation": {
+    "description": "Delete account confirmation"
+  },
   "failed_to_send_deletion_request": "Failed to send account deletion request. Please try again.",
+  "@failed_to_send_deletion_request": {
+    "description": "Failed to send deletion request"
+  },
   "requires_recent_login_description": "For security reasons, please sign out and sign back in before attempting to delete your account.",
-  "delete_account_failed": "An error occurred while deleting your account. Please try again."
+  "@requires_recent_login_description": {
+    "description": "Requires recent login description"
+  },
+  "delete_account_failed": "An error occurred while deleting your account. Please try again.",
+  "@delete_account_failed": {
+    "description": "Delete account failed"
+  }
 }

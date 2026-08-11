@@ -167,7 +167,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get delete_wallet => 'Delete Wallet';
 
   @override
-  String delete_wallet_confirmation(Object walletName) {
+  String delete_wallet_confirmation(String walletName) {
     return 'Are you sure you want to delete the wallet \'$walletName\'? This action cannot be undone.';
   }
 
@@ -300,7 +300,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get or_continue_with => 'Or continue with';
 
   @override
-  String sign_in_with(Object provider) {
+  String sign_in_with(String provider) {
     return 'Sign in with $provider';
   }
 
@@ -518,7 +518,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get edit_category => 'Edit Category';
 
   @override
-  String are_you_sure_delete_category(Object categoryName) {
+  String are_you_sure_delete_category(String categoryName) {
     return 'Are you sure you want to delete $categoryName?';
   }
 
@@ -687,7 +687,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get limit_reached => 'Limit Reached';
 
   @override
-  String limit_reached_description(Object featureName, Object limit) {
+  String limit_reached_description(String featureName, String limit) {
     return 'You have used $featureName $limit times today.\nPlease come back tomorrow or upgrade to Premium.';
   }
 
@@ -734,7 +734,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get edit_budget => 'Edit Budget';
 
   @override
-  String are_you_sure_delete_budget(Object budgetName) {
+  String are_you_sure_delete_budget(String budgetName) {
     return 'Are you sure you want to delete \n $budgetName?';
   }
 
@@ -868,7 +868,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sync_data => 'Sync Data';
 
   @override
-  String continue_with(Object price) {
+  String continue_with(String price) {
     return 'Continue with $price';
   }
 
@@ -1040,12 +1040,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get restore => 'Restore';
 
   @override
-  String used_up_daily_limit(Object value) {
+  String used_up_daily_limit(String value) {
     return 'You\'ve used up your voice input limit for today. Watch an ad to get $value more uses or upgrade to Premium.';
   }
 
   @override
-  String see_ads(Object additionalUses) {
+  String see_ads(String additionalUses) {
     return 'See Ads (+$additionalUses uses)';
   }
 
@@ -1221,7 +1221,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sync_data_now => 'Sync Now';
 
   @override
-  String last_synced(Object time) {
+  String last_synced(String time) {
     return 'Last Synced: \n$time';
   }
 
@@ -1236,7 +1236,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Please log in to sync your data across devices.';
 
   @override
-  String sync_error(Object error) {
+  String sync_error(String error) {
     return 'Sync error: $error';
   }
 
@@ -1248,7 +1248,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sync_in_progress => 'Sync in progress, please wait.';
 
   @override
-  String cooldown(Object seconds) {
+  String cooldown(String seconds) {
     return 'You\'re acting too quickly. Please wait $seconds seconds before syncing again.';
   }
 
@@ -1282,7 +1282,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get import_success => 'Imported successfully!';
 
   @override
-  String import_success_description(Object count) {
+  String import_success_description(String count) {
     return 'Imported successfully $count transactions from the file.';
   }
 
@@ -1290,7 +1290,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get file_format_template => 'File Format Template';
 
   @override
-  String download_sample_file(Object format) {
+  String download_sample_file(String format) {
     return 'Download Sample File $format';
   }
 
@@ -1463,7 +1463,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get keep_your_streak => 'Keep your streak!';
 
   @override
-  String keep_your_streak_day(Object streak) {
+  String keep_your_streak_day(String streak) {
     return 'Keep your $streak-day streak!';
   }
 
@@ -1471,7 +1471,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get streak => 'Streak';
 
   @override
-  String streak_days(Object days) {
+  String streak_days(String days) {
     return '$days days';
   }
 

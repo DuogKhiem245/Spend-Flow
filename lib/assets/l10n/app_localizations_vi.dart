@@ -167,7 +167,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get delete_wallet => 'Xóa ví';
 
   @override
-  String delete_wallet_confirmation(Object walletName) {
+  String delete_wallet_confirmation(String walletName) {
     return 'Bạn có chắc chắn muốn xóa ví \'$walletName\' không? Hành động này không thể hoàn tác.';
   }
 
@@ -300,7 +300,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get or_continue_with => 'Hoặc đăng nhập với';
 
   @override
-  String sign_in_with(Object provider) {
+  String sign_in_with(String provider) {
     return 'Đăng nhập với $provider';
   }
 
@@ -516,7 +516,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get edit_category => 'Chỉnh sửa danh mục';
 
   @override
-  String are_you_sure_delete_category(Object categoryName) {
+  String are_you_sure_delete_category(String categoryName) {
     return 'Bạn có chắc chắn muốn xóa danh mục $categoryName?';
   }
 
@@ -685,7 +685,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get limit_reached => 'Đã đạt giới hạn';
 
   @override
-  String limit_reached_description(Object featureName, Object limit) {
+  String limit_reached_description(String featureName, String limit) {
     return 'Bạn đã sử dụng $featureName $limit lần hôm nay.\nVui lòng quay lại vào ngày mai hoặc nâng cấp lên Premium.';
   }
 
@@ -732,7 +732,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get edit_budget => 'Sửa ngân sách';
 
   @override
-  String are_you_sure_delete_budget(Object budgetName) {
+  String are_you_sure_delete_budget(String budgetName) {
     return 'Bạn có chắc muốn xóa ngân sách \n $budgetName? \n';
   }
 
@@ -867,7 +867,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get sync_data => 'Đồng bộ dữ liệu';
 
   @override
-  String continue_with(Object price) {
+  String continue_with(String price) {
     return 'Tiếp tục với $price';
   }
 
@@ -1039,12 +1039,12 @@ class AppLocalizationsVi extends AppLocalizations {
   String get restore => 'Khôi phục';
 
   @override
-  String used_up_daily_limit(Object value) {
+  String used_up_daily_limit(String value) {
     return 'Bạn đã sử dụng hết giới hạn nhập giọng nói trong ngày hôm nay. Xem quảng cáo để nhận thêm $value lượt sử dụng hoặc nâng cấp lên Premium.';
   }
 
   @override
-  String see_ads(Object additionalUses) {
+  String see_ads(String additionalUses) {
     return 'Xem quảng cáo (+$additionalUses lượt)';
   }
 
@@ -1219,7 +1219,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get sync_data_now => 'Đồng bộ ngay';
 
   @override
-  String last_synced(Object time) {
+  String last_synced(String time) {
     return 'Đồng bộ lần cuối: \n$time';
   }
 
@@ -1234,7 +1234,7 @@ class AppLocalizationsVi extends AppLocalizations {
       'Vui lòng đăng nhập để đồng bộ dữ liệu của bạn trên các thiết bị.';
 
   @override
-  String sync_error(Object error) {
+  String sync_error(String error) {
     return 'Lỗi đồng bộ hóa: $error';
   }
 
@@ -1246,7 +1246,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get sync_in_progress => 'Hệ thống đang đồng bộ, vui lòng đợi.';
 
   @override
-  String cooldown(Object seconds) {
+  String cooldown(String seconds) {
     return 'Bạn thao tác quá nhanh. Vui lòng đợi $seconds giây để đồng bộ lại.';
   }
 
@@ -1280,7 +1280,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get import_success => 'Nhập thành công!';
 
   @override
-  String import_success_description(Object count) {
+  String import_success_description(String count) {
     return 'Đã nhập thành công $count giao dịch từ tệp.';
   }
 
@@ -1288,7 +1288,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get file_format_template => 'Mẫu định dạng tệp';
 
   @override
-  String download_sample_file(Object format) {
+  String download_sample_file(String format) {
     return 'Tải xuống tệp mẫu $format';
   }
 
@@ -1461,7 +1461,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get keep_your_streak => 'Duy trì chuỗi của bạn!';
 
   @override
-  String keep_your_streak_day(Object streak) {
+  String keep_your_streak_day(String streak) {
     return 'Duy trì chuỗi $streak ngày của bạn!';
   }
 
@@ -1469,7 +1469,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get streak => 'Chuỗi';
 
   @override
-  String streak_days(Object days) {
+  String streak_days(String days) {
     return '$days ngày';
   }
 

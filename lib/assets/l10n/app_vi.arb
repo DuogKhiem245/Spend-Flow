@@ -1,522 +1,2045 @@
 {
   "@@locale": "vi",
   "app_name": "SpendFlow",
+  "@app_name": {
+    "description": "App name"
+  },
   "ok": "Đồng ý",
+  "@ok": {
+    "description": "Ok"
+  },
   "cancel": "Hủy",
+  "@cancel": {
+    "description": "Cancel"
+  },
   "skip": "Bỏ qua",
+  "@skip": {
+    "description": "Skip"
+  },
   "next": "Tiếp theo",
+  "@next": {
+    "description": "Next"
+  },
   "confirm": "Xác nhận",
+  "@confirm": {
+    "description": "Confirm"
+  },
   "save": "Lưu",
+  "@save": {
+    "description": "Save"
+  },
   "edit": "Sửa",
+  "@edit": {
+    "description": "Edit"
+  },
   "delete": "Xóa",
+  "@delete": {
+    "description": "Delete"
+  },
   "yes": "Có",
+  "@yes": {
+    "description": "Yes"
+  },
   "no": "Không",
+  "@no": {
+    "description": "No"
+  },
   "done": "Hoàn tất",
+  "@done": {
+    "description": "Done"
+  },
   "close": "Đóng",
+  "@close": {
+    "description": "Close"
+  },
   "back": "Quay lại",
+  "@back": {
+    "description": "Back"
+  },
   "start": "Bắt đầu",
+  "@start": {
+    "description": "Start"
+  },
   "continueAction": "Tiếp tục",
+  "@continueAction": {
+    "description": "Continueaction"
+  },
   "view_all": "Xem tất cả",
+  "@view_all": {
+    "description": "View all"
+  },
   "see_all": "Xem tất cả",
+  "@see_all": {
+    "description": "See all"
+  },
   "amount": "Số tiền",
+  "@amount": {
+    "description": "Amount"
+  },
   "name": "Tên giao dịch",
+  "@name": {
+    "description": "Name"
+  },
   "date": "Ngày",
+  "@date": {
+    "description": "Date"
+  },
   "month": "Tháng",
+  "@month": {
+    "description": "Month"
+  },
   "life_time": "Trọn đời",
+  "@life_time": {
+    "description": "Life time"
+  },
   "today": "Hôm nay",
+  "@today": {
+    "description": "Today"
+  },
   "other": "Khác",
+  "@other": {
+    "description": "Other"
+  },
   "home": "Trang chủ",
+  "@home": {
+    "description": "Home"
+  },
   "reports": "Báo cáo",
+  "@reports": {
+    "description": "Reports"
+  },
   "budgets": "Ngân sách",
+  "@budgets": {
+    "description": "Budgets"
+  },
   "all": "Tất cả",
+  "@all": {
+    "description": "All"
+  },
   "error": "Lỗi",
+  "@error": {
+    "description": "Error"
+  },
   "user": "Người dùng",
+  "@user": {
+    "description": "User"
+  },
   "success": "Thành công",
+  "@success": {
+    "description": "Success"
+  },
   "loading": "Đang tải...",
-
+  "@loading": {
+    "description": "Loading"
+  },
   "onboard_step1_title": "Ghi chép trong nháy mắt",
+  "@onboard_step1_title": {
+    "description": "Onboard step1 title"
+  },
   "onboard_step1_message": "Tự động xác định địa điểm chi tiêu giúp bạn ghi chép nhanh hơn bao giờ hết. Không còn phải nhớ mình đã tiêu gì ở đâu.",
+  "@onboard_step1_message": {
+    "description": "Onboard step1 message"
+  },
   "onboard_step2_title": "Làm chủ ví tiền của bạn",
+  "@onboard_step2_title": {
+    "description": "Onboard step2 title"
+  },
   "onboard_step2_message": "Thiết lập hạn mức chi tiêu cho từng danh mục. Chúng tôi sẽ giúp bạn luôn đi đúng lộ trình tài chính.",
+  "@onboard_step2_message": {
+    "description": "Onboard step2 message"
+  },
   "onboard_step3_title": "Xây dựng thói quen tốt",
+  "@onboard_step3_title": {
+    "description": "Onboard step3 title"
+  },
   "onboard_step3_message": "Nhận thông báo nhắc nhở vào cuối ngày để không bỏ lỡ bất kỳ giao dịch nào. Kỷ luật là chìa khóa của sự thịnh vượng.",
-
+  "@onboard_step3_message": {
+    "description": "Onboard step3 message"
+  },
   "create_first_wallet": "Tạo ví đầu tiên của bạn",
+  "@create_first_wallet": {
+    "description": "Create first wallet"
+  },
   "welcome_create_wallet": "Chào mừng đến với Spend Flow!\nHãy tạo ví đầu tiên của bạn để bắt đầu.",
+  "@welcome_create_wallet": {
+    "description": "Welcome create wallet"
+  },
   "enter_wallet_name": "Nhập tên ví",
+  "@enter_wallet_name": {
+    "description": "Enter wallet name"
+  },
   "eg_my_wallet": "ví dụ: Ví của tôi, Tiền mặt, Thẻ tín dụng",
+  "@eg_my_wallet": {
+    "description": "Eg my wallet"
+  },
   "currency_unit": "Đơn vị tiền tệ",
+  "@currency_unit": {
+    "description": "Currency unit"
+  },
   "create_wallet": "Tạo ví",
+  "@create_wallet": {
+    "description": "Create wallet"
+  },
   "please_enter_wallet_name": "Vui lòng nhập tên ví.",
+  "@please_enter_wallet_name": {
+    "description": "Please enter wallet name"
+  },
   "add_wallet": "Thêm ví mới",
+  "@add_wallet": {
+    "description": "Add wallet"
+  },
   "wallet_name": "Tên ví",
+  "@wallet_name": {
+    "description": "Wallet name"
+  },
   "add_wallet_description": "Thêm nhiều ví để quản lí và theo dõi tài chính hiệu quả hơn.",
+  "@add_wallet_description": {
+    "description": "Add wallet description"
+  },
   "cannot_delete_last_wallet": "Bạn không thể xóa ví duy nhất.",
+  "@cannot_delete_last_wallet": {
+    "description": "Cannot delete last wallet"
+  },
   "delete_wallet": "Xóa ví",
+  "@delete_wallet": {
+    "description": "Delete wallet"
+  },
   "delete_wallet_confirmation": "Bạn có chắc chắn muốn xóa ví '{walletName}' không? Hành động này không thể hoàn tác.",
+  "@delete_wallet_confirmation": {
+    "description": "Delete wallet confirmation",
+    "placeholders": {
+      "walletName": {
+        "type": "String"
+      }
+    }
+  },
   "in_use": "Đang sử dụng",
+  "@in_use": {
+    "description": "In use"
+  },
   "incomplete_details": "Thiếu dữ liệu",
+  "@incomplete_details": {
+    "description": "Incomplete details"
+  },
   "please_fill_required_fields": "Vui lòng điền vào các trường bắt buộc sau:",
+  "@please_fill_required_fields": {
+    "description": "Please fill required fields"
+  },
   "select_wallet": "Chọn ví",
+  "@select_wallet": {
+    "description": "Select wallet"
+  },
   "please_create_wallet_first": "Vui lòng tạo ví trước khi thêm giao dịch.",
+  "@please_create_wallet_first": {
+    "description": "Please create wallet first"
+  },
   "create_now": "Tạo ngay",
+  "@create_now": {
+    "description": "Create now"
+  },
   "no_wallets_yet": "Chưa có ví nào",
-
+  "@no_wallets_yet": {
+    "description": "No wallets yet"
+  },
   "login": "Đăng nhập",
+  "@login": {
+    "description": "Login"
+  },
   "register": "Đăng ký",
+  "@register": {
+    "description": "Register"
+  },
   "logout": "Đăng xuất",
+  "@logout": {
+    "description": "Logout"
+  },
   "email": "Email",
+  "@email": {
+    "description": "Email"
+  },
   "password": "Mật khẩu",
+  "@password": {
+    "description": "Password"
+  },
   "new_password": "Mật khẩu mới",
+  "@new_password": {
+    "description": "New password"
+  },
   "enter_email": "Nhập email của bạn",
+  "@enter_email": {
+    "description": "Enter email"
+  },
   "enter_your_password": "Nhập mật khẩu của bạn",
+  "@enter_your_password": {
+    "description": "Enter your password"
+  },
   "confirm_password": "Nhập lại mật khẩu",
+  "@confirm_password": {
+    "description": "Confirm password"
+  },
   "confirm_your_password": "Nhập lại mật khẩu",
+  "@confirm_your_password": {
+    "description": "Confirm your password"
+  },
   "passwords_match": "Mật khẩu trùng khớp.",
+  "@passwords_match": {
+    "description": "Passwords match"
+  },
   "passwords_mismatch": "Mật khẩu không trùng khớp.",
+  "@passwords_mismatch": {
+    "description": "Passwords mismatch"
+  },
   "forgot_password": "Quên mật khẩu?",
+  "@forgot_password": {
+    "description": "Forgot password"
+  },
   "description_forgot_password": "Nhập email được liên kết với tài khoản của bạn để đặt lại mật khẩu.",
+  "@description_forgot_password": {
+    "description": "Description forgot password"
+  },
   "send_otp": "Gửi OTP",
+  "@send_otp": {
+    "description": "Send otp"
+  },
   "enter_otp": "Nhập OTP",
+  "@enter_otp": {
+    "description": "Enter otp"
+  },
   "resend": "Gửi lại",
+  "@resend": {
+    "description": "Resend"
+  },
   "verify": "Xác thực",
+  "@verify": {
+    "description": "Verify"
+  },
   "no_otp": "Không nhận được mã?",
+  "@no_otp": {
+    "description": "No otp"
+  },
   "verify_otp": "Xác thực OTP",
+  "@verify_otp": {
+    "description": "Verify otp"
+  },
   "we_sent_otp": "Mã xác thực (OTP) đã được gửi đến email của bạn. Vui lòng kiểm tra hộp thư đến (hoặc hòm thư Spam/Quảng cáo) để xem mã.",
+  "@we_sent_otp": {
+    "description": "We sent otp"
+  },
   "dont_receive_otp": "Chưa nhận được OTP?",
+  "@dont_receive_otp": {
+    "description": "Dont receive otp"
+  },
   "plese_enter_valid_otp": "Vui lòng nhập mã OTP hợp lệ.",
+  "@plese_enter_valid_otp": {
+    "description": "Plese enter valid otp"
+  },
   "otp_resent": "Mã OTP đã được gửi lại thành công.",
+  "@otp_resent": {
+    "description": "Otp resent"
+  },
   "register_successful": "Đăng ký thành công!",
+  "@register_successful": {
+    "description": "Register successful"
+  },
   "register_successful_description": "Tài khoản của bạn đã được tạo thành công. Bây giờ bạn có thể đăng nhập bằng thông tin đăng nhập của mình.",
+  "@register_successful_description": {
+    "description": "Register successful description"
+  },
   "no_account": "Chưa có tài khoản?",
+  "@no_account": {
+    "description": "No account"
+  },
   "have_account": "Đã có tài khoản?",
+  "@have_account": {
+    "description": "Have account"
+  },
   "login_error": "Email hoặc mật khẩu không hợp lệ",
+  "@login_error": {
+    "description": "Login error"
+  },
   "register_error": "Đăng ký thất bại",
+  "@register_error": {
+    "description": "Register error"
+  },
   "create_account": "Đăng kí tài khoản",
+  "@create_account": {
+    "description": "Create account"
+  },
   "create_password": "Tạo mật khẩu mới",
+  "@create_password": {
+    "description": "Create password"
+  },
   "create_new_password": "Gần xong rồi! Tạo mật khẩu mới của bạn.",
+  "@create_new_password": {
+    "description": "Create new password"
+  },
   "or_continue_with": "Hoặc đăng nhập với",
+  "@or_continue_with": {
+    "description": "Or continue with"
+  },
   "sign_in_with": "Đăng nhập với {provider}",
+  "@sign_in_with": {
+    "description": "Sign in with",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
   "check_your_mail": "Kiểm tra email của bạn",
+  "@check_your_mail": {
+    "description": "Check your mail"
+  },
   "we_have_sent_mail": "Chúng tôi đã gửi một email đến:",
+  "@we_have_sent_mail": {
+    "description": "We have sent mail"
+  },
   "please_check_your_mail_to_verify_account": "Vui lòng kiểm tra email của bạn để xác thực tài khoản trước khi đăng nhập.",
+  "@please_check_your_mail_to_verify_account": {
+    "description": "Please check your mail to verify account"
+  },
   "register_failed": "Đăng ký thất bại",
+  "@register_failed": {
+    "description": "Register failed"
+  },
   "please_fill_all_fields": "Vui lòng điền vào tất cả các trường.",
-  "please_enter_email_and_password" : "Vui lòng nhập cả email và mật khẩu.",
+  "@please_fill_all_fields": {
+    "description": "Please fill all fields"
+  },
+  "please_enter_email_and_password": "Vui lòng nhập cả email và mật khẩu.",
+  "@please_enter_email_and_password": {
+    "description": "Please enter email and password"
+  },
   "incorrect_email_or_password": "Email hoặc mật khẩu không đúng.",
+  "@incorrect_email_or_password": {
+    "description": "Incorrect email or password"
+  },
   "invalid_email_format": "Định dạng email không hợp lệ.",
+  "@invalid_email_format": {
+    "description": "Invalid email format"
+  },
   "this_account_has_been_disabled": "Tài khoản này đã bị vô hiệu hóa.",
+  "@this_account_has_been_disabled": {
+    "description": "This account has been disabled"
+  },
   "too_many_requests_please_try_later": "Quá nhiều yêu cầu. Vui lòng thử lại sau.",
+  "@too_many_requests_please_try_later": {
+    "description": "Too many requests please try later"
+  },
   "email_not_verified": "Email chưa được xác thực",
+  "@email_not_verified": {
+    "description": "Email not verified"
+  },
   "please_verify_your_email_to_continue": "Vui lòng xác thực email của bạn để tiếp tục.",
+  "@please_verify_your_email_to_continue": {
+    "description": "Please verify your email to continue"
+  },
   "are_you_sure_logout": "Bạn có chắc chắn muốn đăng xuất không?",
+  "@are_you_sure_logout": {
+    "description": "Are you sure logout"
+  },
   "have_error_occurred": "Đã xảy ra lỗi. Vui lòng thử lại.",
+  "@have_error_occurred": {
+    "description": "Have error occurred"
+  },
   "user_not_found": "Không tìm thấy tài khoản với email này.",
+  "@user_not_found": {
+    "description": "User not found"
+  },
   "enter_otp_reset_password": "Chúng tôi vừa gửi mã OTP vào email của bạn. Hãy nhập mã OTP để đặt lại mật khẩu.",
+  "@enter_otp_reset_password": {
+    "description": "Enter otp reset password"
+  },
   "not_time_yet_to_resend_otp": "Vui lòng chờ một lát để gửi lại mã OTP.",
+  "@not_time_yet_to_resend_otp": {
+    "description": "Not time yet to resend otp"
+  },
   "reset_password_successful": "Đặt lại mật khẩu thành công",
+  "@reset_password_successful": {
+    "description": "Reset password successful"
+  },
   "reset_password_successful_description": "Mật khẩu của bạn đã được đặt lại thành công. Bây giờ bạn có thể đăng nhập bằng mật khẩu mới.",
-
+  "@reset_password_successful_description": {
+    "description": "Reset password successful description"
+  },
   "welcome_back": "Chào mừng trở lại",
+  "@welcome_back": {
+    "description": "Welcome back"
+  },
   "back_login": "Quay lại đăng nhập",
+  "@back_login": {
+    "description": "Back login"
+  },
   "description_create_account": "Kiểm soát tài chính của bạn ngay hôm nay",
+  "@description_create_account": {
+    "description": "Description create account"
+  },
   "label_weak": "Yếu",
+  "@label_weak": {
+    "description": "Label weak"
+  },
   "label_fair": "Trung bình",
+  "@label_fair": {
+    "description": "Label fair"
+  },
   "label_good": "Tốt",
+  "@label_good": {
+    "description": "Label good"
+  },
   "label_strong": "Mạnh",
+  "@label_strong": {
+    "description": "Label strong"
+  },
   "low_pass": "Tối thiểu 8 ký tự, bao gồm chữ số và ký tự đặc biệt.",
+  "@low_pass": {
+    "description": "Low pass"
+  },
   "weak_pass": "Quá ngắn. Vui lòng nhập thêm ký tự.",
+  "@weak_pass": {
+    "description": "Weak pass"
+  },
   "fair_pass": "Khá hơn rồi. Hãy thêm số và ký tự đặt biệt.",
+  "@fair_pass": {
+    "description": "Fair pass"
+  },
   "good_pass_char": "Sắp hoàn hảo! Hãy thêm ký tự đặc biệt để tăng bảo mật.",
+  "@good_pass_char": {
+    "description": "Good pass char"
+  },
   "good_pass_num": "Sắp hoàn hảo! Hãy thêm số để tăng bảo mật.",
+  "@good_pass_num": {
+    "description": "Good pass num"
+  },
   "good_pass_special": "Sắp hoàn hảo! Hãy thêm ký tự bất kì để tăng bảo mật.",
+  "@good_pass_special": {
+    "description": "Good pass special"
+  },
   "strong_pass": "Tuyệt vời! Mật khẩu của bạn đã an toàn.",
+  "@strong_pass": {
+    "description": "Strong pass"
+  },
   "password_reset_email_sent": "Chúng tôi đã gửi một liên kết đặt lại mật khẩu đến email của bạn.",
+  "@password_reset_email_sent": {
+    "description": "Password reset email sent"
+  },
   "forgot_password_description": "Nhập email được liên kết với tài khoản của bạn để đặt lại mật khẩu.",
+  "@forgot_password_description": {
+    "description": "Forgot password description"
+  },
   "send_email_reset": "Gửi email đặt lại",
+  "@send_email_reset": {
+    "description": "Send email reset"
+  },
   "password_weak_password": "Mật khẩu quá yếu.",
+  "@password_weak_password": {
+    "description": "Password weak password"
+  },
   "please_edit_fields": "Vui lòng chỉnh sửa các trường sau để tiếp tục:",
+  "@please_edit_fields": {
+    "description": "Please edit fields"
+  },
   "something_went_wrong": "Đã xảy ra lỗi. Vui lòng thử lại.",
+  "@something_went_wrong": {
+    "description": "Something went wrong"
+  },
   "network_error": "Lỗi kết nối mạng, vui lòng kiểm tra lại.",
+  "@network_error": {
+    "description": "Network error"
+  },
   "email_already_in_use": "Địa chỉ email đã được sử dụng bởi tài khoản khác.",
+  "@email_already_in_use": {
+    "description": "Email already in use"
+  },
   "invalid_email": "Địa chỉ email không hợp lệ.",
+  "@invalid_email": {
+    "description": "Invalid email"
+  },
   "operation_not_allowed": "Không cho phép thực hiện. Vui lòng liên hệ hỗ trợ.",
+  "@operation_not_allowed": {
+    "description": "Operation not allowed"
+  },
   "reset_password": "Đặt lại mật khẩu",
+  "@reset_password": {
+    "description": "Reset password"
+  },
   "email_not_received": "Không nhận được email?",
+  "@email_not_received": {
+    "description": "Email not received"
+  },
   "verification_email_sent": "Đã gửi email xác thực",
-  
+  "@verification_email_sent": {
+    "description": "Verification email sent"
+  },
   "good_morning": "Chào buổi sáng",
+  "@good_morning": {
+    "description": "Good morning"
+  },
   "good_afternoon": "Chào buổi chiều",
+  "@good_afternoon": {
+    "description": "Good afternoon"
+  },
   "good_evening": "Chào buổi tối",
+  "@good_evening": {
+    "description": "Good evening"
+  },
   "hello": "Xin chào",
+  "@hello": {
+    "description": "Hello"
+  },
   "income": "Thu nhập",
+  "@income": {
+    "description": "Income"
+  },
   "expenses": "Chi tiêu",
+  "@expenses": {
+    "description": "Expenses"
+  },
   "balance": "Còn lại",
+  "@balance": {
+    "description": "Balance"
+  },
   "total_balance": "Tổng số dư",
+  "@total_balance": {
+    "description": "Total balance"
+  },
   "spending_this_month": "Chi tiêu trong tháng này",
+  "@spending_this_month": {
+    "description": "Spending this month"
+  },
   "total_spent": "Tổng chi tiêu",
+  "@total_spent": {
+    "description": "Total spent"
+  },
   "recent_transactions": "Giao dịch gần đây",
+  "@recent_transactions": {
+    "description": "Recent transactions"
+  },
   "add_transaction": "Thêm giao dịch",
+  "@add_transaction": {
+    "description": "Add transaction"
+  },
   "no_transactions": "Không có dữ liệu",
+  "@no_transactions": {
+    "description": "No transactions"
+  },
   "enter_transaction_name": "Nhập tên giao dịch",
+  "@enter_transaction_name": {
+    "description": "Enter transaction name"
+  },
   "suggested_category": "Danh mục gợi ý",
+  "@suggested_category": {
+    "description": "Suggested category"
+  },
   "category": "Danh mục",
+  "@category": {
+    "description": "Category"
+  },
   "categories": "Danh mục",
+  "@categories": {
+    "description": "Categories"
+  },
   "select_category": "Chọn danh mục",
+  "@select_category": {
+    "description": "Select category"
+  },
   "edit_category": "Chỉnh sửa danh mục",
+  "@edit_category": {
+    "description": "Edit category"
+  },
   "are_you_sure_delete_category": "Bạn có chắc chắn muốn xóa danh mục {categoryName}?",
+  "@are_you_sure_delete_category": {
+    "description": "Are you sure delete category",
+    "placeholders": {
+      "categoryName": {
+        "type": "String"
+      }
+    }
+  },
   "system_category": "Danh mục hệ thống không thể xóa.",
+  "@system_category": {
+    "description": "System category"
+  },
   "system_category_description": "Bạn không thể chỉnh sửa hoặc xóa danh mục mặc định này.",
-
+  "@system_category_description": {
+    "description": "System category description"
+  },
   "category_food": "Ăn uống",
+  "@category_food": {
+    "description": "Category food"
+  },
   "category_transport": "Di chuyển",
+  "@category_transport": {
+    "description": "Category transport"
+  },
   "category_salary": "Lương",
+  "@category_salary": {
+    "description": "Category salary"
+  },
   "category_shopping": "Mua sắm",
+  "@category_shopping": {
+    "description": "Category shopping"
+  },
   "category_game": "Trò chơi",
+  "@category_game": {
+    "description": "Category game"
+  },
   "category_house": "Nhà cửa",
+  "@category_house": {
+    "description": "Category house"
+  },
   "category_gift": "Quà tặng",
+  "@category_gift": {
+    "description": "Category gift"
+  },
   "category_health": "Sức khỏe",
+  "@category_health": {
+    "description": "Category health"
+  },
   "category_entertainment": "Giải trí",
+  "@category_entertainment": {
+    "description": "Category entertainment"
+  },
   "category_bill": "Hóa đơn",
+  "@category_bill": {
+    "description": "Category bill"
+  },
   "category_insurance": "Bảo hiểm",
+  "@category_insurance": {
+    "description": "Category insurance"
+  },
   "category_education": "Giáo dục",
+  "@category_education": {
+    "description": "Category education"
+  },
   "category_pet": "Thú cưng",
+  "@category_pet": {
+    "description": "Category pet"
+  },
   "category_travel": "Du lịch",
+  "@category_travel": {
+    "description": "Category travel"
+  },
   "category_savings": "Tiết kiệm",
+  "@category_savings": {
+    "description": "Category savings"
+  },
   "category_phone": "Điện thoại",
+  "@category_phone": {
+    "description": "Category phone"
+  },
   "category_internet": "Internet",
+  "@category_internet": {
+    "description": "Category internet"
+  },
   "category_water": "Nước",
+  "@category_water": {
+    "description": "Category water"
+  },
   "category_electricity": "Điện",
+  "@category_electricity": {
+    "description": "Category electricity"
+  },
   "category_gas": "Gas",
+  "@category_gas": {
+    "description": "Category gas"
+  },
   "category_cleaning": "Dọn dẹp",
+  "@category_cleaning": {
+    "description": "Category cleaning"
+  },
   "category_beauty": "Làm đẹp",
+  "@category_beauty": {
+    "description": "Category beauty"
+  },
   "category_baby": "Em bé",
+  "@category_baby": {
+    "description": "Category baby"
+  },
   "category_sport": "Thể thao",
+  "@category_sport": {
+    "description": "Category sport"
+  },
   "category_music": "Âm nhạc",
+  "@category_music": {
+    "description": "Category music"
+  },
   "category_repair": "Sửa chữa",
+  "@category_repair": {
+    "description": "Category repair"
+  },
   "category_tax": "Thuế",
+  "@category_tax": {
+    "description": "Category tax"
+  },
   "note": "Ghi chú (tùy chọn)",
+  "@note": {
+    "description": "Note"
+  },
   "enter_note": "Nhập ghi chú",
+  "@enter_note": {
+    "description": "Enter note"
+  },
   "add_income": "Thêm thu nhập",
+  "@add_income": {
+    "description": "Add income"
+  },
   "add_expense": "Thêm chi tiêu",
+  "@add_expense": {
+    "description": "Add expense"
+  },
   "search_category": "Tìm kiếm danh mục",
+  "@search_category": {
+    "description": "Search category"
+  },
   "no_category_found": "Không tìm thấy danh mục",
+  "@no_category_found": {
+    "description": "No category found"
+  },
   "most_used": "Sử dụng nhiều nhất",
+  "@most_used": {
+    "description": "Most used"
+  },
   "category_suggestions": "Danh mục gợi ý",
+  "@category_suggestions": {
+    "description": "Category suggestions"
+  },
   "all_categories": "Tất cả danh mục",
+  "@all_categories": {
+    "description": "All categories"
+  },
   "new_category": "Danh mục mới",
+  "@new_category": {
+    "description": "New category"
+  },
   "category_name": "Tên danh mục",
+  "@category_name": {
+    "description": "Category name"
+  },
   "category_color": "Màu danh mục",
+  "@category_color": {
+    "description": "Category color"
+  },
   "category_icon": "Biểu tượng danh mục",
+  "@category_icon": {
+    "description": "Category icon"
+  },
   "vs_last_month": "so với Tháng trước",
+  "@vs_last_month": {
+    "description": "Vs last month"
+  },
   "transaction": "Giao dịch",
+  "@transaction": {
+    "description": "Transaction"
+  },
   "delete_transaction": "Xóa giao dịch",
+  "@delete_transaction": {
+    "description": "Delete transaction"
+  },
   "delete_transaction_confirmation": "Bạn có chắc chắn muốn xóa giao dịch này không?",
+  "@delete_transaction_confirmation": {
+    "description": "Delete transaction confirmation"
+  },
   "transaction_details": "Chi tiết giao dịch",
+  "@transaction_details": {
+    "description": "Transaction details"
+  },
   "spending_trend": "Xu hướng chi tiêu",
+  "@spending_trend": {
+    "description": "Spending trend"
+  },
   "spending_last_7_days": "Chi tiêu trong 7 ngày qua",
+  "@spending_last_7_days": {
+    "description": "Spending last 7 days"
+  },
   "note_2": "Ghi chú",
-
+  "@note_2": {
+    "description": "Note 2"
+  },
   "scan_receipt": "Quét hóa đơn",
+  "@scan_receipt": {
+    "description": "Scan receipt"
+  },
   "add_via_voice": "Thêm bằng giọng nói",
+  "@add_via_voice": {
+    "description": "Add via voice"
+  },
   "add_manually": "Thêm thủ công",
+  "@add_manually": {
+    "description": "Add manually"
+  },
   "limit_reached": "Đã đạt giới hạn",
+  "@limit_reached": {
+    "description": "Limit reached"
+  },
   "limit_reached_description": "Bạn đã sử dụng {featureName} {limit} lần hôm nay.\nVui lòng quay lại vào ngày mai hoặc nâng cấp lên Premium.",
-
+  "@limit_reached_description": {
+    "description": "Limit reached description",
+    "placeholders": {
+      "featureName": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
   "align_receipt": "Căn chỉnh hóa đơn của bạn vào khung",
-
+  "@align_receipt": {
+    "description": "Align receipt"
+  },
   "listening": "Đang nghe...",
+  "@listening": {
+    "description": "Listening"
+  },
   "voice_example": "Ví dụ: Tôi đã chi 50 đô la cho thực phẩm",
+  "@voice_example": {
+    "description": "Voice example"
+  },
   "tap_to_stop": "Chạm để dừng",
+  "@tap_to_stop": {
+    "description": "Tap to stop"
+  },
   "tap_to_listen": "Chạm để nghe",
-  
+  "@tap_to_listen": {
+    "description": "Tap to listen"
+  },
   "yesterday": "Hôm qua",
-
+  "@yesterday": {
+    "description": "Yesterday"
+  },
   "your_monthly_budget": "Ngân sách hàng tháng của bạn",
+  "@your_monthly_budget": {
+    "description": "Your monthly budget"
+  },
   "spent": "Đã chi ",
+  "@spent": {
+    "description": "Spent"
+  },
   "out_of": " trong tổng ",
+  "@out_of": {
+    "description": "Out of"
+  },
   "left_to_spend": "còn lại để chi tiêu",
+  "@left_to_spend": {
+    "description": "Left to spend"
+  },
   "add_budget": "Thêm ngân sách",
+  "@add_budget": {
+    "description": "Add budget"
+  },
   "no_budgets_yet": "Chưa có ngân sách nào",
+  "@no_budgets_yet": {
+    "description": "No budgets yet"
+  },
   "create_budget_description": "Nhấn + để tạo giới hạn chi tiêu",
+  "@create_budget_description": {
+    "description": "Create budget description"
+  },
   "edit_budget": "Sửa ngân sách",
+  "@edit_budget": {
+    "description": "Edit budget"
+  },
   "are_you_sure_delete_budget": "Bạn có chắc muốn xóa ngân sách \n {budgetName}? \n",
+  "@are_you_sure_delete_budget": {
+    "description": "Are you sure delete budget",
+    "placeholders": {
+      "budgetName": {
+        "type": "String"
+      }
+    }
+  },
   "delete_budget": "Xóa ngân sách",
-
+  "@delete_budget": {
+    "description": "Delete budget"
+  },
   "settings": "Cài đặt",
+  "@settings": {
+    "description": "Settings"
+  },
   "settings_description": "Giữ dữ liệu tài chính luôn đồng bộ trên tất cả thiết bị của bạn",
+  "@settings_description": {
+    "description": "Settings description"
+  },
   "sign_in_now": "Đăng nhập ngay",
+  "@sign_in_now": {
+    "description": "Sign in now"
+  },
   "get_started": "Bắt đầu ngay",
+  "@get_started": {
+    "description": "Get started"
+  },
   "welcome": "Chào mừng !",
+  "@welcome": {
+    "description": "Welcome"
+  },
   "general": "Cài đặt chung",
+  "@general": {
+    "description": "General"
+  },
   "security": "Bảo mật",
+  "@security": {
+    "description": "Security"
+  },
   "privacy_and_security": "Quyền riêng tư & Bảo mật",
+  "@privacy_and_security": {
+    "description": "Privacy and security"
+  },
   "support": "Hỗ trợ",
+  "@support": {
+    "description": "Support"
+  },
   "profile": "Hồ sơ",
+  "@profile": {
+    "description": "Profile"
+  },
   "language": "Ngôn ngữ",
+  "@language": {
+    "description": "Language"
+  },
   "dark_mode": "Chế độ tối",
+  "@dark_mode": {
+    "description": "Dark mode"
+  },
   "notifications": "Thông báo",
+  "@notifications": {
+    "description": "Notifications"
+  },
   "appearance": "Giao diện",
+  "@appearance": {
+    "description": "Appearance"
+  },
   "currency": "Tiền tệ",
+  "@currency": {
+    "description": "Currency"
+  },
   "about": "Giới thiệu",
+  "@about": {
+    "description": "About"
+  },
   "terms_of_service": "Điều khoản dịch vụ",
+  "@terms_of_service": {
+    "description": "Terms of service"
+  },
   "privacy_policy": "Chính sách quyền riêng tư",
+  "@privacy_policy": {
+    "description": "Privacy policy"
+  },
   "version": "Phiên bản",
+  "@version": {
+    "description": "Version"
+  },
   "edit_profile": "Chỉnh sửa hồ sơ",
+  "@edit_profile": {
+    "description": "Edit profile"
+  },
   "full_name": "Họ và tên",
+  "@full_name": {
+    "description": "Full name"
+  },
   "enter_full_name": "Nhập họ và tên",
+  "@enter_full_name": {
+    "description": "Enter full name"
+  },
   "email_address": "Địa chỉ email",
+  "@email_address": {
+    "description": "Email address"
+  },
   "enter_email_address": "Nhập địa chỉ email",
+  "@enter_email_address": {
+    "description": "Enter email address"
+  },
   "phone_number": "Số điện thoại",
+  "@phone_number": {
+    "description": "Phone number"
+  },
   "enter_phone_number": "Nhập số điện thoại",
+  "@enter_phone_number": {
+    "description": "Enter phone number"
+  },
   "day_of_birth": "Ngày sinh",
+  "@day_of_birth": {
+    "description": "Day of birth"
+  },
   "select_day_of_birth": "Chọn ngày sinh",
+  "@select_day_of_birth": {
+    "description": "Select day of birth"
+  },
   "save_changes": "Lưu thay đổi",
+  "@save_changes": {
+    "description": "Save changes"
+  },
   "profile_updated_success": "Cập nhật hồ sơ thành công!",
+  "@profile_updated_success": {
+    "description": "Profile updated success"
+  },
   "error_updating_profile": "Lỗi khi cập nhật hồ sơ.",
+  "@error_updating_profile": {
+    "description": "Error updating profile"
+  },
   "error_uploading_avatar": "Lỗi khi tải lên ảnh đại diện.",
+  "@error_uploading_avatar": {
+    "description": "Error uploading avatar"
+  },
   "require_premium_to_edit_avatar": "Bạn cần nâng cấp lên Premium hoặc xem quảng cáo để chỉnh sửa ảnh đại diện.",
+  "@require_premium_to_edit_avatar": {
+    "description": "Require premium to edit avatar"
+  },
   "edit_avatar": "Chỉnh sửa ảnh đại diện",
-
+  "@edit_avatar": {
+    "description": "Edit avatar"
+  },
   "upgrade_premium": "Nâng cấp lên Premium!",
+  "@upgrade_premium": {
+    "description": "Upgrade premium"
+  },
   "upgrade_premium_description": "Mở khóa các tính năng cao cấp và nâng cao trải nghiệm của bạn.",
+  "@upgrade_premium_description": {
+    "description": "Upgrade premium description"
+  },
   "upgrade_now": "Nâng cấp ngay",
+  "@upgrade_now": {
+    "description": "Upgrade now"
+  },
   "you_are_premium": "Bạn đã sẵn sàng, người dùng Premium!",
+  "@you_are_premium": {
+    "description": "You are premium"
+  },
   "you_are_premium_description": "Tận hưởng trải nghiệm nâng cao của bạn.",
+  "@you_are_premium_description": {
+    "description": "You are premium description"
+  },
   "import_export_data": "Nhập/Xuất dữ liệu",
+  "@import_export_data": {
+    "description": "Import export data"
+  },
   "sync_data": "Đồng bộ dữ liệu",
+  "@sync_data": {
+    "description": "Sync data"
+  },
   "continue_with": "Tiếp tục với {price}",
+  "@continue_with": {
+    "description": "Continue with",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
   "biometric_authentication": "Xác thực sinh trắc học",
+  "@biometric_authentication": {
+    "description": "Biometric authentication"
+  },
   "password_security": "Bảo mật mật mã",
+  "@password_security": {
+    "description": "Password security"
+  },
   "face_id_description": "Mở khóa ứng dụng chỉ bằng một ánh nhìn. Face ID mang lại sự tiện lợi và bảo mật bằng cách nhận diện khuôn mặt của bạn.",
+  "@face_id_description": {
+    "description": "Face id description"
+  },
   "touch_id_description": "Mở khóa ứng dụng chỉ bằng một cú chạm. Touch ID giúp truy cập nhanh chóng và an toàn bằng vân tay của bạn.",
+  "@touch_id_description": {
+    "description": "Touch id description"
+  },
   "pass_code_description": "Thêm một lớp bảo vệ. Mã khóa đảm bảo chỉ bạn mới có thể truy cập dữ liệu tài chính, ngay cả khi thiết bị bị xâm phạm.",
-  "passcode" : "Passcode",
+  "@pass_code_description": {
+    "description": "Pass code description"
+  },
+  "passcode": "Passcode",
+  "@passcode": {
+    "description": "Passcode"
+  },
   "change_passcode": "Đổi passcode",
+  "@change_passcode": {
+    "description": "Change passcode"
+  },
   "old_passcode": "Mã khóa cũ",
+  "@old_passcode": {
+    "description": "Old passcode"
+  },
   "enter_old_passcode": "Nhập mã khóa cũ",
+  "@enter_old_passcode": {
+    "description": "Enter old passcode"
+  },
   "new_passcode": "Passcode mới",
+  "@new_passcode": {
+    "description": "New passcode"
+  },
   "enter_new_passcode": "Nhập Passcode mới",
+  "@enter_new_passcode": {
+    "description": "Enter new passcode"
+  },
   "confirm_new_passcode": "Xác nhận Passcode mới",
+  "@confirm_new_passcode": {
+    "description": "Confirm new passcode"
+  },
   "enter_confirm_new_passcode": "Nhập lại Passcode mới",
+  "@enter_confirm_new_passcode": {
+    "description": "Enter confirm new passcode"
+  },
   "turnOffPasscode": "Tắt Passcode",
+  "@turnOffPasscode": {
+    "description": "Turnoffpasscode"
+  },
   "createPasscode": "Tạo Passcode",
+  "@createPasscode": {
+    "description": "Createpasscode"
+  },
   "changePasscode": "Đổi Passcode",
+  "@changePasscode": {
+    "description": "Changepasscode"
+  },
   "removePasscode": "Xóa Passcode",
+  "@removePasscode": {
+    "description": "Removepasscode"
+  },
   "updatePasscode": "Cập nhật Passcode",
+  "@updatePasscode": {
+    "description": "Updatepasscode"
+  },
   "description_create_passcode": "Bảo vệ tài khoản của bạn bằng cách thường xuyên cập nhật Passcode 6 chữ số.",
+  "@description_create_passcode": {
+    "description": "Description create passcode"
+  },
   "description_remove_passcode": "Nhập Passcode hiện tại của bạn để tắt bảo mật.",
+  "@description_remove_passcode": {
+    "description": "Description remove passcode"
+  },
   "currentPasscode": "Passcode hiện tại",
+  "@currentPasscode": {
+    "description": "Currentpasscode"
+  },
   "enterCurrentPin": "Nhập mã PIN hiện tại",
+  "@enterCurrentPin": {
+    "description": "Entercurrentpin"
+  },
   "passcode_turn_off_success": "Passcode đã được tắt thành công!",
+  "@passcode_turn_off_success": {
+    "description": "Passcode turn off success"
+  },
   "passcode_update_success": "Cập nhật Passcode thành công!",
+  "@passcode_update_success": {
+    "description": "Passcode update success"
+  },
   "passcode_create_success": "Tạo Passcode thành công!",
+  "@passcode_create_success": {
+    "description": "Passcode create success"
+  },
   "currentPasscodeIncorrect": "Passcode hiện tại không đúng.",
+  "@currentPasscodeIncorrect": {
+    "description": "Currentpasscodeincorrect"
+  },
   "errorSavingData": "Lỗi khi lưu dữ liệu.",
+  "@errorSavingData": {
+    "description": "Errorsavingdata"
+  },
   "newPasscodeMustBe6Digits": "Passcode mới phải có 6 chữ số.",
+  "@newPasscodeMustBe6Digits": {
+    "description": "Newpasscodemustbe6digits"
+  },
   "passcodesDoNotMatch": "Passcode không khớp.",
+  "@passcodesDoNotMatch": {
+    "description": "Passcodesdonotmatch"
+  },
   "enter_passcode": "Nhập Passcode",
+  "@enter_passcode": {
+    "description": "Enter passcode"
+  },
   "incorrect_passcode": "Passcode không đúng.",
+  "@incorrect_passcode": {
+    "description": "Incorrect passcode"
+  },
   "face": "Face ID",
+  "@face": {
+    "description": "Face"
+  },
   "fingerprint": "Vân tay",
-
+  "@fingerprint": {
+    "description": "Fingerprint"
+  },
   "report_locked": "Nội dung được khóa",
+  "@report_locked": {
+    "description": "Report locked"
+  },
   "unlock": "Mở khóa",
+  "@unlock": {
+    "description": "Unlock"
+  },
   "click_to_unlock": "Chạm để mở khóa",
-
+  "@click_to_unlock": {
+    "description": "Click to unlock"
+  },
   "unlock_untilimited_access": "Mở khóa truy cập không giới hạn",
+  "@unlock_untilimited_access": {
+    "description": "Unlock untilimited access"
+  },
   "unlock_untilimited_access_description": "Nâng cấp lên Premium để loại bỏ mọi giới hạn và truy cập các tính năng nâng cao.",
+  "@unlock_untilimited_access_description": {
+    "description": "Unlock untilimited access description"
+  },
   "daily_input_cap_reached": "Đã đạt giới hạn nhập hàng ngày",
+  "@daily_input_cap_reached": {
+    "description": "Daily input cap reached"
+  },
   "daily_input_cap_reached_description": "Bạn đã đạt giới hạn nhập hàng ngày cho việc quét hóa đơn và nhập giọng nói. Nâng cấp ngay để tiếp tục.",
+  "@daily_input_cap_reached_description": {
+    "description": "Daily input cap reached description"
+  },
   "feature_comparison": "So sánh tính năng",
+  "@feature_comparison": {
+    "description": "Feature comparison"
+  },
   "feature": "Tính năng",
+  "@feature": {
+    "description": "Feature"
+  },
   "free": "Miễn phí",
+  "@free": {
+    "description": "Free"
+  },
   "premium": "Cao cấp",
+  "@premium": {
+    "description": "Premium"
+  },
   "no_ads": "Không quảng cáo",
+  "@no_ads": {
+    "description": "No ads"
+  },
   "transaction_locking": "Khóa sổ giao dịch",
+  "@transaction_locking": {
+    "description": "Transaction locking"
+  },
   "unlimited_scans": "Quét hóa đơn không giới hạn",
+  "@unlimited_scans": {
+    "description": "Unlimited scans"
+  },
   "unlimited_voice_entries": "Nhập giọng nói không giới hạn",
+  "@unlimited_voice_entries": {
+    "description": "Unlimited voice entries"
+  },
   "day": "ngày",
+  "@day": {
+    "description": "Day"
+  },
   "year": "Năm",
+  "@year": {
+    "description": "Year"
+  },
   "subscription_auto_renews": "Đăng ký tự động gia hạn",
+  "@subscription_auto_renews": {
+    "description": "Subscription auto renews"
+  },
   "accept_terms_conditions": "Đăng ký tự động gia hạn. Bằng cách tiếp tục, bạn đồng ý với Điều khoản Dịch vụ và Chính sách Quyền riêng tư của chúng tôi.",
+  "@accept_terms_conditions": {
+    "description": "Accept terms conditions"
+  },
   "restore": "Khôi phục",
+  "@restore": {
+    "description": "Restore"
+  },
   "used_up_daily_limit": "Bạn đã sử dụng hết giới hạn nhập giọng nói trong ngày hôm nay. Xem quảng cáo để nhận thêm {value} lượt sử dụng hoặc nâng cấp lên Premium.",
+  "@used_up_daily_limit": {
+    "description": "Used up daily limit",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
   "see_ads": "Xem quảng cáo (+{additionalUses} lượt)",
+  "@see_ads": {
+    "description": "See ads",
+    "placeholders": {
+      "additionalUses": {
+        "type": "String"
+      }
+    }
+  },
   "ads_loading": "Đang tải quảng cáo...",
+  "@ads_loading": {
+    "description": "Ads loading"
+  },
   "monthly_plan": "Gói hàng tháng",
+  "@monthly_plan": {
+    "description": "Monthly plan"
+  },
   "yearly_plan": "Gói hàng năm",
+  "@yearly_plan": {
+    "description": "Yearly plan"
+  },
   "lifetime_plan": "Gói vĩnh viễn",
+  "@lifetime_plan": {
+    "description": "Lifetime plan"
+  },
   "pay_once_enjoy_forever": "Trả một lần, sử dụng mãi mãi",
+  "@pay_once_enjoy_forever": {
+    "description": "Pay once enjoy forever"
+  },
   "yearly_discount": "Tiết kiệm 20% với gói hàng năm",
+  "@yearly_discount": {
+    "description": "Yearly discount"
+  },
   "best_value": "GIÁ TRỊ TỐT NHẤT",
+  "@best_value": {
+    "description": "Best value"
+  },
   "purchase_successful": "Mua thành công!",
+  "@purchase_successful": {
+    "description": "Purchase successful"
+  },
   "purchase_successful_description": "Cảm ơn bạn đã nâng cấp lên Premium! Hãy tận hưởng trải nghiệm nâng cao của bạn.",
+  "@purchase_successful_description": {
+    "description": "Purchase successful description"
+  },
   "restore_successful": "Khôi phục thành công!",
+  "@restore_successful": {
+    "description": "Restore successful"
+  },
   "restore_successful_description": "Mua hàng trước đó của bạn đã được khôi phục. Hãy tận hưởng các tính năng Premium của bạn!",
+  "@restore_successful_description": {
+    "description": "Restore successful description"
+  },
   "nothing_to_restore": "Không có gì để khôi phục",
+  "@nothing_to_restore": {
+    "description": "Nothing to restore"
+  },
   "nothing_to_restore_description": "Không tìm thấy mua hàng trước đó để khôi phục.",
+  "@nothing_to_restore_description": {
+    "description": "Nothing to restore description"
+  },
   "restore_failed": "Khôi phục thất bại",
+  "@restore_failed": {
+    "description": "Restore failed"
+  },
   "restore_failed_description": "Đã xảy ra lỗi khi khôi phục mua hàng của bạn. Vui lòng thử lại.",
+  "@restore_failed_description": {
+    "description": "Restore failed description"
+  },
   "purchase_failed": "Mua hàng thất bại",
+  "@purchase_failed": {
+    "description": "Purchase failed"
+  },
   "purchase_failed_description": "Đã xảy ra lỗi trong quá trình giao dịch. Vui lòng thử lại.",
+  "@purchase_failed_description": {
+    "description": "Purchase failed description"
+  },
   "purchase_canceled": "Giao dịch đã bị hủy",
+  "@purchase_canceled": {
+    "description": "Purchase canceled"
+  },
   "purchase_canceled_description": "Giao dịch của bạn đã bị hủy. Vui lòng thử lại nếu bạn muốn nâng cấp lên Premium.",
+  "@purchase_canceled_description": {
+    "description": "Purchase canceled description"
+  },
   "premium_sync_account": "Tài khoản Premium của bạn sẽ được đồng bộ với tài khoản mà bạn đăng nhập vào. Hãy đảm bảo đăng nhập bằng cùng một tài khoản trên tất cả thiết bị của bạn để tận hưởng trải nghiệm Premium liền mạch.",
+  "@premium_sync_account": {
+    "description": "Premium sync account"
+  },
   "premium_sync_warning": "Lưu ý: Nếu bạn đã mua gói Premium trên một tài khoản khác, vui lòng đăng nhập vào tài khoản đó để khôi phục quyền truy cập Premium của bạn. Nếu bạn đang sử dụng cùng một tài khoản, hãy thử khôi phục mua hàng để đồng bộ hóa quyền truy cập Premium của bạn.",
-
+  "@premium_sync_warning": {
+    "description": "Premium sync warning"
+  },
   "select_language": "Chọn ngôn ngữ",
+  "@select_language": {
+    "description": "Select language"
+  },
   "suggested": "Gợi ý",
+  "@suggested": {
+    "description": "Suggested"
+  },
   "all_languages": "Tất cả ngôn ngữ",
+  "@all_languages": {
+    "description": "All languages"
+  },
   "apply_changes": "Áp dụng thay đổi",
-
+  "@apply_changes": {
+    "description": "Apply changes"
+  },
   "select_currency": "Chọn tiền tệ",
+  "@select_currency": {
+    "description": "Select currency"
+  },
   "search_currency": "Tìm kiếm tiền tệ hoặc quốc gia...",
+  "@search_currency": {
+    "description": "Search currency"
+  },
   "popular": "Phổ biến",
+  "@popular": {
+    "description": "Popular"
+  },
   "all_currencies": "Tất cả tiền tệ",
+  "@all_currencies": {
+    "description": "All currencies"
+  },
   "currency_change_warning": "Thay đổi tiền tệ chỉ cập nhật ký hiệu hiển thị. Tỷ giá giao dịch trước đó sẽ không được tính toán lại.",
-
+  "@currency_change_warning": {
+    "description": "Currency change warning"
+  },
   "data_management": "Quản lý dữ liệu",
+  "@data_management": {
+    "description": "Data management"
+  },
   "select_format": "Chọn định dạng",
+  "@select_format": {
+    "description": "Select format"
+  },
   "export_data": "Xuất dữ liệu",
+  "@export_data": {
+    "description": "Export data"
+  },
   "export_data_description": "Xuất dữ liệu tài chính của bạn để sao lưu hoặc phân tích.",
+  "@export_data_description": {
+    "description": "Export data description"
+  },
   "confirm_export": "Xác nhận xuất",
+  "@confirm_export": {
+    "description": "Confirm export"
+  },
   "import_data": "Nhập dữ liệu",
+  "@import_data": {
+    "description": "Import data"
+  },
   "import_data_description": "Nhập dữ liệu tài chính từ các nguồn bên ngoài để đồng bộ hóa với ứng dụng.",
+  "@import_data_description": {
+    "description": "Import data description"
+  },
   "import_data_title": "Nhập ",
+  "@import_data_title": {
+    "description": "Import data title"
+  },
   "data": "dữ liệu",
+  "@data": {
+    "description": "Data"
+  },
   "import_data_title_2": " của bạn.",
+  "@import_data_title_2": {
+    "description": "Import data title 2"
+  },
   "confirm_import": "Xác nhận nhập",
+  "@confirm_import": {
+    "description": "Confirm import"
+  },
   "csv_format": "Định dạng CSV",
+  "@csv_format": {
+    "description": "Csv format"
+  },
   "csv_description": "Dữ liệu được phân tách bằng dấu phẩy, tương thích với hầu hết các ứng dụng bảng tính.",
+  "@csv_description": {
+    "description": "Csv description"
+  },
   "json_format": "Định dạng JSON",
+  "@json_format": {
+    "description": "Json format"
+  },
   "json_description": "Định dạng dữ liệu linh hoạt, lý tưởng cho việc trao đổi dữ liệu giữa các ứng dụng.",
+  "@json_description": {
+    "description": "Json description"
+  },
   "excel_format": "Định dạng Excel",
+  "@excel_format": {
+    "description": "Excel format"
+  },
   "excel_description": "Định dạng bảng tính phổ biến, hỗ trợ các tính năng nâng cao và phân tích dữ liệu.",
+  "@excel_description": {
+    "description": "Excel description"
+  },
   "select_file": "Chọn tệp",
+  "@select_file": {
+    "description": "Select file"
+  },
   "no_file_selected": "Chưa chọn tệp nào",
+  "@no_file_selected": {
+    "description": "No file selected"
+  },
   "import_successful": "Nhập dữ liệu thành công!",
+  "@import_successful": {
+    "description": "Import successful"
+  },
   "error_importing_data": "Lỗi khi nhập dữ liệu.",
+  "@error_importing_data": {
+    "description": "Error importing data"
+  },
   "sync_data_now": "Đồng bộ ngay",
+  "@sync_data_now": {
+    "description": "Sync data now"
+  },
   "last_synced": "Đồng bộ lần cuối: \n{time}",
+  "@last_synced": {
+    "description": "Last synced",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "syncing": "Đang đồng bộ...",
+  "@syncing": {
+    "description": "Syncing"
+  },
   "never_synced": "Chưa đồng bộ",
+  "@never_synced": {
+    "description": "Never synced"
+  },
   "unauthenticated": "Vui lòng đăng nhập để đồng bộ dữ liệu của bạn trên các thiết bị.",
+  "@unauthenticated": {
+    "description": "Unauthenticated"
+  },
   "sync_error": "Lỗi đồng bộ hóa: {error}",
+  "@sync_error": {
+    "description": "Sync error",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "premium_required_to_sync": "Bạn cần nâng cấp lên Premium hoặc xem quảng cáo để đồng bộ dữ liệu.",
+  "@premium_required_to_sync": {
+    "description": "Premium required to sync"
+  },
   "sync_in_progress": "Hệ thống đang đồng bộ, vui lòng đợi.",
-  "cooldown":"Bạn thao tác quá nhanh. Vui lòng đợi {seconds} giây để đồng bộ lại.",
+  "@sync_in_progress": {
+    "description": "Sync in progress"
+  },
+  "cooldown": "Bạn thao tác quá nhanh. Vui lòng đợi {seconds} giây để đồng bộ lại.",
+  "@cooldown": {
+    "description": "Cooldown",
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
   "accepted_formats": "Chấp nhận các định dạng",
+  "@accepted_formats": {
+    "description": "Accepted formats"
+  },
   "select_file_to_import": "Chọn tệp để nhập",
+  "@select_file_to_import": {
+    "description": "Select file to import"
+  },
   "tap_to_browse": "Chạm để duyệt thiết bị hoặc lưu trữ đám mây của bạn cho các tệp.",
+  "@tap_to_browse": {
+    "description": "Tap to browse"
+  },
   "protected": "Được bảo vệ",
+  "@protected": {
+    "description": "Protected"
+  },
   "protected_description": "Dữ liệu của bạn không bao giờ rời khỏi thiết bị và được xử lý cục bộ.",
+  "@protected_description": {
+    "description": "Protected description"
+  },
   "recent_imports": "Nhập gần đây",
+  "@recent_imports": {
+    "description": "Recent imports"
+  },
   "no_recent_imports": "Chưa có nhập dữ liệu gần đây",
+  "@no_recent_imports": {
+    "description": "No recent imports"
+  },
   "invalid_format": "Định dạng tệp không hợp lệ.",
+  "@invalid_format": {
+    "description": "Invalid format"
+  },
   "import_success": "Nhập thành công!",
+  "@import_success": {
+    "description": "Import success"
+  },
   "import_success_description": "Đã nhập thành công {count} giao dịch từ tệp.",
+  "@import_success_description": {
+    "description": "Import success description",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
   "file_format_template": "Mẫu định dạng tệp",
+  "@file_format_template": {
+    "description": "File format template"
+  },
   "download_sample_file": "Tải xuống tệp mẫu {format}",
-
+  "@download_sample_file": {
+    "description": "Download sample file",
+    "placeholders": {
+      "format": {
+        "type": "String"
+      }
+    }
+  },
   "card": "Thẻ",
-
+  "@card": {
+    "description": "Card"
+  },
   "font_selection": "Lựa chọn Font chữ",
+  "@font_selection": {
+    "description": "Font selection"
+  },
   "select_font": "Chọn Font chữ",
+  "@select_font": {
+    "description": "Select font"
+  },
   "font": "Font chữ",
+  "@font": {
+    "description": "Font"
+  },
   "font_description": "Một giao dịch mỗi ngày sẽ giúp bạn tránh được 'Tháng túng thiếu'.",
-  
+  "@font_description": {
+    "description": "Font description"
+  },
   "reminder_title": "Nhắc nhở chi tiêu hàng ngày",
+  "@reminder_title": {
+    "description": "Reminder title"
+  },
   "reminder_body": "Bạn đã ghi chép chi tiêu hôm nay chưa? 💸",
-
+  "@reminder_body": {
+    "description": "Reminder body"
+  },
   "defaultTransactionTitle": "Giao dịch mới",
+  "@defaultTransactionTitle": {
+    "description": "Defaulttransactiontitle"
+  },
   "invoice_analysis": "Đang phân tích hóa đơn ...",
-
+  "@invoice_analysis": {
+    "description": "Invoice analysis"
+  },
   "mapbox_error": "Lỗi tải bản đồ. Vui lòng kiểm tra cấu hình token Mapbox của bạn.",
+  "@mapbox_error": {
+    "description": "Mapbox error"
+  },
   "location": "Vị trí",
+  "@location": {
+    "description": "Location"
+  },
   "current_location": "Vị trí hiện tại",
+  "@current_location": {
+    "description": "Current location"
+  },
   "select_location": "Chọn vị trí",
+  "@select_location": {
+    "description": "Select location"
+  },
   "no_location_selected": "Chưa chọn vị trí",
+  "@no_location_selected": {
+    "description": "No location selected"
+  },
   "search_location": "Tìm kiếm vị trí...",
+  "@search_location": {
+    "description": "Search location"
+  },
   "tap_to_change_location": "Chạm để thay đổi vị trí",
+  "@tap_to_change_location": {
+    "description": "Tap to change location"
+  },
   "search_results": "Kết quả tìm kiếm",
+  "@search_results": {
+    "description": "Search results"
+  },
   "no_location_found": "Không tìm thấy vị trí",
+  "@no_location_found": {
+    "description": "No location found"
+  },
   "recent_locations": "Vị trí gần đây",
+  "@recent_locations": {
+    "description": "Recent locations"
+  },
   "location_access_error": "Lỗi truy cập vị trí",
+  "@location_access_error": {
+    "description": "Location access error"
+  },
   "location_permission_denied": "Quyền truy cập vị trí bị từ chối.",
+  "@location_permission_denied": {
+    "description": "Location permission denied"
+  },
   "location_permission_denied_description": "Vui lòng bật quyền truy cập vị trí trong cài đặt.",
+  "@location_permission_denied_description": {
+    "description": "Location permission denied description"
+  },
   "notification_permission_denied": "Nhận thông báo bị từ chối.",
+  "@notification_permission_denied": {
+    "description": "Notification permission denied"
+  },
   "notification_permission_denied_description": "Vui lòng bật thông báo trong cài đặt để nhận nhắc nhở.",
+  "@notification_permission_denied_description": {
+    "description": "Notification permission denied description"
+  },
   "permission_required_camera": "Quyền truy cập camera bị từ chối",
+  "@permission_required_camera": {
+    "description": "Permission required camera"
+  },
   "permission_required_camera_description": "Vui lòng bật quyền truy cập camera trong cài đặt để sử dụng tính năng quét hóa đơn.",
-
+  "@permission_required_camera_description": {
+    "description": "Permission required camera description"
+  },
   "voice_input_error": "Lỗi nhập giọng nói. Vui lòng thử lại.",
+  "@voice_input_error": {
+    "description": "Voice input error"
+  },
   "voice_input_not_recognized": "Không nhận diện được giọng nói. Vui lòng thử lại.",
+  "@voice_input_not_recognized": {
+    "description": "Voice input not recognized"
+  },
   "voice_input_permission_denied": "Quyền nhập giọng nói bị từ chối. Vui lòng bật quyền truy cập micro trong cài đặt.",
+  "@voice_input_permission_denied": {
+    "description": "Voice input permission denied"
+  },
   "error_ai_request": "AI không thể nhận dạng yêu cầu này. Hãy thử nói rõ hơn.",
+  "@error_ai_request": {
+    "description": "Error ai request"
+  },
   "voice_analysis": "Đang phân tích giọng nói...",
+  "@voice_analysis": {
+    "description": "Voice analysis"
+  },
   "scan_receipt_error": "Lỗi quét hóa đơn. Vui lòng thử lại.",
+  "@scan_receipt_error": {
+    "description": "Scan receipt error"
+  },
   "requires_premium": "Tính năng này yêu cầu xem quảng cáo để sử dụng hoặc nâng cấp lên Premium.",
+  "@requires_premium": {
+    "description": "Requires premium"
+  },
   "watch_ad_continue": "Xem quảng cáo để tiếp tục",
+  "@watch_ad_continue": {
+    "description": "Watch ad continue"
+  },
   "permission_required_voice_input": "Quyền truy cập micro bị từ chối",
+  "@permission_required_voice_input": {
+    "description": "Permission required voice input"
+  },
   "permission_required_voice_input_description": "Vui lòng bật quyền truy cập micro trong cài đặt để sử dụng nhập giọng nói.",
+  "@permission_required_voice_input_description": {
+    "description": "Permission required voice input description"
+  },
   "permission_required_location": "Quyền truy cập vị trí bị từ chối",
+  "@permission_required_location": {
+    "description": "Permission required location"
+  },
   "permission_required_location_description": "Vui lòng bật quyền truy cập vị trí trong cài đặt để sử dụng các tính năng vị trí.",
+  "@permission_required_location_description": {
+    "description": "Permission required location description"
+  },
   "congratulations": "Chúc mừng!",
+  "@congratulations": {
+    "description": "Congratulations"
+  },
   "successfully_purchased": "Bạn đã mua thành công gói Premium. Hãy tận hưởng trải nghiệm nâng cao của bạn!",
+  "@successfully_purchased": {
+    "description": "Successfully purchased"
+  },
   "cancel_purchase": "Giao dịch đã bị hủy.",
+  "@cancel_purchase": {
+    "description": "Cancel purchase"
+  },
   "restore_no_purchase_description": "Không tìm thấy giao dịch nào để khôi phục.",
-
+  "@restore_no_purchase_description": {
+    "description": "Restore no purchase description"
+  },
   "ai_powered": "Hỗ trợ bởi AI",
+  "@ai_powered": {
+    "description": "Ai powered"
+  },
   "entries_pending": "Mục đang chờ xử lý",
+  "@entries_pending": {
+    "description": "Entries pending"
+  },
   "confirm_selected_entries": "Thêm các mục đã chọn",
+  "@confirm_selected_entries": {
+    "description": "Confirm selected entries"
+  },
   "preview_results": "Xem trước kết quả",
+  "@preview_results": {
+    "description": "Preview results"
+  },
   "clear_all": "Bỏ chọn tất cả",
+  "@clear_all": {
+    "description": "Clear all"
+  },
   "select_all": "Chọn tất cả",
+  "@select_all": {
+    "description": "Select all"
+  },
   "fail_to_save_transactions": "Lưu giao dịch thất bại. Vui lòng thử lại.",
-
+  "@fail_to_save_transactions": {
+    "description": "Fail to save transactions"
+  },
   "tap_to_check_in": "Chạm để kiểm tra",
+  "@tap_to_check_in": {
+    "description": "Tap to check in"
+  },
   "keep_your_streak": "Duy trì chuỗi của bạn!",
+  "@keep_your_streak": {
+    "description": "Keep your streak"
+  },
   "keep_your_streak_day": "Duy trì chuỗi {streak} ngày của bạn!",
+  "@keep_your_streak_day": {
+    "description": "Keep your streak day",
+    "placeholders": {
+      "streak": {
+        "type": "String"
+      }
+    }
+  },
   "streak": "Chuỗi",
+  "@streak": {
+    "description": "Streak"
+  },
   "streak_days": "{days} ngày",
-
+  "@streak_days": {
+    "description": "Streak days",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
   "not_logined": "Chưa đăng nhập",
+  "@not_logined": {
+    "description": "Not logined"
+  },
   "please_login_to_sync_data": "Vui lòng đăng nhập để đồng bộ dữ liệu của bạn trên các thiết bị.",
+  "@please_login_to_sync_data": {
+    "description": "Please login to sync data"
+  },
   "require_premium_to_sync": "Bạn cần nâng cấp lên Premium hoặc xem quảng cáo để đồng bộ dữ liệu.",
-
+  "@require_premium_to_sync": {
+    "description": "Require premium to sync"
+  },
   "information_and_support": "Thông tin & Hỗ trợ",
+  "@information_and_support": {
+    "description": "Information and support"
+  },
   "contact_support": "Liên hệ hỗ trợ",
+  "@contact_support": {
+    "description": "Contact support"
+  },
   "send_email": "Gửi email hỗ trợ",
+  "@send_email": {
+    "description": "Send email"
+  },
   "describe_issue": "Mô tả vấn đề của bạn ở đây...",
+  "@describe_issue": {
+    "description": "Describe issue"
+  },
   "feedback": "Góp ý",
+  "@feedback": {
+    "description": "Feedback"
+  },
   "feedback_description": "Chúng tôi rất muốn nghe ý kiến của bạn! Hãy chia sẻ suy nghĩ, đề xuất hoặc bất kỳ vấn đề nào bạn gặp phải để chúng tôi có thể cải thiện ứng dụng.",
+  "@feedback_description": {
+    "description": "Feedback description"
+  },
   "submit_feedback": "Gửi góp ý",
+  "@submit_feedback": {
+    "description": "Submit feedback"
+  },
   "report_issue": "Báo cáo sự cố",
+  "@report_issue": {
+    "description": "Report issue"
+  },
   "report_issue_description": "Nếu bạn gặp phải bất kỳ lỗi nào hoặc có vấn đề với ứng dụng, vui lòng cho chúng tôi biết. Mô tả chi tiết vấn đề của bạn để chúng tôi có thể giải quyết nó nhanh chóng.",
+  "@report_issue_description": {
+    "description": "Report issue description"
+  },
   "submit_issue": "Gửi báo cáo sự cố",
+  "@submit_issue": {
+    "description": "Submit issue"
+  },
   "thank_you_feedback": "Cảm ơn bạn đã gửi góp ý! Chúng tôi đánh giá cao phản hồi của bạn và sẽ xem xét nó để cải thiện ứng dụng.",
+  "@thank_you_feedback": {
+    "description": "Thank you feedback"
+  },
   "thank_you_issue": "Cảm ơn bạn đã báo cáo sự cố! Chúng tôi đánh giá cao phản hồi của bạn và sẽ xem xét nó để giải quyết vấn đề bạn gặp phải.",
+  "@thank_you_issue": {
+    "description": "Thank you issue"
+  },
   "request_delete_account": "Yêu cầu xóa tài khoản",
+  "@request_delete_account": {
+    "description": "Request delete account"
+  },
   "delete_account_description": "Nếu bạn muốn xóa tài khoản của mình, vui lòng cho chúng tôi biết taị sao bạn muốn xóa tài khoản. Chúng tôi sẽ xử lý yêu cầu của bạn trong thời gian sớm nhất có thể.",
+  "@delete_account_description": {
+    "description": "Delete account description"
+  },
   "submit_delete_request": "Gửi yêu cầu xóa tài khoản",
+  "@submit_delete_request": {
+    "description": "Submit delete request"
+  },
   "select_subject": "Chọn chủ đề",
+  "@select_subject": {
+    "description": "Select subject"
+  },
   "please_enter_content": "Vui lòng nhập nội dung",
+  "@please_enter_content": {
+    "description": "Please enter content"
+  },
   "subject": "Chủ đề",
+  "@subject": {
+    "description": "Subject"
+  },
   "content": "Nội dung",
+  "@content": {
+    "description": "Content"
+  },
   "send_contact_success": "Gửi liên hệ thành công! Chúng tôi sẽ liên hệ lại với bạn sớm nhất có thể.",
+  "@send_contact_success": {
+    "description": "Send contact success"
+  },
   "send_contact_error": "Lỗi khi gửi liên hệ. Vui lòng thử lại.",
+  "@send_contact_error": {
+    "description": "Send contact error"
+  },
   "contact_info": "Thông tin liên hệ",
+  "@contact_info": {
+    "description": "Contact info"
+  },
   "email_placeholder": "Nhập email của bạn",
+  "@email_placeholder": {
+    "description": "Email placeholder"
+  },
   "name_placeholder": "Nhập tên của bạn",
+  "@name_placeholder": {
+    "description": "Name placeholder"
+  },
   "invalid_name": "Vui lòng nhập tên của bạn.",
+  "@invalid_name": {
+    "description": "Invalid name"
+  },
   "mrs": "Bà",
+  "@mrs": {
+    "description": "Mrs"
+  },
   "mr": "Ông",
+  "@mr": {
+    "description": "Mr"
+  },
   "ms": "Cô",
+  "@ms": {
+    "description": "Ms"
+  },
   "salutation": "Danh xưng",
+  "@salutation": {
+    "description": "Salutation"
+  },
   "delete_account": "Xóa tài khoản",
+  "@delete_account": {
+    "description": "Delete account"
+  },
   "delete_account_confirmation": "Bạn có chắc chắn muốn xóa tài khoản của mình không? Hành động này không thể hoàn tác và sẽ xóa tất cả dữ liệu của bạn.",
+  "@delete_account_confirmation": {
+    "description": "Delete account confirmation"
+  },
   "failed_to_send_deletion_request": "Lỗi khi gửi yêu cầu xóa tài khoản. Vui lòng thử lại.",
+  "@failed_to_send_deletion_request": {
+    "description": "Failed to send deletion request"
+  },
   "requires_recent_login_description": "Vì lý do bảo mật, vui lòng đăng xuất và đăng nhập lại sau đó thử lại yêu cầu xóa tài khoản của bạn.",
-  "delete_account_failed": "Đã xảy ra lỗi khi xoá tài khoản của bạn. Vui lòng thử lại."
+  "@requires_recent_login_description": {
+    "description": "Requires recent login description"
+  },
+  "delete_account_failed": "Đã xảy ra lỗi khi xoá tài khoản của bạn. Vui lòng thử lại.",
+  "@delete_account_failed": {
+    "description": "Delete account failed"
+  }
 }

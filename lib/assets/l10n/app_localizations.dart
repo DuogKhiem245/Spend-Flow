@@ -98,2947 +98,2947 @@ abstract class AppLocalizations {
     Locale('vi'),
   ];
 
-  /// No description provided for @app_name.
+  /// App name
   ///
   /// In vi, this message translates to:
   /// **'SpendFlow'**
   String get app_name;
 
-  /// No description provided for @ok.
+  /// Ok
   ///
   /// In vi, this message translates to:
   /// **'Đồng ý'**
   String get ok;
 
-  /// No description provided for @cancel.
+  /// Cancel
   ///
   /// In vi, this message translates to:
   /// **'Hủy'**
   String get cancel;
 
-  /// No description provided for @skip.
+  /// Skip
   ///
   /// In vi, this message translates to:
   /// **'Bỏ qua'**
   String get skip;
 
-  /// No description provided for @next.
+  /// Next
   ///
   /// In vi, this message translates to:
   /// **'Tiếp theo'**
   String get next;
 
-  /// No description provided for @confirm.
+  /// Confirm
   ///
   /// In vi, this message translates to:
   /// **'Xác nhận'**
   String get confirm;
 
-  /// No description provided for @save.
+  /// Save
   ///
   /// In vi, this message translates to:
   /// **'Lưu'**
   String get save;
 
-  /// No description provided for @edit.
+  /// Edit
   ///
   /// In vi, this message translates to:
   /// **'Sửa'**
   String get edit;
 
-  /// No description provided for @delete.
+  /// Delete
   ///
   /// In vi, this message translates to:
   /// **'Xóa'**
   String get delete;
 
-  /// No description provided for @yes.
+  /// Yes
   ///
   /// In vi, this message translates to:
   /// **'Có'**
   String get yes;
 
-  /// No description provided for @no.
+  /// No
   ///
   /// In vi, this message translates to:
   /// **'Không'**
   String get no;
 
-  /// No description provided for @done.
+  /// Done
   ///
   /// In vi, this message translates to:
   /// **'Hoàn tất'**
   String get done;
 
-  /// No description provided for @close.
+  /// Close
   ///
   /// In vi, this message translates to:
   /// **'Đóng'**
   String get close;
 
-  /// No description provided for @back.
+  /// Back
   ///
   /// In vi, this message translates to:
   /// **'Quay lại'**
   String get back;
 
-  /// No description provided for @start.
+  /// Start
   ///
   /// In vi, this message translates to:
   /// **'Bắt đầu'**
   String get start;
 
-  /// No description provided for @continueAction.
+  /// Continueaction
   ///
   /// In vi, this message translates to:
   /// **'Tiếp tục'**
   String get continueAction;
 
-  /// No description provided for @view_all.
+  /// View all
   ///
   /// In vi, this message translates to:
   /// **'Xem tất cả'**
   String get view_all;
 
-  /// No description provided for @see_all.
+  /// See all
   ///
   /// In vi, this message translates to:
   /// **'Xem tất cả'**
   String get see_all;
 
-  /// No description provided for @amount.
+  /// Amount
   ///
   /// In vi, this message translates to:
   /// **'Số tiền'**
   String get amount;
 
-  /// No description provided for @name.
+  /// Name
   ///
   /// In vi, this message translates to:
   /// **'Tên giao dịch'**
   String get name;
 
-  /// No description provided for @date.
+  /// Date
   ///
   /// In vi, this message translates to:
   /// **'Ngày'**
   String get date;
 
-  /// No description provided for @month.
+  /// Month
   ///
   /// In vi, this message translates to:
   /// **'Tháng'**
   String get month;
 
-  /// No description provided for @life_time.
+  /// Life time
   ///
   /// In vi, this message translates to:
   /// **'Trọn đời'**
   String get life_time;
 
-  /// No description provided for @today.
+  /// Today
   ///
   /// In vi, this message translates to:
   /// **'Hôm nay'**
   String get today;
 
-  /// No description provided for @other.
+  /// Other
   ///
   /// In vi, this message translates to:
   /// **'Khác'**
   String get other;
 
-  /// No description provided for @home.
+  /// Home
   ///
   /// In vi, this message translates to:
   /// **'Trang chủ'**
   String get home;
 
-  /// No description provided for @reports.
+  /// Reports
   ///
   /// In vi, this message translates to:
   /// **'Báo cáo'**
   String get reports;
 
-  /// No description provided for @budgets.
+  /// Budgets
   ///
   /// In vi, this message translates to:
   /// **'Ngân sách'**
   String get budgets;
 
-  /// No description provided for @all.
+  /// All
   ///
   /// In vi, this message translates to:
   /// **'Tất cả'**
   String get all;
 
-  /// No description provided for @error.
+  /// Error
   ///
   /// In vi, this message translates to:
   /// **'Lỗi'**
   String get error;
 
-  /// No description provided for @user.
+  /// User
   ///
   /// In vi, this message translates to:
   /// **'Người dùng'**
   String get user;
 
-  /// No description provided for @success.
+  /// Success
   ///
   /// In vi, this message translates to:
   /// **'Thành công'**
   String get success;
 
-  /// No description provided for @loading.
+  /// Loading
   ///
   /// In vi, this message translates to:
   /// **'Đang tải...'**
   String get loading;
 
-  /// No description provided for @onboard_step1_title.
+  /// Onboard step1 title
   ///
   /// In vi, this message translates to:
   /// **'Ghi chép trong nháy mắt'**
   String get onboard_step1_title;
 
-  /// No description provided for @onboard_step1_message.
+  /// Onboard step1 message
   ///
   /// In vi, this message translates to:
   /// **'Tự động xác định địa điểm chi tiêu giúp bạn ghi chép nhanh hơn bao giờ hết. Không còn phải nhớ mình đã tiêu gì ở đâu.'**
   String get onboard_step1_message;
 
-  /// No description provided for @onboard_step2_title.
+  /// Onboard step2 title
   ///
   /// In vi, this message translates to:
   /// **'Làm chủ ví tiền của bạn'**
   String get onboard_step2_title;
 
-  /// No description provided for @onboard_step2_message.
+  /// Onboard step2 message
   ///
   /// In vi, this message translates to:
   /// **'Thiết lập hạn mức chi tiêu cho từng danh mục. Chúng tôi sẽ giúp bạn luôn đi đúng lộ trình tài chính.'**
   String get onboard_step2_message;
 
-  /// No description provided for @onboard_step3_title.
+  /// Onboard step3 title
   ///
   /// In vi, this message translates to:
   /// **'Xây dựng thói quen tốt'**
   String get onboard_step3_title;
 
-  /// No description provided for @onboard_step3_message.
+  /// Onboard step3 message
   ///
   /// In vi, this message translates to:
   /// **'Nhận thông báo nhắc nhở vào cuối ngày để không bỏ lỡ bất kỳ giao dịch nào. Kỷ luật là chìa khóa của sự thịnh vượng.'**
   String get onboard_step3_message;
 
-  /// No description provided for @create_first_wallet.
+  /// Create first wallet
   ///
   /// In vi, this message translates to:
   /// **'Tạo ví đầu tiên của bạn'**
   String get create_first_wallet;
 
-  /// No description provided for @welcome_create_wallet.
+  /// Welcome create wallet
   ///
   /// In vi, this message translates to:
   /// **'Chào mừng đến với Spend Flow!\nHãy tạo ví đầu tiên của bạn để bắt đầu.'**
   String get welcome_create_wallet;
 
-  /// No description provided for @enter_wallet_name.
+  /// Enter wallet name
   ///
   /// In vi, this message translates to:
   /// **'Nhập tên ví'**
   String get enter_wallet_name;
 
-  /// No description provided for @eg_my_wallet.
+  /// Eg my wallet
   ///
   /// In vi, this message translates to:
   /// **'ví dụ: Ví của tôi, Tiền mặt, Thẻ tín dụng'**
   String get eg_my_wallet;
 
-  /// No description provided for @currency_unit.
+  /// Currency unit
   ///
   /// In vi, this message translates to:
   /// **'Đơn vị tiền tệ'**
   String get currency_unit;
 
-  /// No description provided for @create_wallet.
+  /// Create wallet
   ///
   /// In vi, this message translates to:
   /// **'Tạo ví'**
   String get create_wallet;
 
-  /// No description provided for @please_enter_wallet_name.
+  /// Please enter wallet name
   ///
   /// In vi, this message translates to:
   /// **'Vui lòng nhập tên ví.'**
   String get please_enter_wallet_name;
 
-  /// No description provided for @add_wallet.
+  /// Add wallet
   ///
   /// In vi, this message translates to:
   /// **'Thêm ví mới'**
   String get add_wallet;
 
-  /// No description provided for @wallet_name.
+  /// Wallet name
   ///
   /// In vi, this message translates to:
   /// **'Tên ví'**
   String get wallet_name;
 
-  /// No description provided for @add_wallet_description.
+  /// Add wallet description
   ///
   /// In vi, this message translates to:
   /// **'Thêm nhiều ví để quản lí và theo dõi tài chính hiệu quả hơn.'**
   String get add_wallet_description;
 
-  /// No description provided for @cannot_delete_last_wallet.
+  /// Cannot delete last wallet
   ///
   /// In vi, this message translates to:
   /// **'Bạn không thể xóa ví duy nhất.'**
   String get cannot_delete_last_wallet;
 
-  /// No description provided for @delete_wallet.
+  /// Delete wallet
   ///
   /// In vi, this message translates to:
   /// **'Xóa ví'**
   String get delete_wallet;
 
-  /// No description provided for @delete_wallet_confirmation.
+  /// Delete wallet confirmation
   ///
   /// In vi, this message translates to:
   /// **'Bạn có chắc chắn muốn xóa ví \'{walletName}\' không? Hành động này không thể hoàn tác.'**
-  String delete_wallet_confirmation(Object walletName);
+  String delete_wallet_confirmation(String walletName);
 
-  /// No description provided for @in_use.
+  /// In use
   ///
   /// In vi, this message translates to:
   /// **'Đang sử dụng'**
   String get in_use;
 
-  /// No description provided for @incomplete_details.
+  /// Incomplete details
   ///
   /// In vi, this message translates to:
   /// **'Thiếu dữ liệu'**
   String get incomplete_details;
 
-  /// No description provided for @please_fill_required_fields.
+  /// Please fill required fields
   ///
   /// In vi, this message translates to:
   /// **'Vui lòng điền vào các trường bắt buộc sau:'**
   String get please_fill_required_fields;
 
-  /// No description provided for @select_wallet.
+  /// Select wallet
   ///
   /// In vi, this message translates to:
   /// **'Chọn ví'**
   String get select_wallet;
 
-  /// No description provided for @please_create_wallet_first.
+  /// Please create wallet first
   ///
   /// In vi, this message translates to:
   /// **'Vui lòng tạo ví trước khi thêm giao dịch.'**
   String get please_create_wallet_first;
 
-  /// No description provided for @create_now.
+  /// Create now
   ///
   /// In vi, this message translates to:
   /// **'Tạo ngay'**
   String get create_now;
 
-  /// No description provided for @no_wallets_yet.
+  /// No wallets yet
   ///
   /// In vi, this message translates to:
   /// **'Chưa có ví nào'**
   String get no_wallets_yet;
 
-  /// No description provided for @login.
+  /// Login
   ///
   /// In vi, this message translates to:
   /// **'Đăng nhập'**
   String get login;
 
-  /// No description provided for @register.
+  /// Register
   ///
   /// In vi, this message translates to:
   /// **'Đăng ký'**
   String get register;
 
-  /// No description provided for @logout.
+  /// Logout
   ///
   /// In vi, this message translates to:
   /// **'Đăng xuất'**
   String get logout;
 
-  /// No description provided for @email.
+  /// Email
   ///
   /// In vi, this message translates to:
   /// **'Email'**
   String get email;
 
-  /// No description provided for @password.
+  /// Password
   ///
   /// In vi, this message translates to:
   /// **'Mật khẩu'**
   String get password;
 
-  /// No description provided for @new_password.
+  /// New password
   ///
   /// In vi, this message translates to:
   /// **'Mật khẩu mới'**
   String get new_password;
 
-  /// No description provided for @enter_email.
+  /// Enter email
   ///
   /// In vi, this message translates to:
   /// **'Nhập email của bạn'**
   String get enter_email;
 
-  /// No description provided for @enter_your_password.
+  /// Enter your password
   ///
   /// In vi, this message translates to:
   /// **'Nhập mật khẩu của bạn'**
   String get enter_your_password;
 
-  /// No description provided for @confirm_password.
+  /// Confirm password
   ///
   /// In vi, this message translates to:
   /// **'Nhập lại mật khẩu'**
   String get confirm_password;
 
-  /// No description provided for @confirm_your_password.
+  /// Confirm your password
   ///
   /// In vi, this message translates to:
   /// **'Nhập lại mật khẩu'**
   String get confirm_your_password;
 
-  /// No description provided for @passwords_match.
+  /// Passwords match
   ///
   /// In vi, this message translates to:
   /// **'Mật khẩu trùng khớp.'**
   String get passwords_match;
 
-  /// No description provided for @passwords_mismatch.
+  /// Passwords mismatch
   ///
   /// In vi, this message translates to:
   /// **'Mật khẩu không trùng khớp.'**
   String get passwords_mismatch;
 
-  /// No description provided for @forgot_password.
+  /// Forgot password
   ///
   /// In vi, this message translates to:
   /// **'Quên mật khẩu?'**
   String get forgot_password;
 
-  /// No description provided for @description_forgot_password.
+  /// Description forgot password
   ///
   /// In vi, this message translates to:
   /// **'Nhập email được liên kết với tài khoản của bạn để đặt lại mật khẩu.'**
   String get description_forgot_password;
 
-  /// No description provided for @send_otp.
+  /// Send otp
   ///
   /// In vi, this message translates to:
   /// **'Gửi OTP'**
   String get send_otp;
 
-  /// No description provided for @enter_otp.
+  /// Enter otp
   ///
   /// In vi, this message translates to:
   /// **'Nhập OTP'**
   String get enter_otp;
 
-  /// No description provided for @resend.
+  /// Resend
   ///
   /// In vi, this message translates to:
   /// **'Gửi lại'**
   String get resend;
 
-  /// No description provided for @verify.
+  /// Verify
   ///
   /// In vi, this message translates to:
   /// **'Xác thực'**
   String get verify;
 
-  /// No description provided for @no_otp.
+  /// No otp
   ///
   /// In vi, this message translates to:
   /// **'Không nhận được mã?'**
   String get no_otp;
 
-  /// No description provided for @verify_otp.
+  /// Verify otp
   ///
   /// In vi, this message translates to:
   /// **'Xác thực OTP'**
   String get verify_otp;
 
-  /// No description provided for @we_sent_otp.
+  /// We sent otp
   ///
   /// In vi, this message translates to:
   /// **'Mã xác thực (OTP) đã được gửi đến email của bạn. Vui lòng kiểm tra hộp thư đến (hoặc hòm thư Spam/Quảng cáo) để xem mã.'**
   String get we_sent_otp;
 
-  /// No description provided for @dont_receive_otp.
+  /// Dont receive otp
   ///
   /// In vi, this message translates to:
   /// **'Chưa nhận được OTP?'**
   String get dont_receive_otp;
 
-  /// No description provided for @plese_enter_valid_otp.
+  /// Plese enter valid otp
   ///
   /// In vi, this message translates to:
   /// **'Vui lòng nhập mã OTP hợp lệ.'**
   String get plese_enter_valid_otp;
 
-  /// No description provided for @otp_resent.
+  /// Otp resent
   ///
   /// In vi, this message translates to:
   /// **'Mã OTP đã được gửi lại thành công.'**
   String get otp_resent;
 
-  /// No description provided for @register_successful.
+  /// Register successful
   ///
   /// In vi, this message translates to:
   /// **'Đăng ký thành công!'**
   String get register_successful;
 
-  /// No description provided for @register_successful_description.
+  /// Register successful description
   ///
   /// In vi, this message translates to:
   /// **'Tài khoản của bạn đã được tạo thành công. Bây giờ bạn có thể đăng nhập bằng thông tin đăng nhập của mình.'**
   String get register_successful_description;
 
-  /// No description provided for @no_account.
+  /// No account
   ///
   /// In vi, this message translates to:
   /// **'Chưa có tài khoản?'**
   String get no_account;
 
-  /// No description provided for @have_account.
+  /// Have account
   ///
   /// In vi, this message translates to:
   /// **'Đã có tài khoản?'**
   String get have_account;
 
-  /// No description provided for @login_error.
+  /// Login error
   ///
   /// In vi, this message translates to:
   /// **'Email hoặc mật khẩu không hợp lệ'**
   String get login_error;
 
-  /// No description provided for @register_error.
+  /// Register error
   ///
   /// In vi, this message translates to:
   /// **'Đăng ký thất bại'**
   String get register_error;
 
-  /// No description provided for @create_account.
+  /// Create account
   ///
   /// In vi, this message translates to:
   /// **'Đăng kí tài khoản'**
   String get create_account;
 
-  /// No description provided for @create_password.
+  /// Create password
   ///
   /// In vi, this message translates to:
   /// **'Tạo mật khẩu mới'**
   String get create_password;
 
-  /// No description provided for @create_new_password.
+  /// Create new password
   ///
   /// In vi, this message translates to:
   /// **'Gần xong rồi! Tạo mật khẩu mới của bạn.'**
   String get create_new_password;
 
-  /// No description provided for @or_continue_with.
+  /// Or continue with
   ///
   /// In vi, this message translates to:
   /// **'Hoặc đăng nhập với'**
   String get or_continue_with;
 
-  /// No description provided for @sign_in_with.
+  /// Sign in with
   ///
   /// In vi, this message translates to:
   /// **'Đăng nhập với {provider}'**
-  String sign_in_with(Object provider);
+  String sign_in_with(String provider);
 
-  /// No description provided for @check_your_mail.
+  /// Check your mail
   ///
   /// In vi, this message translates to:
   /// **'Kiểm tra email của bạn'**
   String get check_your_mail;
 
-  /// No description provided for @we_have_sent_mail.
+  /// We have sent mail
   ///
   /// In vi, this message translates to:
   /// **'Chúng tôi đã gửi một email đến:'**
   String get we_have_sent_mail;
 
-  /// No description provided for @please_check_your_mail_to_verify_account.
+  /// Please check your mail to verify account
   ///
   /// In vi, this message translates to:
   /// **'Vui lòng kiểm tra email của bạn để xác thực tài khoản trước khi đăng nhập.'**
   String get please_check_your_mail_to_verify_account;
 
-  /// No description provided for @register_failed.
+  /// Register failed
   ///
   /// In vi, this message translates to:
   /// **'Đăng ký thất bại'**
   String get register_failed;
 
-  /// No description provided for @please_fill_all_fields.
+  /// Please fill all fields
   ///
   /// In vi, this message translates to:
   /// **'Vui lòng điền vào tất cả các trường.'**
   String get please_fill_all_fields;
 
-  /// No description provided for @please_enter_email_and_password.
+  /// Please enter email and password
   ///
   /// In vi, this message translates to:
   /// **'Vui lòng nhập cả email và mật khẩu.'**
   String get please_enter_email_and_password;
 
-  /// No description provided for @incorrect_email_or_password.
+  /// Incorrect email or password
   ///
   /// In vi, this message translates to:
   /// **'Email hoặc mật khẩu không đúng.'**
   String get incorrect_email_or_password;
 
-  /// No description provided for @invalid_email_format.
+  /// Invalid email format
   ///
   /// In vi, this message translates to:
   /// **'Định dạng email không hợp lệ.'**
   String get invalid_email_format;
 
-  /// No description provided for @this_account_has_been_disabled.
+  /// This account has been disabled
   ///
   /// In vi, this message translates to:
   /// **'Tài khoản này đã bị vô hiệu hóa.'**
   String get this_account_has_been_disabled;
 
-  /// No description provided for @too_many_requests_please_try_later.
+  /// Too many requests please try later
   ///
   /// In vi, this message translates to:
   /// **'Quá nhiều yêu cầu. Vui lòng thử lại sau.'**
   String get too_many_requests_please_try_later;
 
-  /// No description provided for @email_not_verified.
+  /// Email not verified
   ///
   /// In vi, this message translates to:
   /// **'Email chưa được xác thực'**
   String get email_not_verified;
 
-  /// No description provided for @please_verify_your_email_to_continue.
+  /// Please verify your email to continue
   ///
   /// In vi, this message translates to:
   /// **'Vui lòng xác thực email của bạn để tiếp tục.'**
   String get please_verify_your_email_to_continue;
 
-  /// No description provided for @are_you_sure_logout.
+  /// Are you sure logout
   ///
   /// In vi, this message translates to:
   /// **'Bạn có chắc chắn muốn đăng xuất không?'**
   String get are_you_sure_logout;
 
-  /// No description provided for @have_error_occurred.
+  /// Have error occurred
   ///
   /// In vi, this message translates to:
   /// **'Đã xảy ra lỗi. Vui lòng thử lại.'**
   String get have_error_occurred;
 
-  /// No description provided for @user_not_found.
+  /// User not found
   ///
   /// In vi, this message translates to:
   /// **'Không tìm thấy tài khoản với email này.'**
   String get user_not_found;
 
-  /// No description provided for @enter_otp_reset_password.
+  /// Enter otp reset password
   ///
   /// In vi, this message translates to:
   /// **'Chúng tôi vừa gửi mã OTP vào email của bạn. Hãy nhập mã OTP để đặt lại mật khẩu.'**
   String get enter_otp_reset_password;
 
-  /// No description provided for @not_time_yet_to_resend_otp.
+  /// Not time yet to resend otp
   ///
   /// In vi, this message translates to:
   /// **'Vui lòng chờ một lát để gửi lại mã OTP.'**
   String get not_time_yet_to_resend_otp;
 
-  /// No description provided for @reset_password_successful.
+  /// Reset password successful
   ///
   /// In vi, this message translates to:
   /// **'Đặt lại mật khẩu thành công'**
   String get reset_password_successful;
 
-  /// No description provided for @reset_password_successful_description.
+  /// Reset password successful description
   ///
   /// In vi, this message translates to:
   /// **'Mật khẩu của bạn đã được đặt lại thành công. Bây giờ bạn có thể đăng nhập bằng mật khẩu mới.'**
   String get reset_password_successful_description;
 
-  /// No description provided for @welcome_back.
+  /// Welcome back
   ///
   /// In vi, this message translates to:
   /// **'Chào mừng trở lại'**
   String get welcome_back;
 
-  /// No description provided for @back_login.
+  /// Back login
   ///
   /// In vi, this message translates to:
   /// **'Quay lại đăng nhập'**
   String get back_login;
 
-  /// No description provided for @description_create_account.
+  /// Description create account
   ///
   /// In vi, this message translates to:
   /// **'Kiểm soát tài chính của bạn ngay hôm nay'**
   String get description_create_account;
 
-  /// No description provided for @label_weak.
+  /// Label weak
   ///
   /// In vi, this message translates to:
   /// **'Yếu'**
   String get label_weak;
 
-  /// No description provided for @label_fair.
+  /// Label fair
   ///
   /// In vi, this message translates to:
   /// **'Trung bình'**
   String get label_fair;
 
-  /// No description provided for @label_good.
+  /// Label good
   ///
   /// In vi, this message translates to:
   /// **'Tốt'**
   String get label_good;
 
-  /// No description provided for @label_strong.
+  /// Label strong
   ///
   /// In vi, this message translates to:
   /// **'Mạnh'**
   String get label_strong;
 
-  /// No description provided for @low_pass.
+  /// Low pass
   ///
   /// In vi, this message translates to:
   /// **'Tối thiểu 8 ký tự, bao gồm chữ số và ký tự đặc biệt.'**
   String get low_pass;
 
-  /// No description provided for @weak_pass.
+  /// Weak pass
   ///
   /// In vi, this message translates to:
   /// **'Quá ngắn. Vui lòng nhập thêm ký tự.'**
   String get weak_pass;
 
-  /// No description provided for @fair_pass.
+  /// Fair pass
   ///
   /// In vi, this message translates to:
   /// **'Khá hơn rồi. Hãy thêm số và ký tự đặt biệt.'**
   String get fair_pass;
 
-  /// No description provided for @good_pass_char.
+  /// Good pass char
   ///
   /// In vi, this message translates to:
   /// **'Sắp hoàn hảo! Hãy thêm ký tự đặc biệt để tăng bảo mật.'**
   String get good_pass_char;
 
-  /// No description provided for @good_pass_num.
+  /// Good pass num
   ///
   /// In vi, this message translates to:
   /// **'Sắp hoàn hảo! Hãy thêm số để tăng bảo mật.'**
   String get good_pass_num;
 
-  /// No description provided for @good_pass_special.
+  /// Good pass special
   ///
   /// In vi, this message translates to:
   /// **'Sắp hoàn hảo! Hãy thêm ký tự bất kì để tăng bảo mật.'**
   String get good_pass_special;
 
-  /// No description provided for @strong_pass.
+  /// Strong pass
   ///
   /// In vi, this message translates to:
   /// **'Tuyệt vời! Mật khẩu của bạn đã an toàn.'**
   String get strong_pass;
 
-  /// No description provided for @password_reset_email_sent.
+  /// Password reset email sent
   ///
   /// In vi, this message translates to:
   /// **'Chúng tôi đã gửi một liên kết đặt lại mật khẩu đến email của bạn.'**
   String get password_reset_email_sent;
 
-  /// No description provided for @forgot_password_description.
+  /// Forgot password description
   ///
   /// In vi, this message translates to:
   /// **'Nhập email được liên kết với tài khoản của bạn để đặt lại mật khẩu.'**
   String get forgot_password_description;
 
-  /// No description provided for @send_email_reset.
+  /// Send email reset
   ///
   /// In vi, this message translates to:
   /// **'Gửi email đặt lại'**
   String get send_email_reset;
 
-  /// No description provided for @password_weak_password.
+  /// Password weak password
   ///
   /// In vi, this message translates to:
   /// **'Mật khẩu quá yếu.'**
   String get password_weak_password;
 
-  /// No description provided for @please_edit_fields.
+  /// Please edit fields
   ///
   /// In vi, this message translates to:
   /// **'Vui lòng chỉnh sửa các trường sau để tiếp tục:'**
   String get please_edit_fields;
 
-  /// No description provided for @something_went_wrong.
+  /// Something went wrong
   ///
   /// In vi, this message translates to:
   /// **'Đã xảy ra lỗi. Vui lòng thử lại.'**
   String get something_went_wrong;
 
-  /// No description provided for @network_error.
+  /// Network error
   ///
   /// In vi, this message translates to:
   /// **'Lỗi kết nối mạng, vui lòng kiểm tra lại.'**
   String get network_error;
 
-  /// No description provided for @email_already_in_use.
+  /// Email already in use
   ///
   /// In vi, this message translates to:
   /// **'Địa chỉ email đã được sử dụng bởi tài khoản khác.'**
   String get email_already_in_use;
 
-  /// No description provided for @invalid_email.
+  /// Invalid email
   ///
   /// In vi, this message translates to:
   /// **'Địa chỉ email không hợp lệ.'**
   String get invalid_email;
 
-  /// No description provided for @operation_not_allowed.
+  /// Operation not allowed
   ///
   /// In vi, this message translates to:
   /// **'Không cho phép thực hiện. Vui lòng liên hệ hỗ trợ.'**
   String get operation_not_allowed;
 
-  /// No description provided for @reset_password.
+  /// Reset password
   ///
   /// In vi, this message translates to:
   /// **'Đặt lại mật khẩu'**
   String get reset_password;
 
-  /// No description provided for @email_not_received.
+  /// Email not received
   ///
   /// In vi, this message translates to:
   /// **'Không nhận được email?'**
   String get email_not_received;
 
-  /// No description provided for @verification_email_sent.
+  /// Verification email sent
   ///
   /// In vi, this message translates to:
   /// **'Đã gửi email xác thực'**
   String get verification_email_sent;
 
-  /// No description provided for @good_morning.
+  /// Good morning
   ///
   /// In vi, this message translates to:
   /// **'Chào buổi sáng'**
   String get good_morning;
 
-  /// No description provided for @good_afternoon.
+  /// Good afternoon
   ///
   /// In vi, this message translates to:
   /// **'Chào buổi chiều'**
   String get good_afternoon;
 
-  /// No description provided for @good_evening.
+  /// Good evening
   ///
   /// In vi, this message translates to:
   /// **'Chào buổi tối'**
   String get good_evening;
 
-  /// No description provided for @hello.
+  /// Hello
   ///
   /// In vi, this message translates to:
   /// **'Xin chào'**
   String get hello;
 
-  /// No description provided for @income.
+  /// Income
   ///
   /// In vi, this message translates to:
   /// **'Thu nhập'**
   String get income;
 
-  /// No description provided for @expenses.
+  /// Expenses
   ///
   /// In vi, this message translates to:
   /// **'Chi tiêu'**
   String get expenses;
 
-  /// No description provided for @balance.
+  /// Balance
   ///
   /// In vi, this message translates to:
   /// **'Còn lại'**
   String get balance;
 
-  /// No description provided for @total_balance.
+  /// Total balance
   ///
   /// In vi, this message translates to:
   /// **'Tổng số dư'**
   String get total_balance;
 
-  /// No description provided for @spending_this_month.
+  /// Spending this month
   ///
   /// In vi, this message translates to:
   /// **'Chi tiêu trong tháng này'**
   String get spending_this_month;
 
-  /// No description provided for @total_spent.
+  /// Total spent
   ///
   /// In vi, this message translates to:
   /// **'Tổng chi tiêu'**
   String get total_spent;
 
-  /// No description provided for @recent_transactions.
+  /// Recent transactions
   ///
   /// In vi, this message translates to:
   /// **'Giao dịch gần đây'**
   String get recent_transactions;
 
-  /// No description provided for @add_transaction.
+  /// Add transaction
   ///
   /// In vi, this message translates to:
   /// **'Thêm giao dịch'**
   String get add_transaction;
 
-  /// No description provided for @no_transactions.
+  /// No transactions
   ///
   /// In vi, this message translates to:
   /// **'Không có dữ liệu'**
   String get no_transactions;
 
-  /// No description provided for @enter_transaction_name.
+  /// Enter transaction name
   ///
   /// In vi, this message translates to:
   /// **'Nhập tên giao dịch'**
   String get enter_transaction_name;
 
-  /// No description provided for @suggested_category.
+  /// Suggested category
   ///
   /// In vi, this message translates to:
   /// **'Danh mục gợi ý'**
   String get suggested_category;
 
-  /// No description provided for @category.
+  /// Category
   ///
   /// In vi, this message translates to:
   /// **'Danh mục'**
   String get category;
 
-  /// No description provided for @categories.
+  /// Categories
   ///
   /// In vi, this message translates to:
   /// **'Danh mục'**
   String get categories;
 
-  /// No description provided for @select_category.
+  /// Select category
   ///
   /// In vi, this message translates to:
   /// **'Chọn danh mục'**
   String get select_category;
 
-  /// No description provided for @edit_category.
+  /// Edit category
   ///
   /// In vi, this message translates to:
   /// **'Chỉnh sửa danh mục'**
   String get edit_category;
 
-  /// No description provided for @are_you_sure_delete_category.
+  /// Are you sure delete category
   ///
   /// In vi, this message translates to:
   /// **'Bạn có chắc chắn muốn xóa danh mục {categoryName}?'**
-  String are_you_sure_delete_category(Object categoryName);
+  String are_you_sure_delete_category(String categoryName);
 
-  /// No description provided for @system_category.
+  /// System category
   ///
   /// In vi, this message translates to:
   /// **'Danh mục hệ thống không thể xóa.'**
   String get system_category;
 
-  /// No description provided for @system_category_description.
+  /// System category description
   ///
   /// In vi, this message translates to:
   /// **'Bạn không thể chỉnh sửa hoặc xóa danh mục mặc định này.'**
   String get system_category_description;
 
-  /// No description provided for @category_food.
+  /// Category food
   ///
   /// In vi, this message translates to:
   /// **'Ăn uống'**
   String get category_food;
 
-  /// No description provided for @category_transport.
+  /// Category transport
   ///
   /// In vi, this message translates to:
   /// **'Di chuyển'**
   String get category_transport;
 
-  /// No description provided for @category_salary.
+  /// Category salary
   ///
   /// In vi, this message translates to:
   /// **'Lương'**
   String get category_salary;
 
-  /// No description provided for @category_shopping.
+  /// Category shopping
   ///
   /// In vi, this message translates to:
   /// **'Mua sắm'**
   String get category_shopping;
 
-  /// No description provided for @category_game.
+  /// Category game
   ///
   /// In vi, this message translates to:
   /// **'Trò chơi'**
   String get category_game;
 
-  /// No description provided for @category_house.
+  /// Category house
   ///
   /// In vi, this message translates to:
   /// **'Nhà cửa'**
   String get category_house;
 
-  /// No description provided for @category_gift.
+  /// Category gift
   ///
   /// In vi, this message translates to:
   /// **'Quà tặng'**
   String get category_gift;
 
-  /// No description provided for @category_health.
+  /// Category health
   ///
   /// In vi, this message translates to:
   /// **'Sức khỏe'**
   String get category_health;
 
-  /// No description provided for @category_entertainment.
+  /// Category entertainment
   ///
   /// In vi, this message translates to:
   /// **'Giải trí'**
   String get category_entertainment;
 
-  /// No description provided for @category_bill.
+  /// Category bill
   ///
   /// In vi, this message translates to:
   /// **'Hóa đơn'**
   String get category_bill;
 
-  /// No description provided for @category_insurance.
+  /// Category insurance
   ///
   /// In vi, this message translates to:
   /// **'Bảo hiểm'**
   String get category_insurance;
 
-  /// No description provided for @category_education.
+  /// Category education
   ///
   /// In vi, this message translates to:
   /// **'Giáo dục'**
   String get category_education;
 
-  /// No description provided for @category_pet.
+  /// Category pet
   ///
   /// In vi, this message translates to:
   /// **'Thú cưng'**
   String get category_pet;
 
-  /// No description provided for @category_travel.
+  /// Category travel
   ///
   /// In vi, this message translates to:
   /// **'Du lịch'**
   String get category_travel;
 
-  /// No description provided for @category_savings.
+  /// Category savings
   ///
   /// In vi, this message translates to:
   /// **'Tiết kiệm'**
   String get category_savings;
 
-  /// No description provided for @category_phone.
+  /// Category phone
   ///
   /// In vi, this message translates to:
   /// **'Điện thoại'**
   String get category_phone;
 
-  /// No description provided for @category_internet.
+  /// Category internet
   ///
   /// In vi, this message translates to:
   /// **'Internet'**
   String get category_internet;
 
-  /// No description provided for @category_water.
+  /// Category water
   ///
   /// In vi, this message translates to:
   /// **'Nước'**
   String get category_water;
 
-  /// No description provided for @category_electricity.
+  /// Category electricity
   ///
   /// In vi, this message translates to:
   /// **'Điện'**
   String get category_electricity;
 
-  /// No description provided for @category_gas.
+  /// Category gas
   ///
   /// In vi, this message translates to:
   /// **'Gas'**
   String get category_gas;
 
-  /// No description provided for @category_cleaning.
+  /// Category cleaning
   ///
   /// In vi, this message translates to:
   /// **'Dọn dẹp'**
   String get category_cleaning;
 
-  /// No description provided for @category_beauty.
+  /// Category beauty
   ///
   /// In vi, this message translates to:
   /// **'Làm đẹp'**
   String get category_beauty;
 
-  /// No description provided for @category_baby.
+  /// Category baby
   ///
   /// In vi, this message translates to:
   /// **'Em bé'**
   String get category_baby;
 
-  /// No description provided for @category_sport.
+  /// Category sport
   ///
   /// In vi, this message translates to:
   /// **'Thể thao'**
   String get category_sport;
 
-  /// No description provided for @category_music.
+  /// Category music
   ///
   /// In vi, this message translates to:
   /// **'Âm nhạc'**
   String get category_music;
 
-  /// No description provided for @category_repair.
+  /// Category repair
   ///
   /// In vi, this message translates to:
   /// **'Sửa chữa'**
   String get category_repair;
 
-  /// No description provided for @category_tax.
+  /// Category tax
   ///
   /// In vi, this message translates to:
   /// **'Thuế'**
   String get category_tax;
 
-  /// No description provided for @note.
+  /// Note
   ///
   /// In vi, this message translates to:
   /// **'Ghi chú (tùy chọn)'**
   String get note;
 
-  /// No description provided for @enter_note.
+  /// Enter note
   ///
   /// In vi, this message translates to:
   /// **'Nhập ghi chú'**
   String get enter_note;
 
-  /// No description provided for @add_income.
+  /// Add income
   ///
   /// In vi, this message translates to:
   /// **'Thêm thu nhập'**
   String get add_income;
 
-  /// No description provided for @add_expense.
+  /// Add expense
   ///
   /// In vi, this message translates to:
   /// **'Thêm chi tiêu'**
   String get add_expense;
 
-  /// No description provided for @search_category.
+  /// Search category
   ///
   /// In vi, this message translates to:
   /// **'Tìm kiếm danh mục'**
   String get search_category;
 
-  /// No description provided for @no_category_found.
+  /// No category found
   ///
   /// In vi, this message translates to:
   /// **'Không tìm thấy danh mục'**
   String get no_category_found;
 
-  /// No description provided for @most_used.
+  /// Most used
   ///
   /// In vi, this message translates to:
   /// **'Sử dụng nhiều nhất'**
   String get most_used;
 
-  /// No description provided for @category_suggestions.
+  /// Category suggestions
   ///
   /// In vi, this message translates to:
   /// **'Danh mục gợi ý'**
   String get category_suggestions;
 
-  /// No description provided for @all_categories.
+  /// All categories
   ///
   /// In vi, this message translates to:
   /// **'Tất cả danh mục'**
   String get all_categories;
 
-  /// No description provided for @new_category.
+  /// New category
   ///
   /// In vi, this message translates to:
   /// **'Danh mục mới'**
   String get new_category;
 
-  /// No description provided for @category_name.
+  /// Category name
   ///
   /// In vi, this message translates to:
   /// **'Tên danh mục'**
   String get category_name;
 
-  /// No description provided for @category_color.
+  /// Category color
   ///
   /// In vi, this message translates to:
   /// **'Màu danh mục'**
   String get category_color;
 
-  /// No description provided for @category_icon.
+  /// Category icon
   ///
   /// In vi, this message translates to:
   /// **'Biểu tượng danh mục'**
   String get category_icon;
 
-  /// No description provided for @vs_last_month.
+  /// Vs last month
   ///
   /// In vi, this message translates to:
   /// **'so với Tháng trước'**
   String get vs_last_month;
 
-  /// No description provided for @transaction.
+  /// Transaction
   ///
   /// In vi, this message translates to:
   /// **'Giao dịch'**
   String get transaction;
 
-  /// No description provided for @delete_transaction.
+  /// Delete transaction
   ///
   /// In vi, this message translates to:
   /// **'Xóa giao dịch'**
   String get delete_transaction;
 
-  /// No description provided for @delete_transaction_confirmation.
+  /// Delete transaction confirmation
   ///
   /// In vi, this message translates to:
   /// **'Bạn có chắc chắn muốn xóa giao dịch này không?'**
   String get delete_transaction_confirmation;
 
-  /// No description provided for @transaction_details.
+  /// Transaction details
   ///
   /// In vi, this message translates to:
   /// **'Chi tiết giao dịch'**
   String get transaction_details;
 
-  /// No description provided for @spending_trend.
+  /// Spending trend
   ///
   /// In vi, this message translates to:
   /// **'Xu hướng chi tiêu'**
   String get spending_trend;
 
-  /// No description provided for @spending_last_7_days.
+  /// Spending last 7 days
   ///
   /// In vi, this message translates to:
   /// **'Chi tiêu trong 7 ngày qua'**
   String get spending_last_7_days;
 
-  /// No description provided for @note_2.
+  /// Note 2
   ///
   /// In vi, this message translates to:
   /// **'Ghi chú'**
   String get note_2;
 
-  /// No description provided for @scan_receipt.
+  /// Scan receipt
   ///
   /// In vi, this message translates to:
   /// **'Quét hóa đơn'**
   String get scan_receipt;
 
-  /// No description provided for @add_via_voice.
+  /// Add via voice
   ///
   /// In vi, this message translates to:
   /// **'Thêm bằng giọng nói'**
   String get add_via_voice;
 
-  /// No description provided for @add_manually.
+  /// Add manually
   ///
   /// In vi, this message translates to:
   /// **'Thêm thủ công'**
   String get add_manually;
 
-  /// No description provided for @limit_reached.
+  /// Limit reached
   ///
   /// In vi, this message translates to:
   /// **'Đã đạt giới hạn'**
   String get limit_reached;
 
-  /// No description provided for @limit_reached_description.
+  /// Limit reached description
   ///
   /// In vi, this message translates to:
   /// **'Bạn đã sử dụng {featureName} {limit} lần hôm nay.\nVui lòng quay lại vào ngày mai hoặc nâng cấp lên Premium.'**
-  String limit_reached_description(Object featureName, Object limit);
+  String limit_reached_description(String featureName, String limit);
 
-  /// No description provided for @align_receipt.
+  /// Align receipt
   ///
   /// In vi, this message translates to:
   /// **'Căn chỉnh hóa đơn của bạn vào khung'**
   String get align_receipt;
 
-  /// No description provided for @listening.
+  /// Listening
   ///
   /// In vi, this message translates to:
   /// **'Đang nghe...'**
   String get listening;
 
-  /// No description provided for @voice_example.
+  /// Voice example
   ///
   /// In vi, this message translates to:
   /// **'Ví dụ: Tôi đã chi 50 đô la cho thực phẩm'**
   String get voice_example;
 
-  /// No description provided for @tap_to_stop.
+  /// Tap to stop
   ///
   /// In vi, this message translates to:
   /// **'Chạm để dừng'**
   String get tap_to_stop;
 
-  /// No description provided for @tap_to_listen.
+  /// Tap to listen
   ///
   /// In vi, this message translates to:
   /// **'Chạm để nghe'**
   String get tap_to_listen;
 
-  /// No description provided for @yesterday.
+  /// Yesterday
   ///
   /// In vi, this message translates to:
   /// **'Hôm qua'**
   String get yesterday;
 
-  /// No description provided for @your_monthly_budget.
+  /// Your monthly budget
   ///
   /// In vi, this message translates to:
   /// **'Ngân sách hàng tháng của bạn'**
   String get your_monthly_budget;
 
-  /// No description provided for @spent.
+  /// Spent
   ///
   /// In vi, this message translates to:
   /// **'Đã chi '**
   String get spent;
 
-  /// No description provided for @out_of.
+  /// Out of
   ///
   /// In vi, this message translates to:
   /// **' trong tổng '**
   String get out_of;
 
-  /// No description provided for @left_to_spend.
+  /// Left to spend
   ///
   /// In vi, this message translates to:
   /// **'còn lại để chi tiêu'**
   String get left_to_spend;
 
-  /// No description provided for @add_budget.
+  /// Add budget
   ///
   /// In vi, this message translates to:
   /// **'Thêm ngân sách'**
   String get add_budget;
 
-  /// No description provided for @no_budgets_yet.
+  /// No budgets yet
   ///
   /// In vi, this message translates to:
   /// **'Chưa có ngân sách nào'**
   String get no_budgets_yet;
 
-  /// No description provided for @create_budget_description.
+  /// Create budget description
   ///
   /// In vi, this message translates to:
   /// **'Nhấn + để tạo giới hạn chi tiêu'**
   String get create_budget_description;
 
-  /// No description provided for @edit_budget.
+  /// Edit budget
   ///
   /// In vi, this message translates to:
   /// **'Sửa ngân sách'**
   String get edit_budget;
 
-  /// No description provided for @are_you_sure_delete_budget.
+  /// Are you sure delete budget
   ///
   /// In vi, this message translates to:
   /// **'Bạn có chắc muốn xóa ngân sách \n {budgetName}? \n'**
-  String are_you_sure_delete_budget(Object budgetName);
+  String are_you_sure_delete_budget(String budgetName);
 
-  /// No description provided for @delete_budget.
+  /// Delete budget
   ///
   /// In vi, this message translates to:
   /// **'Xóa ngân sách'**
   String get delete_budget;
 
-  /// No description provided for @settings.
+  /// Settings
   ///
   /// In vi, this message translates to:
   /// **'Cài đặt'**
   String get settings;
 
-  /// No description provided for @settings_description.
+  /// Settings description
   ///
   /// In vi, this message translates to:
   /// **'Giữ dữ liệu tài chính luôn đồng bộ trên tất cả thiết bị của bạn'**
   String get settings_description;
 
-  /// No description provided for @sign_in_now.
+  /// Sign in now
   ///
   /// In vi, this message translates to:
   /// **'Đăng nhập ngay'**
   String get sign_in_now;
 
-  /// No description provided for @get_started.
+  /// Get started
   ///
   /// In vi, this message translates to:
   /// **'Bắt đầu ngay'**
   String get get_started;
 
-  /// No description provided for @welcome.
+  /// Welcome
   ///
   /// In vi, this message translates to:
   /// **'Chào mừng !'**
   String get welcome;
 
-  /// No description provided for @general.
+  /// General
   ///
   /// In vi, this message translates to:
   /// **'Cài đặt chung'**
   String get general;
 
-  /// No description provided for @security.
+  /// Security
   ///
   /// In vi, this message translates to:
   /// **'Bảo mật'**
   String get security;
 
-  /// No description provided for @privacy_and_security.
+  /// Privacy and security
   ///
   /// In vi, this message translates to:
   /// **'Quyền riêng tư & Bảo mật'**
   String get privacy_and_security;
 
-  /// No description provided for @support.
+  /// Support
   ///
   /// In vi, this message translates to:
   /// **'Hỗ trợ'**
   String get support;
 
-  /// No description provided for @profile.
+  /// Profile
   ///
   /// In vi, this message translates to:
   /// **'Hồ sơ'**
   String get profile;
 
-  /// No description provided for @language.
+  /// Language
   ///
   /// In vi, this message translates to:
   /// **'Ngôn ngữ'**
   String get language;
 
-  /// No description provided for @dark_mode.
+  /// Dark mode
   ///
   /// In vi, this message translates to:
   /// **'Chế độ tối'**
   String get dark_mode;
 
-  /// No description provided for @notifications.
+  /// Notifications
   ///
   /// In vi, this message translates to:
   /// **'Thông báo'**
   String get notifications;
 
-  /// No description provided for @appearance.
+  /// Appearance
   ///
   /// In vi, this message translates to:
   /// **'Giao diện'**
   String get appearance;
 
-  /// No description provided for @currency.
+  /// Currency
   ///
   /// In vi, this message translates to:
   /// **'Tiền tệ'**
   String get currency;
 
-  /// No description provided for @about.
+  /// About
   ///
   /// In vi, this message translates to:
   /// **'Giới thiệu'**
   String get about;
 
-  /// No description provided for @terms_of_service.
+  /// Terms of service
   ///
   /// In vi, this message translates to:
   /// **'Điều khoản dịch vụ'**
   String get terms_of_service;
 
-  /// No description provided for @privacy_policy.
+  /// Privacy policy
   ///
   /// In vi, this message translates to:
   /// **'Chính sách quyền riêng tư'**
   String get privacy_policy;
 
-  /// No description provided for @version.
+  /// Version
   ///
   /// In vi, this message translates to:
   /// **'Phiên bản'**
   String get version;
 
-  /// No description provided for @edit_profile.
+  /// Edit profile
   ///
   /// In vi, this message translates to:
   /// **'Chỉnh sửa hồ sơ'**
   String get edit_profile;
 
-  /// No description provided for @full_name.
+  /// Full name
   ///
   /// In vi, this message translates to:
   /// **'Họ và tên'**
   String get full_name;
 
-  /// No description provided for @enter_full_name.
+  /// Enter full name
   ///
   /// In vi, this message translates to:
   /// **'Nhập họ và tên'**
   String get enter_full_name;
 
-  /// No description provided for @email_address.
+  /// Email address
   ///
   /// In vi, this message translates to:
   /// **'Địa chỉ email'**
   String get email_address;
 
-  /// No description provided for @enter_email_address.
+  /// Enter email address
   ///
   /// In vi, this message translates to:
   /// **'Nhập địa chỉ email'**
   String get enter_email_address;
 
-  /// No description provided for @phone_number.
+  /// Phone number
   ///
   /// In vi, this message translates to:
   /// **'Số điện thoại'**
   String get phone_number;
 
-  /// No description provided for @enter_phone_number.
+  /// Enter phone number
   ///
   /// In vi, this message translates to:
   /// **'Nhập số điện thoại'**
   String get enter_phone_number;
 
-  /// No description provided for @day_of_birth.
+  /// Day of birth
   ///
   /// In vi, this message translates to:
   /// **'Ngày sinh'**
   String get day_of_birth;
 
-  /// No description provided for @select_day_of_birth.
+  /// Select day of birth
   ///
   /// In vi, this message translates to:
   /// **'Chọn ngày sinh'**
   String get select_day_of_birth;
 
-  /// No description provided for @save_changes.
+  /// Save changes
   ///
   /// In vi, this message translates to:
   /// **'Lưu thay đổi'**
   String get save_changes;
 
-  /// No description provided for @profile_updated_success.
+  /// Profile updated success
   ///
   /// In vi, this message translates to:
   /// **'Cập nhật hồ sơ thành công!'**
   String get profile_updated_success;
 
-  /// No description provided for @error_updating_profile.
+  /// Error updating profile
   ///
   /// In vi, this message translates to:
   /// **'Lỗi khi cập nhật hồ sơ.'**
   String get error_updating_profile;
 
-  /// No description provided for @error_uploading_avatar.
+  /// Error uploading avatar
   ///
   /// In vi, this message translates to:
   /// **'Lỗi khi tải lên ảnh đại diện.'**
   String get error_uploading_avatar;
 
-  /// No description provided for @require_premium_to_edit_avatar.
+  /// Require premium to edit avatar
   ///
   /// In vi, this message translates to:
   /// **'Bạn cần nâng cấp lên Premium hoặc xem quảng cáo để chỉnh sửa ảnh đại diện.'**
   String get require_premium_to_edit_avatar;
 
-  /// No description provided for @edit_avatar.
+  /// Edit avatar
   ///
   /// In vi, this message translates to:
   /// **'Chỉnh sửa ảnh đại diện'**
   String get edit_avatar;
 
-  /// No description provided for @upgrade_premium.
+  /// Upgrade premium
   ///
   /// In vi, this message translates to:
   /// **'Nâng cấp lên Premium!'**
   String get upgrade_premium;
 
-  /// No description provided for @upgrade_premium_description.
+  /// Upgrade premium description
   ///
   /// In vi, this message translates to:
   /// **'Mở khóa các tính năng cao cấp và nâng cao trải nghiệm của bạn.'**
   String get upgrade_premium_description;
 
-  /// No description provided for @upgrade_now.
+  /// Upgrade now
   ///
   /// In vi, this message translates to:
   /// **'Nâng cấp ngay'**
   String get upgrade_now;
 
-  /// No description provided for @you_are_premium.
+  /// You are premium
   ///
   /// In vi, this message translates to:
   /// **'Bạn đã sẵn sàng, người dùng Premium!'**
   String get you_are_premium;
 
-  /// No description provided for @you_are_premium_description.
+  /// You are premium description
   ///
   /// In vi, this message translates to:
   /// **'Tận hưởng trải nghiệm nâng cao của bạn.'**
   String get you_are_premium_description;
 
-  /// No description provided for @import_export_data.
+  /// Import export data
   ///
   /// In vi, this message translates to:
   /// **'Nhập/Xuất dữ liệu'**
   String get import_export_data;
 
-  /// No description provided for @sync_data.
+  /// Sync data
   ///
   /// In vi, this message translates to:
   /// **'Đồng bộ dữ liệu'**
   String get sync_data;
 
-  /// No description provided for @continue_with.
+  /// Continue with
   ///
   /// In vi, this message translates to:
   /// **'Tiếp tục với {price}'**
-  String continue_with(Object price);
+  String continue_with(String price);
 
-  /// No description provided for @biometric_authentication.
+  /// Biometric authentication
   ///
   /// In vi, this message translates to:
   /// **'Xác thực sinh trắc học'**
   String get biometric_authentication;
 
-  /// No description provided for @password_security.
+  /// Password security
   ///
   /// In vi, this message translates to:
   /// **'Bảo mật mật mã'**
   String get password_security;
 
-  /// No description provided for @face_id_description.
+  /// Face id description
   ///
   /// In vi, this message translates to:
   /// **'Mở khóa ứng dụng chỉ bằng một ánh nhìn. Face ID mang lại sự tiện lợi và bảo mật bằng cách nhận diện khuôn mặt của bạn.'**
   String get face_id_description;
 
-  /// No description provided for @touch_id_description.
+  /// Touch id description
   ///
   /// In vi, this message translates to:
   /// **'Mở khóa ứng dụng chỉ bằng một cú chạm. Touch ID giúp truy cập nhanh chóng và an toàn bằng vân tay của bạn.'**
   String get touch_id_description;
 
-  /// No description provided for @pass_code_description.
+  /// Pass code description
   ///
   /// In vi, this message translates to:
   /// **'Thêm một lớp bảo vệ. Mã khóa đảm bảo chỉ bạn mới có thể truy cập dữ liệu tài chính, ngay cả khi thiết bị bị xâm phạm.'**
   String get pass_code_description;
 
-  /// No description provided for @passcode.
+  /// Passcode
   ///
   /// In vi, this message translates to:
   /// **'Passcode'**
   String get passcode;
 
-  /// No description provided for @change_passcode.
+  /// Change passcode
   ///
   /// In vi, this message translates to:
   /// **'Đổi passcode'**
   String get change_passcode;
 
-  /// No description provided for @old_passcode.
+  /// Old passcode
   ///
   /// In vi, this message translates to:
   /// **'Mã khóa cũ'**
   String get old_passcode;
 
-  /// No description provided for @enter_old_passcode.
+  /// Enter old passcode
   ///
   /// In vi, this message translates to:
   /// **'Nhập mã khóa cũ'**
   String get enter_old_passcode;
 
-  /// No description provided for @new_passcode.
+  /// New passcode
   ///
   /// In vi, this message translates to:
   /// **'Passcode mới'**
   String get new_passcode;
 
-  /// No description provided for @enter_new_passcode.
+  /// Enter new passcode
   ///
   /// In vi, this message translates to:
   /// **'Nhập Passcode mới'**
   String get enter_new_passcode;
 
-  /// No description provided for @confirm_new_passcode.
+  /// Confirm new passcode
   ///
   /// In vi, this message translates to:
   /// **'Xác nhận Passcode mới'**
   String get confirm_new_passcode;
 
-  /// No description provided for @enter_confirm_new_passcode.
+  /// Enter confirm new passcode
   ///
   /// In vi, this message translates to:
   /// **'Nhập lại Passcode mới'**
   String get enter_confirm_new_passcode;
 
-  /// No description provided for @turnOffPasscode.
+  /// Turnoffpasscode
   ///
   /// In vi, this message translates to:
   /// **'Tắt Passcode'**
   String get turnOffPasscode;
 
-  /// No description provided for @createPasscode.
+  /// Createpasscode
   ///
   /// In vi, this message translates to:
   /// **'Tạo Passcode'**
   String get createPasscode;
 
-  /// No description provided for @changePasscode.
+  /// Changepasscode
   ///
   /// In vi, this message translates to:
   /// **'Đổi Passcode'**
   String get changePasscode;
 
-  /// No description provided for @removePasscode.
+  /// Removepasscode
   ///
   /// In vi, this message translates to:
   /// **'Xóa Passcode'**
   String get removePasscode;
 
-  /// No description provided for @updatePasscode.
+  /// Updatepasscode
   ///
   /// In vi, this message translates to:
   /// **'Cập nhật Passcode'**
   String get updatePasscode;
 
-  /// No description provided for @description_create_passcode.
+  /// Description create passcode
   ///
   /// In vi, this message translates to:
   /// **'Bảo vệ tài khoản của bạn bằng cách thường xuyên cập nhật Passcode 6 chữ số.'**
   String get description_create_passcode;
 
-  /// No description provided for @description_remove_passcode.
+  /// Description remove passcode
   ///
   /// In vi, this message translates to:
   /// **'Nhập Passcode hiện tại của bạn để tắt bảo mật.'**
   String get description_remove_passcode;
 
-  /// No description provided for @currentPasscode.
+  /// Currentpasscode
   ///
   /// In vi, this message translates to:
   /// **'Passcode hiện tại'**
   String get currentPasscode;
 
-  /// No description provided for @enterCurrentPin.
+  /// Entercurrentpin
   ///
   /// In vi, this message translates to:
   /// **'Nhập mã PIN hiện tại'**
   String get enterCurrentPin;
 
-  /// No description provided for @passcode_turn_off_success.
+  /// Passcode turn off success
   ///
   /// In vi, this message translates to:
   /// **'Passcode đã được tắt thành công!'**
   String get passcode_turn_off_success;
 
-  /// No description provided for @passcode_update_success.
+  /// Passcode update success
   ///
   /// In vi, this message translates to:
   /// **'Cập nhật Passcode thành công!'**
   String get passcode_update_success;
 
-  /// No description provided for @passcode_create_success.
+  /// Passcode create success
   ///
   /// In vi, this message translates to:
   /// **'Tạo Passcode thành công!'**
   String get passcode_create_success;
 
-  /// No description provided for @currentPasscodeIncorrect.
+  /// Currentpasscodeincorrect
   ///
   /// In vi, this message translates to:
   /// **'Passcode hiện tại không đúng.'**
   String get currentPasscodeIncorrect;
 
-  /// No description provided for @errorSavingData.
+  /// Errorsavingdata
   ///
   /// In vi, this message translates to:
   /// **'Lỗi khi lưu dữ liệu.'**
   String get errorSavingData;
 
-  /// No description provided for @newPasscodeMustBe6Digits.
+  /// Newpasscodemustbe6digits
   ///
   /// In vi, this message translates to:
   /// **'Passcode mới phải có 6 chữ số.'**
   String get newPasscodeMustBe6Digits;
 
-  /// No description provided for @passcodesDoNotMatch.
+  /// Passcodesdonotmatch
   ///
   /// In vi, this message translates to:
   /// **'Passcode không khớp.'**
   String get passcodesDoNotMatch;
 
-  /// No description provided for @enter_passcode.
+  /// Enter passcode
   ///
   /// In vi, this message translates to:
   /// **'Nhập Passcode'**
   String get enter_passcode;
 
-  /// No description provided for @incorrect_passcode.
+  /// Incorrect passcode
   ///
   /// In vi, this message translates to:
   /// **'Passcode không đúng.'**
   String get incorrect_passcode;
 
-  /// No description provided for @face.
+  /// Face
   ///
   /// In vi, this message translates to:
   /// **'Face ID'**
   String get face;
 
-  /// No description provided for @fingerprint.
+  /// Fingerprint
   ///
   /// In vi, this message translates to:
   /// **'Vân tay'**
   String get fingerprint;
 
-  /// No description provided for @report_locked.
+  /// Report locked
   ///
   /// In vi, this message translates to:
   /// **'Nội dung được khóa'**
   String get report_locked;
 
-  /// No description provided for @unlock.
+  /// Unlock
   ///
   /// In vi, this message translates to:
   /// **'Mở khóa'**
   String get unlock;
 
-  /// No description provided for @click_to_unlock.
+  /// Click to unlock
   ///
   /// In vi, this message translates to:
   /// **'Chạm để mở khóa'**
   String get click_to_unlock;
 
-  /// No description provided for @unlock_untilimited_access.
+  /// Unlock untilimited access
   ///
   /// In vi, this message translates to:
   /// **'Mở khóa truy cập không giới hạn'**
   String get unlock_untilimited_access;
 
-  /// No description provided for @unlock_untilimited_access_description.
+  /// Unlock untilimited access description
   ///
   /// In vi, this message translates to:
   /// **'Nâng cấp lên Premium để loại bỏ mọi giới hạn và truy cập các tính năng nâng cao.'**
   String get unlock_untilimited_access_description;
 
-  /// No description provided for @daily_input_cap_reached.
+  /// Daily input cap reached
   ///
   /// In vi, this message translates to:
   /// **'Đã đạt giới hạn nhập hàng ngày'**
   String get daily_input_cap_reached;
 
-  /// No description provided for @daily_input_cap_reached_description.
+  /// Daily input cap reached description
   ///
   /// In vi, this message translates to:
   /// **'Bạn đã đạt giới hạn nhập hàng ngày cho việc quét hóa đơn và nhập giọng nói. Nâng cấp ngay để tiếp tục.'**
   String get daily_input_cap_reached_description;
 
-  /// No description provided for @feature_comparison.
+  /// Feature comparison
   ///
   /// In vi, this message translates to:
   /// **'So sánh tính năng'**
   String get feature_comparison;
 
-  /// No description provided for @feature.
+  /// Feature
   ///
   /// In vi, this message translates to:
   /// **'Tính năng'**
   String get feature;
 
-  /// No description provided for @free.
+  /// Free
   ///
   /// In vi, this message translates to:
   /// **'Miễn phí'**
   String get free;
 
-  /// No description provided for @premium.
+  /// Premium
   ///
   /// In vi, this message translates to:
   /// **'Cao cấp'**
   String get premium;
 
-  /// No description provided for @no_ads.
+  /// No ads
   ///
   /// In vi, this message translates to:
   /// **'Không quảng cáo'**
   String get no_ads;
 
-  /// No description provided for @transaction_locking.
+  /// Transaction locking
   ///
   /// In vi, this message translates to:
   /// **'Khóa sổ giao dịch'**
   String get transaction_locking;
 
-  /// No description provided for @unlimited_scans.
+  /// Unlimited scans
   ///
   /// In vi, this message translates to:
   /// **'Quét hóa đơn không giới hạn'**
   String get unlimited_scans;
 
-  /// No description provided for @unlimited_voice_entries.
+  /// Unlimited voice entries
   ///
   /// In vi, this message translates to:
   /// **'Nhập giọng nói không giới hạn'**
   String get unlimited_voice_entries;
 
-  /// No description provided for @day.
+  /// Day
   ///
   /// In vi, this message translates to:
   /// **'ngày'**
   String get day;
 
-  /// No description provided for @year.
+  /// Year
   ///
   /// In vi, this message translates to:
   /// **'Năm'**
   String get year;
 
-  /// No description provided for @subscription_auto_renews.
+  /// Subscription auto renews
   ///
   /// In vi, this message translates to:
   /// **'Đăng ký tự động gia hạn'**
   String get subscription_auto_renews;
 
-  /// No description provided for @accept_terms_conditions.
+  /// Accept terms conditions
   ///
   /// In vi, this message translates to:
   /// **'Đăng ký tự động gia hạn. Bằng cách tiếp tục, bạn đồng ý với Điều khoản Dịch vụ và Chính sách Quyền riêng tư của chúng tôi.'**
   String get accept_terms_conditions;
 
-  /// No description provided for @restore.
+  /// Restore
   ///
   /// In vi, this message translates to:
   /// **'Khôi phục'**
   String get restore;
 
-  /// No description provided for @used_up_daily_limit.
+  /// Used up daily limit
   ///
   /// In vi, this message translates to:
   /// **'Bạn đã sử dụng hết giới hạn nhập giọng nói trong ngày hôm nay. Xem quảng cáo để nhận thêm {value} lượt sử dụng hoặc nâng cấp lên Premium.'**
-  String used_up_daily_limit(Object value);
+  String used_up_daily_limit(String value);
 
-  /// No description provided for @see_ads.
+  /// See ads
   ///
   /// In vi, this message translates to:
   /// **'Xem quảng cáo (+{additionalUses} lượt)'**
-  String see_ads(Object additionalUses);
+  String see_ads(String additionalUses);
 
-  /// No description provided for @ads_loading.
+  /// Ads loading
   ///
   /// In vi, this message translates to:
   /// **'Đang tải quảng cáo...'**
   String get ads_loading;
 
-  /// No description provided for @monthly_plan.
+  /// Monthly plan
   ///
   /// In vi, this message translates to:
   /// **'Gói hàng tháng'**
   String get monthly_plan;
 
-  /// No description provided for @yearly_plan.
+  /// Yearly plan
   ///
   /// In vi, this message translates to:
   /// **'Gói hàng năm'**
   String get yearly_plan;
 
-  /// No description provided for @lifetime_plan.
+  /// Lifetime plan
   ///
   /// In vi, this message translates to:
   /// **'Gói vĩnh viễn'**
   String get lifetime_plan;
 
-  /// No description provided for @pay_once_enjoy_forever.
+  /// Pay once enjoy forever
   ///
   /// In vi, this message translates to:
   /// **'Trả một lần, sử dụng mãi mãi'**
   String get pay_once_enjoy_forever;
 
-  /// No description provided for @yearly_discount.
+  /// Yearly discount
   ///
   /// In vi, this message translates to:
   /// **'Tiết kiệm 20% với gói hàng năm'**
   String get yearly_discount;
 
-  /// No description provided for @best_value.
+  /// Best value
   ///
   /// In vi, this message translates to:
   /// **'GIÁ TRỊ TỐT NHẤT'**
   String get best_value;
 
-  /// No description provided for @purchase_successful.
+  /// Purchase successful
   ///
   /// In vi, this message translates to:
   /// **'Mua thành công!'**
   String get purchase_successful;
 
-  /// No description provided for @purchase_successful_description.
+  /// Purchase successful description
   ///
   /// In vi, this message translates to:
   /// **'Cảm ơn bạn đã nâng cấp lên Premium! Hãy tận hưởng trải nghiệm nâng cao của bạn.'**
   String get purchase_successful_description;
 
-  /// No description provided for @restore_successful.
+  /// Restore successful
   ///
   /// In vi, this message translates to:
   /// **'Khôi phục thành công!'**
   String get restore_successful;
 
-  /// No description provided for @restore_successful_description.
+  /// Restore successful description
   ///
   /// In vi, this message translates to:
   /// **'Mua hàng trước đó của bạn đã được khôi phục. Hãy tận hưởng các tính năng Premium của bạn!'**
   String get restore_successful_description;
 
-  /// No description provided for @nothing_to_restore.
+  /// Nothing to restore
   ///
   /// In vi, this message translates to:
   /// **'Không có gì để khôi phục'**
   String get nothing_to_restore;
 
-  /// No description provided for @nothing_to_restore_description.
+  /// Nothing to restore description
   ///
   /// In vi, this message translates to:
   /// **'Không tìm thấy mua hàng trước đó để khôi phục.'**
   String get nothing_to_restore_description;
 
-  /// No description provided for @restore_failed.
+  /// Restore failed
   ///
   /// In vi, this message translates to:
   /// **'Khôi phục thất bại'**
   String get restore_failed;
 
-  /// No description provided for @restore_failed_description.
+  /// Restore failed description
   ///
   /// In vi, this message translates to:
   /// **'Đã xảy ra lỗi khi khôi phục mua hàng của bạn. Vui lòng thử lại.'**
   String get restore_failed_description;
 
-  /// No description provided for @purchase_failed.
+  /// Purchase failed
   ///
   /// In vi, this message translates to:
   /// **'Mua hàng thất bại'**
   String get purchase_failed;
 
-  /// No description provided for @purchase_failed_description.
+  /// Purchase failed description
   ///
   /// In vi, this message translates to:
   /// **'Đã xảy ra lỗi trong quá trình giao dịch. Vui lòng thử lại.'**
   String get purchase_failed_description;
 
-  /// No description provided for @purchase_canceled.
+  /// Purchase canceled
   ///
   /// In vi, this message translates to:
   /// **'Giao dịch đã bị hủy'**
   String get purchase_canceled;
 
-  /// No description provided for @purchase_canceled_description.
+  /// Purchase canceled description
   ///
   /// In vi, this message translates to:
   /// **'Giao dịch của bạn đã bị hủy. Vui lòng thử lại nếu bạn muốn nâng cấp lên Premium.'**
   String get purchase_canceled_description;
 
-  /// No description provided for @premium_sync_account.
+  /// Premium sync account
   ///
   /// In vi, this message translates to:
   /// **'Tài khoản Premium của bạn sẽ được đồng bộ với tài khoản mà bạn đăng nhập vào. Hãy đảm bảo đăng nhập bằng cùng một tài khoản trên tất cả thiết bị của bạn để tận hưởng trải nghiệm Premium liền mạch.'**
   String get premium_sync_account;
 
-  /// No description provided for @premium_sync_warning.
+  /// Premium sync warning
   ///
   /// In vi, this message translates to:
   /// **'Lưu ý: Nếu bạn đã mua gói Premium trên một tài khoản khác, vui lòng đăng nhập vào tài khoản đó để khôi phục quyền truy cập Premium của bạn. Nếu bạn đang sử dụng cùng một tài khoản, hãy thử khôi phục mua hàng để đồng bộ hóa quyền truy cập Premium của bạn.'**
   String get premium_sync_warning;
 
-  /// No description provided for @select_language.
+  /// Select language
   ///
   /// In vi, this message translates to:
   /// **'Chọn ngôn ngữ'**
   String get select_language;
 
-  /// No description provided for @suggested.
+  /// Suggested
   ///
   /// In vi, this message translates to:
   /// **'Gợi ý'**
   String get suggested;
 
-  /// No description provided for @all_languages.
+  /// All languages
   ///
   /// In vi, this message translates to:
   /// **'Tất cả ngôn ngữ'**
   String get all_languages;
 
-  /// No description provided for @apply_changes.
+  /// Apply changes
   ///
   /// In vi, this message translates to:
   /// **'Áp dụng thay đổi'**
   String get apply_changes;
 
-  /// No description provided for @select_currency.
+  /// Select currency
   ///
   /// In vi, this message translates to:
   /// **'Chọn tiền tệ'**
   String get select_currency;
 
-  /// No description provided for @search_currency.
+  /// Search currency
   ///
   /// In vi, this message translates to:
   /// **'Tìm kiếm tiền tệ hoặc quốc gia...'**
   String get search_currency;
 
-  /// No description provided for @popular.
+  /// Popular
   ///
   /// In vi, this message translates to:
   /// **'Phổ biến'**
   String get popular;
 
-  /// No description provided for @all_currencies.
+  /// All currencies
   ///
   /// In vi, this message translates to:
   /// **'Tất cả tiền tệ'**
   String get all_currencies;
 
-  /// No description provided for @currency_change_warning.
+  /// Currency change warning
   ///
   /// In vi, this message translates to:
   /// **'Thay đổi tiền tệ chỉ cập nhật ký hiệu hiển thị. Tỷ giá giao dịch trước đó sẽ không được tính toán lại.'**
   String get currency_change_warning;
 
-  /// No description provided for @data_management.
+  /// Data management
   ///
   /// In vi, this message translates to:
   /// **'Quản lý dữ liệu'**
   String get data_management;
 
-  /// No description provided for @select_format.
+  /// Select format
   ///
   /// In vi, this message translates to:
   /// **'Chọn định dạng'**
   String get select_format;
 
-  /// No description provided for @export_data.
+  /// Export data
   ///
   /// In vi, this message translates to:
   /// **'Xuất dữ liệu'**
   String get export_data;
 
-  /// No description provided for @export_data_description.
+  /// Export data description
   ///
   /// In vi, this message translates to:
   /// **'Xuất dữ liệu tài chính của bạn để sao lưu hoặc phân tích.'**
   String get export_data_description;
 
-  /// No description provided for @confirm_export.
+  /// Confirm export
   ///
   /// In vi, this message translates to:
   /// **'Xác nhận xuất'**
   String get confirm_export;
 
-  /// No description provided for @import_data.
+  /// Import data
   ///
   /// In vi, this message translates to:
   /// **'Nhập dữ liệu'**
   String get import_data;
 
-  /// No description provided for @import_data_description.
+  /// Import data description
   ///
   /// In vi, this message translates to:
   /// **'Nhập dữ liệu tài chính từ các nguồn bên ngoài để đồng bộ hóa với ứng dụng.'**
   String get import_data_description;
 
-  /// No description provided for @import_data_title.
+  /// Import data title
   ///
   /// In vi, this message translates to:
   /// **'Nhập '**
   String get import_data_title;
 
-  /// No description provided for @data.
+  /// Data
   ///
   /// In vi, this message translates to:
   /// **'dữ liệu'**
   String get data;
 
-  /// No description provided for @import_data_title_2.
+  /// Import data title 2
   ///
   /// In vi, this message translates to:
   /// **' của bạn.'**
   String get import_data_title_2;
 
-  /// No description provided for @confirm_import.
+  /// Confirm import
   ///
   /// In vi, this message translates to:
   /// **'Xác nhận nhập'**
   String get confirm_import;
 
-  /// No description provided for @csv_format.
+  /// Csv format
   ///
   /// In vi, this message translates to:
   /// **'Định dạng CSV'**
   String get csv_format;
 
-  /// No description provided for @csv_description.
+  /// Csv description
   ///
   /// In vi, this message translates to:
   /// **'Dữ liệu được phân tách bằng dấu phẩy, tương thích với hầu hết các ứng dụng bảng tính.'**
   String get csv_description;
 
-  /// No description provided for @json_format.
+  /// Json format
   ///
   /// In vi, this message translates to:
   /// **'Định dạng JSON'**
   String get json_format;
 
-  /// No description provided for @json_description.
+  /// Json description
   ///
   /// In vi, this message translates to:
   /// **'Định dạng dữ liệu linh hoạt, lý tưởng cho việc trao đổi dữ liệu giữa các ứng dụng.'**
   String get json_description;
 
-  /// No description provided for @excel_format.
+  /// Excel format
   ///
   /// In vi, this message translates to:
   /// **'Định dạng Excel'**
   String get excel_format;
 
-  /// No description provided for @excel_description.
+  /// Excel description
   ///
   /// In vi, this message translates to:
   /// **'Định dạng bảng tính phổ biến, hỗ trợ các tính năng nâng cao và phân tích dữ liệu.'**
   String get excel_description;
 
-  /// No description provided for @select_file.
+  /// Select file
   ///
   /// In vi, this message translates to:
   /// **'Chọn tệp'**
   String get select_file;
 
-  /// No description provided for @no_file_selected.
+  /// No file selected
   ///
   /// In vi, this message translates to:
   /// **'Chưa chọn tệp nào'**
   String get no_file_selected;
 
-  /// No description provided for @import_successful.
+  /// Import successful
   ///
   /// In vi, this message translates to:
   /// **'Nhập dữ liệu thành công!'**
   String get import_successful;
 
-  /// No description provided for @error_importing_data.
+  /// Error importing data
   ///
   /// In vi, this message translates to:
   /// **'Lỗi khi nhập dữ liệu.'**
   String get error_importing_data;
 
-  /// No description provided for @sync_data_now.
+  /// Sync data now
   ///
   /// In vi, this message translates to:
   /// **'Đồng bộ ngay'**
   String get sync_data_now;
 
-  /// No description provided for @last_synced.
+  /// Last synced
   ///
   /// In vi, this message translates to:
   /// **'Đồng bộ lần cuối: \n{time}'**
-  String last_synced(Object time);
+  String last_synced(String time);
 
-  /// No description provided for @syncing.
+  /// Syncing
   ///
   /// In vi, this message translates to:
   /// **'Đang đồng bộ...'**
   String get syncing;
 
-  /// No description provided for @never_synced.
+  /// Never synced
   ///
   /// In vi, this message translates to:
   /// **'Chưa đồng bộ'**
   String get never_synced;
 
-  /// No description provided for @unauthenticated.
+  /// Unauthenticated
   ///
   /// In vi, this message translates to:
   /// **'Vui lòng đăng nhập để đồng bộ dữ liệu của bạn trên các thiết bị.'**
   String get unauthenticated;
 
-  /// No description provided for @sync_error.
+  /// Sync error
   ///
   /// In vi, this message translates to:
   /// **'Lỗi đồng bộ hóa: {error}'**
-  String sync_error(Object error);
+  String sync_error(String error);
 
-  /// No description provided for @premium_required_to_sync.
+  /// Premium required to sync
   ///
   /// In vi, this message translates to:
   /// **'Bạn cần nâng cấp lên Premium hoặc xem quảng cáo để đồng bộ dữ liệu.'**
   String get premium_required_to_sync;
 
-  /// No description provided for @sync_in_progress.
+  /// Sync in progress
   ///
   /// In vi, this message translates to:
   /// **'Hệ thống đang đồng bộ, vui lòng đợi.'**
   String get sync_in_progress;
 
-  /// No description provided for @cooldown.
+  /// Cooldown
   ///
   /// In vi, this message translates to:
   /// **'Bạn thao tác quá nhanh. Vui lòng đợi {seconds} giây để đồng bộ lại.'**
-  String cooldown(Object seconds);
+  String cooldown(String seconds);
 
-  /// No description provided for @accepted_formats.
+  /// Accepted formats
   ///
   /// In vi, this message translates to:
   /// **'Chấp nhận các định dạng'**
   String get accepted_formats;
 
-  /// No description provided for @select_file_to_import.
+  /// Select file to import
   ///
   /// In vi, this message translates to:
   /// **'Chọn tệp để nhập'**
   String get select_file_to_import;
 
-  /// No description provided for @tap_to_browse.
+  /// Tap to browse
   ///
   /// In vi, this message translates to:
   /// **'Chạm để duyệt thiết bị hoặc lưu trữ đám mây của bạn cho các tệp.'**
   String get tap_to_browse;
 
-  /// No description provided for @protected.
+  /// Protected
   ///
   /// In vi, this message translates to:
   /// **'Được bảo vệ'**
   String get protected;
 
-  /// No description provided for @protected_description.
+  /// Protected description
   ///
   /// In vi, this message translates to:
   /// **'Dữ liệu của bạn không bao giờ rời khỏi thiết bị và được xử lý cục bộ.'**
   String get protected_description;
 
-  /// No description provided for @recent_imports.
+  /// Recent imports
   ///
   /// In vi, this message translates to:
   /// **'Nhập gần đây'**
   String get recent_imports;
 
-  /// No description provided for @no_recent_imports.
+  /// No recent imports
   ///
   /// In vi, this message translates to:
   /// **'Chưa có nhập dữ liệu gần đây'**
   String get no_recent_imports;
 
-  /// No description provided for @invalid_format.
+  /// Invalid format
   ///
   /// In vi, this message translates to:
   /// **'Định dạng tệp không hợp lệ.'**
   String get invalid_format;
 
-  /// No description provided for @import_success.
+  /// Import success
   ///
   /// In vi, this message translates to:
   /// **'Nhập thành công!'**
   String get import_success;
 
-  /// No description provided for @import_success_description.
+  /// Import success description
   ///
   /// In vi, this message translates to:
   /// **'Đã nhập thành công {count} giao dịch từ tệp.'**
-  String import_success_description(Object count);
+  String import_success_description(String count);
 
-  /// No description provided for @file_format_template.
+  /// File format template
   ///
   /// In vi, this message translates to:
   /// **'Mẫu định dạng tệp'**
   String get file_format_template;
 
-  /// No description provided for @download_sample_file.
+  /// Download sample file
   ///
   /// In vi, this message translates to:
   /// **'Tải xuống tệp mẫu {format}'**
-  String download_sample_file(Object format);
+  String download_sample_file(String format);
 
-  /// No description provided for @card.
+  /// Card
   ///
   /// In vi, this message translates to:
   /// **'Thẻ'**
   String get card;
 
-  /// No description provided for @font_selection.
+  /// Font selection
   ///
   /// In vi, this message translates to:
   /// **'Lựa chọn Font chữ'**
   String get font_selection;
 
-  /// No description provided for @select_font.
+  /// Select font
   ///
   /// In vi, this message translates to:
   /// **'Chọn Font chữ'**
   String get select_font;
 
-  /// No description provided for @font.
+  /// Font
   ///
   /// In vi, this message translates to:
   /// **'Font chữ'**
   String get font;
 
-  /// No description provided for @font_description.
+  /// Font description
   ///
   /// In vi, this message translates to:
   /// **'Một giao dịch mỗi ngày sẽ giúp bạn tránh được \'Tháng túng thiếu\'.'**
   String get font_description;
 
-  /// No description provided for @reminder_title.
+  /// Reminder title
   ///
   /// In vi, this message translates to:
   /// **'Nhắc nhở chi tiêu hàng ngày'**
   String get reminder_title;
 
-  /// No description provided for @reminder_body.
+  /// Reminder body
   ///
   /// In vi, this message translates to:
   /// **'Bạn đã ghi chép chi tiêu hôm nay chưa? 💸'**
   String get reminder_body;
 
-  /// No description provided for @defaultTransactionTitle.
+  /// Defaulttransactiontitle
   ///
   /// In vi, this message translates to:
   /// **'Giao dịch mới'**
   String get defaultTransactionTitle;
 
-  /// No description provided for @invoice_analysis.
+  /// Invoice analysis
   ///
   /// In vi, this message translates to:
   /// **'Đang phân tích hóa đơn ...'**
   String get invoice_analysis;
 
-  /// No description provided for @mapbox_error.
+  /// Mapbox error
   ///
   /// In vi, this message translates to:
   /// **'Lỗi tải bản đồ. Vui lòng kiểm tra cấu hình token Mapbox của bạn.'**
   String get mapbox_error;
 
-  /// No description provided for @location.
+  /// Location
   ///
   /// In vi, this message translates to:
   /// **'Vị trí'**
   String get location;
 
-  /// No description provided for @current_location.
+  /// Current location
   ///
   /// In vi, this message translates to:
   /// **'Vị trí hiện tại'**
   String get current_location;
 
-  /// No description provided for @select_location.
+  /// Select location
   ///
   /// In vi, this message translates to:
   /// **'Chọn vị trí'**
   String get select_location;
 
-  /// No description provided for @no_location_selected.
+  /// No location selected
   ///
   /// In vi, this message translates to:
   /// **'Chưa chọn vị trí'**
   String get no_location_selected;
 
-  /// No description provided for @search_location.
+  /// Search location
   ///
   /// In vi, this message translates to:
   /// **'Tìm kiếm vị trí...'**
   String get search_location;
 
-  /// No description provided for @tap_to_change_location.
+  /// Tap to change location
   ///
   /// In vi, this message translates to:
   /// **'Chạm để thay đổi vị trí'**
   String get tap_to_change_location;
 
-  /// No description provided for @search_results.
+  /// Search results
   ///
   /// In vi, this message translates to:
   /// **'Kết quả tìm kiếm'**
   String get search_results;
 
-  /// No description provided for @no_location_found.
+  /// No location found
   ///
   /// In vi, this message translates to:
   /// **'Không tìm thấy vị trí'**
   String get no_location_found;
 
-  /// No description provided for @recent_locations.
+  /// Recent locations
   ///
   /// In vi, this message translates to:
   /// **'Vị trí gần đây'**
   String get recent_locations;
 
-  /// No description provided for @location_access_error.
+  /// Location access error
   ///
   /// In vi, this message translates to:
   /// **'Lỗi truy cập vị trí'**
   String get location_access_error;
 
-  /// No description provided for @location_permission_denied.
+  /// Location permission denied
   ///
   /// In vi, this message translates to:
   /// **'Quyền truy cập vị trí bị từ chối.'**
   String get location_permission_denied;
 
-  /// No description provided for @location_permission_denied_description.
+  /// Location permission denied description
   ///
   /// In vi, this message translates to:
   /// **'Vui lòng bật quyền truy cập vị trí trong cài đặt.'**
   String get location_permission_denied_description;
 
-  /// No description provided for @notification_permission_denied.
+  /// Notification permission denied
   ///
   /// In vi, this message translates to:
   /// **'Nhận thông báo bị từ chối.'**
   String get notification_permission_denied;
 
-  /// No description provided for @notification_permission_denied_description.
+  /// Notification permission denied description
   ///
   /// In vi, this message translates to:
   /// **'Vui lòng bật thông báo trong cài đặt để nhận nhắc nhở.'**
   String get notification_permission_denied_description;
 
-  /// No description provided for @permission_required_camera.
+  /// Permission required camera
   ///
   /// In vi, this message translates to:
   /// **'Quyền truy cập camera bị từ chối'**
   String get permission_required_camera;
 
-  /// No description provided for @permission_required_camera_description.
+  /// Permission required camera description
   ///
   /// In vi, this message translates to:
   /// **'Vui lòng bật quyền truy cập camera trong cài đặt để sử dụng tính năng quét hóa đơn.'**
   String get permission_required_camera_description;
 
-  /// No description provided for @voice_input_error.
+  /// Voice input error
   ///
   /// In vi, this message translates to:
   /// **'Lỗi nhập giọng nói. Vui lòng thử lại.'**
   String get voice_input_error;
 
-  /// No description provided for @voice_input_not_recognized.
+  /// Voice input not recognized
   ///
   /// In vi, this message translates to:
   /// **'Không nhận diện được giọng nói. Vui lòng thử lại.'**
   String get voice_input_not_recognized;
 
-  /// No description provided for @voice_input_permission_denied.
+  /// Voice input permission denied
   ///
   /// In vi, this message translates to:
   /// **'Quyền nhập giọng nói bị từ chối. Vui lòng bật quyền truy cập micro trong cài đặt.'**
   String get voice_input_permission_denied;
 
-  /// No description provided for @error_ai_request.
+  /// Error ai request
   ///
   /// In vi, this message translates to:
   /// **'AI không thể nhận dạng yêu cầu này. Hãy thử nói rõ hơn.'**
   String get error_ai_request;
 
-  /// No description provided for @voice_analysis.
+  /// Voice analysis
   ///
   /// In vi, this message translates to:
   /// **'Đang phân tích giọng nói...'**
   String get voice_analysis;
 
-  /// No description provided for @scan_receipt_error.
+  /// Scan receipt error
   ///
   /// In vi, this message translates to:
   /// **'Lỗi quét hóa đơn. Vui lòng thử lại.'**
   String get scan_receipt_error;
 
-  /// No description provided for @requires_premium.
+  /// Requires premium
   ///
   /// In vi, this message translates to:
   /// **'Tính năng này yêu cầu xem quảng cáo để sử dụng hoặc nâng cấp lên Premium.'**
   String get requires_premium;
 
-  /// No description provided for @watch_ad_continue.
+  /// Watch ad continue
   ///
   /// In vi, this message translates to:
   /// **'Xem quảng cáo để tiếp tục'**
   String get watch_ad_continue;
 
-  /// No description provided for @permission_required_voice_input.
+  /// Permission required voice input
   ///
   /// In vi, this message translates to:
   /// **'Quyền truy cập micro bị từ chối'**
   String get permission_required_voice_input;
 
-  /// No description provided for @permission_required_voice_input_description.
+  /// Permission required voice input description
   ///
   /// In vi, this message translates to:
   /// **'Vui lòng bật quyền truy cập micro trong cài đặt để sử dụng nhập giọng nói.'**
   String get permission_required_voice_input_description;
 
-  /// No description provided for @permission_required_location.
+  /// Permission required location
   ///
   /// In vi, this message translates to:
   /// **'Quyền truy cập vị trí bị từ chối'**
   String get permission_required_location;
 
-  /// No description provided for @permission_required_location_description.
+  /// Permission required location description
   ///
   /// In vi, this message translates to:
   /// **'Vui lòng bật quyền truy cập vị trí trong cài đặt để sử dụng các tính năng vị trí.'**
   String get permission_required_location_description;
 
-  /// No description provided for @congratulations.
+  /// Congratulations
   ///
   /// In vi, this message translates to:
   /// **'Chúc mừng!'**
   String get congratulations;
 
-  /// No description provided for @successfully_purchased.
+  /// Successfully purchased
   ///
   /// In vi, this message translates to:
   /// **'Bạn đã mua thành công gói Premium. Hãy tận hưởng trải nghiệm nâng cao của bạn!'**
   String get successfully_purchased;
 
-  /// No description provided for @cancel_purchase.
+  /// Cancel purchase
   ///
   /// In vi, this message translates to:
   /// **'Giao dịch đã bị hủy.'**
   String get cancel_purchase;
 
-  /// No description provided for @restore_no_purchase_description.
+  /// Restore no purchase description
   ///
   /// In vi, this message translates to:
   /// **'Không tìm thấy giao dịch nào để khôi phục.'**
   String get restore_no_purchase_description;
 
-  /// No description provided for @ai_powered.
+  /// Ai powered
   ///
   /// In vi, this message translates to:
   /// **'Hỗ trợ bởi AI'**
   String get ai_powered;
 
-  /// No description provided for @entries_pending.
+  /// Entries pending
   ///
   /// In vi, this message translates to:
   /// **'Mục đang chờ xử lý'**
   String get entries_pending;
 
-  /// No description provided for @confirm_selected_entries.
+  /// Confirm selected entries
   ///
   /// In vi, this message translates to:
   /// **'Thêm các mục đã chọn'**
   String get confirm_selected_entries;
 
-  /// No description provided for @preview_results.
+  /// Preview results
   ///
   /// In vi, this message translates to:
   /// **'Xem trước kết quả'**
   String get preview_results;
 
-  /// No description provided for @clear_all.
+  /// Clear all
   ///
   /// In vi, this message translates to:
   /// **'Bỏ chọn tất cả'**
   String get clear_all;
 
-  /// No description provided for @select_all.
+  /// Select all
   ///
   /// In vi, this message translates to:
   /// **'Chọn tất cả'**
   String get select_all;
 
-  /// No description provided for @fail_to_save_transactions.
+  /// Fail to save transactions
   ///
   /// In vi, this message translates to:
   /// **'Lưu giao dịch thất bại. Vui lòng thử lại.'**
   String get fail_to_save_transactions;
 
-  /// No description provided for @tap_to_check_in.
+  /// Tap to check in
   ///
   /// In vi, this message translates to:
   /// **'Chạm để kiểm tra'**
   String get tap_to_check_in;
 
-  /// No description provided for @keep_your_streak.
+  /// Keep your streak
   ///
   /// In vi, this message translates to:
   /// **'Duy trì chuỗi của bạn!'**
   String get keep_your_streak;
 
-  /// No description provided for @keep_your_streak_day.
+  /// Keep your streak day
   ///
   /// In vi, this message translates to:
   /// **'Duy trì chuỗi {streak} ngày của bạn!'**
-  String keep_your_streak_day(Object streak);
+  String keep_your_streak_day(String streak);
 
-  /// No description provided for @streak.
+  /// Streak
   ///
   /// In vi, this message translates to:
   /// **'Chuỗi'**
   String get streak;
 
-  /// No description provided for @streak_days.
+  /// Streak days
   ///
   /// In vi, this message translates to:
   /// **'{days} ngày'**
-  String streak_days(Object days);
+  String streak_days(String days);
 
-  /// No description provided for @not_logined.
+  /// Not logined
   ///
   /// In vi, this message translates to:
   /// **'Chưa đăng nhập'**
   String get not_logined;
 
-  /// No description provided for @please_login_to_sync_data.
+  /// Please login to sync data
   ///
   /// In vi, this message translates to:
   /// **'Vui lòng đăng nhập để đồng bộ dữ liệu của bạn trên các thiết bị.'**
   String get please_login_to_sync_data;
 
-  /// No description provided for @require_premium_to_sync.
+  /// Require premium to sync
   ///
   /// In vi, this message translates to:
   /// **'Bạn cần nâng cấp lên Premium hoặc xem quảng cáo để đồng bộ dữ liệu.'**
   String get require_premium_to_sync;
 
-  /// No description provided for @information_and_support.
+  /// Information and support
   ///
   /// In vi, this message translates to:
   /// **'Thông tin & Hỗ trợ'**
   String get information_and_support;
 
-  /// No description provided for @contact_support.
+  /// Contact support
   ///
   /// In vi, this message translates to:
   /// **'Liên hệ hỗ trợ'**
   String get contact_support;
 
-  /// No description provided for @send_email.
+  /// Send email
   ///
   /// In vi, this message translates to:
   /// **'Gửi email hỗ trợ'**
   String get send_email;
 
-  /// No description provided for @describe_issue.
+  /// Describe issue
   ///
   /// In vi, this message translates to:
   /// **'Mô tả vấn đề của bạn ở đây...'**
   String get describe_issue;
 
-  /// No description provided for @feedback.
+  /// Feedback
   ///
   /// In vi, this message translates to:
   /// **'Góp ý'**
   String get feedback;
 
-  /// No description provided for @feedback_description.
+  /// Feedback description
   ///
   /// In vi, this message translates to:
   /// **'Chúng tôi rất muốn nghe ý kiến của bạn! Hãy chia sẻ suy nghĩ, đề xuất hoặc bất kỳ vấn đề nào bạn gặp phải để chúng tôi có thể cải thiện ứng dụng.'**
   String get feedback_description;
 
-  /// No description provided for @submit_feedback.
+  /// Submit feedback
   ///
   /// In vi, this message translates to:
   /// **'Gửi góp ý'**
   String get submit_feedback;
 
-  /// No description provided for @report_issue.
+  /// Report issue
   ///
   /// In vi, this message translates to:
   /// **'Báo cáo sự cố'**
   String get report_issue;
 
-  /// No description provided for @report_issue_description.
+  /// Report issue description
   ///
   /// In vi, this message translates to:
   /// **'Nếu bạn gặp phải bất kỳ lỗi nào hoặc có vấn đề với ứng dụng, vui lòng cho chúng tôi biết. Mô tả chi tiết vấn đề của bạn để chúng tôi có thể giải quyết nó nhanh chóng.'**
   String get report_issue_description;
 
-  /// No description provided for @submit_issue.
+  /// Submit issue
   ///
   /// In vi, this message translates to:
   /// **'Gửi báo cáo sự cố'**
   String get submit_issue;
 
-  /// No description provided for @thank_you_feedback.
+  /// Thank you feedback
   ///
   /// In vi, this message translates to:
   /// **'Cảm ơn bạn đã gửi góp ý! Chúng tôi đánh giá cao phản hồi của bạn và sẽ xem xét nó để cải thiện ứng dụng.'**
   String get thank_you_feedback;
 
-  /// No description provided for @thank_you_issue.
+  /// Thank you issue
   ///
   /// In vi, this message translates to:
   /// **'Cảm ơn bạn đã báo cáo sự cố! Chúng tôi đánh giá cao phản hồi của bạn và sẽ xem xét nó để giải quyết vấn đề bạn gặp phải.'**
   String get thank_you_issue;
 
-  /// No description provided for @request_delete_account.
+  /// Request delete account
   ///
   /// In vi, this message translates to:
   /// **'Yêu cầu xóa tài khoản'**
   String get request_delete_account;
 
-  /// No description provided for @delete_account_description.
+  /// Delete account description
   ///
   /// In vi, this message translates to:
   /// **'Nếu bạn muốn xóa tài khoản của mình, vui lòng cho chúng tôi biết taị sao bạn muốn xóa tài khoản. Chúng tôi sẽ xử lý yêu cầu của bạn trong thời gian sớm nhất có thể.'**
   String get delete_account_description;
 
-  /// No description provided for @submit_delete_request.
+  /// Submit delete request
   ///
   /// In vi, this message translates to:
   /// **'Gửi yêu cầu xóa tài khoản'**
   String get submit_delete_request;
 
-  /// No description provided for @select_subject.
+  /// Select subject
   ///
   /// In vi, this message translates to:
   /// **'Chọn chủ đề'**
   String get select_subject;
 
-  /// No description provided for @please_enter_content.
+  /// Please enter content
   ///
   /// In vi, this message translates to:
   /// **'Vui lòng nhập nội dung'**
   String get please_enter_content;
 
-  /// No description provided for @subject.
+  /// Subject
   ///
   /// In vi, this message translates to:
   /// **'Chủ đề'**
   String get subject;
 
-  /// No description provided for @content.
+  /// Content
   ///
   /// In vi, this message translates to:
   /// **'Nội dung'**
   String get content;
 
-  /// No description provided for @send_contact_success.
+  /// Send contact success
   ///
   /// In vi, this message translates to:
   /// **'Gửi liên hệ thành công! Chúng tôi sẽ liên hệ lại với bạn sớm nhất có thể.'**
   String get send_contact_success;
 
-  /// No description provided for @send_contact_error.
+  /// Send contact error
   ///
   /// In vi, this message translates to:
   /// **'Lỗi khi gửi liên hệ. Vui lòng thử lại.'**
   String get send_contact_error;
 
-  /// No description provided for @contact_info.
+  /// Contact info
   ///
   /// In vi, this message translates to:
   /// **'Thông tin liên hệ'**
   String get contact_info;
 
-  /// No description provided for @email_placeholder.
+  /// Email placeholder
   ///
   /// In vi, this message translates to:
   /// **'Nhập email của bạn'**
   String get email_placeholder;
 
-  /// No description provided for @name_placeholder.
+  /// Name placeholder
   ///
   /// In vi, this message translates to:
   /// **'Nhập tên của bạn'**
   String get name_placeholder;
 
-  /// No description provided for @invalid_name.
+  /// Invalid name
   ///
   /// In vi, this message translates to:
   /// **'Vui lòng nhập tên của bạn.'**
   String get invalid_name;
 
-  /// No description provided for @mrs.
+  /// Mrs
   ///
   /// In vi, this message translates to:
   /// **'Bà'**
   String get mrs;
 
-  /// No description provided for @mr.
+  /// Mr
   ///
   /// In vi, this message translates to:
   /// **'Ông'**
   String get mr;
 
-  /// No description provided for @ms.
+  /// Ms
   ///
   /// In vi, this message translates to:
   /// **'Cô'**
   String get ms;
 
-  /// No description provided for @salutation.
+  /// Salutation
   ///
   /// In vi, this message translates to:
   /// **'Danh xưng'**
   String get salutation;
 
-  /// No description provided for @delete_account.
+  /// Delete account
   ///
   /// In vi, this message translates to:
   /// **'Xóa tài khoản'**
   String get delete_account;
 
-  /// No description provided for @delete_account_confirmation.
+  /// Delete account confirmation
   ///
   /// In vi, this message translates to:
   /// **'Bạn có chắc chắn muốn xóa tài khoản của mình không? Hành động này không thể hoàn tác và sẽ xóa tất cả dữ liệu của bạn.'**
   String get delete_account_confirmation;
 
-  /// No description provided for @failed_to_send_deletion_request.
+  /// Failed to send deletion request
   ///
   /// In vi, this message translates to:
   /// **'Lỗi khi gửi yêu cầu xóa tài khoản. Vui lòng thử lại.'**
   String get failed_to_send_deletion_request;
 
-  /// No description provided for @requires_recent_login_description.
+  /// Requires recent login description
   ///
   /// In vi, this message translates to:
   /// **'Vì lý do bảo mật, vui lòng đăng xuất và đăng nhập lại sau đó thử lại yêu cầu xóa tài khoản của bạn.'**
   String get requires_recent_login_description;
 
-  /// No description provided for @delete_account_failed.
+  /// Delete account failed
   ///
   /// In vi, this message translates to:
   /// **'Đã xảy ra lỗi khi xoá tài khoản của bạn. Vui lòng thử lại.'**
