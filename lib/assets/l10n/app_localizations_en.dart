@@ -437,10 +437,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get something_went_wrong => 'Something went wrong. Please try again.';
 
   @override
-  String get network_error =>
-      'Network error. Please check your connection and try again.';
-
-  @override
   String get email_already_in_use =>
       'The email address is already in use by another account.';
 
@@ -450,6 +446,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get operation_not_allowed =>
       'Operation not allowed. Please contact support.';
+
+  @override
+  String get network_error =>
+      'Network error. Please check your connection and try again.';
 
   @override
   String get reset_password => 'Reset Password';
@@ -1045,14 +1045,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String see_ads(String additionalUses) {
-    return 'See Ads (+$additionalUses uses)';
-  }
-
-  @override
-  String get ads_loading => 'Ads Loading...';
-
-  @override
   String get monthly_plan => 'Monthly Plan';
 
   @override
@@ -1069,6 +1061,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get best_value => 'BEST VALUE';
+
+  @override
+  String get transaction_cancelled => 'Transaction cancelled.';
 
   @override
   String get purchase_successful => 'Purchase Successful!';
@@ -1149,6 +1144,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'Changing currency will only update the display symbol. Past transaction rates will not be recalculated.';
 
   @override
+  String see_ads(String additionalUses) {
+    return 'See Ads (+$additionalUses uses)';
+  }
+
+  @override
+  String get ads_loading => 'Ads Loading...';
+
+  @override
   String get data_management => 'Data Management';
 
   @override
@@ -1168,10 +1171,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get import_data => 'Import Data';
 
   @override
-  String get import_data_description =>
-      'Import financial data from external sources to synchronize with the application.';
-
-  @override
   String get import_data_title => 'Let\'s get your ';
 
   @override
@@ -1179,6 +1178,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get import_data_title_2 => ' in.';
+
+  @override
+  String get import_data_description =>
+      'Import financial data from external sources to synchronize with the application.';
 
   @override
   String get confirm_import => 'Confirm Import';
@@ -1507,20 +1510,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'We\'d love to hear your thoughts and suggestions to help us improve SpendFlow. Please share your feedback with us!';
 
   @override
+  String get thank_you_feedback => 'Thank you for your feedback!';
+
+  @override
   String get submit_feedback => 'Submit Feedback';
 
   @override
   String get report_issue => 'Report Issue';
 
   @override
-  String get report_issue_description =>
-      'If you encounter any bugs or issues, please report them here. Your input helps us improve the app for everyone.';
-
-  @override
   String get submit_issue => 'Submit Issue';
 
   @override
-  String get thank_you_feedback => 'Thank you for your feedback!';
+  String get report_issue_description =>
+      'If you encounter any bugs or issues, please report them here. Your input helps us improve the app for everyone.';
 
   @override
   String get thank_you_issue =>

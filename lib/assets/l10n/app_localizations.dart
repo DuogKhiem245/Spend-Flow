@@ -896,12 +896,6 @@ abstract class AppLocalizations {
   /// **'Đã xảy ra lỗi. Vui lòng thử lại.'**
   String get something_went_wrong;
 
-  /// Network error
-  ///
-  /// In vi, this message translates to:
-  /// **'Lỗi kết nối mạng, vui lòng kiểm tra lại.'**
-  String get network_error;
-
   /// Email already in use
   ///
   /// In vi, this message translates to:
@@ -919,6 +913,12 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Không cho phép thực hiện. Vui lòng liên hệ hỗ trợ.'**
   String get operation_not_allowed;
+
+  /// Network error
+  ///
+  /// In vi, this message translates to:
+  /// **'Lỗi kết nối mạng, vui lòng kiểm tra lại.'**
+  String get network_error;
 
   /// Reset password
   ///
@@ -2060,18 +2060,6 @@ abstract class AppLocalizations {
   /// **'Bạn đã sử dụng hết giới hạn nhập giọng nói trong ngày hôm nay. Xem quảng cáo để nhận thêm {value} lượt sử dụng hoặc nâng cấp lên Premium.'**
   String used_up_daily_limit(String value);
 
-  /// See ads
-  ///
-  /// In vi, this message translates to:
-  /// **'Xem quảng cáo (+{additionalUses} lượt)'**
-  String see_ads(String additionalUses);
-
-  /// Ads loading
-  ///
-  /// In vi, this message translates to:
-  /// **'Đang tải quảng cáo...'**
-  String get ads_loading;
-
   /// Monthly plan
   ///
   /// In vi, this message translates to:
@@ -2107,6 +2095,12 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'GIÁ TRỊ TỐT NHẤT'**
   String get best_value;
+
+  /// Transaction cancelled
+  ///
+  /// In vi, this message translates to:
+  /// **'Giao dịch đã bị hủy.'**
+  String get transaction_cancelled;
 
   /// Purchase successful
   ///
@@ -2246,6 +2240,18 @@ abstract class AppLocalizations {
   /// **'Thay đổi tiền tệ chỉ cập nhật ký hiệu hiển thị. Tỷ giá giao dịch trước đó sẽ không được tính toán lại.'**
   String get currency_change_warning;
 
+  /// See ads
+  ///
+  /// In vi, this message translates to:
+  /// **'Xem quảng cáo (+{additionalUses} lượt)'**
+  String see_ads(String additionalUses);
+
+  /// Ads loading
+  ///
+  /// In vi, this message translates to:
+  /// **'Đang tải quảng cáo...'**
+  String get ads_loading;
+
   /// Data management
   ///
   /// In vi, this message translates to:
@@ -2282,12 +2288,6 @@ abstract class AppLocalizations {
   /// **'Nhập dữ liệu'**
   String get import_data;
 
-  /// Import data description
-  ///
-  /// In vi, this message translates to:
-  /// **'Nhập dữ liệu tài chính từ các nguồn bên ngoài để đồng bộ hóa với ứng dụng.'**
-  String get import_data_description;
-
   /// Import data title
   ///
   /// In vi, this message translates to:
@@ -2305,6 +2305,12 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **' của bạn.'**
   String get import_data_title_2;
+
+  /// Import data description
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập dữ liệu tài chính từ các nguồn bên ngoài để đồng bộ hóa với ứng dụng.'**
+  String get import_data_description;
 
   /// Confirm import
   ///
@@ -2876,6 +2882,12 @@ abstract class AppLocalizations {
   /// **'Chúng tôi rất muốn nghe ý kiến của bạn! Hãy chia sẻ suy nghĩ, đề xuất hoặc bất kỳ vấn đề nào bạn gặp phải để chúng tôi có thể cải thiện ứng dụng.'**
   String get feedback_description;
 
+  /// Thank you feedback
+  ///
+  /// In vi, this message translates to:
+  /// **'Cảm ơn bạn đã gửi góp ý! Chúng tôi đánh giá cao phản hồi của bạn và sẽ xem xét nó để cải thiện ứng dụng.'**
+  String get thank_you_feedback;
+
   /// Submit feedback
   ///
   /// In vi, this message translates to:
@@ -2888,23 +2900,17 @@ abstract class AppLocalizations {
   /// **'Báo cáo sự cố'**
   String get report_issue;
 
-  /// Report issue description
-  ///
-  /// In vi, this message translates to:
-  /// **'Nếu bạn gặp phải bất kỳ lỗi nào hoặc có vấn đề với ứng dụng, vui lòng cho chúng tôi biết. Mô tả chi tiết vấn đề của bạn để chúng tôi có thể giải quyết nó nhanh chóng.'**
-  String get report_issue_description;
-
   /// Submit issue
   ///
   /// In vi, this message translates to:
   /// **'Gửi báo cáo sự cố'**
   String get submit_issue;
 
-  /// Thank you feedback
+  /// Report issue description
   ///
   /// In vi, this message translates to:
-  /// **'Cảm ơn bạn đã gửi góp ý! Chúng tôi đánh giá cao phản hồi của bạn và sẽ xem xét nó để cải thiện ứng dụng.'**
-  String get thank_you_feedback;
+  /// **'Nếu bạn gặp phải bất kỳ lỗi nào hoặc có vấn đề với ứng dụng, vui lòng cho chúng tôi biết. Mô tả chi tiết vấn đề của bạn để chúng tôi có thể giải quyết nó nhanh chóng.'**
+  String get report_issue_description;
 
   /// Thank you issue
   ///

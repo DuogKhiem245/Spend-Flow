@@ -542,10 +542,6 @@
   "@something_went_wrong": {
     "description": "Something went wrong"
   },
-  "network_error": "Lỗi kết nối mạng, vui lòng kiểm tra lại.",
-  "@network_error": {
-    "description": "Network error"
-  },
   "email_already_in_use": "Địa chỉ email đã được sử dụng bởi tài khoản khác.",
   "@email_already_in_use": {
     "description": "Email already in use"
@@ -557,6 +553,10 @@
   "operation_not_allowed": "Không cho phép thực hiện. Vui lòng liên hệ hỗ trợ.",
   "@operation_not_allowed": {
     "description": "Operation not allowed"
+  },
+  "network_error": "Lỗi kết nối mạng, vui lòng kiểm tra lại.",
+  "@network_error": {
+    "description": "Network error"
   },
   "reset_password": "Đặt lại mật khẩu",
   "@reset_password": {
@@ -1346,19 +1346,6 @@
       }
     }
   },
-  "see_ads": "Xem quảng cáo (+{additionalUses} lượt)",
-  "@see_ads": {
-    "description": "See ads",
-    "placeholders": {
-      "additionalUses": {
-        "type": "String"
-      }
-    }
-  },
-  "ads_loading": "Đang tải quảng cáo...",
-  "@ads_loading": {
-    "description": "Ads loading"
-  },
   "monthly_plan": "Gói hàng tháng",
   "@monthly_plan": {
     "description": "Monthly plan"
@@ -1382,6 +1369,10 @@
   "best_value": "GIÁ TRỊ TỐT NHẤT",
   "@best_value": {
     "description": "Best value"
+  },
+  "transaction_cancelled": "Giao dịch đã bị hủy.",
+  "@transaction_cancelled": {
+    "description": "Transaction cancelled"
   },
   "purchase_successful": "Mua thành công!",
   "@purchase_successful": {
@@ -1475,6 +1466,19 @@
   "@currency_change_warning": {
     "description": "Currency change warning"
   },
+  "see_ads": "Xem quảng cáo (+{additionalUses} lượt)",
+  "@see_ads": {
+    "description": "See ads",
+    "placeholders": {
+      "additionalUses": {
+        "type": "String"
+      }
+    }
+  },
+  "ads_loading": "Đang tải quảng cáo...",
+  "@ads_loading": {
+    "description": "Ads loading"
+  },
   "data_management": "Quản lý dữ liệu",
   "@data_management": {
     "description": "Data management"
@@ -1499,10 +1503,6 @@
   "@import_data": {
     "description": "Import data"
   },
-  "import_data_description": "Nhập dữ liệu tài chính từ các nguồn bên ngoài để đồng bộ hóa với ứng dụng.",
-  "@import_data_description": {
-    "description": "Import data description"
-  },
   "import_data_title": "Nhập ",
   "@import_data_title": {
     "description": "Import data title"
@@ -1514,6 +1514,10 @@
   "import_data_title_2": " của bạn.",
   "@import_data_title_2": {
     "description": "Import data title 2"
+  },
+  "import_data_description": "Nhập dữ liệu tài chính từ các nguồn bên ngoài để đồng bộ hóa với ứng dụng.",
+  "@import_data_description": {
+    "description": "Import data description"
   },
   "confirm_import": "Xác nhận nhập",
   "@confirm_import": {
@@ -1930,6 +1934,10 @@
   "@feedback_description": {
     "description": "Feedback description"
   },
+  "thank_you_feedback": "Cảm ơn bạn đã gửi góp ý! Chúng tôi đánh giá cao phản hồi của bạn và sẽ xem xét nó để cải thiện ứng dụng.",
+  "@thank_you_feedback": {
+    "description": "Thank you feedback"
+  },
   "submit_feedback": "Gửi góp ý",
   "@submit_feedback": {
     "description": "Submit feedback"
@@ -1938,17 +1946,13 @@
   "@report_issue": {
     "description": "Report issue"
   },
-  "report_issue_description": "Nếu bạn gặp phải bất kỳ lỗi nào hoặc có vấn đề với ứng dụng, vui lòng cho chúng tôi biết. Mô tả chi tiết vấn đề của bạn để chúng tôi có thể giải quyết nó nhanh chóng.",
-  "@report_issue_description": {
-    "description": "Report issue description"
-  },
   "submit_issue": "Gửi báo cáo sự cố",
   "@submit_issue": {
     "description": "Submit issue"
   },
-  "thank_you_feedback": "Cảm ơn bạn đã gửi góp ý! Chúng tôi đánh giá cao phản hồi của bạn và sẽ xem xét nó để cải thiện ứng dụng.",
-  "@thank_you_feedback": {
-    "description": "Thank you feedback"
+  "report_issue_description": "Nếu bạn gặp phải bất kỳ lỗi nào hoặc có vấn đề với ứng dụng, vui lòng cho chúng tôi biết. Mô tả chi tiết vấn đề của bạn để chúng tôi có thể giải quyết nó nhanh chóng.",
+  "@report_issue_description": {
+    "description": "Report issue description"
   },
   "thank_you_issue": "Cảm ơn bạn đã báo cáo sự cố! Chúng tôi đánh giá cao phản hồi của bạn và sẽ xem xét nó để giải quyết vấn đề bạn gặp phải.",
   "@thank_you_issue": {

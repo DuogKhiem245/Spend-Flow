@@ -436,9 +436,6 @@ class AppLocalizationsVi extends AppLocalizations {
   String get something_went_wrong => 'Đã xảy ra lỗi. Vui lòng thử lại.';
 
   @override
-  String get network_error => 'Lỗi kết nối mạng, vui lòng kiểm tra lại.';
-
-  @override
   String get email_already_in_use =>
       'Địa chỉ email đã được sử dụng bởi tài khoản khác.';
 
@@ -448,6 +445,9 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get operation_not_allowed =>
       'Không cho phép thực hiện. Vui lòng liên hệ hỗ trợ.';
+
+  @override
+  String get network_error => 'Lỗi kết nối mạng, vui lòng kiểm tra lại.';
 
   @override
   String get reset_password => 'Đặt lại mật khẩu';
@@ -1044,14 +1044,6 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String see_ads(String additionalUses) {
-    return 'Xem quảng cáo (+$additionalUses lượt)';
-  }
-
-  @override
-  String get ads_loading => 'Đang tải quảng cáo...';
-
-  @override
   String get monthly_plan => 'Gói hàng tháng';
 
   @override
@@ -1068,6 +1060,9 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get best_value => 'GIÁ TRỊ TỐT NHẤT';
+
+  @override
+  String get transaction_cancelled => 'Giao dịch đã bị hủy.';
 
   @override
   String get purchase_successful => 'Mua thành công!';
@@ -1148,6 +1143,14 @@ class AppLocalizationsVi extends AppLocalizations {
       'Thay đổi tiền tệ chỉ cập nhật ký hiệu hiển thị. Tỷ giá giao dịch trước đó sẽ không được tính toán lại.';
 
   @override
+  String see_ads(String additionalUses) {
+    return 'Xem quảng cáo (+$additionalUses lượt)';
+  }
+
+  @override
+  String get ads_loading => 'Đang tải quảng cáo...';
+
+  @override
   String get data_management => 'Quản lý dữ liệu';
 
   @override
@@ -1167,10 +1170,6 @@ class AppLocalizationsVi extends AppLocalizations {
   String get import_data => 'Nhập dữ liệu';
 
   @override
-  String get import_data_description =>
-      'Nhập dữ liệu tài chính từ các nguồn bên ngoài để đồng bộ hóa với ứng dụng.';
-
-  @override
   String get import_data_title => 'Nhập ';
 
   @override
@@ -1178,6 +1177,10 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get import_data_title_2 => ' của bạn.';
+
+  @override
+  String get import_data_description =>
+      'Nhập dữ liệu tài chính từ các nguồn bên ngoài để đồng bộ hóa với ứng dụng.';
 
   @override
   String get confirm_import => 'Xác nhận nhập';
@@ -1504,21 +1507,21 @@ class AppLocalizationsVi extends AppLocalizations {
       'Chúng tôi rất muốn nghe ý kiến của bạn! Hãy chia sẻ suy nghĩ, đề xuất hoặc bất kỳ vấn đề nào bạn gặp phải để chúng tôi có thể cải thiện ứng dụng.';
 
   @override
+  String get thank_you_feedback =>
+      'Cảm ơn bạn đã gửi góp ý! Chúng tôi đánh giá cao phản hồi của bạn và sẽ xem xét nó để cải thiện ứng dụng.';
+
+  @override
   String get submit_feedback => 'Gửi góp ý';
 
   @override
   String get report_issue => 'Báo cáo sự cố';
 
   @override
-  String get report_issue_description =>
-      'Nếu bạn gặp phải bất kỳ lỗi nào hoặc có vấn đề với ứng dụng, vui lòng cho chúng tôi biết. Mô tả chi tiết vấn đề của bạn để chúng tôi có thể giải quyết nó nhanh chóng.';
-
-  @override
   String get submit_issue => 'Gửi báo cáo sự cố';
 
   @override
-  String get thank_you_feedback =>
-      'Cảm ơn bạn đã gửi góp ý! Chúng tôi đánh giá cao phản hồi của bạn và sẽ xem xét nó để cải thiện ứng dụng.';
+  String get report_issue_description =>
+      'Nếu bạn gặp phải bất kỳ lỗi nào hoặc có vấn đề với ứng dụng, vui lòng cho chúng tôi biết. Mô tả chi tiết vấn đề của bạn để chúng tôi có thể giải quyết nó nhanh chóng.';
 
   @override
   String get thank_you_issue =>
