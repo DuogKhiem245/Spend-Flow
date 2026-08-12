@@ -46,7 +46,7 @@ class StreakCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  l10n!.keep_your_streak_day(day),
+                  l10n!.keep_your_streak_day(day as String),
                   style: CupertinoTheme.of(context).textTheme.textStyle
                       .copyWith(fontWeight: FontWeight.bold, fontSize: 15.sp),
                 ),

@@ -271,7 +271,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             ),
             SizedBox(height: 8.h),
             Text(
-              isVoice ? l10n.used_up_daily_limit(5) : l10n.requires_premium,
+              isVoice ? l10n.used_up_daily_limit("5") : l10n.requires_premium,
               textAlign: TextAlign.center,
               style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                 fontSize: 14.sp,
@@ -282,7 +282,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             CustomOptionWidget(
               context: context,
               icon: CupertinoIcons.play_circle_fill,
-              label: isVoice ? l10n.see_ads(5) : l10n.watch_ad_continue,
+              label: isVoice ? l10n.see_ads("5") : l10n.watch_ad_continue,
               color: CupertinoTheme.of(context).primaryColor,
               onTap: () => _handleRewardAdFlow(isVoice: isVoice),
             ),

@@ -228,7 +228,7 @@ class ImportViewModel extends ChangeNotifier {
           AdaptiveAlertDialog.show(
             context: context,
             title: l10n.import_success,
-            message: l10n.import_success_description(_recentImportCount!),
+            message: l10n.import_success_description(_recentImportCount! as String),
             icon: 'arrow.down.doc.fill',
             actions: [
               AlertAction(

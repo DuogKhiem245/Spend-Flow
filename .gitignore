@@ -30,6 +30,8 @@ doc/api/
 functions/node_modules/
 functions/lib/
 functions/.firebase/
+functions/.env
+.env
 
 # iOS files
 **/ios/**/Runner/GoogleService-Info.plist
