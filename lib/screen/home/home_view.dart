@@ -36,7 +36,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   final _premiumViewModel = premiumViewModel;
 
   bool _isMenuOpen = false;
-  bool _hasBanner = true;
 
   @override
   void initState() {
@@ -45,7 +44,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     _viewModel.initData();
     _adsService.loadRewardedAd(RewardedAdType.scanReceipt);
     _adsService.loadRewardedAd(RewardedAdType.voiceInput);
-    _checkBanner();
   }
 
   @override
@@ -59,15 +57,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
       _viewModel.lockApp();
-    }
-  }
-
-  Future<void> _checkBanner() async {
-    final available = await _adsService.checkBannerAdAvailable();
-    if (mounted) {
-      setState(() {
-        _hasBanner = available;
-      });
     }
   }
 
@@ -144,7 +133,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                       ),
                       Positioned(
                         right: 20.w,
-                        bottom: (_premiumViewModel.isPremium || !_hasBanner)
+                        bottom: (_premiumViewModel.isPremium || !_viewModel.hasBanner)
                             ? Platform.isIOS
                                   ? 100.h
                                   : 95.h

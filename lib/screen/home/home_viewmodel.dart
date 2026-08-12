@@ -9,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/model/wallet_model.dart';
+import 'package:spend_flow/core/services/ads_service.dart';
 import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 import 'package:spend_flow/core/model/category_model.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
@@ -20,6 +21,7 @@ class HomeViewModel extends ChangeNotifier {
   final LocalStorageService _storage = LocalStorageService();
   final LocalAuthentication _auth = LocalAuthentication();
   final NotificationService notificationService = NotificationService();
+  final AdsService _adsService = AdsService();
 
   User? get currentUser => FirebaseAuth.instance.currentUser;
 
@@ -28,10 +30,12 @@ class HomeViewModel extends ChangeNotifier {
   bool _isLocked = true;
   bool _hasSecurity = false;
   bool _isFaceIdAvailable = false;
+  bool _hasBanner = false;
 
   bool get isLocked => _isLocked;
   bool get hasSecurity => _hasSecurity;
   bool get isFaceIdAvailable => _isFaceIdAvailable;
+  bool get hasBanner => _hasBanner;
 
   String _currencySymbol = '\$';
   String get currencySymbol => _currencySymbol;
@@ -68,9 +72,18 @@ class HomeViewModel extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     _currentWalletId = prefs.getString('current_wallet_id');
 
-    await Future.wait([_checkSecurity(), _loadCurrency(), _loadWallets()]);
+    await Future.wait([
+      _checkSecurity(),
+      _loadCurrency(),
+      _loadWallets(),
+      _checkBannerAd(),
+    ]);
 
     await reloadData();
+  }
+
+  Future<void> _checkBannerAd() async {
+    _hasBanner = await _adsService.checkBannerAdAvailable();
   }
 
   Future<void> initializeImage() async {
@@ -93,6 +106,7 @@ class HomeViewModel extends ChangeNotifier {
         _fetchMonthStats(walletId),
         _fetchChartData(walletId),
         _fetchRecentTransactions(walletId),
+        _checkBannerAd(),
       ]);
       //SyncService().syncData();
     } catch (e) {
