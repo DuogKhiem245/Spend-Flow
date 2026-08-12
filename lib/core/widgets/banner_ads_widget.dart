@@ -5,22 +5,29 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class BannerAdWidget extends StatefulWidget {
   final String adUnitId;
-  const BannerAdWidget({super.key, required this.adUnitId});
+  final ValueChanged<bool>? onAdStatusChanged;
+
+  const BannerAdWidget({
+    super.key,
+    required this.adUnitId,
+    this.onAdStatusChanged,
+  });
 
   @override
   State<BannerAdWidget> createState() => _BannerAdWidgetState();
 }
 
-// THÊM WidgetsBindingObserver VÀO ĐÂY ĐỂ LẮNG NGHE VÒNG ĐỜI APP
 class _BannerAdWidgetState extends State<BannerAdWidget>
     with WidgetsBindingObserver {
   BannerAd? _bannerAd;
   bool _isLoaded = false;
 
+  bool get isAdAvailable => _bannerAd != null && _isLoaded;
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this); 
+    WidgetsBinding.instance.addObserver(this);
     _loadAd();
   }
 
@@ -30,6 +37,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget>
     setState(() {
       _isLoaded = false;
     });
+    widget.onAdStatusChanged?.call(false);
 
     _bannerAd = BannerAd(
       adUnitId: widget.adUnitId,
@@ -39,14 +47,16 @@ class _BannerAdWidgetState extends State<BannerAdWidget>
         onAdLoaded: (ad) {
           if (mounted) {
             setState(() => _isLoaded = true);
+            widget.onAdStatusChanged?.call(true);
           }
         },
         onAdFailedToLoad: (ad, error) {
           debugPrint('BannerAd lỗi tải: ${error.message}');
           ad.dispose();
-          _bannerAd = null; 
+          _bannerAd = null;
           if (mounted) {
             setState(() => _isLoaded = false);
+            widget.onAdStatusChanged?.call(false);
           }
         },
       ),
@@ -65,7 +75,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget>
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this); 
+    WidgetsBinding.instance.removeObserver(this);
     _bannerAd?.dispose();
     super.dispose();
   }

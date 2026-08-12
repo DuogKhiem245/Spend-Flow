@@ -174,6 +174,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                     selectedIndex: _index,
                     height: 50.h,
                     color: CupertinoTheme.of(context).primaryColor,
+                    textColor: CupertinoTheme.of(context).textTheme.textStyle.color,
                     onValueChanged: _isLoading
                         ? (i) {}
                         : (i) => setState(() => _onTabChanged(i)),

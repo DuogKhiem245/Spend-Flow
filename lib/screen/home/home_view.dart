@@ -36,6 +36,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   final _premiumViewModel = premiumViewModel;
 
   bool _isMenuOpen = false;
+  bool _hasBanner = true;
 
   @override
   void initState() {
@@ -44,6 +45,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     _viewModel.initData();
     _adsService.loadRewardedAd(RewardedAdType.scanReceipt);
     _adsService.loadRewardedAd(RewardedAdType.voiceInput);
+    _checkBanner();
   }
 
   @override
@@ -59,7 +61,16 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       _viewModel.lockApp();
     }
   }
-  
+
+  Future<void> _checkBanner() async {
+    final available = await _adsService.checkBannerAdAvailable();
+    if (mounted) {
+      setState(() {
+        _hasBanner = available;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -133,13 +144,13 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                       ),
                       Positioned(
                         right: 20.w,
-                        bottom: _premiumViewModel.isPremium
+                        bottom: (_premiumViewModel.isPremium || !_hasBanner)
                             ? Platform.isIOS
                                   ? 100.h
                                   : 95.h
                             : Platform.isIOS
                             ? 150.h
-                            : 150.h, 
+                            : 150.h,
                         child: _buildFloatingButton(l10n),
                       ),
                     ],
@@ -451,9 +462,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             decoration: BoxDecoration(
               color: backgroundColor,
               shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(color: Colors.black12, blurRadius: 4),
-              ],
+              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
             ),
             child: Icon(
               icon,

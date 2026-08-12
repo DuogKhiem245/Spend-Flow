@@ -1,50 +1,64 @@
 import 'dart:io';
 
 class AdConfig {
-  // Trạng thái kiểm thử: 
+  // Trạng thái kiểm thử:
   // - true: Sử dụng các ID quảng cáo Test của Google (an toàn khi phát triển)
   // - false: Sử dụng các ID quảng cáo Production thực tế để hiển thị quảng cáo thật và kiếm doanh thu
-  static const bool isTestMode = false;
+  static const bool isTestMode = true;
 
   // ==========================================
   // 1. ID QUẢNG CÁO THỬ NGHIỆM (Test Ad Unit IDs từ Google)
   // ==========================================
-  
-  // Quảng cáo Banner (Banner Ad) thử nghiệm
-  static const String testAndroidBanner = 'ca-app-pub-3940256099942544/6300978111';
+
+  // Quảng cáo Banner
+  static const String testAndroidBanner =
+      'ca-app-pub-3940256099942544/6300978111';
   static const String testIosBanner = 'ca-app-pub-3940256099942544/2934735716';
-  
-  // Quảng cáo Xen kẽ toàn màn hình (Interstitial Ad) thử nghiệm
-  static const String testAndroidInterstitial = 'ca-app-pub-3940256099942544/1033173712';
-  static const String testIosInterstitial = 'ca-app-pub-3940256099942544/4411468910';
-  
-  // Quảng cáo Video nhận thưởng (Rewarded Ad) thử nghiệm
-  static const String testAndroidRewarded = 'ca-app-pub-3940256099942544/5224354917';
-  static const String testIosRewarded = 'ca-app-pub-3940256099942544/1712485313';
+
+  // Quảng cáo Xen kẽ toàn màn hình
+  static const String testAndroidInterstitial =
+      'ca-app-pub-3940256099942544/1033173712';
+  static const String testIosInterstitial =
+      'ca-app-pub-3940256099942544/4411468910';
+
+  // Quảng cáo Video nhận thưởng
+  static const String testAndroidRewarded =
+      'ca-app-pub-3940256099942544/5224354917';
+  static const String testIosRewarded =
+      'ca-app-pub-3940256099942544/1712485313';
 
   // ==========================================
   // 2. ID QUẢNG CÁO THỰC TẾ (Production Ad Unit IDs)
   // ==========================================
 
-  // Quảng cáo Banner (Banner Ad) thực tế
-  static const String prodAndroidBanner = 'ca-app-pub-7163558183405140/9319825503';
+  // Quảng cáo Banner
+  static const String prodAndroidBanner =
+      'ca-app-pub-7163558183405140/9319825503';
   static const String prodIosBanner = 'ca-app-pub-7163558183405140/2878127543';
 
-  // Quảng cáo Xen kẽ toàn màn hình (Interstitial Ad) thực tế
-  static const String prodAndroidInterstitial = 'ca-app-pub-5260847065768800/7346643173';
-  static const String prodIosInterstitial = 'ca-app-pub-7163558183405140/5005597435';
+  // Quảng cáo Xen kẽ toàn màn hình
+  static const String prodAndroidInterstitial =
+      'ca-app-pub-7163558183405140/5005597435';
+  static const String prodIosInterstitial =
+      'ca-app-pub-7163558183405140/7631760770';
 
-  // Quảng cáo Video nhận thưởng - Tính năng Quét hóa đơn (Scan Receipt)
-  static const String prodAndroidRewardedScanReceipt = 'ca-app-pub-7163558183405140/7917711557';
-  static const String prodIosRewardedScanReceipt = 'ca-app-pub-7163558183405140/2945988846';
+  // Quảng cáo Video nhận thưởng - Tính năng Quét hóa đơn
+  static const String prodAndroidRewardedScanReceipt =
+      'ca-app-pub-7163558183405140/7917711557';
+  static const String prodIosRewardedScanReceipt =
+      'ca-app-pub-7163558183405140/2945988846';
 
-  // Quảng cáo Video nhận thưởng - Tính năng Nhập liệu bằng giọng nói (Voice Input)
-  static const String prodAndroidRewardedVoiceInput = 'ca-app-pub-7163558183405140/7917711557';
-  static const String prodIosRewardedVoiceInput = 'ca-app-pub-7163558183405140/29459888464';
+  // Quảng cáo Video nhận thưởng - Tính năng Nhập liệu bằng giọng nói
+  static const String prodAndroidRewardedVoiceInput =
+      'ca-app-pub-7163558183405140/7917711557';
+  static const String prodIosRewardedVoiceInput =
+      'ca-app-pub-7163558183405140/29459888464';
 
-  // Quảng cáo Video nhận thưởng - Tính năng Đồng bộ dữ liệu (Sync Data)
-  static const String prodAndroidRewardedSyncData = 'ca-app-pub-7163558183405140/7917711557';
-  static const String prodIosRewardedSyncData = 'ca-app-pub-7163558183405140/2945988846';
+  // Quảng cáo Video nhận thưởng - Tính năng Đồng bộ dữ liệu
+  static const String prodAndroidRewardedSyncData =
+      'ca-app-pub-7163558183405140/7917711557';
+  static const String prodIosRewardedSyncData =
+      'ca-app-pub-7163558183405140/2945988846';
 
   // ==========================================
   // 3. ID ỨNG DỤNG ADMOB (Native App IDs)
@@ -76,11 +90,17 @@ class AdConfig {
     }
     switch (typeName) {
       case 'scanReceipt':
-        return Platform.isAndroid ? prodAndroidRewardedScanReceipt : prodIosRewardedScanReceipt;
+        return Platform.isAndroid
+            ? prodAndroidRewardedScanReceipt
+            : prodIosRewardedScanReceipt;
       case 'voiceInput':
-        return Platform.isAndroid ? prodAndroidRewardedVoiceInput : prodIosRewardedVoiceInput;
+        return Platform.isAndroid
+            ? prodAndroidRewardedVoiceInput
+            : prodIosRewardedVoiceInput;
       case 'syncData':
-        return Platform.isAndroid ? prodAndroidRewardedSyncData : prodIosRewardedSyncData;
+        return Platform.isAndroid
+            ? prodAndroidRewardedSyncData
+            : prodIosRewardedSyncData;
       default:
         return Platform.isAndroid ? testAndroidRewarded : testIosRewarded;
     }

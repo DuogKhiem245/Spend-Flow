@@ -31,7 +31,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.586343572662-gc1bldt5e1cg1g1p1mjpuqise9qec33e</string>
+				<string>com.googleusercontent.apps.586343572662-0b0eecf4d9488up1c1groea0058ablp9</string>			
 			</array>
 		</dict>
 	</array>
@@ -99,5 +99,16 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+	<key>SKAdNetworkItems</key>
+    <array>
+        <dict>
+            <key>SKAdNetworkIdentifier</key>
+            <string>cstr6suwn9.skadnetwork</string>
+        </dict>
+        <dict>
+            <key>SKAdNetworkIdentifier</key>
+            <string>4dzt52r2t5.skadnetwork</string>
+        </dict>
+    </array>
 </dict>
 </plist>

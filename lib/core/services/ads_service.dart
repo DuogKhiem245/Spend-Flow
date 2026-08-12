@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,6 +25,34 @@ class AdsService {
   String get interstitialAdUnitId => AdConfig.interstitialAdUnitId;
 
   String get bannerAdUnitId => AdConfig.bannerAdUnitId;
+
+  Future<bool> checkBannerAdAvailable({String? customAdUnitId}) async {
+    final completer = Completer<bool>();
+
+    final bannerAd = BannerAd(
+      adUnitId: customAdUnitId ?? bannerAdUnitId,
+      request: const AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          ad.dispose();
+          if (!completer.isCompleted) {
+            completer.complete(true);
+          }
+        },
+        onAdFailedToLoad: (ad, error) {
+          debugPrint('BannerAd lỗi tải chi tiết: Domain=${error.domain}, Code=${error.code}, Message=${error.message}');
+          ad.dispose();
+          if (!completer.isCompleted) {
+            completer.complete(false);
+          }
+        },
+      ),
+    );
+
+    bannerAd.load();
+    return completer.future;
+  }
 
   String getRewardedAdUnitId(RewardedAdType type) {
     return AdConfig.getRewardedAdUnitId(type.name);
