@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,6 +22,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget>
     with WidgetsBindingObserver {
   BannerAd? _bannerAd;
   bool _isLoaded = false;
+  Timer? _retryTimer;
 
   bool get isAdAvailable => _bannerAd != null && _isLoaded;
 
@@ -32,6 +34,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget>
   }
 
   void _loadAd() {
+    _retryTimer?.cancel();
     _bannerAd?.dispose();
 
     setState(() {
@@ -46,17 +49,27 @@ class _BannerAdWidgetState extends State<BannerAdWidget>
       listener: BannerAdListener(
         onAdLoaded: (ad) {
           if (mounted) {
+            _retryTimer?.cancel();
+            _retryTimer = null;
             setState(() => _isLoaded = true);
             widget.onAdStatusChanged?.call(true);
           }
         },
         onAdFailedToLoad: (ad, error) {
-          debugPrint('BannerAd lỗi tải: ${error.message}');
+          debugPrint(
+            'BannerAd không tải được (${error.code}): ${error.message}',
+          );
           ad.dispose();
           _bannerAd = null;
           if (mounted) {
             setState(() => _isLoaded = false);
             widget.onAdStatusChanged?.call(false);
+            _retryTimer = Timer(const Duration(seconds: 30), () {
+              _retryTimer = null;
+              if (mounted && !_isLoaded) {
+                _loadAd();
+              }
+            });
           }
         },
       ),
@@ -66,7 +79,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      if (!_isLoaded) {
+      if (!_isLoaded && _retryTimer == null) {
         debugPrint('Tự động tải lại BannerAd do đang trống...');
         _loadAd();
       }
@@ -76,6 +89,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _retryTimer?.cancel();
     _bannerAd?.dispose();
     super.dispose();
   }

@@ -203,7 +203,7 @@ class ImportViewModel extends ChangeNotifier {
     AppLocalizations l10n,
   ) async {
     try {
-      FilePickerResult? result = await FilePicker.pickFiles(
+      final PlatformFile? result = await FilePicker.pickFile(
         type: FileType.custom,
         allowedExtensions: ['csv', 'json'],
       );
@@ -213,13 +213,13 @@ class ImportViewModel extends ChangeNotifier {
       _status = ImportStatus.loading;
       notifyListeners();
 
-      final file = File(result.files.first.path!);
-      final extension = result.files.first.extension?.toLowerCase();
+      final file = File(result.path!);
+      final extension = result.extension?.toLowerCase();
 
       bool success = await _processFileContent(file, extension!);
 
       if (success) {
-        await _recordImportHistory(result.files.first.name, extension);
+        await _recordImportHistory(result.name, extension);
         _status = ImportStatus.success;
 
         if (context.mounted) {

@@ -4,7 +4,7 @@ class AdConfig {
   // Trạng thái kiểm thử:
   // - true: Sử dụng các ID quảng cáo Test của Google (an toàn khi phát triển)
   // - false: Sử dụng các ID quảng cáo Production thực tế để hiển thị quảng cáo thật và kiếm doanh thu
-  static const bool isTestMode = true;
+  static bool get isTestMode => false;
 
   // ==========================================
   // 1. ID QUẢNG CÁO THỬ NGHIỆM (Test Ad Unit IDs từ Google)
@@ -52,7 +52,7 @@ class AdConfig {
   static const String prodAndroidRewardedVoiceInput =
       'ca-app-pub-7163558183405140/7917711557';
   static const String prodIosRewardedVoiceInput =
-      'ca-app-pub-7163558183405140/29459888464';
+      'ca-app-pub-7163558183405140/2945988846';
 
   // Quảng cáo Video nhận thưởng - Tính năng Đồng bộ dữ liệu
   static const String prodAndroidRewardedSyncData =
