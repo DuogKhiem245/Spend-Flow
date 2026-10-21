@@ -7,7 +7,7 @@ import Foundation
 
 import cloud_firestore
 import cloud_functions
-import cupertino_native
+import cupertino_native_better
 import file_picker_darwin
 import file_selector_macos
 import firebase_auth

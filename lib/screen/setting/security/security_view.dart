@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
-import 'package:cupertino_native/components/switch.dart';
+import 'package:cupertino_native_better/cupertino_native.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

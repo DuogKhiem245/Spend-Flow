@@ -1,4 +1,4 @@
-import 'package:cupertino_native/components/switch.dart';
+import 'package:cupertino_native_better/cupertino_native.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';

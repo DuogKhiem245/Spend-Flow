@@ -19,7 +19,6 @@ dependencies:
   intl: ^0.20.2
   shared_preferences: ^2.5.3
   provider: ^6.1.5+1  
-  cupertino_native: ^0.1.1
   fl_chart: ^1.1.1
   image_picker: ^1.2.1
   sembast: ^3.8.5+2
@@ -64,15 +63,20 @@ dependencies:
   focus_detector: ^2.0.1
   app_tracking_transparency: ^2.0.6+1
   cupertino_ui: ^1.1.1
+  cupertino_native_better: ^1.7.0
   
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
-  intl_utils: ^2.8.2
   flutter_launcher_icons: ^0.14.4
 
 flutter:
+  # Keep this existing CocoaPods-based iOS project on CocoaPods. Flutter 3.47
+  # enables SwiftPM by default, which otherwise mixes the two integrations.
+  config:
+    enable-swift-package-manager: false
+
   assets:
     - lib/assets/images/
     - lib/assets/docs/
