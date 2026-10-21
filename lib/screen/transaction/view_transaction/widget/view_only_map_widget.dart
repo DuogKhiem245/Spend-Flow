@@ -51,7 +51,7 @@ class _ViewOnlyMapWidgetState extends State<ViewOnlyMapWidget> {
                         key: ValueKey(
                           "ViewMap_${widget.longitude}_${widget.latitude}",
                         ),
-                        cameraOptions: CameraOptions(
+                        viewport: CameraViewportState(
                           center: Point(coordinates: position),
                           zoom: 15.0,
                         ),

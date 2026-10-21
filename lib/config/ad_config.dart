@@ -4,7 +4,7 @@ class AdConfig {
   // Trạng thái kiểm thử:
   // - true: Sử dụng các ID quảng cáo Test của Google (an toàn khi phát triển)
   // - false: Sử dụng các ID quảng cáo Production thực tế để hiển thị quảng cáo thật và kiếm doanh thu
-  static bool get isTestMode => false;
+  static bool get isTestMode => true;
 
   // ==========================================
   // 1. ID QUẢNG CÁO THỬ NGHIỆM (Test Ad Unit IDs từ Google)

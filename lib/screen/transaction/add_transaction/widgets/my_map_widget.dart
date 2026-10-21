@@ -244,7 +244,7 @@ class _MyMapWidgetState extends State<MyMapWidget> {
                                           OneSequenceGestureRecognizer
                                         >(() => EagerGestureRecognizer()),
                                       },
-                                  cameraOptions: CameraOptions(
+                                  viewport: CameraViewportState(
                                     center: Point(coordinates: currentPos),
                                     zoom: 15.0,
                                   ),
