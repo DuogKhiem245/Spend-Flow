@@ -1,9 +1,12 @@
 import 'dart:io';
+import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/core/model/category_model.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 
@@ -105,6 +108,18 @@ class TransactionDetailViewModel extends ChangeNotifier {
     return " ${format.format(_totalSpending7Days)}";
   }
 
+  bool _isSameCategory(CategoryModel a, CategoryModel b) {
+    if (a.id == b.id) return true;
+    if (a.l10nKey != null && b.l10nKey != null && a.l10nKey == b.l10nKey) {
+      return true;
+    }
+    if (a.name.trim().isNotEmpty &&
+        a.name.trim().toLowerCase() == b.name.trim().toLowerCase()) {
+      return true;
+    }
+    return false;
+  }
+
   Future<void> loadTrendData(BuildContext context) async {
     _isLoadingChart = true;
     notifyListeners();
@@ -112,33 +127,89 @@ class TransactionDetailViewModel extends ChangeNotifier {
     try {
       final l10n = AppLocalizations.of(context)!;
 
-      final endDate = _transaction.date;
-      final startDate = endDate.subtract(const Duration(days: 6));
+      // Chuẩn hóa ngày hiện tại và ngày của giao dịch về 00:00:00
+      final now = DateTime.now();
+      final today = DateTime(now.year, now.month, now.day);
+      final targetDate = DateTime(
+        _transaction.date.year,
+        _transaction.date.month,
+        _transaction.date.day,
+      );
+
+      // Số ngày từ ngày chọn tới hôm nay
+      final daysUntilToday = today.difference(targetDate).inDays;
+
+      // Số ngày sau ngày chọn: tối đa 3 ngày và không vượt quá ngày hiện tại (n ngày sau <= today)
+      final afterDays = math.min(3, math.max(0, daysUntilToday));
+
+      // Số ngày trước ngày chọn: 6 - n ngày trước để tổng cộng luôn là 7 ngày
+      final beforeDays = 6 - afterDays;
+
+      final startDate = targetDate.subtract(Duration(days: beforeDays));
+      final endDate = targetDate.add(Duration(days: afterDays));
+
+      // Tạo danh sách 7 ngày hiển thị
+      final List<DateTime> chartDates = [];
+      for (int i = 0; i < 7; i++) {
+        chartDates.add(
+          DateTime(startDate.year, startDate.month, startDate.day + i),
+        );
+      }
+
+      // Xác định walletId hợp lệ
+      String walletId = _transaction.walletId;
+      if (walletId.isEmpty) {
+        final prefs = await SharedPreferences.getInstance();
+        walletId = prefs.getString('current_wallet_id') ?? '';
+        if (walletId.isEmpty) {
+          final wallets = await _storage.getAllWallets();
+          if (wallets.isNotEmpty) {
+            walletId = wallets.first.id;
+          }
+        }
+      }
+
+      // Lấy danh sách giao dịch của các tháng nằm trong khoảng
+      final Map<String, TransactionModel> uniqueTransactions = {};
 
       final transactionsStartMonth = await _storage.getTransactionsByMonth(
         startDate,
-        _transaction.walletId,
+        walletId,
       );
-      List<TransactionModel> allTransactions = [...transactionsStartMonth];
-      if (startDate.month != endDate.month) {
-        final transactionsEndMonth = await _storage.getTransactionsByMonth(
-          endDate,
-          _transaction.walletId,
-        );
-        allTransactions.addAll(transactionsEndMonth);
+      for (var tx in transactionsStartMonth) {
+        uniqueTransactions[tx.id] = tx;
       }
 
-      Map<String, double> dailyTotals = {};
+      if (startDate.year != endDate.year || startDate.month != endDate.month) {
+        final transactionsEndMonth = await _storage.getTransactionsByMonth(
+          endDate,
+          walletId,
+        );
+        for (var tx in transactionsEndMonth) {
+          uniqueTransactions[tx.id] = tx;
+        }
+      }
 
-      double tempTotal7Days = 0;
+      final List<TransactionModel> allTransactions =
+          uniqueTransactions.values.toList();
 
-      for (int i = 0; i < 7; i++) {
-        final date = startDate.add(Duration(days: i));
+      // Đảm bảo giao dịch chi tiêu hiện tại có trong danh sách
+      if (!_transaction.isIncome &&
+          !allTransactions.any((tx) => tx.id == _transaction.id)) {
+        allTransactions.add(_transaction);
+      }
+
+      final Map<String, double> dailyTotals = {};
+      for (var date in chartDates) {
         final key = DateFormat('yyyyMMdd').format(date);
         dailyTotals[key] = 0.0;
       }
+
+      double tempTotal7Days = 0;
+
       for (var tx in allTransactions) {
-        if (!tx.isIncome && tx.category.id == _transaction.category.id) {
+        if (!tx.isIncome &&
+            _isSameCategory(tx.category, _transaction.category)) {
           final key = DateFormat('yyyyMMdd').format(tx.date);
           if (dailyTotals.containsKey(key)) {
             dailyTotals[key] = (dailyTotals[key] ?? 0) + tx.amount;
@@ -150,37 +221,27 @@ class TransactionDetailViewModel extends ChangeNotifier {
       _totalSpending7Days = tempTotal7Days;
 
       double maxSpending = 0;
-
       if (dailyTotals.isNotEmpty) {
         maxSpending = dailyTotals.values.reduce((a, b) => a > b ? a : b);
       }
       if (maxSpending == 0) maxSpending = 1;
 
-      List<BarChartData> result = [];
-      final now = DateTime.now();
+      final List<BarChartData> result = [];
+      final targetKey = DateFormat('yyyyMMdd').format(targetDate);
+      final todayKey = DateFormat('yyyyMMdd').format(today);
 
-      for (int i = 0; i < 7; i++) {
-        final date = startDate.add(Duration(days: i));
+      for (var date in chartDates) {
         final key = DateFormat('yyyyMMdd').format(date);
         final amount = dailyTotals[key] ?? 0;
 
         String label;
-
-        final isRealToday =
-            date.year == now.year &&
-            date.month == now.month &&
-            date.day == now.day;
-
-        if (isRealToday) {
+        if (key == todayKey) {
           label = l10n.today;
         } else {
           label = DateFormat('d/M').format(date);
         }
 
-        final isCurrentTxDay =
-            DateFormat('yyyyMMdd').format(date) ==
-            DateFormat('yyyyMMdd').format(_transaction.date);
-
+        final isCurrentTxDay = (key == targetKey);
         result.add(BarChartData(label, amount / maxSpending, isCurrentTxDay));
       }
 

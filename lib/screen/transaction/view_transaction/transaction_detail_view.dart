@@ -326,17 +326,19 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
 
           SizedBox(
             height: 150.h,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: vm.spendingTrendData.map((data) {
-                return _buildBar(
-                  context,
-                  data.label,
-                  data.percent,
-                  data.isActive,
-                );
-              }).toList(),
-            ),
+            child: vm.isLoadingChart
+                ? const Center(child: CupertinoActivityIndicator())
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: vm.spendingTrendData.map((data) {
+                      return _buildBar(
+                        context,
+                        data.label,
+                        data.percent,
+                        data.isActive,
+                      );
+                    }).toList(),
+                  ),
           ),
         ],
       ),
