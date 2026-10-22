@@ -238,7 +238,7 @@ class _SpendingChartState extends State<SpendingChart>
           ),
           child: ListView.builder(
             padding: EdgeInsets.symmetric(
-              vertical: isCompactPhone ? 30.h : 20.h,
+              vertical: isCompactPhone ? 50.h : 20.h,
             ),
             itemCount: widget.chartData.length,
             shrinkWrap: true,
@@ -246,7 +246,7 @@ class _SpendingChartState extends State<SpendingChart>
             itemBuilder: (context, index) {
               final item = widget.chartData[index];
               return Padding(
-                padding: EdgeInsets.only(top: isCompactPhone ? 50.h : 10.h),
+                padding: EdgeInsets.only(top: 10.h) ,
                 child: isTablet
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -270,6 +270,7 @@ class _SpendingChartState extends State<SpendingChart>
                                   fontWeight: FontWeight.w500,
                                 ),
                           ),
+                          
                           SizedBox(width: 8.w),
 
                           Container(

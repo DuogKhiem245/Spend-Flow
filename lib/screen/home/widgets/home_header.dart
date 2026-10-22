@@ -60,31 +60,39 @@ class HomeHeader extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 12.w),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        greetingMessage,
-                        style: CupertinoTheme.of(context).textTheme.textStyle
-                            .copyWith(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                      if (displayName.isNotEmpty) ...[
-                        SizedBox(height: 4.h),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                         Text(
-                          displayName,
-                          maxLines: 1,
+                          greetingMessage,
+                          softWrap: true,
+                          maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: CupertinoTheme.of(context).textTheme.textStyle
                               .copyWith(
-                                fontSize: 16,
-                                color: CupertinoColors.systemGrey,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
                               ),
                         ),
+                        if (displayName.isNotEmpty) ...[
+                          SizedBox(height: 4.h),
+                          Text(
+                            displayName,
+                            softWrap: true,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
+                                .copyWith(
+                                  fontSize: 16,
+                                  color: CupertinoColors.systemGrey,
+                                ),
+                          ),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
                 ],
               ),
