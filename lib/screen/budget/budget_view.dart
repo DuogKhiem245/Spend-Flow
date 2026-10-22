@@ -9,11 +9,9 @@ import 'package:intl/intl.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
-import 'package:spend_flow/core/services/ads_service.dart';
 import 'package:spend_flow/core/utils/category_helper.dart';
 import 'package:spend_flow/core/widgets/skeleton/skeleton_budget_view.dart';
 import 'package:spend_flow/core/widgets/verify_passcode/verify_passcode_sheet.dart';
-import 'package:spend_flow/main.dart';
 import 'package:spend_flow/screen/budget/add_budget/add_budget_view.dart';
 import '../../core/model/budget_model.dart';
 import 'budget_viewmodel.dart';
@@ -28,11 +26,6 @@ class BudgetPage extends StatefulWidget {
 class _BudgetPageState extends State<BudgetPage>
     with WidgetsBindingObserver, AutomaticKeepAliveClientMixin {
   final BudgetViewModel _viewModel = BudgetViewModel();
-  final AdsService _adsService = AdsService();
-  final _premiumViewModel = premiumViewModel;
-
-  bool _isPremium = false;
-  bool _hasBanner = true;
 
   @override
   bool get wantKeepAlive => true;
@@ -41,10 +34,6 @@ class _BudgetPageState extends State<BudgetPage>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-     _checkBanner();
-    setState(() {
-      _isPremium = _premiumViewModel.isPremium;
-    });
   }
 
   @override
@@ -58,15 +47,6 @@ class _BudgetPageState extends State<BudgetPage>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
       _viewModel.lockApp();
-    }
-  }
-
-  Future<void> _checkBanner() async {
-    final available = await _adsService.checkBannerAdAvailable();
-    if (mounted) {
-      setState(() {
-        _hasBanner = available;
-      });
     }
   }
 
@@ -149,22 +129,25 @@ class _BudgetPageState extends State<BudgetPage>
                       ],
                     ),
                   )
-                : Stack(
+                : Column(
                     children: [
-                      Column(
-                        children: [
-                          _buildHeader(l10n),
-                          SizedBox(height: 10.h),
-                          _buildTotalBudgetCard(l10n),
-                          SizedBox(height: 10.h),
-                          Expanded(
-                            child: SingleChildScrollView(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 16.w,
-                                vertical: 10.h,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                      _buildHeader(l10n),
+                      SizedBox(height: 10.h),
+                      _buildTotalBudgetCard(l10n),
+                      SizedBox(height: 10.h),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 10.h,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
                                     l10n.categories,
@@ -179,52 +162,70 @@ class _BudgetPageState extends State<BudgetPage>
                                           ).textTheme.textStyle.color,
                                         ),
                                   ),
-                                  SizedBox(height: 12.h),
 
-                                  if (_viewModel.isLoading)
-                                    Center(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(top: 50.h),
-                                        child:
-                                            const CupertinoActivityIndicator(),
+                                  CupertinoButton(
+                                    padding: EdgeInsets.zero,
+                                    minimumSize: Size.zero,
+                                    onPressed: _navigateToAddBudget,
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 12.w,
+                                        vertical: 6.h,
                                       ),
-                                    )
-                                  else if (_viewModel.budgets.isEmpty)
-                                    _buildEmptyState(l10n)
-                                  else
-                                    ..._viewModel.budgets.map(
-                                      (e) => _buildCategoryCard(e),
+                                      decoration: BoxDecoration(
+                                        color: CupertinoTheme.of(
+                                          context,
+                                        ).primaryColor.withAlpha(30),
+                                        borderRadius: BorderRadius.circular(
+                                          20.r,
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(
+                                            CupertinoIcons.add,
+                                            size: 14.sp,
+                                            color: CupertinoTheme.of(
+                                              context,
+                                            ).primaryColor,
+                                          ),
+                                          SizedBox(width: 4.w),
+                                          Text(
+                                            l10n.add_budget,
+                                            style: TextStyle(
+                                              fontSize: 13.sp,
+                                              fontWeight: FontWeight.w600,
+                                              color: CupertinoTheme.of(
+                                                context,
+                                              ).primaryColor,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-
-                                  SizedBox(height: 80.h),
+                                  ),
                                 ],
                               ),
-                            ),
-                          ),
-                        ],
-                      ),
 
-                      Positioned(
-                        right: 0.w,
-                        bottom: (_isPremium || !_hasBanner)
-                            ? 50.h
-                            : Platform.isIOS
-                            ? 98.h
-                            : 108.h,
-                        child: CupertinoButton(
-                          onPressed: _navigateToAddBudget,
-                          child: Container(
-                            width: 60.w,
-                            height: 60.w,
-                            decoration: BoxDecoration(
-                              color: CupertinoTheme.of(context).primaryColor,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(
-                              CupertinoIcons.add,
-                              color: CupertinoColors.white,
-                              size: 30.sp,
-                            ),
+                              SizedBox(height: 12.h),
+
+                              if (_viewModel.isLoading)
+                                Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: 50.h),
+                                    child: const CupertinoActivityIndicator(),
+                                  ),
+                                )
+                              else if (_viewModel.budgets.isEmpty)
+                                _buildEmptyState(l10n)
+                              else
+                                ..._viewModel.budgets.map(
+                                  (e) => _buildCategoryCard(e),
+                                ),
+
+                              SizedBox(height: 80.h),
+                            ],
                           ),
                         ),
                       ),
@@ -517,7 +518,10 @@ class _BudgetPageState extends State<BudgetPage>
 
   void _onDeleteBudget(BudgetModel budget, BuildContext context) async {
     final l10n = AppLocalizations.of(context)!;
-    final String categoryName = CategoryHelper.getTranslatedName(context, budget.category);
+    final String categoryName = CategoryHelper.getTranslatedName(
+      context,
+      budget.category,
+    );
 
     AdaptiveAlertDialog.show(
       context: context,

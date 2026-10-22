@@ -163,221 +163,224 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
       ),
       child: LoadingOverlay(
         isLoading: _isLoading,
-        child: Padding(
-          padding: EdgeInsets.all(10.w),
-          child: Stack(
-            children: [
-              Column(
-                children: [
-                  AdaptiveSegmentedControl(
-                    labels: [l10n.expenses, l10n.income],
-                    selectedIndex: _index,
-                    height: 50.h,
-                    color: CupertinoTheme.of(context).primaryColor,
-                    textColor: CupertinoTheme.of(context).textTheme.textStyle.color,
-                    onValueChanged: _isLoading
-                        ? (i) {}
-                        : (i) => setState(() => _onTabChanged(i)),
-                  ),
-
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () => FocusScope.of(context).unfocus(),
-                      behavior: HitTestBehavior.translucent,
-                      child: Container(
-                        width: double.infinity,
-                        alignment: Alignment.topLeft,
-                        child: SingleChildScrollView(
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              bottom:
-                                  MediaQuery.of(context).viewInsets.bottom +
-                                  20.h,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: 25.h),
-                                AmountWidget(
-                                  amountController: _amountController,
-                                  baseColor: baseColor,
-                                ),
-                                SizedBox(height: 20.h),
-                                NameTransactionWidget(
-                                  nameController: _nameController,
-                                  baseColor: baseColor,
-                                ),
-                                SizedBox(height: 20.h),
-                                SuggestCategoryWidget(
-                                  selectedCategory: _selectedCategory,
-                                  baseColor: baseColor,
-                                  transactionDate: _transactionDate,
-                                  onCategoryChanged: (CategoryModel category) {
-                                    setState(() {
-                                      _selectedCategory = category;
-                                    });
-                                  },
-                                  onDateChanged: (DateTime newDate) {
-                                    setState(() {
-                                      _transactionDate = newDate;
-                                    });
-                                  },
-                                ),
-                                SizedBox(height: 20.h),
-                                MyMapWidget(viewModel: _viewModel),
-                                SizedBox(height: 20.h),
-                                NoteWidget(
-                                  baseColor: baseColor,
-                                  controller: _noteController,
-                                ),
-                                SizedBox(height: 100.h),
-                              ],
+        child: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.all(10.w),
+            child: Stack(
+              children: [
+                Column(
+                  children: [
+                    AdaptiveSegmentedControl(
+                      labels: [l10n.expenses, l10n.income],
+                      selectedIndex: _index,
+                      height: 50.h,
+                      color: CupertinoTheme.of(context).primaryColor,
+                      textColor: CupertinoTheme.of(context).textTheme.textStyle.color,
+                      onValueChanged: _isLoading
+                          ? (i) {}
+                          : (i) => setState(() => _onTabChanged(i)),
+                    ),
+          
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () => FocusScope.of(context).unfocus(),
+                        behavior: HitTestBehavior.translucent,
+                        child: Container(
+                          width: double.infinity,
+                          alignment: Alignment.topLeft,
+                          child: SingleChildScrollView(
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                bottom:
+                                    MediaQuery.of(context).viewInsets.bottom +
+                                    20.h,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 25.h),
+                                  AmountWidget(
+                                    amountController: _amountController,
+                                    baseColor: baseColor,
+                                  ),
+                                  SizedBox(height: 20.h),
+                                  NameTransactionWidget(
+                                    nameController: _nameController,
+                                    baseColor: baseColor,
+                                  ),
+                                  SizedBox(height: 20.h),
+                                  SuggestCategoryWidget(
+                                    selectedCategory: _selectedCategory,
+                                    baseColor: baseColor,
+                                    transactionDate: _transactionDate,
+                                    onCategoryChanged: (CategoryModel category) {
+                                      setState(() {
+                                        _selectedCategory = category;
+                                      });
+                                    },
+                                    onDateChanged: (DateTime newDate) {
+                                      setState(() {
+                                        _transactionDate = newDate;
+                                      });
+                                    },
+                                  ),
+                                  SizedBox(height: 20.h),
+                                  MyMapWidget(viewModel: _viewModel),
+                                  SizedBox(height: 20.h),
+                                  NoteWidget(
+                                    baseColor: baseColor,
+                                    controller: _noteController,
+                                  ),
+                                  SizedBox(height: 100.h),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 0,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: CupertinoTheme.of(context).scaffoldBackgroundColor,
-                  ),
-                  child: SafeArea(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 10.h),
-                      child: CupertinoButton.filled(
-                        onPressed: _isLoading
-                            ? null
-                            : () async {
-                                List<String> missingFields = [];
-
-                                if (_amountController.text.trim().isEmpty ||
-                                    _amountController.text == "0") {
-                                  missingFields.add(l10n.amount);
-                                }
-                                if (_nameController.text.trim().isEmpty) {
-                                  missingFields.add(l10n.name);
-                                }
-                                if (_selectedCategory == null) {
-                                  missingFields.add(l10n.category);
-                                }
-                                if (missingFields.isNotEmpty) {
-                                  CheckValidWidget.showIncompleteDetailsSheet(
-                                    context: context,
-                                    title: l10n.incomplete_details,
-                                    description:
-                                        l10n.please_fill_required_fields,
-                                    missingFields: missingFields,
-                                    buttonText: "OK",
-                                  );
-                                  return;
-                                }
-
-                                if (widget.isFromAI) {
-                                  double finalAmount =
-                                      double.tryParse(
-                                        _amountController.text.replaceAll(
-                                          '.',
-                                          '',
-                                        ),
-                                      ) ??
-                                      0;
-
-                                  final updatedTransaction = widget
-                                      .transactionData
-                                      ?.copyWith(
-                                        amount: finalAmount,
-                                        title: _nameController.text.trim(),
-                                        category: _selectedCategory,
-                                        date: _transactionDate,
-                                        note: _noteController.text.trim(),
-                                        isIncome: _index == 1,
-                                        location: _viewModel
-                                            .getLocationFromState(),
-                                      );
-
-                                  if (!context.mounted) return;
-                                  Navigator.pop(context, updatedTransaction);
-                                  return;
-                                }
-
-                                setState(() => _isLoading = true);
-
-                                _hasWallet = await WalletViewModel()
-                                    .checkUserHasWallet();
-                                if (!_hasWallet) {
-                                  setState(() => _isLoading = false);
-                                  if (!context.mounted) return;
-                                  _showNoWalletAlert(context);
-                                  return;
-                                }
-
-                                try {
-                                  if (_index == 0) {
-                                    await _viewModel.addExpenseTransaction(
-                                      _amountController.text,
-                                      _nameController.text,
-                                      _selectedCategory,
-                                      _transactionDate,
-                                      _noteController.text,
-                                      _viewModel.getLocationFromState(),
-                                    );
-                                  } else {
-                                    await _viewModel.addIncomeTransaction(
-                                      _amountController.text,
-                                      _nameController.text,
-                                      _selectedCategory,
-                                      _transactionDate,
-                                      _noteController.text,
-                                      _viewModel.getLocationFromState(),
-                                    );
+                  ],
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: CupertinoTheme.of(context).scaffoldBackgroundColor,
+                    ),
+                    child: SafeArea(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 10.h),
+                        child: CupertinoButton.filled(
+                          onPressed: _isLoading
+                              ? null
+                              : () async {
+                                  List<String> missingFields = [];
+          
+                                  if (_amountController.text.trim().isEmpty ||
+                                      _amountController.text == "0") {
+                                    missingFields.add(l10n.amount);
                                   }
-
-                                  if (!context.mounted) return;
-
-                                  if (_premiumViewModel.isPremium) {
-                                    Navigator.pop(context, true);
+                                  if (_nameController.text.trim().isEmpty) {
+                                    missingFields.add(l10n.name);
+                                  }
+                                  if (_selectedCategory == null) {
+                                    missingFields.add(l10n.category);
+                                  }
+                                  if (missingFields.isNotEmpty) {
+                                    CheckValidWidget.showIncompleteDetailsSheet(
+                                      context: context,
+                                      title: l10n.incomplete_details,
+                                      description:
+                                          l10n.please_fill_required_fields,
+                                      missingFields: missingFields,
+                                      buttonText: "OK",
+                                    );
                                     return;
-                                  } else {
-                                    await _adsService
-                                        .showInterstitialWithFrequency(
-                                          isPremium:
-                                              _premiumViewModel.isPremium,
-                                          onAdClosed: () {
-                                            Navigator.pop(context, true);
-                                          },
+                                  }
+          
+                                  if (widget.isFromAI) {
+                                    double finalAmount =
+                                        double.tryParse(
+                                          _amountController.text.replaceAll(
+                                            '.',
+                                            '',
+                                          ),
+                                        ) ??
+                                        0;
+          
+                                    final updatedTransaction = widget
+                                        .transactionData
+                                        ?.copyWith(
+                                          amount: finalAmount,
+                                          title: _nameController.text.trim(),
+                                          category: _selectedCategory,
+                                          date: _transactionDate,
+                                          note: _noteController.text.trim(),
+                                          isIncome: _index == 1,
+                                          location: _viewModel
+                                              .getLocationFromState(),
                                         );
+          
+                                    if (!context.mounted) return;
+                                    Navigator.pop(context, updatedTransaction);
+                                    return;
                                   }
-                                } catch (e) {
-                                  debugPrint("Error add transaction: $e");
-                                } finally {
-                                  if (mounted) {
+          
+                                  setState(() => _isLoading = true);
+          
+                                  _hasWallet = await WalletViewModel()
+                                      .checkUserHasWallet();
+                                  if (!_hasWallet) {
                                     setState(() => _isLoading = false);
+                                    if (!context.mounted) return;
+                                    _showNoWalletAlert(context);
+                                    return;
                                   }
-                                }
-                              },
-                        borderRadius: BorderRadius.circular(30.r),
-                        padding: EdgeInsets.symmetric(vertical: 16.h),
-                        child: Text(
-                          _index == 0 ? l10n.add_expense : l10n.add_income,
-                          style: CupertinoTheme.of(context).textTheme.textStyle
-                              .copyWith(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
+          
+                                  try {
+                                    if (_index == 0) {
+                                      await _viewModel.addExpenseTransaction(
+                                        _amountController.text,
+                                        _nameController.text,
+                                        _selectedCategory,
+                                        _transactionDate,
+                                        _noteController.text,
+                                        _viewModel.getLocationFromState(),
+                                      );
+                                    } else {
+                                      await _viewModel.addIncomeTransaction(
+                                        _amountController.text,
+                                        _nameController.text,
+                                        _selectedCategory,
+                                        _transactionDate,
+                                        _noteController.text,
+                                        _viewModel.getLocationFromState(),
+                                      );
+                                    }
+          
+                                    if (!context.mounted) return;
+          
+                                    if (_premiumViewModel.isPremium) {
+                                      Navigator.pop(context, true);
+                                      return;
+                                    } else {
+                                      await _adsService
+                                          .showInterstitialWithFrequency(
+                                            isPremium:
+                                                _premiumViewModel.isPremium,
+                                            onAdClosed: () {
+                                              Navigator.pop(context, true);
+                                            },
+                                          );
+                                    }
+                                  } catch (e) {
+                                    debugPrint("Error add transaction: $e");
+                                  } finally {
+                                    if (mounted) {
+                                      setState(() => _isLoading = false);
+                                    }
+                                  }
+                                },
+                          borderRadius: BorderRadius.circular(30.r),
+                          padding: EdgeInsets.symmetric(vertical: 16.h),
+                          child: Text(
+                            _index == 0 ? l10n.add_expense : l10n.add_income,
+                            style: CupertinoTheme.of(context).textTheme.textStyle
+                                .copyWith(
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: CupertinoTheme.of(context).primaryContrastingColor,
+                                ),
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

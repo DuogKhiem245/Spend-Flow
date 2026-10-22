@@ -138,6 +138,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         vertical: 14.h,
                       ),
                       decoration: null,
+                      onSubmitted: (_) => _handleResetPassword(context),
                       style: CupertinoTheme.of(
                         context,
                       ).textTheme.textStyle.copyWith(fontSize: 14.sp),

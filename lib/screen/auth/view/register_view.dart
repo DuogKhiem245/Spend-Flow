@@ -95,6 +95,11 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
+    final mediaQuery = MediaQuery.of(context);
+    final double width = mediaQuery.size.width;
+
+    final bool isTablet = width >= 600;
+
     return ListenableBuilder(
       listenable: _viewModel,
       builder: (context, child) {
@@ -109,6 +114,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 leading: CupertinoNavigationBarBackButton(
                   color: CupertinoTheme.of(context).primaryColor,
                   onPressed: () => Navigator.pop(context),
+                ),
+                middle: Text(
+                  l10n.create_account,
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(fontSize: 18.sp, fontWeight: FontWeight.w600),
                 ),
               ),
               child: child!,
@@ -140,25 +150,20 @@ class _RegisterPageState extends State<RegisterPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(30.r),
-                    child: SizedBox(
-                       width: 125.w,
-                      height: 125.w,
+                    borderRadius: BorderRadius.circular(300.r),
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 1000),
                       child: Image.asset(
                         CupertinoTheme.of(context).brightness == Brightness.dark
                             ? 'lib/assets/images/logoDark.png'
                             : 'lib/assets/images/logoLight.png',
-                        fit: BoxFit.cover,
+                        key: ValueKey(CupertinoTheme.of(context).brightness),
+                        width: isTablet ? 100.w : 125.w,
+                        height: isTablet ? 100.w : 125.w,
                       ),
                     ),
                   ),
-                  SizedBox(height: 24.h),
-                  Text(
-                    l10n.create_account,
-                    style: CupertinoTheme.of(context).textTheme.textStyle
-                        .copyWith(fontSize: 24.sp, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 20.h),
+                  isTablet ? SizedBox(height: 0.h) : SizedBox(height: 24.h),
                   Container(
                     padding: EdgeInsets.all(15.w),
                     margin: EdgeInsets.symmetric(horizontal: 20.w),
@@ -202,7 +207,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           },
                         ),
 
-                        SizedBox(height: 16.h),
+                        SizedBox(height: 12.h),
 
                         Container(
                           padding: EdgeInsets.only(left: 8.w),
@@ -357,7 +362,7 @@ class _RegisterPageState extends State<RegisterPage> {
           color: AppColors.borderColor.withValues(alpha: .5),
           width: 0.5.w,
         ),
-      ), 
+      ),
       child: Row(
         children: [
           Padding(

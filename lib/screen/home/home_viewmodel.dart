@@ -563,7 +563,7 @@ class HomeViewModel extends ChangeNotifier {
       final item = entry.value;
       final isTouched = i == touchedIndex;
       final fontSize = 16.sp;
-      final radius = isTouched ? 45.0.w : 35.0.w;
+      final radius = isTouched ? 40.0.w : 32.w;
       final categoryName = CategoryHelper.getTranslatedName(
         context,
         item.originalCategory!,

@@ -210,6 +210,11 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
+    final mediaQuery = MediaQuery.of(context);
+    final double width = mediaQuery.size.width;
+
+    final bool isTablet = width >= 600;
+
     return ListenableBuilder(
       listenable: _viewModel,
       builder: (context, child) {
@@ -221,6 +226,11 @@ class _LoginPageState extends State<LoginPage> {
                   context,
                 ).scaffoldBackgroundColor,
                 padding: EdgeInsetsDirectional.only(end: 10.w),
+                middle: Text(
+                  l10n.login,
+                  style: CupertinoTheme.of(context).textTheme.textStyle
+                      .copyWith(fontSize: 18.sp, fontWeight: FontWeight.w600),
+                ),
                 leading: widget.haveBack
                     ? CupertinoNavigationBarBackButton(
                         color: CupertinoTheme.of(context).primaryColor,
@@ -256,7 +266,7 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(30.r),
+                    borderRadius: BorderRadius.circular(300.r),
                     child: AnimatedSwitcher(
                       duration: const Duration(milliseconds: 1000),
                       child: Image.asset(
@@ -264,18 +274,12 @@ class _LoginPageState extends State<LoginPage> {
                             ? 'lib/assets/images/logoDark.png'
                             : 'lib/assets/images/logoLight.png',
                         key: ValueKey(CupertinoTheme.of(context).brightness),
-                        width: 125.w,
-                        height: 125.w,
+                        width: isTablet ? 100.w : 125.w,
+                        height: isTablet ? 100.w : 125.w,
                       ),
                     ),
                   ),
-                  SizedBox(height: 20.h),
-                  Text(
-                    l10n.login,
-                    style: CupertinoTheme.of(context).textTheme.textStyle
-                        .copyWith(fontSize: 24.sp, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 20.h),
+                  isTablet ? SizedBox(height: 0.h) : SizedBox(height: 20.h),
                   Container(
                     padding: EdgeInsets.all(15.w),
                     margin: EdgeInsets.symmetric(horizontal: 20.w),
@@ -372,26 +376,59 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         SizedBox(height: 20.h),
-                        _buildSocialButton(
-                          context: context,
-                          imageAsset: 'lib/assets/images/google.png',
-                          label: l10n.sign_in_with('Google'),
-                          onTap: () => _handleSocialLogin(
-                            _viewModel.signInWithGoogle,
-                            context,
-                          ),
-                        ),
-                        SizedBox(height: 12.h),
-                        _buildSocialButton(
-                          context: context,
-                          icon: FontAwesomeIcons.apple,
-                          label: l10n.sign_in_with('Apple'),
-                          isApple: true,
-                          onTap: () => _handleSocialLogin(
-                            _viewModel.signInWithApple,
-                            context,
-                          ),
-                        ),
+                        ...(isTablet
+                            ? <Widget>[
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    _buildSocialButton(
+                                      context: context,
+                                      imageAsset:
+                                          'lib/assets/images/google.png',
+                                      label: 'Google',
+                                      onTap: () => _handleSocialLogin(
+                                        _viewModel.signInWithGoogle,
+                                        context,
+                                      ),
+                                      isTablet: true,
+                                    ),
+                                    SizedBox(width: 20.h),
+                                    _buildSocialButton(
+                                      context: context,
+                                      icon: FontAwesomeIcons.apple,
+                                      label: 'Apple',
+                                      isApple: true,
+                                      onTap: () => _handleSocialLogin(
+                                        _viewModel.signInWithApple,
+                                        context,
+                                      ),
+                                      isTablet: true,
+                                    ),
+                                  ],
+                                ),
+                              ]
+                            : <Widget>[
+                                _buildSocialButton(
+                                  context: context,
+                                  imageAsset: 'lib/assets/images/google.png',
+                                  label: l10n.sign_in_with('Google'),
+                                  onTap: () => _handleSocialLogin(
+                                    _viewModel.signInWithGoogle,
+                                    context,
+                                  ),
+                                ),
+                                SizedBox(height: 12.h),
+                                _buildSocialButton(
+                                  context: context,
+                                  icon: FontAwesomeIcons.apple,
+                                  label: l10n.sign_in_with('Apple'),
+                                  isApple: true,
+                                  onTap: () => _handleSocialLogin(
+                                    _viewModel.signInWithApple,
+                                    context,
+                                  ),
+                                ),
+                              ]),
                       ],
                     ),
                   ),
@@ -562,6 +599,7 @@ class _LoginPageState extends State<LoginPage> {
     String? imageAsset,
     Color? iconColor,
     bool isApple = false,
+    bool isTablet = false,
   }) {
     final isDark = CupertinoTheme.of(context).brightness == Brightness.dark;
 
@@ -585,17 +623,11 @@ class _LoginPageState extends State<LoginPage> {
       onTap: onTap,
       child: Container(
         height: 52.h,
+        width: isTablet ? 170.w : null,
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(30.r),
           border: border,
-          // boxShadow: [
-          //   BoxShadow(
-          //     color: Colors.black.withValues(alpha: .1),
-          //     offset: const Offset(0, 2),
-          //     blurRadius: 4,
-          //   ),
-          // ],
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

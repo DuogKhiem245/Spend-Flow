@@ -64,6 +64,11 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
+    final mediaQuery = MediaQuery.of(context);
+    final double width = mediaQuery.size.width;
+
+    final bool isTablet = width >= 600;
+
     return FocusDetector(
       onFocusGained: () async {
         if (mounted) {
@@ -74,76 +79,82 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         listenable: _viewModel,
         builder: (context, child) {
           return CupertinoPageScaffold(
-            child: _viewModel.isLoading
-                ? const SkeletonHomeView()
-                : Stack(
-                    children: [
-                      Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).padding.top + 10.h,
-                              left: 16.w,
-                              right: 16.w,
-                              bottom: 10.h,
-                            ),
-                            color: CupertinoTheme.of(
-                              context,
-                            ).scaffoldBackgroundColor,
-                            child: HomeHeader(viewModel: _viewModel),
-                          ),
-                          Expanded(
-                            child: SingleChildScrollView(
+            child: SafeArea(
+              child: _viewModel.isLoading
+                  ? const SkeletonHomeView()
+                  : Stack(
+                      children: [
+                        Column(
+                          children: [
+                            Container(
                               padding: EdgeInsets.only(
+                                top: 10.h,
                                 left: 16.w,
                                 right: 16.w,
-                                top: 10.h,
-                                bottom: 100.h,
+                                bottom: 10.h,
                               ),
-                              child: Column(
-                                children: [
-                                  BalanceCard(
-                                    income: _viewModel.income,
-                                    expenses: _viewModel.expenses,
-                                    balance: _viewModel.balance,
-                                    viewModel: _viewModel,
-                                  ),
-                                  SizedBox(height: 15.h),
-                                  // StreakCard(),
-                                  // SizedBox(height: 15.h),
-                                  SpendingChart(
-                                    chartData: _viewModel.chartData,
-                                    viewModel: _viewModel,
-                                  ),
-                                  SizedBox(height: 15.h),
-                                  RecentTransaction(
-                                    transactions: _viewModel.recentTransactions,
-                                    viewModel: _viewModel,
-                                  ),
-                                  SizedBox(
-                                    height: _premiumViewModel.isPremium == false
-                                        ? 120.h
-                                        : 80.h,
-                                  ),
-                                ],
+                              color: CupertinoTheme.of(
+                                context,
+                              ).scaffoldBackgroundColor,
+                              child: HomeHeader(viewModel: _viewModel),
+                            ),
+                            Expanded(
+                              child: SingleChildScrollView(
+                                padding: EdgeInsets.only(
+                                  left: 16.w,
+                                  right: 16.w,
+                                  top: 10.h,
+                                  bottom: 100.h,
+                                ),
+                                child: Column(
+                                  children: [
+                                    BalanceCard(
+                                      income: _viewModel.income,
+                                      expenses: _viewModel.expenses,
+                                      balance: _viewModel.balance,
+                                      viewModel: _viewModel,
+                                    ),
+                                    SizedBox(height: 15.h),
+                                    // StreakCard(),
+                                    // SizedBox(height: 15.h),
+                                    SpendingChart(
+                                      chartData: _viewModel.chartData,
+                                      viewModel: _viewModel,
+                                    ),
+                                    SizedBox(height: 15.h),
+                                    RecentTransaction(
+                                      transactions:
+                                          _viewModel.recentTransactions,
+                                      viewModel: _viewModel,
+                                    ),
+                                    SizedBox(
+                                      height:
+                                          _premiumViewModel.isPremium == false
+                                          ? 120.h
+                                          : 80.h,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      Positioned(
-                        right: 20.w,
-                        bottom: (_premiumViewModel.isPremium || !_viewModel.hasBanner)
-                            ? Platform.isIOS
-                                  ? 100.h
-                                  : 95.h
-                            : Platform.isIOS
-                            ? 150.h
-                            : 150.h,
-                        child: _buildFloatingButton(l10n),
-                      ),
-                    ],
-                  ),
+                          ],
+                        ),
+                        Positioned(
+                          right: 20.w,
+                          bottom:
+                              (_premiumViewModel.isPremium ||
+                                  !_viewModel.hasBanner)
+                              ? Platform.isIOS
+                                    ? 100.h
+                                    : 95.h
+                              : Platform.isIOS
+                              ? 150.h
+                              : 150.h,
+                          child: _buildFloatingButton(l10n, isTablet),
+                        ),
+                      ],
+                    ),
+            ),
           );
         },
       ),
@@ -332,7 +343,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     );
   }
 
-  Widget _buildFloatingButton(AppLocalizations? l10n) {
+  Widget _buildFloatingButton(AppLocalizations? l10n, bool isTablet) {
     final primaryColor = CupertinoTheme.of(context).primaryColor;
     final textColor = CupertinoTheme.of(context).textTheme.textStyle.color;
     final barColor = CupertinoTheme.of(context).barBackgroundColor;
@@ -344,7 +355,11 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeInOut,
-          height: _isMenuOpen ? 180.h : 0,
+          height: _isMenuOpen
+              ? isTablet
+                    ? 260.h
+                    : 180
+              : 0,
           child: SingleChildScrollView(
             physics: const NeverScrollableScrollPhysics(),
             child: Column(
@@ -382,8 +397,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           padding: EdgeInsets.zero,
           onPressed: () => setState(() => _isMenuOpen = !_isMenuOpen),
           child: Container(
-            width: 60.w,
-            height: 60.w,
+            width: 60,
+            height: 60,
             decoration: BoxDecoration(
               color: primaryColor,
               shape: BoxShape.circle,

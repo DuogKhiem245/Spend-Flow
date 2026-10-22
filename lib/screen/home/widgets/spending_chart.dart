@@ -93,7 +93,13 @@ class _SpendingChartState extends State<SpendingChart>
 
     final symbol = widget.viewModel.currencySymbol;
 
-    final bool isTablet = MediaQuery.of(context).size.width >= 600;
+    final mediaQuery = MediaQuery.of(context);
+    final double width = mediaQuery.size.width;
+    final double shortestSide = mediaQuery.size.shortestSide;
+
+    final bool isTablet = width >= 600;
+
+    final bool isCompactPhone = shortestSide >= 460 && shortestSide < 470;
 
     if (widget.chartData.isEmpty) {
       return _buildEmptyState(context, l10n);
@@ -101,7 +107,7 @@ class _SpendingChartState extends State<SpendingChart>
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0.w),
+      padding: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, isTablet ? 25.w : 0.w),
       decoration: BoxDecoration(
         color: CupertinoTheme.of(context).barBackgroundColor,
         borderRadius: BorderRadius.circular(30.r),
@@ -116,13 +122,16 @@ class _SpendingChartState extends State<SpendingChart>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildHeader(l10n, context),
+          _buildHeader(l10n, context, isCompactPhone),
 
-          SizedBox(height: 30.h),
-          
+          if (isCompactPhone)
+            SizedBox(height: 80.h)
+          else
+            SizedBox(height: 30.h),
+
           if (isTablet)
             Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                   child: _buildChart(
@@ -132,18 +141,32 @@ class _SpendingChartState extends State<SpendingChart>
                     symbol,
                     totalSpent,
                     isTablet,
+                    isCompactPhone,
                   ),
                 ),
-                SizedBox(width: 30.w),
+                SizedBox(width: 10.w),
                 Expanded(
-                  flex: 1,
-                  child: _buildLegendList(l10n, symbol, context),
+                  child: _buildLegendList(
+                    l10n,
+                    symbol,
+                    context,
+                    isTablet,
+                    isCompactPhone,
+                  ),
                 ),
               ],
             )
           else ...[
-            _buildChart(sections, l10n, context, symbol, totalSpent, isTablet),
-            _buildLegendList(l10n, symbol, context),
+            _buildChart(
+              sections,
+              l10n,
+              context,
+              symbol,
+              totalSpent,
+              isTablet,
+              isCompactPhone,
+            ),
+            _buildLegendList(l10n, symbol, context, isTablet, isCompactPhone),
           ],
         ],
       ),
@@ -201,8 +224,12 @@ class _SpendingChartState extends State<SpendingChart>
     AppLocalizations l10n,
     String symbol,
     BuildContext context,
+    bool isTablet,
+    bool isCompactPhone,
   ) {
     return Stack(
+      alignment: isTablet ? Alignment.topRight : Alignment.topCenter,
+
       children: [
         ImageFiltered(
           imageFilter: ImageFilter.blur(
@@ -210,54 +237,92 @@ class _SpendingChartState extends State<SpendingChart>
             sigmaY: widget.viewModel.isLocked ? 7.0 : 0.0,
           ),
           child: ListView.builder(
-            padding: EdgeInsets.symmetric(vertical: 20.h),
+            padding: EdgeInsets.symmetric(
+              vertical: isCompactPhone ? 30.h : 20.h,
+            ),
             itemCount: widget.chartData.length,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               final item = widget.chartData[index];
               return Padding(
-                padding: EdgeInsets.only(top: 10.h),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 16.w,
-                      height: 16.w,
-                      decoration: BoxDecoration(
-                        color: item.color,
-                        shape: BoxShape.circle,
+                padding: EdgeInsets.only(top: isCompactPhone ? 50.h : 10.h),
+                child: isTablet
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 16.w,
+                            height: 16.w,
+                            decoration: BoxDecoration(
+                              color: item.color,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          SizedBox(width: 8.w),
+                          Text(
+                            item.originalCategory != null
+                                ? CategoryHelper.getTranslatedName(
+                                    context,
+                                    item.originalCategory!,
+                                  )
+                                : (item.category.toLowerCase() == "other"
+                                      ? l10n.other
+                                      : item.category),
+
+                            style: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
+                                .copyWith(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                          ),
+                        ],
+                      )
+                    : Row(
+                        children: [
+                          Container(
+                            width: 16.w,
+                            height: 16.w,
+                            decoration: BoxDecoration(
+                              color: item.color,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          SizedBox(width: 8.w),
+                          Text(
+                            item.originalCategory != null
+                                ? CategoryHelper.getTranslatedName(
+                                    context,
+                                    item.originalCategory!,
+                                  )
+                                : (item.category.toLowerCase() == "other"
+                                      ? l10n.other
+                                      : item.category),
+
+                            style: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
+                                .copyWith(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                          ),
+                          Spacer(),
+                          Text(
+                            "$symbol ${widget.viewModel.formatCurrency(item.amount)}",
+                            style: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
+                                .copyWith(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                          ),
+                        ],
                       ),
-                    ),
-                    SizedBox(width: 8.w),
-
-                    Text(
-                      item.originalCategory != null
-                          ? CategoryHelper.getTranslatedName(
-                              context,
-                              item.originalCategory!,
-                            )
-                          : (item.category.toLowerCase() == "other"
-                                ? l10n.other
-                                : item.category),
-
-                      style: CupertinoTheme.of(context).textTheme.textStyle
-                          .copyWith(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
-                    ),
-
-                    Spacer(),
-                    Text(
-                      "$symbol ${widget.viewModel.formatCurrency(item.amount)}",
-                      style: CupertinoTheme.of(context).textTheme.textStyle
-                          .copyWith(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w700,
-                          ),
-                    ),
-                  ],
-                ),
               );
             },
           ),
@@ -294,16 +359,22 @@ class _SpendingChartState extends State<SpendingChart>
     );
   }
 
-  SizedBox _buildChart(
+  Container _buildChart(
     List<PieChartSectionData> sections,
     AppLocalizations l10n,
     BuildContext context,
     String symbol,
     double totalSpent,
     bool isTablet,
+    bool isCompactPhone,
   ) {
-    return SizedBox(
-      height: isTablet ? 300.h : 200.h,
+    return Container(
+      height: isTablet
+          ? 320.h
+          : isCompactPhone
+          ? 230.h
+          : 200.h,
+      margin: EdgeInsets.only(left: isTablet ? 50.w : 0.w),
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -364,7 +435,11 @@ class _SpendingChartState extends State<SpendingChart>
     );
   }
 
-  Row _buildHeader(AppLocalizations l10n, BuildContext context) {
+  Row _buildHeader(
+    AppLocalizations l10n,
+    BuildContext context,
+    bool isCompactPhone,
+  ) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -373,7 +448,7 @@ class _SpendingChartState extends State<SpendingChart>
           child: Text(
             l10n.spending_this_month,
             style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-              fontSize: 20.sp,
+              fontSize: isCompactPhone ? 17.sp : 20.sp,
               fontWeight: FontWeight.w700,
             ),
             softWrap: true,
@@ -410,14 +485,14 @@ class _SpendingChartState extends State<SpendingChart>
               if (widget.viewModel.hasSecurity) ...[
                 Icon(
                   widget.viewModel.isLocked ? CupertinoIcons.lock_fill : null,
-                  size: 14.sp,
+                  size: isCompactPhone ? 13.sp : 14.sp,
                 ),
                 SizedBox(width: 8.w),
               ],
               Text(
                 l10n.view_all,
                 style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                  fontSize: 14.sp,
+                  fontSize: isCompactPhone ? 13.sp : 14.sp,
                   color: AppColors.primaryColor,
                   fontWeight: FontWeight.w500,
                 ),

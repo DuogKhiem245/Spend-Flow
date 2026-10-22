@@ -221,18 +221,18 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                     Row(
                       children: [
                         Container(
-                          width: 50.w,
-                          height: 50.w,
+                          width: 50,
+                          height: 50,
                           margin: EdgeInsets.only(left: 16.w, right: 12.w),
                           decoration: BoxDecoration(
                             color: CupertinoTheme.of(
                               context,
                             ).primaryColor.withValues(alpha: .15),
-                            borderRadius: BorderRadius.circular(30.r),
+                            borderRadius: BorderRadius.circular(50.r),
                           ),
                           child: Icon(
                             CupertinoIcons.tag_fill,
-                            size: 25.w,
+                            size: 25,
                             color: CupertinoTheme.of(context).primaryColor,
                           ),
                         ),
@@ -240,7 +240,7 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                           l10n.category,
                           style: CupertinoTheme.of(context).textTheme.textStyle
                               .copyWith(
-                                fontSize: 18.sp,
+                                fontSize: 15.sp,
                                 fontWeight: FontWeight.w500,
                                 color: widget.baseColor,
                               ),
@@ -284,7 +284,7 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                                     .textTheme
                                     .textStyle
                                     .copyWith(
-                                      fontSize: 16.sp,
+                                      fontSize: 15.sp,
                                       color: widget.baseColor?.withValues(
                                         alpha: .7,
                                       ),
@@ -314,14 +314,14 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                     Row(
                       children: [
                         Container(
-                          width: 50.w,
-                          height: 50.w,
+                          width: 50,
+                          height: 50,
                           margin: EdgeInsets.only(left: 16.w, right: 12.w),
                           decoration: BoxDecoration(
                             color: CupertinoTheme.of(
                               context,
                             ).primaryColor.withValues(alpha: .15),
-                            borderRadius: BorderRadius.circular(30.r),
+                            borderRadius: BorderRadius.circular(50.r),
                           ),
                           child: Icon(
                             widget.isMonthPicker
@@ -335,7 +335,7 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                           widget.isMonthPicker ? l10n.month : l10n.date,
                           style: CupertinoTheme.of(context).textTheme.textStyle
                               .copyWith(
-                                fontSize: 18.sp,
+                                fontSize: 15.sp,
                                 fontWeight: FontWeight.w500,
                                 color: widget.baseColor,
                               ),
@@ -356,7 +356,7 @@ class _SuggestCategoryWidgetState extends State<SuggestCategoryWidget> {
                                   .textTheme
                                   .textStyle
                                   .copyWith(
-                                    fontSize: 16.sp,
+                                    fontSize: 15.sp,
                                     color: widget.baseColor,
                                   ),
                             ),

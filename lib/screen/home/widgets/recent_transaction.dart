@@ -57,6 +57,12 @@ class _RecentTransactionState extends State<RecentTransaction> {
     final l10n = AppLocalizations.of(context)!;
     final symbol = widget.viewModel.currencySymbol;
 
+    final mediaQuery = MediaQuery.of(context);
+    final double shortestSide = mediaQuery.size.shortestSide;
+
+    // 1. Màn hình gập ngoài
+    final bool isIphoneDuoOuter = shortestSide >= 460 && shortestSide < 470;
+
     if (widget.transactions.isEmpty) {
       return const SizedBox();
     }
@@ -84,7 +90,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
               Text(
                 l10n.recent_transactions,
                 style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                  fontSize: 20.sp,
+                  fontSize: isIphoneDuoOuter ? 17.sp : 20.sp,
                   fontWeight: FontWeight.w700,
                 ),
               ),

@@ -37,8 +37,8 @@ class HomeHeader extends StatelessWidget {
               child: Row(
                 children: [
                   Container(
-                    width: 54.w,
-                    height: 54.h,
+                    width: 54,
+                    height: 54,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: AppColors.borderColor,
@@ -67,7 +67,7 @@ class HomeHeader extends StatelessWidget {
                         greetingMessage,
                         style: CupertinoTheme.of(context).textTheme.textStyle
                             .copyWith(
-                              fontSize: 20.sp,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                       ),
@@ -79,7 +79,7 @@ class HomeHeader extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: CupertinoTheme.of(context).textTheme.textStyle
                               .copyWith(
-                                fontSize: 16.sp,
+                                fontSize: 16,
                                 color: CupertinoColors.systemGrey,
                               ),
                         ),

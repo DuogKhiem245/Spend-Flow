@@ -73,175 +73,318 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
+    final mediaQuery = MediaQuery.of(context);
+    final double width = mediaQuery.size.width;
+
+    final bool isTablet = width >= 600;
+
     return CupertinoPageScaffold(
       child: LoadingOverlay(
         isLoading: _isDeleting,
-        child: StreamBuilder<User?>(
-          stream: authService.userChanges,
-          builder: (context, snapshot) {
-            final user = snapshot.data;
-            final bool isLoading =
-                snapshot.connectionState == ConnectionState.waiting;
-            final bool isLoggedIn = !isLoading && user != null;
+        child: SafeArea(
+          child: StreamBuilder<User?>(
+            stream: authService.userChanges,
+            builder: (context, snapshot) {
+              final user = snapshot.data;
+              final bool isLoading =
+                  snapshot.connectionState == ConnectionState.waiting;
+              final bool isLoggedIn = !isLoading && user != null;
 
-            return Padding(
-              padding: EdgeInsets.only(
-                top: MediaQuery.of(context).padding.top + 10.h,
-                left: 16.w,
-                right: 16.w,
-                bottom: 10.h,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  AccountWidget(currentUser: user, isLoading: isLoading),
-                  SizedBox(height: 10.h),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      padding: EdgeInsets.only(bottom: 20.h),
-                      child: Column(
-                        children: [
-                          ListenableBuilder(
-                            listenable: _premiumViewModel,
-                            builder: (context, child) {
-                              return AnimatedSize(
-                                duration: const Duration(milliseconds: 400),
-                                curve: Curves.easeInOut,
-                                child: AnimatedSwitcher(
-                                  duration: const Duration(milliseconds: 300),
-                                  transitionBuilder:
-                                      (
-                                        Widget child,
-                                        Animation<double> animation,
-                                      ) {
-                                        return FadeTransition(
-                                          opacity: animation,
-                                          child: SizeTransition(
-                                            sizeFactor: animation,
-                                            axisAlignment: -1.0,
-                                            child: child,
+              return Padding(
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).padding.top + 10.h,
+                  left: 16.w,
+                  right: 16.w,
+                  bottom: 10.h,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    AccountWidget(currentUser: user, isLoading: isLoading),
+                    SizedBox(height: 10.h),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        padding: EdgeInsets.only(bottom: 20.h),
+                        child: Column(
+                          children: [
+                            ListenableBuilder(
+                              listenable: _premiumViewModel,
+                              builder: (context, child) {
+                                return AnimatedSize(
+                                  duration: const Duration(milliseconds: 400),
+                                  curve: Curves.easeInOut,
+                                  child: AnimatedSwitcher(
+                                    duration: const Duration(milliseconds: 300),
+                                    transitionBuilder:
+                                        (
+                                          Widget child,
+                                          Animation<double> animation,
+                                        ) {
+                                          return FadeTransition(
+                                            opacity: animation,
+                                            child: SizeTransition(
+                                              sizeFactor: animation,
+                                              child: child,
+                                            ),
+                                          );
+                                        },
+                                    child: _premiumViewModel.isPremium
+                                        ? const SizedBox.shrink()
+                                        : KeyedSubtree(
+                                            key: const ValueKey(
+                                              'upgrade_widget',
+                                            ),
+                                            child: Column(
+                                              children: [
+                                                const UpgradePremiumWidget(),
+                                                SizedBox(height: 20.h),
+                                              ],
+                                            ),
                                           ),
-                                        );
-                                      },
-                                  child: _premiumViewModel.isPremium
-                                      ? const SizedBox.shrink()
-                                      : KeyedSubtree(
-                                          key: const ValueKey('upgrade_widget'),
-                                          child: Column(
-                                            children: [
-                                              const UpgradePremiumWidget(),
-                                              SizedBox(height: 20.h),
-                                            ],
-                                          ),
-                                        ),
-                                ),
-                              );
-                            },
-                          ),
+                                  ),
+                                );
+                              },
+                            ),
 
-                          const SettingGeneralWidget(),
-                          SizedBox(height: 10.h),
+                            const SettingGeneralWidget(),
+                            SizedBox(height: 10.h),
 
-                          const SettingSecurityWidget(),
-                          SizedBox(height: 10.h),
+                            const SettingSecurityWidget(),
+                            SizedBox(height: 10.h),
 
-                          SettingDataWidget(
-                            lastSyncText: _lastSyncText,
-                            onSyncSuccess: _loadLastSyncTime,
-                          ),
-                          SizedBox(height: 10.h),
+                            SettingDataWidget(
+                              lastSyncText: _lastSyncText,
+                              onSyncSuccess: _loadLastSyncTime,
+                            ),
+                            SizedBox(height: 10.h),
 
-                          const SettingInfoWidget(),
+                            const SettingInfoWidget(),
 
-                          isLoggedIn
-                              ? Column(
-                                  children: [
-                                    CupertinoButton(
-                                      onPressed: () =>
-                                          _showLogoutDialog(context),
-                                      borderRadius: BorderRadius.circular(30.r),
-                                      padding: EdgeInsets.symmetric(
-                                        vertical: 8.h,
-                                      ),
-                                      minimumSize: Size(double.infinity, 54.h),
-                                      color: CupertinoTheme.of(
-                                        context,
-                                      ).barBackgroundColor,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            CupertinoIcons.square_arrow_right,
-                                            color: CupertinoColors.systemRed,
-                                            size: 20.r,
-                                          ),
-                                          SizedBox(width: 8.w),
-                                          Text(
-                                            l10n.logout,
-                                            style: CupertinoTheme.of(context)
-                                                .textTheme
-                                                .textStyle
-                                                .copyWith(
-                                                  color:
-                                                      CupertinoColors.systemRed,
-                                                  fontSize: 18.sp,
-                                                  fontWeight: FontWeight.w500,
+                            isLoggedIn
+                                ? isTablet
+                                      ? Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Expanded(
+                                                  child: CupertinoButton(
+                                                    onPressed: () =>
+                                                        _showLogoutDialog(
+                                                          context,
+                                                        ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          30.r,
+                                                        ),
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                          vertical: 8.h,
+                                                        ),
+                                                    minimumSize: Size(0, 54.h),
+                                                    color: CupertinoTheme.of(
+                                                      context,
+                                                    ).barBackgroundColor,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Icon(
+                                                          CupertinoIcons
+                                                              .square_arrow_right,
+                                                          color: CupertinoColors
+                                                              .systemRed,
+                                                          size: 20.r,
+                                                        ),
+                                                        SizedBox(width: 8.w),
+                                                        Text(
+                                                          l10n.logout,
+                                                          style: CupertinoTheme.of(context)
+                                                              .textTheme
+                                                              .textStyle
+                                                              .copyWith(
+                                                                color: CupertinoColors
+                                                                    .systemRed,
+                                                                fontSize: 18.sp,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
                                                 ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(height: 20.h),
-
-                                    CupertinoButton(
-                                      onPressed: () =>
-                                          _showDeleteAccountDialog(context),
-                                      borderRadius: BorderRadius.circular(30.r),
-                                      padding: EdgeInsets.symmetric(
-                                        vertical: 8.h,
-                                      ),
-                                      minimumSize: Size(double.infinity, 54.h),
-                                      color: CupertinoColors.systemRed
-                                          .withValues(alpha: 0.1),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            CupertinoIcons.trash,
-                                            color: CupertinoColors.systemRed,
-                                            size: 20.r,
-                                          ),
-                                          SizedBox(width: 8.w),
-                                          Text(
-                                            l10n.delete_account,
-                                            style: CupertinoTheme.of(context)
-                                                .textTheme
-                                                .textStyle
-                                                .copyWith(
-                                                  color:
-                                                      CupertinoColors.systemRed,
-                                                  fontSize: 18.sp,
-                                                  fontWeight: FontWeight.w500,
+                                                SizedBox(width: 20.w),
+                                                Expanded(
+                                                  child: CupertinoButton(
+                                                    onPressed: () =>
+                                                        _showDeleteAccountDialog(
+                                                          context,
+                                                        ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          30.r,
+                                                        ),
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                          vertical: 8.h,
+                                                        ),
+                                                    minimumSize: Size(0, 54.h),
+                                                    color: CupertinoColors
+                                                        .systemRed
+                                                        .withValues(alpha: 0.1),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Icon(
+                                                          CupertinoIcons.trash,
+                                                          color: CupertinoColors
+                                                              .systemRed,
+                                                          size: 20.r,
+                                                        ),
+                                                        SizedBox(width: 8.w),
+                                                        Text(
+                                                          l10n.delete_account,
+                                                          style: CupertinoTheme.of(context)
+                                                              .textTheme
+                                                              .textStyle
+                                                              .copyWith(
+                                                                color: CupertinoColors
+                                                                    .systemRed,
+                                                                fontSize: 18.sp,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
                                                 ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(height: 180.h)
-                                  ],
-                                )
-                              : SizedBox(height: 80.h),
-                        ],
+                                              ],
+                                            ),
+                                            SizedBox(height: 40.h),
+                                          ],
+                                        )
+                                      : Column(
+                                          children: [
+                                            CupertinoButton(
+                                              onPressed: () =>
+                                                  _showLogoutDialog(context),
+                                              borderRadius:
+                                                  BorderRadius.circular(30.r),
+                                              padding: EdgeInsets.symmetric(
+                                                vertical: 8.h,
+                                              ),
+                                              minimumSize: Size(
+                                                double.infinity,
+                                                54.h,
+                                              ),
+                                              color: CupertinoTheme.of(
+                                                context,
+                                              ).barBackgroundColor,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    CupertinoIcons
+                                                        .square_arrow_right,
+                                                    color: CupertinoColors
+                                                        .systemRed,
+                                                    size: 20.r,
+                                                  ),
+                                                  SizedBox(width: 8.w),
+                                                  Text(
+                                                    l10n.logout,
+                                                    style:
+                                                        CupertinoTheme.of(
+                                                              context,
+                                                            )
+                                                            .textTheme
+                                                            .textStyle
+                                                            .copyWith(
+                                                              color:
+                                                                  CupertinoColors
+                                                                      .systemRed,
+                                                              fontSize: 18.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                            ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(height: 20.h),
+                                            CupertinoButton(
+                                              onPressed: () =>
+                                                  _showDeleteAccountDialog(
+                                                    context,
+                                                  ),
+                                              borderRadius:
+                                                  BorderRadius.circular(30.r),
+                                              padding: EdgeInsets.symmetric(
+                                                vertical: 8.h,
+                                              ),
+                                              minimumSize: Size(
+                                                double.infinity,
+                                                54.h,
+                                              ),
+                                              color: CupertinoColors.systemRed
+                                                  .withValues(alpha: 0.1),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    CupertinoIcons.trash,
+                                                    color: CupertinoColors
+                                                        .systemRed,
+                                                    size: 20.r,
+                                                  ),
+                                                  SizedBox(width: 8.w),
+                                                  Text(
+                                                    l10n.delete_account,
+                                                    style:
+                                                        CupertinoTheme.of(
+                                                              context,
+                                                            )
+                                                            .textTheme
+                                                            .textStyle
+                                                            .copyWith(
+                                                              color:
+                                                                  CupertinoColors
+                                                                      .systemRed,
+                                                              fontSize: 18.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                            ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(height: 180.h),
+                                          ],
+                                        )
+                                : SizedBox(height: 80.h),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            );
-          },
+                  ],
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

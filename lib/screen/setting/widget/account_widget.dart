@@ -22,10 +22,15 @@ class AccountWidget extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final bool isLoggedIn = currentUser != null;
 
+    final mediaQuery = MediaQuery.of(context);
+    final double width = mediaQuery.size.width;
+
+    final bool isTablet = width >= 600;
+
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 16.w),
-      height: 90.h,
+      height: isTablet ? 120 : 90,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: CupertinoTheme.of(context).barBackgroundColor,

@@ -180,26 +180,26 @@ class PremiumView extends StatelessWidget {
           alignment: Alignment.topRight,
           children: [
             Container(
-              width: 100.w,
-              height: 100.w,
+              width: 80.w,
+              height: 80.w,
               decoration: BoxDecoration(
                 color: AppColors.primaryColor.withValues(alpha: .2),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 CupertinoIcons.lock_fill,
-                size: 50.sp,
+                size: 40.sp,
                 color: AppColors.primaryColor,
               ),
             ),
             Container(
-              padding: EdgeInsets.all(6.w),
+              padding: EdgeInsets.all(4.w),
               decoration: BoxDecoration(
                 color: AppColors.primaryColor,
                 shape: BoxShape.circle,
                 border: Border.all(color: Colors.white, width: 3),
               ),
-              child: Icon(Icons.star, color: Colors.white, size: 16.sp),
+              child: Icon(Icons.star, color: Colors.white, size: 14.sp),
             ),
           ],
         ),

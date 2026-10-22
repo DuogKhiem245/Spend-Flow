@@ -230,6 +230,9 @@ class _AddBudgetViewState extends State<AddBudgetView> {
                           .copyWith(
                             fontSize: 18.sp,
                             fontWeight: FontWeight.w600,
+                            color: CupertinoTheme.of(
+                              context,
+                            ).primaryContrastingColor,
                           ),
                     ),
                   ),

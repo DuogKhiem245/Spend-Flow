@@ -59,7 +59,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
                   },
                 ),
 
-                _buildAndroidTabBar(context)
+                _buildAndroidTabBar(context),
 
                 // Platform.isIOS
                 //     ? _buildIOSTabBar(context)
