@@ -252,15 +252,6 @@ class _SpendingChartState extends State<SpendingChart>
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Container(
-                            width: 16.w,
-                            height: 16.w,
-                            decoration: BoxDecoration(
-                              color: item.color,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                          SizedBox(width: 8.w),
                           Text(
                             item.originalCategory != null
                                 ? CategoryHelper.getTranslatedName(
@@ -278,6 +269,16 @@ class _SpendingChartState extends State<SpendingChart>
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.w500,
                                 ),
+                          ),
+                          SizedBox(width: 8.w),
+
+                          Container(
+                            width: 16.w,
+                            height: 16.w,
+                            decoration: BoxDecoration(
+                              color: item.color,
+                              shape: BoxShape.circle,
+                            ),
                           ),
                         ],
                       )

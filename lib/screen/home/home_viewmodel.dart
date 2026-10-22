@@ -558,16 +558,19 @@ class HomeViewModel extends ChangeNotifier {
     int touchedIndex,
     BuildContext context,
   ) {
+    final l10n = AppLocalizations.of(context)!;
+
     return data.asMap().entries.map((entry) {
       final i = entry.key;
       final item = entry.value;
       final isTouched = i == touchedIndex;
       final fontSize = 16.sp;
       final radius = isTouched ? 40.0.w : 32.w;
-      final categoryName = CategoryHelper.getTranslatedName(
-        context,
-        item.originalCategory!,
-      );
+      final categoryName = item.originalCategory != null
+          ? CategoryHelper.getTranslatedName(context, item.originalCategory!)
+          : (item.category.toLowerCase() == "other"
+                ? l10n.other
+                : item.category);
 
       return PieChartSectionData(
         color: item.color,

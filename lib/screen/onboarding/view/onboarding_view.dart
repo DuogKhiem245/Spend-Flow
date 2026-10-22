@@ -64,9 +64,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         ClipRRect(
                           child: Image.asset(
                             item.image,
-                            height: 480.h, // 500
+                            height: 480.h, 
                             width: double.infinity,
-                            fit: BoxFit.cover,
+                            fit: BoxFit.contain,
                           ),
                         ),
                         Text(

@@ -86,6 +86,13 @@ class _SpendingDetailViewState extends State<SpendingDetailView>
 
     final totalSpent = widget.viewModel.calculateTotalSpent(_chartData);
 
+    final mediaQuery = MediaQuery.of(context);
+    final double width = mediaQuery.size.width;
+    final double shortestSide = mediaQuery.size.shortestSide;
+
+    final bool isTablet = width >= 600;
+    final bool isCompactPhone = shortestSide >= 460 && shortestSide < 470;
+
     return ListenableBuilder(
       listenable: widget.viewModel,
       builder: (context, child) => CupertinoPageScaffold(
@@ -128,81 +135,170 @@ class _SpendingDetailViewState extends State<SpendingDetailView>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              l10n.total_spent,
-                              style: CupertinoTheme.of(context)
-                                  .textTheme
-                                  .textStyle
-                                  .copyWith(
-                                    color: CupertinoTheme.of(context)
-                                        .textTheme
-                                        .textStyle
-                                        .color!
-                                        .withValues(alpha: .6),
-                                    fontSize: 14.sp,
-                                  ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 10.w,
-                                vertical: 6.h,
-                              ),
-                              decoration: BoxDecoration(
-                                color: _percentChange > 0
-                                    ? AppColors.errorColor.withValues(
-                                        alpha: .15,
-                                      )
-                                    : AppColors.primaryColor.withValues(
-                                        alpha: .15,
-                                      ),
-                                borderRadius: BorderRadius.circular(20.r),
-                              ),
-                              child: Row(
+                        isCompactPhone
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Icon(
-                                    _percentChange > 0
-                                        ? CupertinoIcons.arrow_up_right
-                                        : CupertinoIcons.arrow_down_right,
-                                    size: 14.sp,
-                                    color: _percentChange > 0
-                                        ? AppColors.errorColor
-                                        : AppColors.primaryColor,
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        l10n.total_spent,
+                                        style: CupertinoTheme.of(context)
+                                            .textTheme
+                                            .textStyle
+                                            .copyWith(
+                                              color: CupertinoTheme.of(context)
+                                                  .textTheme
+                                                  .textStyle
+                                                  .color!
+                                                  .withValues(alpha: .6),
+                                              fontSize: 14.sp,
+                                            ),
+                                      ),
+                                      Text(
+                                        "${widget.viewModel.currencySymbol} ${widget.viewModel.formatCurrency(totalSpent)}",
+                                        style: CupertinoTheme.of(context)
+                                            .textTheme
+                                            .textStyle
+                                            .copyWith(
+                                              fontSize: 28.sp,
+                                              fontWeight: FontWeight.bold,
+                                              letterSpacing: 1,
+                                              color: CupertinoTheme.of(
+                                                context,
+                                              ).textTheme.textStyle.color,
+                                            ),
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(width: 4.w),
-                                  Text(
-                                    "${_percentChange > 0 ? '+' : ''}${_percentChange.toStringAsFixed(1)}% ${l10n.vs_last_month}",
-                                    style: CupertinoTheme.of(context)
-                                        .textTheme
-                                        .textStyle
-                                        .copyWith(
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w600,
+                                  SizedBox(height: 8.h),
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 10.w,
+                                      vertical: 6.h,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: _percentChange > 0
+                                          ? AppColors.errorColor.withValues(
+                                              alpha: .15,
+                                            )
+                                          : AppColors.primaryColor.withValues(
+                                              alpha: .15,
+                                            ),
+                                      borderRadius: BorderRadius.circular(20.r),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          _percentChange > 0
+                                              ? CupertinoIcons.arrow_up_right
+                                              : CupertinoIcons.arrow_down_right,
+                                          size: 14.sp,
                                           color: _percentChange > 0
                                               ? AppColors.errorColor
                                               : AppColors.primaryColor,
                                         ),
+                                        SizedBox(width: 4.w),
+                                        Text(
+                                          "${_percentChange > 0 ? '+' : ''}${_percentChange.toStringAsFixed(1)}% ${l10n.vs_last_month}",
+                                          style: CupertinoTheme.of(context)
+                                              .textTheme
+                                              .textStyle
+                                              .copyWith(
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w600,
+                                                color: _percentChange > 0
+                                                    ? AppColors.errorColor
+                                                    : AppColors.primaryColor,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    l10n.total_spent,
+                                    style: CupertinoTheme.of(context)
+                                        .textTheme
+                                        .textStyle
+                                        .copyWith(
+                                          color: CupertinoTheme.of(context)
+                                              .textTheme
+                                              .textStyle
+                                              .color!
+                                              .withValues(alpha: .6),
+                                          fontSize: 14.sp,
+                                        ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 10.w,
+                                      vertical: 6.h,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: _percentChange > 0
+                                          ? AppColors.errorColor.withValues(
+                                              alpha: .15,
+                                            )
+                                          : AppColors.primaryColor.withValues(
+                                              alpha: .15,
+                                            ),
+                                      borderRadius: BorderRadius.circular(20.r),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          _percentChange > 0
+                                              ? CupertinoIcons.arrow_up_right
+                                              : CupertinoIcons.arrow_down_right,
+                                          size: 14.sp,
+                                          color: _percentChange > 0
+                                              ? AppColors.errorColor
+                                              : AppColors.primaryColor,
+                                        ),
+                                        SizedBox(width: 4.w),
+                                        Text(
+                                          "${_percentChange > 0 ? '+' : ''}${_percentChange.toStringAsFixed(1)}% ${l10n.vs_last_month}",
+                                          style: CupertinoTheme.of(context)
+                                              .textTheme
+                                              .textStyle
+                                              .copyWith(
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w600,
+                                                color: _percentChange > 0
+                                                    ? AppColors.errorColor
+                                                    : AppColors.primaryColor,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
-                            ),
-                          ],
-                        ),
 
-                        Text(
-                          "${widget.viewModel.currencySymbol} ${widget.viewModel.formatCurrency(totalSpent)}",
-                          style: CupertinoTheme.of(context).textTheme.textStyle
-                              .copyWith(
-                                fontSize: 28.sp,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1,
-                                color: CupertinoTheme.of(
-                                  context,
-                                ).textTheme.textStyle.color,
+                        isCompactPhone
+                            ? SizedBox.shrink()
+                            : Text(
+                                "${widget.viewModel.currencySymbol} ${widget.viewModel.formatCurrency(totalSpent)}",
+                                style: CupertinoTheme.of(context)
+                                    .textTheme
+                                    .textStyle
+                                    .copyWith(
+                                      fontSize: 28.sp,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 1,
+                                      color: CupertinoTheme.of(
+                                        context,
+                                      ).textTheme.textStyle.color,
+                                    ),
                               ),
-                        ),
 
                         if (_isLoading)
                           SizedBox(
@@ -232,7 +328,9 @@ class _SpendingDetailViewState extends State<SpendingDetailView>
                           )
                         else
                           SizedBox(
-                            height: 250.h,
+                            height: (isTablet || isCompactPhone)
+                                ? 360.h
+                                : 250.h,
                             child: Stack(
                               alignment: Alignment.center,
                               children: [
