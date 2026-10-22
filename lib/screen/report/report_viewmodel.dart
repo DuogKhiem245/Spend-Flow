@@ -197,9 +197,13 @@ class ReportViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  String formatCurrency(double amount) {
-    final format = NumberFormat("#,##0.00", "en_US");
-    return format.format(amount);
+  String formatCompactCurrency(double amount, AppLocalizations l10n) {
+    final formatter = NumberFormat.compactCurrency(
+      locale: l10n.localeName,
+      decimalDigits: 1,
+      symbol: '',
+    );
+    return formatter.format(amount);
   }
 
   String formatDateHeader(DateTime date, AppLocalizations l10n, String locale) {

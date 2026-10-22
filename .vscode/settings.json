@@ -3,5 +3,6 @@
   "dart.hotReloadOnSave": "all",
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 1000,
-  "cmake.ignoreCMakeListsMissing": true
+  "cmake.ignoreCMakeListsMissing": true,
+  "java.configuration.updateBuildConfiguration": "interactive"
 }

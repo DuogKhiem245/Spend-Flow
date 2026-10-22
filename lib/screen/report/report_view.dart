@@ -156,7 +156,7 @@ class _ReportPageState extends State<ReportPage>
                                   ),
                                 ),
                                 ...group.transactions.map(
-                                  (tx) => _buildTransactionItem(tx),
+                                  (tx) => _buildTransactionItem(tx, l10n),
                                 ),
                               ],
                             );
@@ -289,17 +289,17 @@ class _ReportPageState extends State<ReportPage>
         children: [
           _buildStatItem(
             l10n.expenses,
-            "-$symbol ${_viewModel.formatCurrency(stats['expense']!)}",
+            "-$symbol ${_viewModel.formatCompactCurrency(stats['expense']!, l10n)}",
             CupertinoTheme.of(context).textTheme.textStyle.color!,
           ),
           _buildStatItem(
             l10n.income,
-            "+$symbol ${_viewModel.formatCurrency(stats['income']!)}",
+            "+$symbol ${_viewModel.formatCompactCurrency(stats['income']!, l10n)}",
             CupertinoTheme.of(context).textTheme.textStyle.color!,
           ),
           _buildStatItem(
             l10n.balance,
-            "${stats['balance']! < 0 ? '-' : ''}$symbol ${_viewModel.formatCurrency(stats['balance']!.abs())}",
+            "${stats['balance']! < 0 ? '-' : ''}$symbol ${_viewModel.formatCompactCurrency(stats['balance']!.abs(), l10n)}",
             stats['balance']! >= 0
                 ? AppColors.secondaryColor
                 : AppColors.errorColor,
@@ -334,7 +334,7 @@ class _ReportPageState extends State<ReportPage>
     );
   }
 
-  Widget _buildTransactionItem(TransactionModel tx) {
+  Widget _buildTransactionItem(TransactionModel tx, AppLocalizations l10n) {
     final amountColor = tx.isIncome
         ? CupertinoColors.activeGreen
         : CupertinoTheme.of(context).textTheme.textStyle.color!;
@@ -476,7 +476,7 @@ class _ReportPageState extends State<ReportPage>
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      "$prefix$symbol ${_viewModel.formatCurrency(tx.amount)}",
+                      "$prefix$symbol ${_viewModel.formatCompactCurrency(tx.amount, l10n)}",
                       style: CupertinoTheme.of(context).textTheme.textStyle
                           .copyWith(
                             fontSize: 16.sp,

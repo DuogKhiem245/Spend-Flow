@@ -64,71 +64,73 @@ class _ScanReceiptViewState extends State<ScanReceiptView>
               ),
             ),
           ),
-          child: Stack(
-            children: [
-              Positioned.fill(child: _buildCameraPreview()),
-
-              Column(
-                children: [
-                  const Spacer(),
-
-                  _buildScanFrame(_viewModel.isCameraPermissionDenied, l10n),
-
-                  SizedBox(height: 20.h),
-
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 16.w,
-                      vertical: 8.h,
+          child: SafeArea(
+            child: Stack(
+              children: [
+                Positioned.fill(child: _buildCameraPreview()),
+            
+                Column(
+                  children: [
+                    const Spacer(),
+            
+                    _buildScanFrame(_viewModel.isCameraPermissionDenied, l10n),
+            
+                    SizedBox(height: 20.h),
+            
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 8.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withValues(alpha: .6),
+                        borderRadius: BorderRadius.circular(30.r),
+                      ),
+                      child: Text(
+                        l10n.align_receipt,
+                        style: CupertinoTheme.of(context).textTheme.textStyle
+                            .copyWith(
+                              color: Colors.white,
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                      ),
                     ),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: .6),
-                      borderRadius: BorderRadius.circular(30.r),
-                    ),
-                    child: Text(
-                      l10n.align_receipt,
-                      style: CupertinoTheme.of(context).textTheme.textStyle
-                          .copyWith(
-                            color: Colors.white,
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
-                    ),
-                  ),
-
-                  const Spacer(),
-
-                  _buildBottomBar(),
-                ],
-              ),
-
-              if (_viewModel.isScanning)
-                Container(
-                  color: Colors.black.withValues(alpha: 0.7),
-                  child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        LoadingAnimationWidget.staggeredDotsWave(
-                          color: Colors.white,
-                          size: 50.w,
-                        ),
-                        SizedBox(height: 16.h),
-                        Text(
-                          l10n.invoice_analysis,
-                          style: CupertinoTheme.of(context).textTheme.textStyle
-                              .copyWith(
-                                color: Colors.white,
-                                fontSize: 16.sp,
-                                decoration: TextDecoration.none,
-                                fontWeight: FontWeight.w500,
-                              ),
-                        ),
-                      ],
-                    ),
-                  ),
+            
+                    const Spacer(),
+            
+                    _buildBottomBar(),
+                  ],
                 ),
-            ],
+            
+                if (_viewModel.isScanning)
+                  Container(
+                    color: Colors.black.withValues(alpha: 0.7),
+                    child: Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          LoadingAnimationWidget.staggeredDotsWave(
+                            color: Colors.white,
+                            size: 50.w,
+                          ),
+                          SizedBox(height: 16.h),
+                          Text(
+                            l10n.invoice_analysis,
+                            style: CupertinoTheme.of(context).textTheme.textStyle
+                                .copyWith(
+                                  color: Colors.white,
+                                  fontSize: 16.sp,
+                                  decoration: TextDecoration.none,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ),
         );
       },

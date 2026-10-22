@@ -2045,5 +2045,9 @@
   "delete_account_failed": "Đã xảy ra lỗi khi xoá tài khoản của bạn. Vui lòng thử lại.",
   "@delete_account_failed": {
     "description": "Delete account failed"
+  },
+  "left": "còn lại",
+  "@left": {
+    "description": "left"
   }
 }

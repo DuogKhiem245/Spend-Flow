@@ -189,6 +189,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
       item.category.iconKey,
     );
     final color = isExpense ? AppColors.errorColor : AppColors.secondaryColor;
+    final l10n = AppLocalizations.of(context)!;
 
     return CupertinoButton(
       padding: EdgeInsets.zero,
@@ -262,8 +263,8 @@ class _RecentTransactionState extends State<RecentTransaction> {
               children: [
                 Text(
                   isExpense
-                      ? "-$symbol ${widget.viewModel.formatCompactCurrency(item.amount)}"
-                      : "+$symbol ${widget.viewModel.formatCompactCurrency(item.amount)}",
+                      ? "-$symbol ${widget.viewModel.formatCompactCurrency(item.amount, l10n)}"
+                      : "+$symbol ${widget.viewModel.formatCompactCurrency(item.amount, l10n)}",
                   style: CupertinoTheme.of(context).textTheme.textStyle
                       .copyWith(
                         fontSize: 16.sp,

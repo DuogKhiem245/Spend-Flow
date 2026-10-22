@@ -340,14 +340,9 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  String formatCurrency(double amount) {
-    final formatter = NumberFormat("#,##0.0", "en_US");
-    return formatter.format(amount);
-  }
-
-  String formatCompactCurrency(double amount) {
+  String formatCompactCurrency(double amount, AppLocalizations l10n) {
     final formatter = NumberFormat.compactCurrency(
-      locale: "en_US",
+      locale: l10n.localeName,
       decimalDigits: 1,
       symbol: '',
     );
@@ -576,7 +571,7 @@ class HomeViewModel extends ChangeNotifier {
         color: item.color,
         value: item.amount,
         title: isTouched
-            ? '$categoryName \n $currencySymbol ${formatCurrency(item.amount)}'
+            ? '$categoryName \n $currencySymbol ${formatCompactCurrency(item.amount, l10n)}'
             : '',
         radius: radius,
         titleStyle: CupertinoTheme.of(context).textTheme.textStyle.copyWith(

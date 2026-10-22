@@ -1,7 +1,8 @@
 import java.util.Properties
 import java.io.FileInputStream
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-// 1. THÊM ĐOẠN NÀY VÀO ĐẦU FILE (Để định nghĩa biến bị thiếu)
 val keystoreProperties = Properties()
 val keystorePropertiesFile = rootProject.file("key.properties")
 if (keystorePropertiesFile.exists()) {
@@ -20,17 +21,13 @@ plugins {
 
 android {
     namespace = "com.dk24labs.spend_flow"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 37
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
         isCoreLibraryDesugaringEnabled = true
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     defaultConfig {
@@ -61,6 +58,13 @@ android {
                 "proguard-rules.pro"
             )
         }
+    }
+}
+
+// Cấu hình jvmTarget chuẩn cho Kotlin Compiler
+tasks.withType<KotlinCompile>().configureEach {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
     }
 }
 

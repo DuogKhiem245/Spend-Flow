@@ -3049,6 +3049,12 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Đã xảy ra lỗi khi xoá tài khoản của bạn. Vui lòng thử lại.'**
   String get delete_account_failed;
+
+  /// left
+  ///
+  /// In vi, this message translates to:
+  /// **'còn lại'**
+  String get left;
 }
 
 class _AppLocalizationsDelegate

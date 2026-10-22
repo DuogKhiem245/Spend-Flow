@@ -221,7 +221,7 @@ class _BudgetPageState extends State<BudgetPage>
                                 _buildEmptyState(l10n)
                               else
                                 ..._viewModel.budgets.map(
-                                  (e) => _buildCategoryCard(e),
+                                  (e) => _buildCategoryCard(e, l10n),
                                 ),
 
                               SizedBox(height: 80.h),
@@ -348,7 +348,7 @@ class _BudgetPageState extends State<BudgetPage>
     );
   }
 
-  Widget _buildCategoryCard(BudgetModel budget) {
+  Widget _buildCategoryCard(BudgetModel budget, AppLocalizations l10n) {
     final iconData = AppIcons.getIcon(budget.iconKey);
     final File? imageFile = _viewModel.getRealImageFile(budget.iconKey);
 
@@ -452,7 +452,7 @@ class _BudgetPageState extends State<BudgetPage>
                           ),
                           SizedBox(height: 4.h),
                           Text(
-                            "${_viewModel.formatCurrency(budget.remaining)} left",
+                            "${_viewModel.formatCompactCurrency(budget.remaining, l10n)} ${l10n.left}",
                             style: CupertinoTheme.of(context)
                                 .textTheme
                                 .textStyle
@@ -471,7 +471,7 @@ class _BudgetPageState extends State<BudgetPage>
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            "${_viewModel.formatCurrency(budget.spent)} / ${_viewModel.formatCurrency(budget.total)}",
+                            "${_viewModel.formatCompactCurrency(budget.spent, l10n)} / ${_viewModel.formatCompactCurrency(budget.total, l10n)}",
                             style: CupertinoTheme.of(context)
                                 .textTheme
                                 .textStyle

@@ -86,6 +86,7 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
   }
 
   Widget _buildMainCard(BuildContext context, TransactionDetailViewModel vm) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(20.w),
@@ -188,7 +189,7 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
                     fit: BoxFit.scaleDown,
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      vm.amountString,
+                      vm.amountString(l10n),
                       style: CupertinoTheme.of(context).textTheme.textStyle
                           .copyWith(
                             fontSize: 34.sp,
@@ -248,6 +249,7 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
     BuildContext context,
     TransactionDetailViewModel vm,
   ) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(20.w),
@@ -296,7 +298,7 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    vm.totalSpending7DaysString,
+                    vm.totalSpending7DaysString(l10n),
                     style: CupertinoTheme.of(context).textTheme.textStyle
                         .copyWith(
                           fontSize: 18.sp,

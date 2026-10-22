@@ -6,6 +6,7 @@ class CurrencyData {
     {'code': 'KRW', 'name': 'South Korean Won', 'flag': '🇰🇷', 'symbol': '₩'},
     {'code': 'GBP', 'name': 'British Pound', 'flag': '🇬🇧', 'symbol': '£'},
     {'code': 'CNY', 'name': 'Chinese Yuan', 'flag': '🇨🇳', 'symbol': '¥'},
+    {'code': 'VND', 'name': 'Vietnamese Dong', 'flag': '🇻🇳', 'symbol': '₫'},
   ];
 
   final List<Map<String, String>> allList = [

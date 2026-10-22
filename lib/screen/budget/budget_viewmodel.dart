@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 import 'package:spend_flow/core/model/budget_model.dart';
 
@@ -195,6 +196,15 @@ class BudgetViewModel extends ChangeNotifier {
   String formatCurrency(double amount) {
     final format = NumberFormat("#,##0", "en_US");
     return "$_currencySymbol${format.format(amount)}";
+  }
+
+  String formatCompactCurrency(double amount, AppLocalizations l10n) {
+    final formatter = NumberFormat.compactCurrency(
+      locale: l10n.localeName,
+      decimalDigits: 1,
+      symbol: '',
+    );
+    return formatter.format(amount);
   }
 
   Color getProgressBarColor(double progress) {

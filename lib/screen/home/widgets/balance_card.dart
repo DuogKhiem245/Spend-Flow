@@ -47,7 +47,7 @@ class BalanceCard extends StatelessWidget {
               _buildBalanceRow(
                 context,
                 label: l10n.income,
-                amount: "${_viewModel.formatCurrency(income)} $symbol",
+                amount: "${_viewModel.formatCompactCurrency(income, l10n)} $symbol",
                 isTotal: false,
               ),
 
@@ -56,7 +56,7 @@ class BalanceCard extends StatelessWidget {
               _buildBalanceRow(
                 context,
                 label: l10n.expenses,
-                amount: "${_viewModel.formatCurrency(expenses)} $symbol",
+                amount: "${_viewModel.formatCompactCurrency(expenses, l10n)} $symbol",
                 isTotal: false,
               ),
 
@@ -71,7 +71,7 @@ class BalanceCard extends StatelessWidget {
               _buildBalanceRow(
                 context,
                 label: l10n.total_balance,
-                amount: "${_viewModel.formatCurrency(balance)} $symbol",
+                amount: "${_viewModel.formatCompactCurrency(balance, l10n)} $symbol",
                 isTotal: true,
                 amountColor: balance >= 0
                     ? AppColors.secondaryColor

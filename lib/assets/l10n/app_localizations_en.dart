@@ -1601,4 +1601,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get delete_account_failed =>
       'An error occurred while deleting your account. Please try again.';
+
+  @override
+  String get left => 'left';
 }

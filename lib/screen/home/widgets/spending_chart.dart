@@ -246,7 +246,7 @@ class _SpendingChartState extends State<SpendingChart>
             itemBuilder: (context, index) {
               final item = widget.chartData[index];
               return Padding(
-                padding: EdgeInsets.only(top: 10.h) ,
+                padding: EdgeInsets.only(top: 10.h),
                 child: isTablet
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -270,7 +270,7 @@ class _SpendingChartState extends State<SpendingChart>
                                   fontWeight: FontWeight.w500,
                                 ),
                           ),
-                          
+
                           SizedBox(width: 8.w),
 
                           Container(
@@ -314,7 +314,7 @@ class _SpendingChartState extends State<SpendingChart>
                           ),
                           Spacer(),
                           Text(
-                            "$symbol ${widget.viewModel.formatCurrency(item.amount)}",
+                            "$symbol ${widget.viewModel.formatCompactCurrency(item.amount, l10n)}",
                             style: CupertinoTheme.of(context)
                                 .textTheme
                                 .textStyle
@@ -425,7 +425,7 @@ class _SpendingChartState extends State<SpendingChart>
               ScaleTransition(
                 scale: _animation,
                 child: Text(
-                  "$symbol ${widget.viewModel.formatCompactCurrency(totalSpent)}",
+                  "$symbol ${widget.viewModel.formatCompactCurrency(totalSpent, l10n)}",
                   style: CupertinoTheme.of(context).textTheme.textStyle
                       .copyWith(fontSize: 28.sp, fontWeight: FontWeight.bold),
                 ),

@@ -158,7 +158,7 @@ class _SpendingDetailViewState extends State<SpendingDetailView>
                                             ),
                                       ),
                                       Text(
-                                        "${widget.viewModel.currencySymbol} ${widget.viewModel.formatCurrency(totalSpent)}",
+                                        "${widget.viewModel.currencySymbol} ${widget.viewModel.formatCompactCurrency(totalSpent, l10n)}",
                                         style: CupertinoTheme.of(context)
                                             .textTheme
                                             .textStyle
@@ -286,7 +286,7 @@ class _SpendingDetailViewState extends State<SpendingDetailView>
                         isCompactPhone
                             ? SizedBox.shrink()
                             : Text(
-                                "${widget.viewModel.currencySymbol} ${widget.viewModel.formatCurrency(totalSpent)}",
+                                "${widget.viewModel.currencySymbol} ${widget.viewModel.formatCompactCurrency(totalSpent, l10n)}",
                                 style: CupertinoTheme.of(context)
                                     .textTheme
                                     .textStyle
@@ -601,7 +601,7 @@ class _SpendingDetailViewState extends State<SpendingDetailView>
                         ),
                   ),
                   Text(
-                    "${widget.viewModel.currencySymbol} ${widget.viewModel.formatCurrency(dailyTotal.abs())}",
+                    "${widget.viewModel.currencySymbol} ${widget.viewModel.formatCompactCurrency(dailyTotal.abs(), l10n)}",
                     style: CupertinoTheme.of(context).textTheme.textStyle
                         .copyWith(
                           color: CupertinoColors.systemGrey,
@@ -613,7 +613,7 @@ class _SpendingDetailViewState extends State<SpendingDetailView>
             ),
 
             ...transactions.map(
-              (tx) => _buildTransactionItem(tx, widget.viewModel),
+              (tx) => _buildTransactionItem(tx, widget.viewModel, l10n),
             ),
 
             SizedBox(height: 10.h),
@@ -623,7 +623,11 @@ class _SpendingDetailViewState extends State<SpendingDetailView>
     );
   }
 
-  Widget _buildTransactionItem(TransactionModel item, HomeViewModel viewModel) {
+  Widget _buildTransactionItem(
+    TransactionModel item,
+    HomeViewModel viewModel,
+    AppLocalizations l10n,
+  ) {
     final isIncome = item.isIncome;
     final amountColor = isIncome
         ? AppColors.primaryColor
@@ -710,7 +714,7 @@ class _SpendingDetailViewState extends State<SpendingDetailView>
               ),
             ),
             Text(
-              "${viewModel.currencySymbol} ${viewModel.formatCurrency(item.amount)}",
+              "${viewModel.currencySymbol} ${viewModel.formatCompactCurrency(item.amount, l10n)}",
               style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
                 color: amountColor,
                 fontSize: 16.sp,

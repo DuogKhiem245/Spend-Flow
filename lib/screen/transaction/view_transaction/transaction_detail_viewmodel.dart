@@ -12,7 +12,7 @@ class TransactionDetailViewModel extends ChangeNotifier {
   final TransactionModel _transaction;
 
   String? _appDocumentsPath;
-  String _currencySymbol = '\$'; 
+  String _currencySymbol = '\$';
 
   List<BarChartData> _spendingTrendData = [];
   List<BarChartData> get spendingTrendData => _spendingTrendData;
@@ -53,12 +53,6 @@ class TransactionDetailViewModel extends ChangeNotifier {
 
   double get latitude => _transaction.location.latitude ?? 0.0;
   double get longitude => _transaction.location.longitude ?? 0.0;
-
-  String get amountString {
-    final formattedAmount = _formatCompactCurrency(_transaction.amount);
-    final sign = _transaction.isIncome ? "+" : "-";
-    return "$sign $_currencySymbol $formattedAmount"; // Use cached symbol
-  }
 
   Color get amountColor =>
       _transaction.isIncome ? CupertinoColors.activeGreen : Colors.black;
@@ -106,8 +100,8 @@ class TransactionDetailViewModel extends ChangeNotifier {
     return file.existsSync() ? file : null;
   }
 
-  String get totalSpending7DaysString {
-    final format = NumberFormat("#,##0.00", "en_US");
+  String totalSpending7DaysString (AppLocalizations l10n) {
+    final format = NumberFormat("#,###", l10n.localeName);
     return " ${format.format(_totalSpending7Days)}";
   }
 
@@ -199,9 +193,15 @@ class TransactionDetailViewModel extends ChangeNotifier {
     }
   }
 
-  String _formatCompactCurrency(double amount) {
+  String amountString(AppLocalizations l10n) {
+    final formattedAmount = _formatCompactCurrency(_transaction.amount, l10n);
+    final sign = _transaction.isIncome ? "+" : "-";
+    return "$sign $_currencySymbol $formattedAmount"; // Use cached symbol
+  }
+
+  String _formatCompactCurrency(double amount, AppLocalizations l10n) {
     final formatter = NumberFormat.compactCurrency(
-      locale: "en_US",
+      locale: l10n.localeName,
       decimalDigits: 1,
       symbol: '',
     );

@@ -1598,4 +1598,7 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get delete_account_failed =>
       'Đã xảy ra lỗi khi xoá tài khoản của bạn. Vui lòng thử lại.';
+
+  @override
+  String get left => 'còn lại';
 }

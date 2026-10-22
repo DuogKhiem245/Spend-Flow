@@ -2045,5 +2045,9 @@
   "delete_account_failed": "An error occurred while deleting your account. Please try again.",
   "@delete_account_failed": {
     "description": "Delete account failed"
+  },
+  "left": "left",
+  "@left":{
+    "description": "left"
   }
 }
