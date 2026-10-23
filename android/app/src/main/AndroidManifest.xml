@@ -6,7 +6,7 @@
     
     <!-- Storage Permissions (Hỗ trợ cả Android cũ và Android 13+) -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <!-- <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" /> -->
 
     <!-- Bluetooth & Biometric -->
     <uses-permission android:name="android.permission.BLUETOOTH"/>
@@ -17,6 +17,7 @@
     <!-- Location -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:label="Spend Flow"
         android:name="${applicationName}"
