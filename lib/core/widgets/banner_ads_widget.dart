@@ -57,7 +57,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget>
         },
         onAdFailedToLoad: (ad, error) {
           debugPrint(
-            'BannerAd không tải được (${error.code}): ${error.message}',
+            'BannerAd lỗi tải chi tiết (${error.code}): ${error.message}',
           );
           ad.dispose();
           _bannerAd = null;

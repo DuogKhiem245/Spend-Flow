@@ -22,10 +22,12 @@ import 'package:spend_flow/main.dart';
 class AddTransactionPage extends StatefulWidget {
   final TransactionModel? transactionData;
   final bool isFromAI;
+  final bool isEditing;
   const AddTransactionPage({
     super.key,
     this.transactionData,
     this.isFromAI = false,
+    this.isEditing = false,
   });
 
   @override
@@ -153,7 +155,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
           onPressed: _isLoading ? null : () => Navigator.pop(context),
         ),
         middle: Text(
-          l10n.add_transaction,
+          widget.isEditing ? l10n.edit_transaction : l10n.add_transaction,
           style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
             fontWeight: FontWeight.w600,
             fontSize: 20.sp,
@@ -320,6 +322,36 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                                   }
           
                                   try {
+                                    if (widget.isEditing && widget.transactionData != null) {
+                                      final updated = await _viewModel.updateTransaction(
+                                        originalTransaction: widget.transactionData!,
+                                        amount: _amountController.text,
+                                        name: _nameController.text,
+                                        selectedCategory: _selectedCategory,
+                                        transactionDate: _transactionDate,
+                                        note: _noteController.text,
+                                        isIncome: _index == 1,
+                                        location: _viewModel.getLocationFromState(),
+                                      );
+
+                                      if (!context.mounted) return;
+
+                                      if (_premiumViewModel.isPremium) {
+                                        Navigator.pop(context, updated ?? true);
+                                        return;
+                                      } else {
+                                        await _adsService
+                                            .showInterstitialWithFrequency(
+                                              isPremium:
+                                                  _premiumViewModel.isPremium,
+                                              onAdClosed: () {
+                                                Navigator.pop(context, updated ?? true);
+                                              },
+                                            );
+                                      }
+                                      return;
+                                    }
+
                                     if (_index == 0) {
                                       await _viewModel.addExpenseTransaction(
                                         _amountController.text,
@@ -366,7 +398,13 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                           borderRadius: BorderRadius.circular(30.r),
                           padding: EdgeInsets.symmetric(vertical: 16.h),
                           child: Text(
-                            _index == 0 ? l10n.add_expense : l10n.add_income,
+                            widget.isEditing
+                                ? (_index == 0
+                                    ? l10n.save_expense_change
+                                    : l10n.save_income_change)
+                                : (_index == 0
+                                    ? l10n.add_expense
+                                    : l10n.add_income),
                             style: CupertinoTheme.of(context).textTheme.textStyle
                                 .copyWith(
                                   fontSize: 18.sp,

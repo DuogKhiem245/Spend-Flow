@@ -4,8 +4,6 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -31,7 +29,17 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.586343572662-0b0eecf4d9488up1c1groea0058ablp9</string>			
+				<string>com.googleusercontent.apps.586343572662-0b0eecf4d9488up1c1groea0058ablp9</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.duogkhiem.spendflow</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>spendflow</string>
 			</array>
 		</dict>
 	</array>
@@ -41,24 +49,37 @@
 	<string>ca-app-pub-7163558183405140~6936138115</string>
 	<key>GIDClientID</key>
 	<string>586343572662-ob8mh8pjd5hda6mr73hh30runl9v9ssk.apps.googleusercontent.com</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>Spend Flow uses this identifier to deliver relevant, personalized advertisements and support our free financial tracking features.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>We need access to the camera to scan receipts and capture profile photos.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>This app uses Face ID to securely authenticate and protect your financial data.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to your location to display maps and local transactions.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>The app needs access to your location to help you automatically link your location to your spending transactions.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs access to your location to display maps and local transactions.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We need access to the microphone for voice commands and video recording.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need access to your photo library to select and upload receipt images.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>This app uses speech recognition to convert your voice into text for easy expense logging.</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Spend Flow uses this identifier to deliver relevant, personalized advertisements and support our free financial tracking features.</string>
+	<key>SKAdNetworkItems</key>
+	<array>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>cstr6suwn9.skadnetwork</string>
+		</dict>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>4dzt52r2t5.skadnetwork</string>
+		</dict>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -94,21 +115,8 @@
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
-		<!-- <string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string> -->
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
-	<key>SKAdNetworkItems</key>
-    <array>
-        <dict>
-            <key>SKAdNetworkIdentifier</key>
-            <string>cstr6suwn9.skadnetwork</string>
-        </dict>
-        <dict>
-            <key>SKAdNetworkIdentifier</key>
-            <string>4dzt52r2t5.skadnetwork</string>
-        </dict>
-    </array>
 </dict>
 </plist>

@@ -12,7 +12,8 @@ import 'package:spend_flow/core/services/data_service/local_storage_service.dart
 
 class TransactionDetailViewModel extends ChangeNotifier {
   final LocalStorageService _storage = LocalStorageService();
-  final TransactionModel _transaction;
+  TransactionModel _transaction;
+  TransactionModel get transaction => _transaction;
 
   String? _appDocumentsPath;
   String _currencySymbol = '\$';
@@ -29,6 +30,12 @@ class TransactionDetailViewModel extends ChangeNotifier {
     : _transaction = transaction {
     _initPath();
     _loadCurrencySymbol();
+  }
+
+  void updateTransaction(TransactionModel updated, BuildContext context) {
+    _transaction = updated;
+    loadTrendData(context);
+    notifyListeners();
   }
 
   File? get customImageFile {

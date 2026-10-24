@@ -2049,5 +2049,57 @@
   "left": "còn lại",
   "@left": {
     "description": "left"
+  },
+  "edit_transaction": "Chỉnh sửa giao dịch",
+  "@edit_transaction": {
+    "description": "Edit transaction"
+  },
+  "save_changes": "Lưu thay đổi",
+  "@save_changes": {
+    "description": "Save changes"
+  },
+  "save_expense_change": "Cập nhật chi tiêu",
+  "@save_expense_change": {
+    "description": "Update expense"
+  },
+  "save_income_change": "Cập nhật thu nhập",
+  "@save_income_change": {
+    "description": "Update income"
+  },
+  "transaction_updated": "Cập nhật giao dịch thành công",
+  "@transaction_updated": {
+    "description": "Transaction updated"
+  },
+  "bank_sync": "Đồng bộ ngân hàng",
+  "@bank_sync": {
+    "description": "Bank sync"
+  },
+  "bank_sync_description": "Tự động liên kết và đồng bộ biến động số dư tài khoản ngân hàng",
+  "@bank_sync_description": {
+    "description": "Bank sync description"
+  },
+  "coming_soon": "Sắp ra mắt",
+  "@coming_soon": {
+    "description": "Coming soon"
+  },
+  "feature_under_development": "Tính năng đang được phát triển và sẽ sớm ra mắt trong các phiên bản tới!",
+  "@feature_under_development": {
+    "description": "Feature under development"
+  },
+  "recent_transactions": "Giao dịch gần đây",
+  "@recent_transactions": {
+    "description": "Recent transactions"
+  },
+  "remaining_budget": "Ngân sách còn lại",
+  "@remaining_budget": {
+    "description": "Remaining budget"
+  },
+  "monthly_spending": "Biểu đồ chi tiêu tháng",
+  "@monthly_spending": {
+    "description": "Monthly spending"
+  },
+  "quick_add_voice": "Nói để thêm",
+  "@quick_add_voice": {
+    "description": "Tap to speak"
   }
 }

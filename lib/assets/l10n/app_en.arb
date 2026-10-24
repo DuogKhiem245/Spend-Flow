@@ -2049,5 +2049,57 @@
   "left": "left",
   "@left":{
     "description": "left"
+  },
+  "edit_transaction": "Edit Transaction",
+  "@edit_transaction": {
+    "description": "Edit transaction"
+  },
+  "save_changes": "Save Changes",
+  "@save_changes": {
+    "description": "Save changes"
+  },
+  "save_expense_change": "Update Expense",
+  "@save_expense_change": {
+    "description": "Update expense"
+  },
+  "save_income_change": "Update Income",
+  "@save_income_change": {
+    "description": "Update income"
+  },
+  "transaction_updated": "Transaction updated successfully",
+  "@transaction_updated": {
+    "description": "Transaction updated"
+  },
+  "bank_sync": "Bank Sync",
+  "@bank_sync": {
+    "description": "Bank sync"
+  },
+  "bank_sync_description": "Automatically connect and sync bank account transaction feeds",
+  "@bank_sync_description": {
+    "description": "Bank sync description"
+  },
+  "coming_soon": "Coming Soon",
+  "@coming_soon": {
+    "description": "Coming soon"
+  },
+  "feature_under_development": "This feature is currently under development and will be available in upcoming updates!",
+  "@feature_under_development": {
+    "description": "Feature under development"
+  },
+  "recent_transactions": "Recent Transactions",
+  "@recent_transactions": {
+    "description": "Recent transactions"
+  },
+  "remaining_budget": "Remaining Budget",
+  "@remaining_budget": {
+    "description": "Remaining budget"
+  },
+  "monthly_spending": "Monthly Spending Chart",
+  "@monthly_spending": {
+    "description": "Monthly spending"
+  },
+  "quick_add_voice": "Tap to speak",
+  "@quick_add_voice": {
+    "description": "Tap to speak"
   }
 }

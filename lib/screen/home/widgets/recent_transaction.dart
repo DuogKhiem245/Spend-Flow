@@ -193,13 +193,16 @@ class _RecentTransactionState extends State<RecentTransaction> {
 
     return CupertinoButton(
       padding: EdgeInsets.zero,
-      onPressed: () => {
-        Navigator.push(
+      onPressed: () async {
+        final updated = await Navigator.push(
           context,
           CupertinoPageRoute(
             builder: (context) => TransactionDetailView(transaction: item),
           ),
-        ),
+        );
+        if (updated == true) {
+          widget.viewModel.reloadData();
+        }
       },
       child: Padding(
         padding: EdgeInsets.only(bottom: 12.h),

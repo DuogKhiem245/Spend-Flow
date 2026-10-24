@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_background"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Biểu đồ tháng này"
+                android:textColor="#9E9EA7"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tổng quan thu chi"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btn_voice_input"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/widget_mic_button"
+            android:contentDescription="Nói AI"
+            android:src="@android:drawable/ic_btn_speak_now" />
+    </LinearLayout>
+
+    <!-- Income & Expense Summary Cards -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
+
+        <!-- Income card -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:background="#1532D74B"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tổng thu"
+                android:textColor="#9E9EA7"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/tv_monthly_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="0 ₫"
+                android:textColor="#32D74B"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Expense card -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            android:background="#15FF453A"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tổng chi"
+                android:textColor="#9E9EA7"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/tv_monthly_expense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="0 ₫"
+                android:textColor="#FF453A"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="6dp"
+        android:text="Chi tiêu các ngày gần nhất"
+        android:textColor="#9E9EA7"
+        android:textSize="11sp"
+        android:textStyle="bold" />
+
+    <!-- Chart container with 7 daily columns -->
+    <LinearLayout
+        android:id="@+id/chart_bars_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
+        <!-- Bar 1 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="bottom|center_horizontal"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/bar_view_1"
+                android:layout_width="12dp"
+                android:layout_height="20dp"
+                android:background="#FF9F0A" />
+
+            <TextView
+                android:id="@+id/tv_day_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="1"
+                android:textColor="#7A7A85"
+                android:textSize="9sp" />
+        </LinearLayout>
+
+        <!-- Bar 2 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="bottom|center_horizontal"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/bar_view_2"
+                android:layout_width="12dp"
+                android:layout_height="35dp"
+                android:background="#FF9F0A" />
+
+            <TextView
+                android:id="@+id/tv_day_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="2"
+                android:textColor="#7A7A85"
+                android:textSize="9sp" />
+        </LinearLayout>
+
+        <!-- Bar 3 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="bottom|center_horizontal"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/bar_view_3"
+                android:layout_width="12dp"
+                android:layout_height="50dp"
+                android:background="#FF453A" />
+
+            <TextView
+                android:id="@+id/tv_day_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="3"
+                android:textColor="#7A7A85"
+                android:textSize="9sp" />
+        </LinearLayout>
+
+        <!-- Bar 4 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="bottom|center_horizontal"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/bar_view_4"
+                android:layout_width="12dp"
+                android:layout_height="15dp"
+                android:background="#FF9F0A" />
+
+            <TextView
+                android:id="@+id/tv_day_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="4"
+                android:textColor="#7A7A85"
+                android:textSize="9sp" />
+        </LinearLayout>
+
+        <!-- Bar 5 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="bottom|center_horizontal"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/bar_view_5"
+                android:layout_width="12dp"
+                android:layout_height="65dp"
+                android:background="#FF453A" />
+
+            <TextView
+                android:id="@+id/tv_day_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="5"
+                android:textColor="#7A7A85"
+                android:textSize="9sp" />
+        </LinearLayout>
+
+        <!-- Bar 6 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="bottom|center_horizontal"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/bar_view_6"
+                android:layout_width="12dp"
+                android:layout_height="40dp"
+                android:background="#FF9F0A" />
+
+            <TextView
+                android:id="@+id/tv_day_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="6"
+                android:textColor="#7A7A85"
+                android:textSize="9sp" />
+        </LinearLayout>
+
+        <!-- Bar 7 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="bottom|center_horizontal"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/bar_view_7"
+                android:layout_width="12dp"
+                android:layout_height="30dp"
+                android:background="#FF9F0A" />
+
+            <TextView
+                android:id="@+id/tv_day_7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="7"
+                android:textColor="#7A7A85"
+                android:textSize="9sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

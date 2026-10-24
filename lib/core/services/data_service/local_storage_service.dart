@@ -15,6 +15,7 @@ import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/core/model/category_model.dart';
 import 'package:spend_flow/core/model/budget_model.dart';
 import 'package:spend_flow/core/model/wallet_model.dart';
+import 'package:spend_flow/core/services/widget_sync_service.dart';
 
 class LocalStorageService {
   static final LocalStorageService _instance = LocalStorageService._internal();
@@ -812,6 +813,8 @@ class LocalStorageService {
 
       await incrementCategoryUsage(transaction.category);
 
+      WidgetSyncService().updateAllWidgets();
+
       return true;
     } catch (e) {
       return false;
@@ -888,6 +891,8 @@ class LocalStorageService {
 
       await _syncTransactionStore.add(txn, updatedData);
     });
+
+    WidgetSyncService().updateAllWidgets();
   }
 
   Future<List<Map<String, dynamic>>> getPendingSyncTransactions() async {
@@ -1057,6 +1062,8 @@ class LocalStorageService {
         await _syncBudgetStore.add(txn, syncData);
       }
     });
+
+    WidgetSyncService().updateAllWidgets();
   }
 
   Future<void> deleteBudget(String budgetId) async {
@@ -1074,6 +1081,8 @@ class LocalStorageService {
 
       await _syncBudgetStore.add(txn, updatedData);
     });
+
+    WidgetSyncService().updateAllWidgets();
   }
 
   Future<List<Map<String, dynamic>>> getPendingSyncBudgets() async {

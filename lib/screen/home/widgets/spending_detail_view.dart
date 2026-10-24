@@ -638,13 +638,16 @@ class _SpendingDetailViewState extends State<SpendingDetailView>
     );
 
     return GestureDetector(
-      onTap: () => {
-        Navigator.push(
+      onTap: () async {
+        final updated = await Navigator.push(
           context,
           CupertinoPageRoute(
             builder: (context) => TransactionDetailView(transaction: item),
           ),
-        ),
+        );
+        if (updated == true) {
+          viewModel.reloadData();
+        }
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 12.h),

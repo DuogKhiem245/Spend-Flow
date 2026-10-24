@@ -8,7 +8,8 @@ import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/screen/voice_input/voice_input_viewmodel.dart';
 
 class VoiceInputView extends StatefulWidget {
-  const VoiceInputView({super.key});
+  final bool isFromWidget;
+  const VoiceInputView({super.key, this.isFromWidget = false});
 
   @override
   State<VoiceInputView> createState() => _VoiceInputViewState();
@@ -172,8 +173,11 @@ class _VoiceInputViewState extends State<VoiceInputView> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () =>
-                              _viewModel.toggleListening(context, localeId),
+                          onTap: () => _viewModel.toggleListening(
+                            context,
+                            localeId,
+                            isFromWidget: widget.isFromWidget,
+                          ),
                           child: Container(
                             width: 70.w,
                             height: 70.w,

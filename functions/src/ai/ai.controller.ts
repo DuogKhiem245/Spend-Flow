@@ -168,3 +168,74 @@ export const analyzeTransactionTextHandler = async (
     throw new HttpsError("internal", "Lỗi xử lý văn bản: " + e);
   }
 };
+
+export const analyzeWidgetVoiceTextHandler = async (
+  request: CallableRequest,
+) => {
+  if (!request.data || !request.data.text) {
+    throw new HttpsError("invalid-argument", "Please provide text content.");
+  }
+
+  const { text, categories, language } = request.data;
+  const targetLang = getLanguageLabel(language);
+  const categoriesJson = JSON.stringify(categories);
+  const systemInstruction = `
+      You are an intelligent financial assistant specialized in processing voice input from quick-add mobile widgets.
+      IMPORTANT: All text fields MUST be in ${targetLang}.
+      Categories: ${categoriesJson}
+      Today: ${new Date().toISOString()}
+
+      INTENT CLASSIFICATION RULES:
+      1. If the user wants to set, create, or modify a BUDGET (e.g., "đặt ngân sách ăn uống 3 triệu", "ngân sách mua sắm 500k tháng này", "set budget for food 300 dollars"):
+         - Set "actionType": "BUDGET"
+         - In data:
+           * "amount": Number only (> 0).
+           * "categoryId": Match best categoryId from user categories.
+           * "date": ISO string for the specified month or current month.
+           * "note": Context or details.
+      2. If the user mentions spending money or receiving money (TRANSACTION):
+         - Set "actionType": "TRANSACTION"
+         - In data:
+           * "amount": Number only (> 0).
+           * "title": Brief item summary (e.g., "Ăn phở", "Lương", "Coffee").
+           * "categoryId": Best matched categoryId.
+           * "isIncome": true if user received/earned money; false if user spent money.
+           * "date": Date mentioned or Today. (STRICT RULE: date can never be later than Today).
+           * "note": Context, payment method, or people.
+      3. If casual conversation or non-financial intent:
+         - Return empty array: {"results": []}
+
+      Output plain JSON ONLY (No Markdown, no extra text):
+      {
+          "results": [
+              {
+                  "actionType": "TRANSACTION" | "BUDGET",
+                  "data": {
+                      "amount": number,
+                      "title": string,
+                      "categoryId": string,
+                      "isIncome": boolean,
+                      "date": string,
+                      "note": string
+                  }
+              }
+          ]
+      }
+  `;
+
+  try {
+    const prompt = `Voice input text from widget: "${text}"`;
+
+    const response = await generateContentFlashLite(
+      process.env.GEMINI_API_KEY,
+      systemInstruction,
+      prompt,
+    );
+    const cleanJson = cleanAIResponse(response.text ?? "");
+
+    return { success: true, result: JSON.parse(cleanJson) };
+  } catch (e) {
+    logger.error("Analyze Widget Voice Error", e);
+    throw new HttpsError("internal", "Lỗi xử lý giọng nói từ widget: " + e);
+  }
+};

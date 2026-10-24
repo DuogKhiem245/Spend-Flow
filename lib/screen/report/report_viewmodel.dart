@@ -102,6 +102,10 @@ class ReportViewModel extends ChangeNotifier {
     return prefs.getString('current_wallet_id');
   }
 
+  Future<void> refreshData([bool isDelay = false]) async {
+    await _loadData(isDelay);
+  }
+
   Future<void> _loadData(bool isDelay) async {
     _isLoading = true;
     notifyListeners();

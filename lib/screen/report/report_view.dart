@@ -346,13 +346,16 @@ class _ReportPageState extends State<ReportPage>
     return Container(
       margin: EdgeInsets.only(bottom: 12.h),
       child: GestureDetector(
-        onTap: () => {
-          Navigator.push(
+        onTap: () async {
+          final updated = await Navigator.push(
             context,
             CupertinoPageRoute(
               builder: (context) => TransactionDetailView(transaction: tx),
             ),
-          ),
+          );
+          if (updated == true) {
+            _viewModel.refreshData();
+          }
         },
         child: Slidable(
           key: ValueKey(tx.id),

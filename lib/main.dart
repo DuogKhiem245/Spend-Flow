@@ -21,7 +21,12 @@ import 'package:spend_flow/core/services/general_service/theme_service.dart';
 import 'package:spend_flow/screen/premium/premium_viewmodel.dart';
 import 'package:spend_flow/screen/setting/font/font_viewmodel.dart';
 import 'package:spend_flow/firebase_options.dart';
+import 'package:home_widget/home_widget.dart';
+import 'package:spend_flow/core/services/widget_sync_service.dart';
+import 'package:spend_flow/screen/voice_input/voice_input_view.dart';
 import 'config/app_routes.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final languageService = LanguageService();
 final themeService = ThemeService();
@@ -116,7 +121,34 @@ class _MyAppState extends State<MyApp> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       initATTAndAds();
+      _initHomeWidget();
     });
+  }
+
+  Future<void> _initHomeWidget() async {
+    await WidgetSyncService().init();
+    await WidgetSyncService().updateAllWidgets();
+
+    HomeWidget.widgetClicked.listen((Uri? uri) {
+      _handleWidgetUri(uri);
+    });
+
+    final initialUri = await HomeWidget.initiallyLaunchedFromHomeWidget();
+    if (initialUri != null) {
+      _handleWidgetUri(initialUri);
+    }
+  }
+
+  void _handleWidgetUri(Uri? uri) {
+    if (uri == null) return;
+    if (uri.scheme == 'spendflow' &&
+        (uri.host == 'voice_input' || uri.path.contains('voice_input'))) {
+      navigatorKey.currentState?.push(
+        CupertinoPageRoute(
+          builder: (_) => const VoiceInputView(isFromWidget: true),
+        ),
+      );
+    }
   }
 
   @override
@@ -139,6 +171,7 @@ class _MyAppState extends State<MyApp> {
             );
 
             return CupertinoApp(
+              navigatorKey: navigatorKey,
               title: 'Spend Flow',
               debugShowCheckedModeBanner: false,
               theme: AppCupertinoTheme.light,

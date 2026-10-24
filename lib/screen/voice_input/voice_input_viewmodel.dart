@@ -10,7 +10,9 @@ import 'package:spend_flow/core/data/category_data.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/core/services/general_service/language_service.dart';
 import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
+import 'package:spend_flow/core/model/budget_model.dart';
 import 'package:spend_flow/screen/ai_preview/ai_preview_overview_view.dart';
+import 'package:spend_flow/screen/budget/add_budget/add_budget_view.dart';
 import 'package:spend_flow/screen/transaction/add_transaction/add_transaction_view.dart';
 
 class VoiceInputViewModel extends ChangeNotifier {
@@ -129,20 +131,23 @@ class VoiceInputViewModel extends ChangeNotifier {
           _lastWords = result.recognizedWords;
           _safeNotifyListeners();
         },
-        localeId: localeId,
-        // listenFor: const Duration(seconds: 45), // Optional: limit listening duration
         listenOptions: SpeechListenOptions(
           cancelOnError: true,
           listenMode: ListenMode.confirmation,
+          localeId: localeId,
         ),
       );
     }
   }
 
-  void toggleListening(BuildContext context, String localeId) {
+  void toggleListening(BuildContext context, String localeId, {bool isFromWidget = false}) {
     if (_isListening) {
       stopListening();
-      processVoiceInput(context);
+      if (isFromWidget) {
+        processWidgetVoiceInput(context);
+      } else {
+        processVoiceInput(context);
+      }
     } else {
       startListening(context, localeId);
     }
@@ -227,6 +232,125 @@ class VoiceInputViewModel extends ChangeNotifier {
       }
     } catch (e) {
       debugPrint("Error processing voice input: $e");
+      if (context.mounted) {
+        _showErrorDialog(context, l10n);
+      }
+    } finally {
+      _isProcessing = false;
+      _safeNotifyListeners();
+    }
+  }
+
+  Future<void> processWidgetVoiceInput(BuildContext context) async {
+    if (_lastWords.isEmpty) return;
+    final l10n = AppLocalizations.of(context)!;
+
+    try {
+      _isProcessing = true;
+      _safeNotifyListeners();
+
+      final categories = CategoryData.getAll();
+      final currentLanguage = LanguageService().locale.languageCode;
+      final currentWalletId = await _localStorageService.getCurrentWalletId();
+
+      final aiResult = await _aiService.analyzeWidgetVoiceText(
+        _lastWords,
+        categories,
+        currentLanguage,
+      );
+
+      final List results = aiResult['results'] ?? [];
+
+      if (results.isEmpty) {
+        throw Exception(l10n.error_ai_request);
+      }
+
+      final List<TransactionModel> parsedTransactions = [];
+      BudgetModel? parsedBudget;
+
+      for (var item in results) {
+        final String actionType = item['actionType']?.toString() ?? "";
+        final data = Map<String, dynamic>.from(item['data'] ?? {});
+
+        if (actionType == "BUDGET") {
+          final categoryId = data['categoryId']?.toString();
+          final category = categories.firstWhere(
+            (c) => c.id == categoryId,
+            orElse: () => categories.first,
+          );
+          final amount = (data['amount'] as num?)?.toDouble() ?? 0.0;
+          final dateStr = data['date']?.toString();
+          final date = dateStr != null
+              ? (DateTime.tryParse(dateStr) ?? DateTime.now())
+              : DateTime.now();
+          final note = data['note']?.toString() ?? '';
+
+          parsedBudget = BudgetModel(
+            category: category,
+            total: amount,
+            date: date,
+            walletId: currentWalletId,
+            note: note,
+          );
+          break;
+        } else if (actionType == "TRANSACTION") {
+          parsedTransactions.add(
+            TransactionModel.fromAIResponse(
+              aiData: data,
+              availableCategories: categories,
+              currentWalletId: currentWalletId,
+            ),
+          );
+        }
+      }
+
+      if (!context.mounted) return;
+
+      if (parsedBudget != null) {
+        final isSaved = await Navigator.pushReplacement(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => AddBudgetView(
+              budgetToEdit: parsedBudget,
+              isFromAI: true,
+            ),
+          ),
+        );
+        if (context.mounted && isSaved == true) {
+          Navigator.pop(context, true);
+        }
+        return;
+      }
+
+      if (parsedTransactions.isEmpty) {
+        throw Exception(l10n.error_ai_request);
+      }
+
+      bool? isSaved = false;
+
+      if (parsedTransactions.length == 1) {
+        isSaved = await Navigator.pushReplacement(
+          context,
+          CupertinoPageRoute(
+            builder: (context) =>
+                AddTransactionPage(transactionData: parsedTransactions.first),
+          ),
+        );
+      } else {
+        isSaved = await Navigator.pushReplacement(
+          context,
+          CupertinoPageRoute(
+            builder: (context) =>
+                AIPreviewOverviewView(transactions: parsedTransactions),
+          ),
+        );
+      }
+
+      if (context.mounted && isSaved == true) {
+        Navigator.pop(context, true);
+      }
+    } catch (e) {
+      debugPrint("Error processing widget voice input: $e");
       if (context.mounted) {
         _showErrorDialog(context, l10n);
       }

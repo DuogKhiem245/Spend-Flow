@@ -3055,6 +3055,72 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'còn lại'**
   String get left;
+
+  /// Edit transaction
+  ///
+  /// In vi, this message translates to:
+  /// **'Chỉnh sửa giao dịch'**
+  String get edit_transaction;
+
+  /// Update expense
+  ///
+  /// In vi, this message translates to:
+  /// **'Cập nhật chi tiêu'**
+  String get save_expense_change;
+
+  /// Update income
+  ///
+  /// In vi, this message translates to:
+  /// **'Cập nhật thu nhập'**
+  String get save_income_change;
+
+  /// Transaction updated
+  ///
+  /// In vi, this message translates to:
+  /// **'Cập nhật giao dịch thành công'**
+  String get transaction_updated;
+
+  /// Bank sync
+  ///
+  /// In vi, this message translates to:
+  /// **'Đồng bộ ngân hàng'**
+  String get bank_sync;
+
+  /// Bank sync description
+  ///
+  /// In vi, this message translates to:
+  /// **'Tự động liên kết và đồng bộ biến động số dư tài khoản ngân hàng'**
+  String get bank_sync_description;
+
+  /// Coming soon
+  ///
+  /// In vi, this message translates to:
+  /// **'Sắp ra mắt'**
+  String get coming_soon;
+
+  /// Feature under development
+  ///
+  /// In vi, this message translates to:
+  /// **'Tính năng đang được phát triển và sẽ sớm ra mắt trong các phiên bản tới!'**
+  String get feature_under_development;
+
+  /// Remaining budget
+  ///
+  /// In vi, this message translates to:
+  /// **'Ngân sách còn lại'**
+  String get remaining_budget;
+
+  /// Monthly spending
+  ///
+  /// In vi, this message translates to:
+  /// **'Biểu đồ chi tiêu tháng'**
+  String get monthly_spending;
+
+  /// Tap to speak
+  ///
+  /// In vi, this message translates to:
+  /// **'Nói để thêm'**
+  String get quick_add_voice;
 }
 
 class _AppLocalizationsDelegate

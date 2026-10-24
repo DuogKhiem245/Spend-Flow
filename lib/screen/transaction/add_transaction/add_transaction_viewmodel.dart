@@ -154,6 +154,38 @@ class AddTransactionViewmodel extends ChangeNotifier {
     await _storageService.addTransaction(transaction);
   }
 
+  Future<TransactionModel?> updateTransaction({
+    required TransactionModel originalTransaction,
+    required String amount,
+    required String name,
+    required CategoryModel? selectedCategory,
+    required DateTime? transactionDate,
+    required String note,
+    required bool isIncome,
+    LocationModel? location,
+  }) async {
+    if (selectedCategory == null) return null;
+
+    final double value = _parseAmount(amount);
+    if (value == 0) return null;
+
+    final locationData = location ?? getLocationFromState();
+
+    final updated = originalTransaction.copyWith(
+      amount: value.abs(),
+      title: name.isEmpty ? selectedCategory.name : name,
+      category: selectedCategory,
+      date: transactionDate ?? originalTransaction.date,
+      note: note,
+      isIncome: isIncome,
+      location: locationData,
+      updatedAt: DateTime.now().millisecondsSinceEpoch,
+    );
+
+    await _storageService.addTransaction(updated);
+    return updated;
+  }
+
   Future<Position?> getCurrentLocation({bool isAutoInit = false}) async {
     if (isLocationEnabled == false) {
       return null;

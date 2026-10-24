@@ -48,6 +48,26 @@ class AIService {
     }
   }
 
+  Future<Map<String, dynamic>> analyzeWidgetVoiceText(
+    String text,
+    List<CategoryModel> categories,
+    String language,
+  ) async {
+    try {
+      final result = await _functions
+          .httpsCallable('analyzeWidgetVoiceText')
+          .call({
+            'text': text,
+            'categories': _formatCategories(categories),
+            'language': language,
+          });
+
+      return Map<String, dynamic>.from(result.data['result']);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<List<Map<String, dynamic>>> analyzeTextCSVImport(
     String text,
     List<CategoryModel> categories,

@@ -2,6 +2,7 @@ import { onCall } from "firebase-functions/v2/https";
 import {
   analyzeReceiptImageHandler,
   analyzeTransactionTextHandler,
+  analyzeWidgetVoiceTextHandler,
 } from "./ai/ai.controller.js";
 import {
   forgotPasswordHandler,
@@ -54,4 +55,9 @@ export const analyzeReceiptImage = onCall(
 export const analyzeTransactionText = onCall(
   { secrets: ["GEMINI_API_KEY"] },
   analyzeTransactionTextHandler,
+);
+
+export const analyzeWidgetVoiceText = onCall(
+  { secrets: ["GEMINI_API_KEY"] },
+  analyzeWidgetVoiceTextHandler,
 );

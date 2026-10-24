@@ -271,6 +271,28 @@ class _SettingDataWidgetState extends State<SettingDataWidget> {
           ),
         ),
         SettingItem(
+          title: l10n.bank_sync,
+          description: l10n.bank_sync_description,
+          icon: CupertinoIcons.building_2_fill,
+          iconBgColor: const Color(0xFF5E5CE6),
+          onTap: null,
+          trailing: Container(
+            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+            decoration: BoxDecoration(
+              color: CupertinoColors.systemGrey5.resolveFrom(context),
+              borderRadius: BorderRadius.circular(20.r),
+            ),
+            child: Text(
+              l10n.coming_soon,
+              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w600,
+                color: CupertinoColors.secondaryLabel.resolveFrom(context),
+              ),
+            ),
+          ),
+        ),
+        SettingItem(
           title: l10n.export_data,
           icon: CupertinoIcons.cloud_download_fill,
           iconBgColor: Color.fromRGBO(77, 85, 98, 1),

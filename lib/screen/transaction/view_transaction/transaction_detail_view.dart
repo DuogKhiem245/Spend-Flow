@@ -5,6 +5,7 @@ import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/core/utils/category_helper.dart';
+import 'package:spend_flow/screen/transaction/add_transaction/add_transaction_view.dart';
 import 'package:spend_flow/screen/transaction/view_transaction/widget/view_only_map_widget.dart';
 import 'transaction_detail_viewmodel.dart'; // Nhớ import file ViewModel
 
@@ -18,6 +19,7 @@ class TransactionDetailView extends StatefulWidget {
 
 class _TransactionDetailViewState extends State<TransactionDetailView> {
   late TransactionDetailViewModel _viewModel;
+  bool _isModified = false;
 
   @override
   void initState() {
@@ -31,33 +33,69 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
     });
   }
 
+  Future<void> _editTransaction() async {
+    final result = await Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => AddTransactionPage(
+          transactionData: _viewModel.transaction,
+          isEditing: true,
+        ),
+      ),
+    );
+
+    if (!mounted) return;
+
+    if (result is TransactionModel) {
+      setState(() {
+        _isModified = true;
+      });
+      _viewModel.updateTransaction(result, context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return ListenableBuilder(
-      listenable: _viewModel,
-      builder: (context, child) {
-        return CupertinoPageScaffold(
-          navigationBar: CupertinoNavigationBar(
-            padding: EdgeInsetsDirectional.zero,
-            backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
-            border: null,
-            middle: Text(
-              l10n.transaction_details,
-              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                fontWeight: FontWeight.w600,
-                fontSize: 17.sp,
+    return PopScope(
+      canPop: true,
+      onPopInvokedWithResult: (didPop, result) {},
+      child: ListenableBuilder(
+        listenable: _viewModel,
+        builder: (context, child) {
+          return CupertinoPageScaffold(
+            navigationBar: CupertinoNavigationBar(
+              padding: EdgeInsetsDirectional.zero,
+              backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
+              border: null,
+              middle: Text(
+                l10n.transaction_details,
+                style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 17.sp,
+                ),
+              ),
+              leading: CupertinoNavigationBarBackButton(
+                color: CupertinoTheme.of(context).primaryColor,
+                onPressed: () => Navigator.pop(context, _isModified),
+              ),
+              trailing: CupertinoButton(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                onPressed: () => _editTransaction(),
+                child: Text(
+                  l10n.edit,
+                  style: TextStyle(
+                    color: CupertinoTheme.of(context).primaryColor,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16.sp,
+                  ),
+                ),
               ),
             ),
-            leading: CupertinoNavigationBarBackButton(
-              color: CupertinoTheme.of(context).primaryColor,
-              onPressed: () => Navigator.pop(context),
-            ),
-          ),
-          child: SafeArea(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+            child: SafeArea(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
               child: Column(
                 children: [
                   _buildMainCard(context, _viewModel),
@@ -82,8 +120,9 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
           ),
         );
       },
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildMainCard(BuildContext context, TransactionDetailViewModel vm) {
     final l10n = AppLocalizations.of(context)!;

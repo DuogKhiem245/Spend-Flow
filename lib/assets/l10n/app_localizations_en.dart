@@ -1604,4 +1604,39 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get left => 'left';
+
+  @override
+  String get edit_transaction => 'Edit Transaction';
+
+  @override
+  String get save_expense_change => 'Update Expense';
+
+  @override
+  String get save_income_change => 'Update Income';
+
+  @override
+  String get transaction_updated => 'Transaction updated successfully';
+
+  @override
+  String get bank_sync => 'Bank Sync';
+
+  @override
+  String get bank_sync_description =>
+      'Automatically connect and sync bank account transaction feeds';
+
+  @override
+  String get coming_soon => 'Coming Soon';
+
+  @override
+  String get feature_under_development =>
+      'This feature is currently under development and will be available in upcoming updates!';
+
+  @override
+  String get remaining_budget => 'Remaining Budget';
+
+  @override
+  String get monthly_spending => 'Monthly Spending Chart';
+
+  @override
+  String get quick_add_voice => 'Tap to speak';
 }

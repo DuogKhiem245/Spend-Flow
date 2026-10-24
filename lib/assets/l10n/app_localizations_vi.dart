@@ -1601,4 +1601,39 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get left => 'còn lại';
+
+  @override
+  String get edit_transaction => 'Chỉnh sửa giao dịch';
+
+  @override
+  String get save_expense_change => 'Cập nhật chi tiêu';
+
+  @override
+  String get save_income_change => 'Cập nhật thu nhập';
+
+  @override
+  String get transaction_updated => 'Cập nhật giao dịch thành công';
+
+  @override
+  String get bank_sync => 'Đồng bộ ngân hàng';
+
+  @override
+  String get bank_sync_description =>
+      'Tự động liên kết và đồng bộ biến động số dư tài khoản ngân hàng';
+
+  @override
+  String get coming_soon => 'Sắp ra mắt';
+
+  @override
+  String get feature_under_development =>
+      'Tính năng đang được phát triển và sẽ sớm ra mắt trong các phiên bản tới!';
+
+  @override
+  String get remaining_budget => 'Ngân sách còn lại';
+
+  @override
+  String get monthly_spending => 'Biểu đồ chi tiêu tháng';
+
+  @override
+  String get quick_add_voice => 'Nói để thêm';
 }
