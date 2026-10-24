@@ -23,11 +23,17 @@ class _VoiceInputViewState extends State<VoiceInputView> {
     super.initState();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      _viewModel.initSpeech().then((_) {
+      _viewModel
+          .initSpeech(context: context, isFromWidget: widget.isFromWidget)
+          .then((_) {
         if (!mounted) return;
         final currentLocale = Localizations.localeOf(context);
         final localeId = currentLocale.toString();
-        _viewModel.startListening(context, localeId);
+        _viewModel.startListening(
+          context,
+          localeId,
+          isFromWidget: widget.isFromWidget,
+        );
       });
     });
   }

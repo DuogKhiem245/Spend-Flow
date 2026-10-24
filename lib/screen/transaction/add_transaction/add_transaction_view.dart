@@ -172,15 +172,21 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
               children: [
                 Column(
                   children: [
-                    AdaptiveSegmentedControl(
-                      labels: [l10n.expenses, l10n.income],
-                      selectedIndex: _index,
-                      height: 50.h,
-                      color: CupertinoTheme.of(context).primaryColor,
-                      textColor: CupertinoTheme.of(context).textTheme.textStyle.color,
-                      onValueChanged: _isLoading
-                          ? (i) {}
-                          : (i) => setState(() => _onTabChanged(i)),
+                    IgnorePointer(
+                      ignoring: widget.isEditing,
+                      child: Opacity(
+                        opacity: widget.isEditing ? 0.6 : 1.0,
+                        child: AdaptiveSegmentedControl(
+                          labels: [l10n.expenses, l10n.income],
+                          selectedIndex: _index,
+                          height: 50.h,
+                          color: CupertinoTheme.of(context).primaryColor,
+                          textColor: CupertinoTheme.of(context).textTheme.textStyle.color,
+                          onValueChanged: (_isLoading || widget.isEditing)
+                              ? (i) {}
+                              : (i) => setState(() => _onTabChanged(i)),
+                        ),
+                      ),
                     ),
           
                     Expanded(

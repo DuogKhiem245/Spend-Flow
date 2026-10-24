@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:spend_flow/assets/l10n/app_localizations.dart';
 import 'package:spend_flow/core/services/ai_service.dart';
@@ -36,7 +37,12 @@ class VoiceInputViewModel extends ChangeNotifier {
   bool get isSpeechEnabled => _isSpeechEnabled;
   bool get isProcessing => _isProcessing;
 
-  Future<void> initSpeech() async {
+  BuildContext? _currentContext;
+  bool _isFromWidget = false;
+
+  Future<void> initSpeech({BuildContext? context, bool isFromWidget = false}) async {
+    _currentContext = context;
+    _isFromWidget = isFromWidget;
     try {
       _isSpeechEnabled = await _speechToText.initialize(
         onStatus: (status) {
@@ -44,6 +50,17 @@ class VoiceInputViewModel extends ChangeNotifier {
             _isListening = false;
             _stopWaveAnimation();
             _safeNotifyListeners();
+
+            if (_lastWords.trim().isNotEmpty &&
+                _currentContext != null &&
+                _currentContext!.mounted &&
+                !_isProcessing) {
+              if (_isFromWidget) {
+                processWidgetVoiceInput(_currentContext!);
+              } else {
+                processVoiceInput(_currentContext!);
+              }
+            }
           }
         },
         onError: (errorNotification) {
@@ -59,32 +76,40 @@ class VoiceInputViewModel extends ChangeNotifier {
   }
 
   Future<bool> _checkPermission(BuildContext context) async {
-    var status = await Permission.microphone.status;
-    if (status.isGranted) {
+    final prefs = await SharedPreferences.getInstance();
+    final bool hasRequestedBefore =
+        prefs.getBool('voice_requested_before') ?? false;
+
+    final micStatus = await Permission.microphone.status;
+    final speechStatus = await Permission.speech.status;
+
+    if (micStatus.isGranted && speechStatus.isGranted) {
       return true;
     }
 
-    if (status.isPermanentlyDenied) {
+    if (!hasRequestedBefore) {
+      // Lần đầu tiên: Chỉ yêu cầu quyền hệ thống, nếu từ chối thì KHÔNG hiện popup ép buộc
+      await prefs.setBool('voice_requested_before', true);
+      final statuses = await [
+        Permission.microphone,
+        Permission.speech,
+      ].request();
+
+      final isMicGranted = statuses[Permission.microphone]?.isGranted ?? false;
+      final isSpeechGranted = statuses[Permission.speech]?.isGranted ?? false;
+
+      if (isMicGranted && isSpeechGranted) {
+        return true;
+      }
+      // Người dùng từ chối ở popup hệ thống -> Dừng lại, không làm gì cả
+      return false;
+    } else {
+      // Các lần sau khi vào lại: Nếu chưa được cấp quyền thì hiện popup hướng dẫn vào Settings
       if (context.mounted) {
         _showPermissionDialog(context);
       }
       return false;
     }
-
-    final result = await Permission.microphone.request();
-
-    if (result.isGranted) {
-      return true;
-    }
-
-    // if (result.isDenied || result.isPermanentlyDenied) {
-    //   if (context.mounted) {
-    //     _showPermissionDialog(context);
-    //   }
-    //   return false;
-    // }
-
-    return false;
   }
 
   void _showPermissionDialog(BuildContext context) {
@@ -112,12 +137,19 @@ class VoiceInputViewModel extends ChangeNotifier {
     );
   }
 
-  Future<void> startListening(BuildContext context, String localeId) async {
+  Future<void> startListening(
+    BuildContext context,
+    String localeId, {
+    bool isFromWidget = false,
+  }) async {
+    _currentContext = context;
+    _isFromWidget = isFromWidget;
+
     final hasPermission = await _checkPermission(context);
     if (!hasPermission) return;
 
     if (!_isSpeechEnabled) {
-      await initSpeech();
+      await initSpeech(context: context, isFromWidget: isFromWidget);
     }
 
     if (_isSpeechEnabled) {
@@ -140,7 +172,13 @@ class VoiceInputViewModel extends ChangeNotifier {
     }
   }
 
-  void toggleListening(BuildContext context, String localeId, {bool isFromWidget = false}) {
+  void toggleListening(
+    BuildContext context,
+    String localeId, {
+    bool isFromWidget = false,
+  }) {
+    _currentContext = context;
+    _isFromWidget = isFromWidget;
     if (_isListening) {
       stopListening();
       if (isFromWidget) {
@@ -149,7 +187,7 @@ class VoiceInputViewModel extends ChangeNotifier {
         processVoiceInput(context);
       }
     } else {
-      startListening(context, localeId);
+      startListening(context, localeId, isFromWidget: isFromWidget);
     }
   }
 

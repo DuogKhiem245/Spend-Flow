@@ -33,6 +33,19 @@ class ReportViewModel extends ChangeNotifier {
   ReportViewModel() {
     Future.wait([_checkSecurity(), _loadCurrency()]);
     _loadData(true);
+    LocalStorageService.transactionDataNotifier
+        .addListener(_onTransactionDataChanged);
+  }
+
+  void _onTransactionDataChanged() {
+    _loadData(false);
+  }
+
+  @override
+  void dispose() {
+    LocalStorageService.transactionDataNotifier
+        .removeListener(_onTransactionDataChanged);
+    super.dispose();
   }
 
   Future<void> _checkSecurity() async {

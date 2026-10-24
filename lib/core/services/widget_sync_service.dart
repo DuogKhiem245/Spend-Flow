@@ -24,7 +24,6 @@ class WidgetSyncService {
     try {
       final walletId = await _storage.getCurrentWalletId();
       if (walletId.isEmpty) return;
-
       final currencyData = await _storage.getCurrency();
       final symbol = currencyData['symbol'] ?? '\$';
 

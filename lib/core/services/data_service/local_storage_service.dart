@@ -26,6 +26,13 @@ class LocalStorageService {
 
   LocalStorageService._internal();
 
+  static final ValueNotifier<int> transactionDataNotifier =
+      ValueNotifier<int>(0);
+
+  void notifyTransactionChanged() {
+    transactionDataNotifier.value++;
+  }
+
   // ============================================================
   // 1: SHARED PREFERENCES (SETTINGS)
   // ============================================================
@@ -127,11 +134,13 @@ class LocalStorageService {
   Future<void> savePasscode(String code) async {
     final db = await database;
     await _settingStore.record(_passcodeKey).put(db, {'code': code});
+    WidgetSyncService().updateAllWidgets();
   }
 
   Future<void> removePasscode() async {
     final db = await database;
     await _settingStore.record(_passcodeKey).delete(db);
+    WidgetSyncService().updateAllWidgets();
   }
 
   Future<bool> isFaceIdEnabled() async {
@@ -146,6 +155,7 @@ class LocalStorageService {
   Future<void> setFaceIdEnabled(bool enabled) async {
     final db = await database;
     await _settingStore.record(_faceIdKey).put(db, {'enabled': enabled});
+    WidgetSyncService().updateAllWidgets();
   }
 
   // ------------------------------------------------------------
@@ -814,6 +824,7 @@ class LocalStorageService {
       await incrementCategoryUsage(transaction.category);
 
       WidgetSyncService().updateAllWidgets();
+      notifyTransactionChanged();
 
       return true;
     } catch (e) {
@@ -893,6 +904,7 @@ class LocalStorageService {
     });
 
     WidgetSyncService().updateAllWidgets();
+    notifyTransactionChanged();
   }
 
   Future<List<Map<String, dynamic>>> getPendingSyncTransactions() async {

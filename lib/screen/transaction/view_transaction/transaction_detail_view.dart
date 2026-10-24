@@ -59,8 +59,11 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
     final l10n = AppLocalizations.of(context)!;
 
     return PopScope(
-      canPop: true,
-      onPopInvokedWithResult: (didPop, result) {},
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
+        Navigator.pop(context, _isModified);
+      },
       child: ListenableBuilder(
         listenable: _viewModel,
         builder: (context, child) {

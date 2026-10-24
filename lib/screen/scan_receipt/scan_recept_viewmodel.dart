@@ -41,6 +41,8 @@ class ScanReceiptViewModel extends ChangeNotifier {
   bool _isCameraPermissionDenied = false;
   bool get isCameraPermissionDenied => _isCameraPermissionDenied;
 
+  bool _isRequestingPermission = false;
+
   void setCategories(List<CategoryModel> categories) {
     this.categories = categories;
   }
@@ -52,36 +54,39 @@ class ScanReceiptViewModel extends ChangeNotifier {
   }
 
   Future<void> initCamera(BuildContext context) async {
-    var status = await Permission.camera.status;
+    final status = await Permission.camera.status;
     final prefs = await SharedPreferences.getInstance();
 
-    bool hasDeniedOnce = prefs.getBool('camera_denied_once') ?? false;
+    final bool hasRequestedBefore =
+        prefs.getBool('camera_requested_before') ?? false;
 
-    if (status.isPermanentlyDenied || (!status.isGranted && hasDeniedOnce)) {
+    if (status.isGranted) {
+      _isCameraPermissionDenied = false;
+      notifyListeners();
+    } else {
       _isCameraPermissionDenied = true;
       notifyListeners();
 
-      if (context.mounted) {
-        _showPermissionDialog(context);
-      }
-      return;
-    }
+      if (!hasRequestedBefore) {
+        // Lần đầu tiên: Chỉ yêu cầu quyền hệ thống, nếu từ chối thì KHÔNG hiện popup ép buộc
+        await prefs.setBool('camera_requested_before', true);
+        _isRequestingPermission = true;
+        final requestStatus = await Permission.camera.request();
+        _isRequestingPermission = false;
 
-    if (!status.isGranted) {
-      status = await Permission.camera.request();
-
-      if (!status.isGranted) {
-        await prefs.setBool('camera_denied_once', true);
-
-        _isCameraPermissionDenied = true;
+        if (!requestStatus.isGranted) {
+          return;
+        }
+        _isCameraPermissionDenied = false;
         notifyListeners();
+      } else {
+        // Các lần sau khi vào lại: Nếu chưa được cấp quyền thì hiện popup hướng dẫn vào Settings
+        if (context.mounted) {
+          _showPermissionDialog(context);
+        }
         return;
       }
     }
-
-    await prefs.setBool('camera_denied_once', false);
-    _isCameraPermissionDenied = false;
-    notifyListeners();
 
     try {
       final cameras = await availableCameras();
@@ -106,6 +111,13 @@ class ScanReceiptViewModel extends ChangeNotifier {
   }
 
   Future<void> takePicture(BuildContext context) async {
+    if (_isCameraPermissionDenied) {
+      if (context.mounted) {
+        _showPermissionDialog(context);
+      }
+      return;
+    }
+
     if (controller == null ||
         !controller!.value.isInitialized ||
         _isTakingPicture ||
@@ -341,14 +353,17 @@ class ScanReceiptViewModel extends ChangeNotifier {
   }
 
   void handleLifecycleChange(AppLifecycleState state, BuildContext context) {
-    final CameraController? cameraController = controller;
-    if (cameraController == null || !cameraController.value.isInitialized) {
-      return;
-    }
+    if (_isRequestingPermission) return;
+
     if (state == AppLifecycleState.inactive) {
-      cameraController.dispose();
+      controller?.dispose();
+      controller = null;
     } else if (state == AppLifecycleState.resumed) {
-      initCamera(context);
+      Permission.camera.status.then((status) {
+        if (status.isGranted) {
+          initCamera(context);
+        }
+      });
     }
   }
 
