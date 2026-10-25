@@ -103,6 +103,22 @@
 		AF62A1DC852288327B93095D /* Pods-RunnerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.debug.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B61F9DBA2FB700AC00A8E38B /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Main.strings; sourceTree = "<group>"; };
 		B61F9DBB2FB700AC00A8E38B /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		B6534274308DB5EC00F37851 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		B6534275308DB5EC00F37851 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		B6534276308DB5FA00F37851 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
+		B6534277308DB5FB00F37851 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		B6534278308DB60C00F37851 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		B6534279308DB61400F37851 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		B653427A308DB62F00F37851 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
+		B653427B308DB63200F37851 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		B653427C308DB67500F37851 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
+		B653427D308DB67500F37851 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		B653427E308DB68600F37851 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		B653427F308DB68700F37851 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		B6534280308DB78A00F37851 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Main.strings"; sourceTree = "<group>"; };
+		B6534281308DB78B00F37851 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		B6534282308DB7B700F37851 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
+		B6534283308DB7C400F37851 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		B6B9162D2FB35F2B0048C7C8 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		B6D686B12FB3355F0078E5E9 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		B90A3E407A7EB7F6DB7A02FA /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -339,6 +355,14 @@
 				en,
 				Base,
 				vi,
+				"zh-Hans",
+				"zh-Hant",
+				fr,
+				de,
+				ko,
+				ja,
+				"pt-PT",
+				es,
 			);
 			mainGroup = 97C146E51CF9000F007C117D;
 			packageReferences = (
@@ -568,6 +592,14 @@
 			children = (
 				97C146FB1CF9000F007C117D /* Base */,
 				B61F9DBA2FB700AC00A8E38B /* vi */,
+				B6534274308DB5EC00F37851 /* zh-Hans */,
+				B6534276308DB5FA00F37851 /* zh-Hant */,
+				B6534278308DB60C00F37851 /* fr */,
+				B653427A308DB62F00F37851 /* de */,
+				B653427C308DB67500F37851 /* ko */,
+				B653427E308DB68600F37851 /* ja */,
+				B6534280308DB78A00F37851 /* pt-PT */,
+				B6534282308DB7B700F37851 /* es */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -577,6 +609,14 @@
 			children = (
 				97C147001CF9000F007C117D /* Base */,
 				B61F9DBB2FB700AC00A8E38B /* vi */,
+				B6534275308DB5EC00F37851 /* zh-Hans */,
+				B6534277308DB5FB00F37851 /* zh-Hant */,
+				B6534279308DB61400F37851 /* fr */,
+				B653427B308DB63200F37851 /* de */,
+				B653427D308DB67500F37851 /* ko */,
+				B653427F308DB68700F37851 /* ja */,
+				B6534281308DB78B00F37851 /* pt-PT */,
+				B6534283308DB7C400F37851 /* es */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";

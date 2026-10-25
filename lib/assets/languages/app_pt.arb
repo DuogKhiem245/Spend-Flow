@@ -21,7 +21,7 @@
   "amount": "Valor",
   "name": "Nome",
   "date": "Data",
-  "month": "Mês",
+  "month": "Mês", 
   "life_time": "Vitalício",
   "today": "Hoje",
   "other": "Outro",
