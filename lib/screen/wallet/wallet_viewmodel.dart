@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/core/model/wallet_model.dart';
 import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
+import 'package:spend_flow/core/services/widget_sync_service.dart';
 
 class WalletViewModel extends ChangeNotifier {
   final LocalStorageService _localStorageService = LocalStorageService();
@@ -36,6 +37,13 @@ class WalletViewModel extends ChangeNotifier {
       await prefs.setString('current_wallet_id', newWallet.id);
 
       _createdWallet = newWallet;
+
+      _localStorageService.notifyTransactionChanged();
+      try {
+        await WidgetSyncService().updateAllWidgets();
+      } catch (e) {
+        debugPrint("Error updating widget on wallet create: $e");
+      }
 
     } catch (e) {
       debugPrint("Error creating wallet: $e");

@@ -83,19 +83,8 @@ struct MonthlyChartWidgetEntryView: View {
                         .font(.system(size: 18, weight: .bold))
                 }
                 Spacer()
-                Link(destination: URL(string: "spendflow://voice_input")!) {
-                    HStack(spacing: 4) {
-                        Image(systemName: "mic.fill")
-                            .font(.system(size: 11, weight: .bold))
-                        Text("Nói AI")
-                            .font(.system(size: 11, weight: .semibold))
-                    }
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
-                    .background(Capsule().fill(Color.accentColor))
-                }
             }
+
 
             // Cards: Thu & Chi
             HStack(spacing: 10) {

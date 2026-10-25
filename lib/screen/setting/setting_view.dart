@@ -14,7 +14,8 @@ import 'package:spend_flow/screen/setting/widget/setting_data_widget.dart';
 import 'package:spend_flow/screen/setting/widget/setting_general_widget.dart';
 import 'package:spend_flow/screen/setting/widget/setting_info_widget.dart';
 import 'package:spend_flow/screen/setting/widget/setting_security_widget.dart';
-import 'package:spend_flow/screen/setting/widget/upgrade_premium_widget.dart';
+import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
+import 'package:spend_flow/screen/wallet/wallet_view.dart';
 import 'package:spend_flow/main.dart';
 
 class SettingPage extends StatefulWidget {
@@ -396,7 +397,7 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
     AdaptiveAlertDialog.show(
       context: context,
       title: l10n.logout,
-      message: l10n.are_you_sure_logout,
+      message: l10n.logout_delete_local_data_message,
       icon: 'rectangle.portrait.and.arrow.right.fill',
       actions: [
         AlertAction(
@@ -405,11 +406,28 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
           onPressed: () => {},
         ),
         AlertAction(
-          title: l10n.logout,
+          title: l10n.keep_local_data,
+          style: AlertActionStyle.primary,
+          onPressed: () async {
+            await authService.signOut();
+            await premiumViewModel.handleLogout();
+          },
+        ),
+        AlertAction(
+          title: l10n.delete_local_data,
           style: AlertActionStyle.destructive,
           onPressed: () async {
             await authService.signOut();
             await premiumViewModel.handleLogout();
+            await LocalStorageService().clearAllLocalData();
+            if (context.mounted) {
+              Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+                CupertinoPageRoute(
+                  builder: (_) => const WalletView(firstWallet: true),
+                ),
+                (route) => false,
+              );
+            }
           },
         ),
       ],

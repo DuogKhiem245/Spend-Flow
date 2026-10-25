@@ -25,13 +25,6 @@ class RecentTransactionsWidgetProvider : HomeWidgetProvider() {
                 val appIntent = HomeWidgetLaunchIntent.getActivity(context, MainActivity::class.java)
                 setOnClickPendingIntent(R.id.widget_container, appIntent)
 
-                // Open Voice Input on Mic Button Click
-                val voiceIntent = HomeWidgetLaunchIntent.getActivity(
-                    context,
-                    MainActivity::class.java,
-                    Uri.parse("spendflow://voice_input")
-                )
-                setOnClickPendingIntent(R.id.btn_voice_input, voiceIntent)
 
                 // Total Balance
                 val totalBalance = widgetData.getString("total_balance", "0 ₫") ?: "0 ₫"

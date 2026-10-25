@@ -130,8 +130,24 @@ class _SettingDataWidgetState extends State<SettingDataWidget> {
     if (code == "sync_in_progress") {
       description = l10n.sync_in_progress;
     } else if (code.startsWith("cooldown")) {
-      final seconds = code.split(":")[1];
-      description = l10n.cooldown(seconds);
+      final totalSeconds = int.tryParse(code.split(":")[1]) ?? 0;
+      final minutes = totalSeconds ~/ 60;
+      final seconds = totalSeconds % 60;
+      String timeString;
+      if (minutes > 0) {
+        if (l10n.localeName == 'vi') {
+          timeString = seconds > 0 ? '$minutes phút $seconds giây' : '$minutes phút';
+        } else {
+          timeString = seconds > 0 ? '$minutes min $seconds sec' : '$minutes min';
+        }
+      } else {
+        if (l10n.localeName == 'vi') {
+          timeString = '$seconds giây';
+        } else {
+          timeString = '$seconds sec';
+        }
+      }
+      description = l10n.cooldown(timeString);
     } else if (code.startsWith("error")) {
       final errorMessage = code.replaceFirst("error:", "");
       description = l10n.sync_error(errorMessage);

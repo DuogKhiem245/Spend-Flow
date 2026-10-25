@@ -687,7 +687,16 @@ class LocalStorageService {
 
   Future<String> getCurrentWalletId() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('current_wallet_id')!;
+    final savedId = prefs.getString('current_wallet_id');
+    if (savedId != null && savedId.isNotEmpty) {
+      return savedId;
+    }
+    final all = await getAllWallets();
+    if (all.isNotEmpty) {
+      await prefs.setString('current_wallet_id', all.first.id);
+      return all.first.id;
+    }
+    return '';
   }
 
   Future<void> saveWallet(WalletModel wallet) async {
@@ -943,6 +952,60 @@ class LocalStorageService {
     final db = await database;
     final finder = Finder(filter: Filter.equals('id', id));
     await _transactionStore.delete(db, finder: finder);
+  }
+
+  Future<List<TransactionModel>> getAllActiveTransactions() async {
+    final db = await database;
+    final finder = Finder(
+      filter: Filter.or([
+        Filter.equals('isDeleted', 0),
+        Filter.equals('isDeleted', false),
+        Filter.isNull('isDeleted'),
+      ]),
+    );
+    final snapshots = await _transactionStore.find(db, finder: finder);
+    return snapshots.map((s) {
+      final data = Map<String, dynamic>.from(s.value as Map);
+      return TransactionModel.fromMap(data);
+    }).toList();
+  }
+
+  Future<List<BudgetModel>> getAllActiveBudgets() async {
+    final db = await database;
+    final finder = Finder(
+      filter: Filter.or([
+        Filter.equals('isDeleted', 0),
+        Filter.equals('isDeleted', false),
+        Filter.isNull('isDeleted'),
+      ]),
+    );
+    final snapshots = await _budgetStore.find(db, finder: finder);
+    return snapshots.map((s) {
+      final data = Map<String, dynamic>.from(s.value as Map);
+      return BudgetModel.fromMap(data);
+    }).toList();
+  }
+
+  Future<List<CategoryModel>> getAllCustomCategories() async {
+    final db = await database;
+    final finder = Finder(
+      filter: Filter.and([
+        Filter.or([
+          Filter.equals('isCustom', 1),
+          Filter.equals('isCustom', true),
+        ]),
+        Filter.or([
+          Filter.equals('isDeleted', 0),
+          Filter.equals('isDeleted', false),
+          Filter.isNull('isDeleted'),
+        ]),
+      ]),
+    );
+    final snapshots = await _categorySample.find(db, finder: finder);
+    return snapshots.map((s) {
+      final data = Map<String, dynamic>.from(s.value as Map);
+      return CategoryModel.fromMap(data);
+    }).toList();
   }
 
   // ------------------------------------------------------------
@@ -1208,4 +1271,37 @@ class LocalStorageService {
       await _syncCategoryStore.delete(txn, finder: finder);
     });
   }
+
+  Future<void> clearAllLocalData() async {
+    final db = await database;
+    await db.transaction((txn) async {
+      await _walletStore.delete(txn);
+      await _transactionStore.delete(txn);
+      await _budgetStore.delete(txn);
+      await _recentLocationStore.delete(txn);
+      await _syncWalletStore.delete(txn);
+      await _syncTransactionStore.delete(txn);
+      await _syncBudgetStore.delete(txn);
+      await _syncCategoryStore.delete(txn);
+      await _syncRecentLocationStore.delete(txn);
+      await _categorySample.delete(txn);
+    });
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('current_wallet_id');
+    await prefs.setBool('create_first_wallet', false);
+    await prefs.remove('last_global_sync_time');
+
+    // Khởi tạo lại danh mục mặc định ban đầu
+    await initializeData();
+
+    try {
+      await WidgetSyncService().updateAllWidgets();
+    } catch (e) {
+      debugPrint("Error updating widgets after clear: $e");
+    }
+
+    notifyTransactionChanged();
+  }
 }
+

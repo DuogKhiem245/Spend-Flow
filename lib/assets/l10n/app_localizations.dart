@@ -2429,8 +2429,26 @@ abstract class AppLocalizations {
   /// Cooldown
   ///
   /// In vi, this message translates to:
-  /// **'Bạn thao tác quá nhanh. Vui lòng đợi {seconds} giây để đồng bộ lại.'**
-  String cooldown(String seconds);
+  /// **'Bạn thao tác quá nhanh. Vui lòng đợi {time} để đồng bộ lại.'**
+  String cooldown(String time);
+
+  /// Logout ask delete local data message
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn có muốn xoá dữ liệu trên máy không? Dữ liệu đã đồng bộ trên đám mây sẽ không bị mất.'**
+  String get logout_delete_local_data_message;
+
+  /// Keep local data button
+  ///
+  /// In vi, this message translates to:
+  /// **'Không, chỉ đăng xuất'**
+  String get keep_local_data;
+
+  /// Delete local data button
+  ///
+  /// In vi, this message translates to:
+  /// **'Xoá dữ liệu'**
+  String get delete_local_data;
 
   /// Accepted formats
   ///

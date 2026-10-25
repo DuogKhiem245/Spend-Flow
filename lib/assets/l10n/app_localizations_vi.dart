@@ -1249,9 +1249,19 @@ class AppLocalizationsVi extends AppLocalizations {
   String get sync_in_progress => 'Hệ thống đang đồng bộ, vui lòng đợi.';
 
   @override
-  String cooldown(String seconds) {
-    return 'Bạn thao tác quá nhanh. Vui lòng đợi $seconds giây để đồng bộ lại.';
+  String cooldown(String time) {
+    return 'Bạn thao tác quá nhanh. Vui lòng đợi $time để đồng bộ lại.';
   }
+
+  @override
+  String get logout_delete_local_data_message =>
+      'Bạn có muốn xoá dữ liệu trên máy không? Dữ liệu đã đồng bộ trên đám mây sẽ không bị mất.';
+
+  @override
+  String get keep_local_data => 'Không, chỉ đăng xuất';
+
+  @override
+  String get delete_local_data => 'Xoá dữ liệu';
 
   @override
   String get accepted_formats => 'Chấp nhận các định dạng';

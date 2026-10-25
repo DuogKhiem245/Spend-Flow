@@ -53,12 +53,16 @@ class WalletModel {
 
   factory WalletModel.fromMap(Map<String, dynamic> map) {
     return WalletModel(
-      id: map['id'],
-      name: map['name'],
-      currency: map['currency'],
-      transactions: map['transactions'] != null
+      id: map['id']?.toString(),
+      name: map['name']?.toString() ?? '',
+      currency: map['currency']?.toString() ?? 'USD',
+      transactions: map['transactions'] != null && map['transactions'] is List
           ? List<TransactionModel>.from(
-              map['transactions']?.map((x) => TransactionModel.fromMap(x)),
+              (map['transactions'] as List).map(
+                (x) => TransactionModel.fromMap(
+                  Map<String, dynamic>.from(x as Map),
+                ),
+              ),
             )
           : [],
       updatedAt: _parseTime(map['updatedAt']),

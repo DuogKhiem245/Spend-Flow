@@ -117,14 +117,8 @@ struct SmallBudgetView: View {
                     .font(.system(size: 11, weight: .medium))
                     .foregroundColor(.secondary)
                 Spacer()
-                Link(destination: URL(string: "spendflow://voice_input")!) {
-                    Image(systemName: "mic.fill")
-                        .font(.system(size: 11, weight: .bold))
-                        .foregroundColor(.white)
-                        .padding(5)
-                        .background(Circle().fill(Color.accentColor))
-                }
             }
+
 
             Text(entry.budgetRemaining)
                 .font(.system(size: 15, weight: .bold))
@@ -182,18 +176,6 @@ struct MediumBudgetView: View {
                         .foregroundColor(entry.budgetProgress >= 1.0 ? .red : .primary)
                 }
                 Spacer()
-                Link(destination: URL(string: "spendflow://voice_input")!) {
-                    HStack(spacing: 4) {
-                        Image(systemName: "mic.fill")
-                            .font(.system(size: 11, weight: .bold))
-                        Text("Nói AI")
-                            .font(.system(size: 11, weight: .semibold))
-                    }
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
-                    .background(Capsule().fill(Color.accentColor))
-                }
             }
 
             Divider()
@@ -250,18 +232,6 @@ struct LargeBudgetView: View {
                         .foregroundColor(entry.budgetProgress >= 1.0 ? .red : .primary)
                 }
                 Spacer()
-                Link(destination: URL(string: "spendflow://voice_input")!) {
-                    HStack(spacing: 5) {
-                        Image(systemName: "mic.fill")
-                            .font(.system(size: 12, weight: .bold))
-                        Text("Nhập giọng nói")
-                            .font(.system(size: 12, weight: .semibold))
-                    }
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 6)
-                    .background(Capsule().fill(Color.accentColor))
-                }
             }
 
             // Overall progress

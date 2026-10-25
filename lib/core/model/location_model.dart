@@ -50,11 +50,11 @@ class RecentLocationModel {
 
   factory RecentLocationModel.fromMap(Map<String, dynamic> map) {
     return RecentLocationModel(
-      name: map['name'] ?? '',
-      address: map['address'] ?? '',
-      lat: (map['lat'] as num).toDouble(),
-      lng: (map['lng'] as num).toDouble(),
-      timestamp: map['timestamp'] ?? 0,
+      name: map['name']?.toString() ?? '',
+      address: map['address']?.toString() ?? '',
+      lat: (map['lat'] as num?)?.toDouble() ?? 0.0,
+      lng: (map['lng'] as num?)?.toDouble() ?? 0.0,
+      timestamp: (map['timestamp'] as num?)?.toInt() ?? 0,
     );
   }
 }

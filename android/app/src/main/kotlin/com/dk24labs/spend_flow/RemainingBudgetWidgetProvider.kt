@@ -25,13 +25,6 @@ class RemainingBudgetWidgetProvider : HomeWidgetProvider() {
                 val appIntent = HomeWidgetLaunchIntent.getActivity(context, MainActivity::class.java)
                 setOnClickPendingIntent(R.id.widget_container, appIntent)
 
-                // Open Voice Input on Mic Button Click
-                val voiceIntent = HomeWidgetLaunchIntent.getActivity(
-                    context,
-                    MainActivity::class.java,
-                    Uri.parse("spendflow://voice_input")
-                )
-                setOnClickPendingIntent(R.id.btn_voice_input, voiceIntent)
 
                 val remaining = widgetData.getString("budget_remaining", "0 ₫") ?: "0 ₫"
                 val spent = widgetData.getString("budget_spent", "0 ₫") ?: "0 ₫"

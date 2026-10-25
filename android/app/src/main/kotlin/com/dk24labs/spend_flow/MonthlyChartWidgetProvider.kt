@@ -24,13 +24,6 @@ class MonthlyChartWidgetProvider : HomeWidgetProvider() {
                 val appIntent = HomeWidgetLaunchIntent.getActivity(context, MainActivity::class.java)
                 setOnClickPendingIntent(R.id.widget_container, appIntent)
 
-                // Open Voice Input on Mic Button Click
-                val voiceIntent = HomeWidgetLaunchIntent.getActivity(
-                    context,
-                    MainActivity::class.java,
-                    Uri.parse("spendflow://voice_input")
-                )
-                setOnClickPendingIntent(R.id.btn_voice_input, voiceIntent)
 
                 val monthlyIncome = widgetData.getString("monthly_income", "0 ₫") ?: "0 ₫"
                 val monthlyExpense = widgetData.getString("monthly_expense", "0 ₫") ?: "0 ₫"

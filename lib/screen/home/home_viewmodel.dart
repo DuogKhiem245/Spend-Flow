@@ -14,6 +14,7 @@ import 'package:spend_flow/core/services/data_service/local_storage_service.dart
 import 'package:spend_flow/core/model/category_model.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/core/services/general_service/notification_service.dart';
+import 'package:spend_flow/core/services/widget_sync_service.dart';
 import 'package:spend_flow/core/utils/category_helper.dart';
 import 'package:spend_flow/screen/home/home_model.dart';
 
@@ -288,6 +289,12 @@ class HomeViewModel extends ChangeNotifier {
         await prefs.setString('current_wallet_id', newWalletId);
 
         notifyListeners();
+        _storage.notifyTransactionChanged();
+        try {
+          await WidgetSyncService().updateAllWidgets();
+        } catch (e) {
+          debugPrint("Error updating widget on loadWallets: $e");
+        }
       }
     } catch (e) {
       debugPrint("Error loading wallets: $e");
@@ -305,6 +312,13 @@ class HomeViewModel extends ChangeNotifier {
     await reloadData();
 
     notifyListeners();
+
+    _storage.notifyTransactionChanged();
+    try {
+      await WidgetSyncService().updateAllWidgets();
+    } catch (e) {
+      debugPrint("Error updating widget on switchWallet: $e");
+    }
   }
 
   String getGreetingMessage(BuildContext context) {
@@ -415,6 +429,12 @@ class HomeViewModel extends ChangeNotifier {
       await _storage.deleteWallet(walletId);
 
       await refreshWallets();
+      _storage.notifyTransactionChanged();
+      try {
+        await WidgetSyncService().updateAllWidgets();
+      } catch (e) {
+        debugPrint("Error updating widget on deleteWallet: $e");
+      }
 
       return null;
     } catch (e) {

@@ -1251,9 +1251,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sync_in_progress => 'Sync in progress, please wait.';
 
   @override
-  String cooldown(String seconds) {
-    return 'You\'re acting too quickly. Please wait $seconds seconds before syncing again.';
+  String cooldown(String time) {
+    return 'You\'re acting too quickly. Please wait $time before syncing again.';
   }
+
+  @override
+  String get logout_delete_local_data_message =>
+      'Do you want to delete data on this device? Synced cloud data will remain safe.';
+
+  @override
+  String get keep_local_data => 'No, just logout';
+
+  @override
+  String get delete_local_data => 'Delete data';
 
   @override
   String get accepted_formats => 'Accepted Formats';

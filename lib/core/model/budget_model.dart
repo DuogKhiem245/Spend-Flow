@@ -51,13 +51,23 @@ class BudgetModel {
 
   factory BudgetModel.fromMap(Map<String, dynamic> map) {
     return BudgetModel(
-      id: map['id'],
-      category: CategoryModel.fromMap(map['category']),
+      id: map['id']?.toString() ?? const Uuid().v4(),
+      category: map['category'] != null
+          ? CategoryModel.fromMap(
+              Map<String, dynamic>.from(map['category'] as Map),
+            )
+          : CategoryModel(
+              name: 'Khác',
+              iconKey: 'questionmark',
+              color: const Color(0xFF4CAF50),
+            ),
       total: (map['total'] as num?)?.toDouble() ?? 0.0,
-      spent: 0.0,
-      date: map['date'] != null ? DateTime.parse(map['date']) : DateTime.now(),
-      walletId: map['walletId'],
-      note: map['note'] ?? '',
+      spent: (map['spent'] as num?)?.toDouble() ?? 0.0,
+      date: map['date'] != null
+          ? (DateTime.tryParse(map['date'].toString()) ?? DateTime.now())
+          : DateTime.now(),
+      walletId: map['walletId']?.toString() ?? '',
+      note: map['note']?.toString() ?? '',
       updatedAt: _parseTime(map['updatedAt']),
       isDeleted: map['isDeleted'] == 1 || map['isDeleted'] == true,
     );

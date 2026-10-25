@@ -1605,14 +1605,26 @@
   "@sync_in_progress": {
     "description": "Sync in progress"
   },
-  "cooldown": "You're acting too quickly. Please wait {seconds} seconds before syncing again.",
+  "cooldown": "You're acting too quickly. Please wait {time} before syncing again.",
   "@cooldown": {
     "description": "Cooldown",
     "placeholders": {
-      "seconds": {
+      "time": {
         "type": "String"
       }
     }
+  },
+  "logout_delete_local_data_message": "Do you want to delete data on this device? Synced cloud data will remain safe.",
+  "@logout_delete_local_data_message": {
+    "description": "Logout ask delete local data message"
+  },
+  "keep_local_data": "No, just logout",
+  "@keep_local_data": {
+    "description": "Keep local data button"
+  },
+  "delete_local_data": "Delete data",
+  "@delete_local_data": {
+    "description": "Delete local data button"
   },
   "accepted_formats": "Accepted Formats",
   "@accepted_formats": {

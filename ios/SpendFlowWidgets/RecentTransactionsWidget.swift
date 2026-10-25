@@ -97,18 +97,12 @@ struct SmallRecentView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
-                Text("Số dư")
+                Text("Số dư còn lại")
                     .font(.system(size: 11, weight: .medium))
                     .foregroundColor(.secondary)
                 Spacer()
-                Link(destination: URL(string: "spendflow://voice_input")!) {
-                    Image(systemName: "mic.fill")
-                        .font(.system(size: 11, weight: .bold))
-                        .foregroundColor(.white)
-                        .padding(5)
-                        .background(Circle().fill(Color.accentColor))
-                }
             }
+
 
             Text(entry.totalBalance)
                 .font(.system(size: 15, weight: .bold))
@@ -148,25 +142,13 @@ struct MediumRecentView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Giao dịch gần đây")
+                    Text("Số dư còn lại")
                         .font(.system(size: 11, weight: .medium))
                         .foregroundColor(.secondary)
                     Text(entry.totalBalance)
                         .font(.system(size: 16, weight: .bold))
                 }
                 Spacer()
-                Link(destination: URL(string: "spendflow://voice_input")!) {
-                    HStack(spacing: 4) {
-                        Image(systemName: "mic.fill")
-                            .font(.system(size: 11, weight: .bold))
-                        Text("Nói AI")
-                            .font(.system(size: 11, weight: .semibold))
-                    }
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
-                    .background(Capsule().fill(Color.accentColor))
-                }
             }
 
             Divider()
@@ -220,25 +202,13 @@ struct LargeRecentView: View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Giao dịch gần đây")
+                    Text("Số dư còn lại")
                         .font(.system(size: 12, weight: .medium))
                         .foregroundColor(.secondary)
                     Text(entry.totalBalance)
                         .font(.system(size: 20, weight: .bold))
                 }
                 Spacer()
-                Link(destination: URL(string: "spendflow://voice_input")!) {
-                    HStack(spacing: 5) {
-                        Image(systemName: "mic.fill")
-                            .font(.system(size: 12, weight: .bold))
-                        Text("Nhập giọng nói")
-                            .font(.system(size: 12, weight: .semibold))
-                    }
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 6)
-                    .background(Capsule().fill(Color.accentColor))
-                }
             }
 
             Divider()

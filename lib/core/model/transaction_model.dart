@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:spend_flow/core/model/category_model.dart';
 import 'package:spend_flow/core/model/location_model.dart';
 import 'package:uuid/uuid.dart';
@@ -91,17 +92,31 @@ class TransactionModel {
 
   factory TransactionModel.fromMap(Map<String, dynamic> map) {
     return TransactionModel(
-      id: map['id'],
-      amount: map['amount'],
-      title: map['title'],
-      note: map['note'],
-      date: DateTime.parse(map['date']),
-      category: CategoryModel.fromMap(map['category']),
-      isIncome: map['isIncome'],
-      currency: map['currency'],
-      exchangeRate: map['exchangeRate'],
-      walletId: map['walletId'],
-      location: LocationModel.fromMap(map['location']),
+      id: map['id']?.toString() ?? const Uuid().v4(),
+      amount: (map['amount'] as num?)?.toDouble() ?? 0.0,
+      title: map['title']?.toString() ?? '',
+      note: map['note']?.toString() ?? '',
+      date: map['date'] != null
+          ? (DateTime.tryParse(map['date'].toString()) ?? DateTime.now())
+          : DateTime.now(),
+      category: map['category'] != null
+          ? CategoryModel.fromMap(
+              Map<String, dynamic>.from(map['category'] as Map),
+            )
+          : CategoryModel(
+              name: 'Khác',
+              iconKey: 'questionmark',
+              color: const Color(0xFF4CAF50),
+            ),
+      isIncome: map['isIncome'] == true || map['isIncome'] == 1,
+      currency: map['currency']?.toString() ?? 'VND',
+      exchangeRate: (map['exchangeRate'] as num?)?.toDouble() ?? 1.0,
+      walletId: map['walletId']?.toString() ?? '',
+      location: LocationModel.fromMap(
+        map['location'] != null
+            ? Map<String, dynamic>.from(map['location'] as Map)
+            : null,
+      ),
       updatedAt: _parseTime(map['updatedAt']),
       isDeleted: map['isDeleted'] == 1 || map['isDeleted'] == true,
     );

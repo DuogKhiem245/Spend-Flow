@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/core/model/budget_model.dart';
 import 'package:spend_flow/core/model/category_model.dart';
 import 'package:spend_flow/core/model/location_model.dart';
@@ -9,6 +10,7 @@ import 'package:spend_flow/core/model/transaction_model.dart';
 import 'package:spend_flow/core/model/wallet_model.dart';
 import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 import 'package:spend_flow/core/services/sync_service/image_sync_service.dart';
+import 'package:spend_flow/core/services/widget_sync_service.dart';
 import 'package:spend_flow/main.dart';
 
 class SyncService {
@@ -53,7 +55,7 @@ class SyncService {
             _lastRunTime!.day == now.day;
 
         if (isSameDay) {
-          return "premium_required"; 
+          return "premium_required";
         }
       }
     }
@@ -70,22 +72,25 @@ class SyncService {
 
     try {
       final lastSyncTimestamp = await _localStorage.getGlobalSyncTime();
+      final bool isInitialSync = (lastSyncTimestamp == 0);
 
       final queryTimestamp = lastSyncTimestamp > 30000
           ? lastSyncTimestamp - 30000
           : 0;
 
+      // 1. Pull các cập nhật từ Cloud về
       await _pullCategories(queryTimestamp);
       await _pullWallets(queryTimestamp);
       await _pullLocationChanges(queryTimestamp);
       await _pullTransactions(queryTimestamp);
       await _pullBudgets(queryTimestamp);
 
-      await _pushCategories();
-      await _pushWallets();
+      // 2. Push dữ liệu local lên Cloud
+      await _pushCategories(isInitialSync);
+      await _pushWallets(isInitialSync);
       await _pushLocationChanges();
-      await _pushTransactions();
-      await _pushBudgets();
+      await _pushTransactions(isInitialSync);
+      await _pushBudgets(isInitialSync);
 
       _lastRunTime = DateTime.now();
       await _localStorage.saveGlobalSyncTime(
@@ -93,9 +98,18 @@ class SyncService {
       );
       lastSyncNotifier.value = _lastRunTime;
 
-      return null; 
+      // 3. Thông báo cập nhật UI và Widgets
+      _localStorage.notifyTransactionChanged();
+      try {
+        await WidgetSyncService().updateAllWidgets();
+      } catch (e) {
+        debugPrint("Error update widgets after sync: $e");
+      }
+
+      return null;
     } catch (e) {
-      return "error:${e.toString()}"; 
+      debugPrint("SyncData error: $e");
+      return "error:${e.toString()}";
     } finally {
       _isSyncing = false;
     }
@@ -107,57 +121,82 @@ class SyncService {
     return DateTime.fromMillisecondsSinceEpoch(timestamp);
   }
 
-  Future<void> _pushCategories() async {
-    final pending = await _localStorage.getPendingSyncCategories();
-    if (pending.isEmpty) return;
+  /// Helper chia nhỏ batch commit để không vượt quá giới hạn 500 documents của Firestore
+  Future<void> _commitInChunks<T>(
+    List<T> items,
+    void Function(WriteBatch batch, T item) action,
+  ) async {
+    const int chunkSize = 400;
+    for (int i = 0; i < items.length; i += chunkSize) {
+      final batch = _firestore.batch();
+      final end = (i + chunkSize < items.length) ? i + chunkSize : items.length;
+      final chunk = items.sublist(i, end);
+      for (var item in chunk) {
+        action(batch, item);
+      }
+      await batch.commit();
+    }
+  }
 
+  // ============================================================
+  // CATEGORIES
+  // ============================================================
+
+  Future<void> _pushCategories(bool isInitialSync) async {
+    final pending = await _localStorage.getPendingSyncCategories();
+
+    List<CategoryModel> categoriesToPush = [];
     List<String> syncedIds = [];
+
+    if (pending.isNotEmpty) {
+      categoriesToPush = pending;
+    } else if (isInitialSync) {
+      categoriesToPush = await _localStorage.getAllCustomCategories();
+    }
+
+    if (categoriesToPush.isEmpty) return;
+
     final userId = _auth.currentUser!.uid;
 
-    for (var cat in pending) {
+    for (var cat in categoriesToPush) {
       CategoryModel catToSync = cat;
 
       if (cat.isCustom &&
           (cat.remoteIconUrl == null || cat.remoteIconUrl!.isEmpty)) {
         final url = await _imageService.uploadImage(cat.iconKey, userId);
-
         if (url != null) {
           catToSync = cat.copyWith(remoteIconUrl: url);
           await _localStorage.updateCategory(catToSync);
         }
       }
 
-      try {
-        final docRef = _userRef.collection('categories').doc(cat.id);
-        Map<String, dynamic> data = catToSync.toMap();
-        data['updatedAt'] = FieldValue.serverTimestamp();
-        await docRef.set(data, SetOptions(merge: true));
-        syncedIds.add(cat.id);
-      } catch (e) {
-        debugPrint("Error push category ${cat.name}: $e");
-      }
+      final docRef = _userRef.collection('categories').doc(cat.id);
+      Map<String, dynamic> data = catToSync.toMap();
+      data['updatedAt'] = FieldValue.serverTimestamp();
+      await docRef.set(data, SetOptions(merge: true));
+      syncedIds.add(cat.id);
     }
 
-    if (syncedIds.isNotEmpty) {
+    if (pending.isNotEmpty && syncedIds.isNotEmpty) {
       await _localStorage.removeSyncedCategories(syncedIds);
     }
   }
 
   Future<void> _pullCategories(int lastSyncTime) async {
-    try {
-      Query query = _userRef.collection('categories');
+    Query query = _userRef.collection('categories');
 
-      if (lastSyncTime > 0) {
-        final queryTimestamp = Timestamp.fromMillisecondsSinceEpoch(
-          lastSyncTime,
-        );
-        query = query.where('updatedAt', isGreaterThan: queryTimestamp);
-      }
+    if (lastSyncTime > 0) {
+      final queryTimestamp = Timestamp.fromMillisecondsSinceEpoch(
+        lastSyncTime,
+      );
+      query = query.where('updatedAt', isGreaterThan: queryTimestamp);
+    }
 
-      final snapshot = await query.get();
-      if (snapshot.docs.isEmpty) return;
+    final snapshot = await query.get();
+    if (snapshot.docs.isEmpty) return;
 
-      for (var doc in snapshot.docs) {
+    for (var doc in snapshot.docs) {
+      try {
         final data = doc.data() as Map<String, dynamic>;
         var cloudCat = CategoryModel.fromMap(data);
 
@@ -184,184 +223,198 @@ class SyncService {
           }
         }
         await _localStorage.saveCategoryFromSync(cloudCat);
+      } catch (e) {
+        debugPrint("Error Pull Category ${doc.id}: $e");
       }
-    } catch (e) {
-      debugPrint("Error Pull Categories: $e");
     }
   }
 
-  Future<void> _pushWallets() async {
+  // ============================================================
+  // WALLETS
+  // ============================================================
+
+  Future<void> _pushWallets(bool isInitialSync) async {
     final pending = await _localStorage.getPendingSyncWallets();
-    if (pending.isEmpty) return;
 
-    List<int> processedKeys = [];
-    final batch = _firestore.batch();
+    if (pending.isNotEmpty) {
+      List<int> processedKeys = [];
+      await _commitInChunks(pending, (batch, item) {
+        final int key = item['key'];
+        final data = Map<String, dynamic>.from(item)..remove('key');
+        final wallet = WalletModel.fromMap(data);
+        final docRef = _userRef.collection('wallets').doc(wallet.id);
 
-    for (var item in pending) {
-      final int key = item['key'];
-      final data = Map<String, dynamic>.from(item)..remove('key');
-      final wallet = WalletModel.fromMap(data);
-      final docRef = _userRef.collection('wallets').doc(wallet.id);
+        Map<String, dynamic> walletData = wallet.toMap();
+        walletData['updatedAt'] = FieldValue.serverTimestamp();
+        batch.set(docRef, walletData, SetOptions(merge: true));
+        processedKeys.add(key);
+      });
 
-      Map<String, dynamic> walletData = wallet.toMap();
-      walletData['updatedAt'] = FieldValue.serverTimestamp();
-      batch.set(docRef, walletData, SetOptions(merge: true));
-      processedKeys.add(key);
-    }
-
-    try {
-      await batch.commit();
       if (processedKeys.isNotEmpty) {
         await _localStorage.removeSyncedWallets(processedKeys);
       }
-    } catch (e) {
-      debugPrint("Error push wallets: $e");
+    } else if (isInitialSync) {
+      final allWallets = await _localStorage.getAllWallets();
+      if (allWallets.isNotEmpty) {
+        await _commitInChunks(allWallets, (batch, wallet) {
+          final docRef = _userRef.collection('wallets').doc(wallet.id);
+          Map<String, dynamic> walletData = wallet.toMap();
+          walletData['updatedAt'] = FieldValue.serverTimestamp();
+          batch.set(docRef, walletData, SetOptions(merge: true));
+        });
+      }
     }
   }
 
   Future<void> _pullWallets(int lastSyncTime) async {
-    try {
-      Query query = _userRef.collection('wallets');
+    Query query = _userRef.collection('wallets');
 
-      if (lastSyncTime > 0) {
-        final queryTimestamp = Timestamp.fromMillisecondsSinceEpoch(
-          lastSyncTime,
-        );
-        query = query.where('updatedAt', isGreaterThan: queryTimestamp);
-      }
+    if (lastSyncTime > 0) {
+      final queryTimestamp = Timestamp.fromMillisecondsSinceEpoch(
+        lastSyncTime,
+      );
+      query = query.where('updatedAt', isGreaterThan: queryTimestamp);
+    }
 
-      final snapshot = await query.get();
-      if (snapshot.docs.isEmpty) return;
-
+    final snapshot = await query.get();
+    if (snapshot.docs.isNotEmpty) {
       for (var doc in snapshot.docs) {
-        final data = doc.data() as Map<String, dynamic>;
-        final cloudWallet = WalletModel.fromMap(data);
+        try {
+          final data = doc.data() as Map<String, dynamic>;
+          final cloudWallet = WalletModel.fromMap(data);
 
-        if (cloudWallet.isDeleted) {
-          await _localStorage.deleteWalletFromSync(cloudWallet.id);
-        } else {
-          await _localStorage.saveWalletFromSync(cloudWallet);
+          if (cloudWallet.isDeleted) {
+            await _localStorage.deleteWalletFromSync(cloudWallet.id);
+          } else {
+            await _localStorage.saveWalletFromSync(cloudWallet);
+          }
+        } catch (e) {
+          debugPrint("Error Pull Wallet ${doc.id}: $e");
         }
       }
-    } catch (e) {
-      debugPrint("Error Pull Wallets: $e");
+    }
+
+    // Đảm bảo SharedPreferences có current_wallet_id hợp lệ sau khi clone về
+    final prefs = await SharedPreferences.getInstance();
+    final currentWalletId = prefs.getString('current_wallet_id');
+    final allWallets = await _localStorage.getAllWallets();
+    if (allWallets.isNotEmpty) {
+      if (currentWalletId == null ||
+          !allWallets.any((w) => w.id == currentWalletId)) {
+        await prefs.setString('current_wallet_id', allWallets.first.id);
+        await prefs.setBool('create_first_wallet', true);
+      }
     }
   }
 
+  // ============================================================
+  // RECENT LOCATIONS
+  // ============================================================
+
   Future<void> _pushLocationChanges() async {
     final pendingItems = await _localStorage.getPendingRecentLocations();
-
     if (pendingItems.isEmpty) return;
 
     List<int> processedKeys = [];
-    final batch = _firestore.batch();
-
-    for (var item in pendingItems) {
+    await _commitInChunks(pendingItems, (batch, item) {
       final int key = item['key'];
       final String action = item['action'];
       final Map<String, dynamic> data = item['data'];
 
-      try {
-        if (action == 'UPSERT') {
-          final location = RecentLocationModel.fromMap(data);
-          final docRef = _userRef
-              .collection('recent_locations')
-              .doc(location.id);
-
-          batch.set(docRef, location.toMap(), SetOptions(merge: true));
-        }
-
-        processedKeys.add(key);
-      } catch (e) {
-        debugPrint("Error preparing item $key: $e");
+      if (action == 'UPSERT') {
+        final location = RecentLocationModel.fromMap(data);
+        final docRef = _userRef
+            .collection('recent_locations')
+            .doc(location.id);
+        batch.set(docRef, location.toMap(), SetOptions(merge: true));
       }
-    }
+      processedKeys.add(key);
+    });
 
-    try {
-      await batch.commit();
-
-      if (processedKeys.isNotEmpty) {
-        await _localStorage.removeSyncedRecentLocations(processedKeys);
-      }
-    } catch (e) {
-      debugPrint("Error Batch Commit Recent Locations: $e");
+    if (processedKeys.isNotEmpty) {
+      await _localStorage.removeSyncedRecentLocations(processedKeys);
     }
   }
 
   Future<void> _pullLocationChanges(int lastSyncTime) async {
-    try {
-      Query query = _userRef.collection('recent_locations');
+    Query query = _userRef.collection('recent_locations');
 
-      if (lastSyncTime > 0) {
-        final queryTimestamp = Timestamp.fromMillisecondsSinceEpoch(
-          lastSyncTime,
-        );
-        query = query.where('timestamp', isGreaterThan: queryTimestamp);
-      }
+    if (lastSyncTime > 0) {
+      final queryTimestamp = Timestamp.fromMillisecondsSinceEpoch(
+        lastSyncTime,
+      );
+      query = query.where('timestamp', isGreaterThan: queryTimestamp);
+    }
 
-      query = query.orderBy('timestamp', descending: true).limit(20);
+    query = query.orderBy('timestamp', descending: true).limit(20);
 
-      final snapshot = await query.get();
+    final snapshot = await query.get();
+    if (snapshot.docs.isEmpty) return;
 
-      if (snapshot.docs.isEmpty) return;
-
-      for (var doc in snapshot.docs) {
+    for (var doc in snapshot.docs) {
+      try {
         final data = doc.data() as Map<String, dynamic>;
         final location = RecentLocationModel.fromMap(data);
-
         await _localStorage.saveSyncedRecentLocation(location);
+      } catch (e) {
+        debugPrint("Error Pull Location ${doc.id}: $e");
       }
-    } catch (e) {
-      debugPrint("Error loading Recent Locations from Server: $e");
     }
   }
 
-  Future<void> _pushTransactions() async {
+  // ============================================================
+  // TRANSACTIONS
+  // ============================================================
+
+  Future<void> _pushTransactions(bool isInitialSync) async {
     final pending = await _localStorage.getPendingSyncTransactions();
-    if (pending.isEmpty) return;
 
-    List<int> processedKeys = [];
-    final batch = _firestore.batch();
+    if (pending.isNotEmpty) {
+      List<int> processedKeys = [];
+      await _commitInChunks(pending, (batch, item) {
+        final int key = item['key'];
+        final data = Map<String, dynamic>.from(item)..remove('key');
+        final tx = TransactionModel.fromMap(data);
 
-    for (var item in pending) {
-      final int key = item['key'];
-      final data = Map<String, dynamic>.from(item)..remove('key');
-      final tx = TransactionModel.fromMap(data);
+        final docRef = _userRef.collection('transactions').doc(tx.id);
+        Map<String, dynamic> txData = tx.toMap();
+        txData['updatedAt'] = FieldValue.serverTimestamp();
 
-      final docRef = _userRef.collection('transactions').doc(tx.id);
+        batch.set(docRef, txData, SetOptions(merge: true));
+        processedKeys.add(key);
+      });
 
-      Map<String, dynamic> txData = tx.toMap();
-      txData['updatedAt'] = FieldValue.serverTimestamp();
-
-      batch.set(docRef, txData, SetOptions(merge: true));
-      processedKeys.add(key);
-    }
-
-    try {
-      await batch.commit();
       if (processedKeys.isNotEmpty) {
         await _localStorage.removeSyncedTransactions(processedKeys);
       }
-    } catch (e) {
-      debugPrint("Error push transactions: $e");
+    } else if (isInitialSync) {
+      final allActive = await _localStorage.getAllActiveTransactions();
+      if (allActive.isNotEmpty) {
+        await _commitInChunks(allActive, (batch, tx) {
+          final docRef = _userRef.collection('transactions').doc(tx.id);
+          Map<String, dynamic> txData = tx.toMap();
+          txData['updatedAt'] = FieldValue.serverTimestamp();
+          batch.set(docRef, txData, SetOptions(merge: true));
+        });
+      }
     }
   }
 
   Future<void> _pullTransactions(int lastSyncTime) async {
-    try {
-      Query query = _userRef.collection('transactions');
+    Query query = _userRef.collection('transactions');
 
-      if (lastSyncTime > 0) {
-        final queryTimestamp = Timestamp.fromMillisecondsSinceEpoch(
-          lastSyncTime,
-        );
-        query = query.where('updatedAt', isGreaterThan: queryTimestamp);
-      }
+    if (lastSyncTime > 0) {
+      final queryTimestamp = Timestamp.fromMillisecondsSinceEpoch(
+        lastSyncTime,
+      );
+      query = query.where('updatedAt', isGreaterThan: queryTimestamp);
+    }
 
-      final snapshot = await query.get();
-      if (snapshot.docs.isEmpty) return;
+    final snapshot = await query.get();
+    if (snapshot.docs.isEmpty) return;
 
-      for (var doc in snapshot.docs) {
+    for (var doc in snapshot.docs) {
+      try {
         final data = doc.data() as Map<String, dynamic>;
         final tx = TransactionModel.fromMap(data);
 
@@ -370,56 +423,65 @@ class SyncService {
         } else {
           await _localStorage.saveTransactionFromSync(tx);
         }
+      } catch (e) {
+        debugPrint("Error Pull Transaction ${doc.id}: $e");
       }
-    } catch (e) {
-      debugPrint("Error Pull Transactions: $e");
     }
   }
 
-  Future<void> _pushBudgets() async {
+  // ============================================================
+  // BUDGETS
+  // ============================================================
+
+  Future<void> _pushBudgets(bool isInitialSync) async {
     final pending = await _localStorage.getPendingSyncBudgets();
-    if (pending.isEmpty) return;
 
-    List<int> processedKeys = [];
-    final batch = _firestore.batch();
+    if (pending.isNotEmpty) {
+      List<int> processedKeys = [];
+      await _commitInChunks(pending, (batch, item) {
+        final int key = item['key'];
+        final data = Map<String, dynamic>.from(item)..remove('key');
+        final budget = BudgetModel.fromMap(data);
 
-    for (var item in pending) {
-      final int key = item['key'];
-      final data = Map<String, dynamic>.from(item)..remove('key');
+        final docRef = _userRef.collection('budgets').doc(budget.id);
+        Map<String, dynamic> budgetData = budget.toMap();
+        budgetData['updatedAt'] = FieldValue.serverTimestamp();
 
-      final budget = BudgetModel.fromMap(data);
-      final docRef = _userRef.collection('budgets').doc(budget.id);
+        batch.set(docRef, budgetData, SetOptions(merge: true));
+        processedKeys.add(key);
+      });
 
-      Map<String, dynamic> budgetData = budget.toMap();
-
-      budgetData['updatedAt'] = FieldValue.serverTimestamp();
-      batch.set(docRef, budgetData, SetOptions(merge: true));
-      processedKeys.add(key);
-    }
-
-    try {
-      await batch.commit();
-      await _localStorage.removeSyncedBudgets(processedKeys);
-    } catch (e) {
-      debugPrint("Error push budgets: $e");
+      if (processedKeys.isNotEmpty) {
+        await _localStorage.removeSyncedBudgets(processedKeys);
+      }
+    } else if (isInitialSync) {
+      final allBudgets = await _localStorage.getAllActiveBudgets();
+      if (allBudgets.isNotEmpty) {
+        await _commitInChunks(allBudgets, (batch, budget) {
+          final docRef = _userRef.collection('budgets').doc(budget.id);
+          Map<String, dynamic> budgetData = budget.toMap();
+          budgetData['updatedAt'] = FieldValue.serverTimestamp();
+          batch.set(docRef, budgetData, SetOptions(merge: true));
+        });
+      }
     }
   }
 
   Future<void> _pullBudgets(int lastSyncTime) async {
-    try {
-      Query query = _userRef.collection('budgets');
+    Query query = _userRef.collection('budgets');
 
-      if (lastSyncTime > 0) {
-        final queryTimestamp = Timestamp.fromMillisecondsSinceEpoch(
-          lastSyncTime,
-        );
-        query = query.where('updatedAt', isGreaterThan: queryTimestamp);
-      }
+    if (lastSyncTime > 0) {
+      final queryTimestamp = Timestamp.fromMillisecondsSinceEpoch(
+        lastSyncTime,
+      );
+      query = query.where('updatedAt', isGreaterThan: queryTimestamp);
+    }
 
-      final snapshot = await query.get();
-      if (snapshot.docs.isEmpty) return;
+    final snapshot = await query.get();
+    if (snapshot.docs.isEmpty) return;
 
-      for (var doc in snapshot.docs) {
+    for (var doc in snapshot.docs) {
+      try {
         final data = doc.data() as Map<String, dynamic>;
         final cloudBudget = BudgetModel.fromMap(data);
 
@@ -428,9 +490,9 @@ class SyncService {
         } else {
           await _localStorage.saveBudgetFromSync(cloudBudget);
         }
+      } catch (e) {
+        debugPrint("Error Pull Budget ${doc.id}: $e");
       }
-    } catch (e) {
-      debugPrint("Error pull budgets: $e");
     }
   }
 }

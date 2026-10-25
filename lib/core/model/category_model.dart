@@ -72,15 +72,15 @@ class CategoryModel {
 
   factory CategoryModel.fromMap(Map<String, dynamic> map) {
     return CategoryModel(
-      id: map['id'],
-      name: map['name'],
-      l10nKey: map['l10nKey'],
-      iconKey: map['iconKey'],
-      color: Color(map['colorValue']),
-      count: map['count'] ?? 0,
+      id: map['id']?.toString(),
+      name: map['name']?.toString() ?? '',
+      l10nKey: map['l10nKey']?.toString(),
+      iconKey: map['iconKey']?.toString() ?? 'folder',
+      color: Color((map['colorValue'] as num?)?.toInt() ?? 0xFF4CAF50),
+      count: (map['count'] as num?)?.toInt() ?? 0,
 
       isCustom: map['isCustom'] == 1 || map['isCustom'] == true,
-      remoteIconUrl: map['remoteIconUrl'],
+      remoteIconUrl: map['remoteIconUrl']?.toString(),
 
       isDeleted: map['isDeleted'] == 1 || map['isDeleted'] == true,
       updatedAt: _parseTime(map['updatedAt']),
