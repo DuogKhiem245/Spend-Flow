@@ -1,16 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:spend_flow/assets/languages/app_localizations.dart';
+import 'package:spend_flow/core/data/category_data.dart';
 import 'package:spend_flow/core/model/category_model.dart';
 
 class CategoryHelper {
-  static String getTranslatedName(
-    BuildContext context,
-    CategoryModel category,
-  ) {
-    if (category.l10nKey == null) return category.name;
+  static String? _resolveL10nKey(CategoryModel category) {
+    if (category.l10nKey != null && category.l10nKey!.isNotEmpty) {
+      return category.l10nKey;
+    }
+    // Fallback: Tìm trong sampleCategories theo id hoặc theo name
+    try {
+      final matched = CategoryData.sampleCategories.where((c) {
+        if (c.id == category.id) return true;
+        if (c.name.trim().toLowerCase() == category.name.trim().toLowerCase()) {
+          return true;
+        }
+        return false;
+      }).firstOrNull;
+      return matched?.l10nKey;
+    } catch (_) {
+      return null;
+    }
+  }
 
-    final l10n = AppLocalizations.of(context)!;
-
+  static String? _getLocalizedKey(AppLocalizations l10n, String key) {
     final Map<String, String> localizedMap = {
       'category_food': l10n.category_food,
       'category_transport': l10n.category_transport,
@@ -41,6 +54,34 @@ class CategoryHelper {
       'category_tax': l10n.category_tax,
     };
 
-    return localizedMap[category.l10nKey] ?? category.name;
+    return localizedMap[key];
+  }
+
+  static String getTranslatedName(
+    BuildContext context,
+    CategoryModel category,
+  ) {
+    final key = _resolveL10nKey(category);
+    if (key == null) return category.name;
+
+    final l10n = AppLocalizations.of(context);
+    if (l10n == null) return category.name;
+
+    return _getLocalizedKey(l10n, key) ?? category.name;
+  }
+
+  static String getTranslatedNameByLocale(
+    Locale locale,
+    CategoryModel category,
+  ) {
+    final key = _resolveL10nKey(category);
+    if (key == null) return category.name;
+
+    try {
+      final l10n = lookupAppLocalizations(locale);
+      return _getLocalizedKey(l10n, key) ?? category.name;
+    } catch (_) {
+      return category.name;
+    }
   }
 }

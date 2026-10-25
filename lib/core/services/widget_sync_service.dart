@@ -4,6 +4,7 @@ import 'package:home_widget/home_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 import 'package:spend_flow/core/services/general_service/language_service.dart';
+import 'package:spend_flow/core/utils/category_helper.dart';
 
 class WidgetSyncService {
   static final WidgetSyncService _instance = WidgetSyncService._internal();
@@ -24,6 +25,7 @@ class WidgetSyncService {
   Future<void> updateAllWidgets() async {
     try {
       final langCode = LanguageService().currentLanguageCode;
+      final currentLocale = LanguageService().locale;
       await HomeWidget.saveWidgetData<String>('app_language', langCode);
 
       final currencyData = await _storage.getCurrency();
@@ -71,12 +73,16 @@ class WidgetSyncService {
       final recentList = allTransactions.take(6).map((tx) {
         final prefix = tx.isIncome ? '+' : '-';
         final formatted = '$prefix${numberFormatter.format(tx.amount)} $symbol';
+        final localizedCategoryName = CategoryHelper.getTranslatedNameByLocale(
+          currentLocale,
+          tx.category,
+        );
         return {
           'id': tx.id,
           'title': tx.title,
           'amount': tx.amount,
           'formattedAmount': formatted,
-          'categoryName': tx.category.name,
+          'categoryName': localizedCategoryName,
           'categoryColor': '#${tx.category.color.toARGB32().toRadixString(16).padLeft(8, '0')}',
           'iconKey': tx.category.iconKey,
           'isIncome': tx.isIncome,
@@ -142,8 +148,13 @@ class WidgetSyncService {
         totalBudget += b.total;
         totalSpent += b.spent;
 
+        final localizedCategoryName = CategoryHelper.getTranslatedNameByLocale(
+          currentLocale,
+          b.category,
+        );
+
         categoryBudgets.add({
-          'name': b.name,
+          'name': localizedCategoryName,
           'total': b.total,
           'spent': b.spent,
           'remaining': b.remaining,
