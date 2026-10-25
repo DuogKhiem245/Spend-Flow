@@ -26,15 +26,33 @@ class WidgetSyncService {
       final langCode = LanguageService().currentLanguageCode;
       await HomeWidget.saveWidgetData<String>('app_language', langCode);
 
+      final currencyData = await _storage.getCurrency();
+      final symbol = currencyData['symbol'] ?? '\$';
+      final formattedZero = '0 $symbol';
+
       final walletId = await _storage.getCurrentWalletId();
       if (walletId.isEmpty) {
+        await HomeWidget.saveWidgetData<String>('total_balance', formattedZero);
+        await HomeWidget.saveWidgetData<String>('wallet_balance', formattedZero);
+        await HomeWidget.saveWidgetData<String>('recent_transactions', '[]');
+        await HomeWidget.saveWidgetData<String>('monthly_income', formattedZero);
+        await HomeWidget.saveWidgetData<String>('monthly_total_income', formattedZero);
+        await HomeWidget.saveWidgetData<String>('monthly_expense', formattedZero);
+        await HomeWidget.saveWidgetData<String>('monthly_total_expense', formattedZero);
+        await HomeWidget.saveWidgetData<String>('monthly_daily_chart', '[]');
+        await HomeWidget.saveWidgetData<String>('budget_total', formattedZero);
+        await HomeWidget.saveWidgetData<String>('budget_spent', formattedZero);
+        await HomeWidget.saveWidgetData<String>('budget_remaining', formattedZero);
+        await HomeWidget.saveWidgetData<double>('budget_progress', 0.0);
+        await HomeWidget.saveWidgetData<String>('budget_percent', '0%');
+        await HomeWidget.saveWidgetData<String>('category_budgets', '[]');
+        await HomeWidget.saveWidgetData<String>('currency_symbol', symbol);
+
         await HomeWidget.updateWidget(iOSName: 'RecentTransactionsWidget', androidName: 'RecentTransactionsWidgetProvider');
         await HomeWidget.updateWidget(iOSName: 'MonthlyChartWidget', androidName: 'MonthlyChartWidgetProvider');
         await HomeWidget.updateWidget(iOSName: 'RemainingBudgetWidget', androidName: 'RemainingBudgetWidgetProvider');
         return;
       }
-      final currencyData = await _storage.getCurrency();
-      final symbol = currencyData['symbol'] ?? '\$';
 
       final numberFormatter = NumberFormat("#,###");
 
