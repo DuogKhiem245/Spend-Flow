@@ -224,7 +224,7 @@ class _MyAppState extends State<MyApp> {
                 GlobalCupertinoLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,
               ],
-              supportedLocales: [const Locale('en'), const Locale('vi')],
+              supportedLocales: AppLocalizations.supportedLocales,
               initialRoute: AppRoutes.main,
               routes: AppRoutes.getRoutes(
                 onboardDone: widget.onboardDone,

@@ -2059,16 +2059,12 @@
     "description": "Delete account failed"
   },
   "left": "left",
-  "@left":{
+  "@left": {
     "description": "left"
   },
   "edit_transaction": "Edit Transaction",
   "@edit_transaction": {
     "description": "Edit transaction"
-  },
-  "save_changes": "Save Changes",
-  "@save_changes": {
-    "description": "Save changes"
   },
   "save_expense_change": "Update Expense",
   "@save_expense_change": {
@@ -2097,10 +2093,6 @@
   "feature_under_development": "This feature is currently under development and will be available in upcoming updates!",
   "@feature_under_development": {
     "description": "Feature under development"
-  },
-  "recent_transactions": "Recent Transactions",
-  "@recent_transactions": {
-    "description": "Recent transactions"
   },
   "remaining_budget": "Remaining Budget",
   "@remaining_budget": {

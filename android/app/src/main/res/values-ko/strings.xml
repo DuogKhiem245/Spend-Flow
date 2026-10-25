@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_remaining_balance">잔액</string>
+    <string name="widget_empty_tx">최근 내역이 없습니다</string>
+    <string name="widget_monthly_chart">월별 차트</string>
+    <string name="widget_overview_income_expense">수입/지출 개요</string>
+    <string name="widget_total_income">총 수입</string>
+    <string name="widget_total_expense">총 지출</string>
+    <string name="widget_daily_spending">일일 지출</string>
+    <string name="widget_remaining_budget">남은 예산</string>
+    <string name="widget_budget_spent_total">지출: %1$s / %2$s</string>
+    <string name="widget_cat_remaining">남음 %1$s</string>
+    <string name="widget_default_category">카테고리</string>
+    <string name="widget_default_transaction">거래</string>
+</resources>

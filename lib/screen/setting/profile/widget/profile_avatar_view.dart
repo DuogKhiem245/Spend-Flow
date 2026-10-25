@@ -69,7 +69,7 @@ class ProfileAvatar extends StatelessWidget {
       return Image.network(
         photoUrl!,
         fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) => _defaultIcon(),
+        errorBuilder: (_, _, _) => _defaultIcon(),
         loadingBuilder: (_, child, p) => p == null
             ? child
             : const Center(child: CupertinoActivityIndicator()),

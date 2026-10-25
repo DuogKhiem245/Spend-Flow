@@ -48,7 +48,7 @@ class HomeHeader extends StatelessWidget {
                           ? Image.network(
                               photoUrl,
                               fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) => Image.asset(
+                              errorBuilder: (_, _, _) => Image.asset(
                                 'lib/assets/images/avatar.png',
                                 fit: BoxFit.cover,
                               ),

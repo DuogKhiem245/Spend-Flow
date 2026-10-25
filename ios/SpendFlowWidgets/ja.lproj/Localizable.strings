@@ -1,0 +1,21 @@
+/* SpendFlowWidgets Japanese Localization */
+"remaining_balance" = "残高";
+"no_transactions" = "取引なし";
+"no_recent_transactions" = "最近の取引はありません";
+"monthly_chart" = "今月のグラフ";
+"overview_income_expense" = "収支の概要";
+"total_income" = "総収入";
+"total_expense" = "総支出";
+"remaining_budget" = "残りの予算";
+"budget_remaining_short" = "残り";
+"spent_label" = "使用済";
+"spent_format" = "支出: %@";
+"total_format" = "合計: %@";
+"used_percent_format" = "使用率 %@";
+"no_budget_title" = "予算なし";
+"no_budget_desc" = "今月の予算は設定されていません";
+"category" = "カテゴリー";
+"remaining_prefix" = "残り";
+"daily_spending" = "日別支出";
+"by_category" = "カテゴリー別";
+"no_category_budget" = "カテゴリー別予算なし";

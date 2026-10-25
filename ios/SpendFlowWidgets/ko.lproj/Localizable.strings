@@ -1,0 +1,21 @@
+/* SpendFlowWidgets Korean Localization */
+"remaining_balance" = "남은 잔액";
+"no_transactions" = "내역 없음";
+"no_recent_transactions" = "최근 거래 내역이 없습니다";
+"monthly_chart" = "이번 달 차트";
+"overview_income_expense" = "수입 및 지출";
+"total_income" = "총수입";
+"total_expense" = "총지출";
+"remaining_budget" = "남은 예산";
+"budget_remaining_short" = "남은 금액";
+"spent_label" = "사용됨";
+"spent_format" = "지출: %@";
+"total_format" = "총액: %@";
+"used_percent_format" = "사용됨 %@";
+"no_budget_title" = "예산 없음";
+"no_budget_desc" = "이번 달 예산이 설정되지 않았습니다";
+"category" = "카테고리";
+"remaining_prefix" = "남음";
+"daily_spending" = "일별 지출";
+"by_category" = "카테고리별";
+"no_category_budget" = "카테고리별 예산 없음";

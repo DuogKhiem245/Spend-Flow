@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_remaining_balance">剩余金额</string>
+    <string name="widget_empty_tx">近期暂无交易</string>
+    <string name="widget_monthly_chart">本月图表</string>
+    <string name="widget_overview_income_expense">收支总览</string>
+    <string name="widget_total_income">总收入</string>
+    <string name="widget_total_expense">总支出</string>
+    <string name="widget_daily_spending">每日支出</string>
+    <string name="widget_remaining_budget">剩余预算</string>
+    <string name="widget_budget_spent_total">已支出: %1$s / %2$s</string>
+    <string name="widget_cat_remaining">剩余 %1$s</string>
+    <string name="widget_default_category">分类</string>
+    <string name="widget_default_transaction">交易</string>
+</resources>

@@ -1,0 +1,21 @@
+/* SpendFlowWidgets Traditional Chinese Localization */
+"remaining_balance" = "剩餘金額";
+"no_transactions" = "暫無交易";
+"no_recent_transactions" = "近期暫無交易";
+"monthly_chart" = "本月圖表";
+"overview_income_expense" = "收支總覽";
+"total_income" = "總收入";
+"total_expense" = "總支出";
+"remaining_budget" = "剩餘預算";
+"budget_remaining_short" = "剩餘";
+"spent_label" = "已用";
+"spent_format" = "已支出: %@";
+"total_format" = "總計: %@";
+"used_percent_format" = "已使用 %@",
+"no_budget_title" = "暫無預算";
+"no_budget_desc" = "本月尚未設定預算";
+"category" = "類別";
+"remaining_prefix" = "剩餘";
+"daily_spending" = "每日支出";
+"by_category" = "按類別";
+"no_category_budget" = "暫無類別預算";

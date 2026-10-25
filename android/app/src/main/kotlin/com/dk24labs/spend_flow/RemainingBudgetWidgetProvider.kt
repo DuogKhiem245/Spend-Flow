@@ -27,7 +27,16 @@ class RemainingBudgetWidgetProvider : HomeWidgetProvider() {
 
 
                 val lang = widgetData.getString("app_language", null)
-                val locale = if (lang != null && lang.startsWith("en", ignoreCase = true)) java.util.Locale.ENGLISH else java.util.Locale("vi")
+                val locale = when {
+                    lang == null -> java.util.Locale("vi")
+                    lang.startsWith("en", ignoreCase = true) -> java.util.Locale.ENGLISH
+                    lang.contains("hant", ignoreCase = true) || lang.contains("tw", ignoreCase = true) || lang.contains("hk", ignoreCase = true) -> java.util.Locale.TRADITIONAL_CHINESE
+                    lang.startsWith("zh", ignoreCase = true) -> java.util.Locale.SIMPLIFIED_CHINESE
+                    lang.startsWith("ja", ignoreCase = true) -> java.util.Locale.JAPANESE
+                    lang.startsWith("ko", ignoreCase = true) -> java.util.Locale.KOREAN
+                    lang.startsWith("es", ignoreCase = true) -> java.util.Locale("es")
+                    else -> java.util.Locale("vi")
+                }
                 val config = android.content.res.Configuration(context.resources.configuration)
                 config.setLocale(locale)
                 val localizedContext = context.createConfigurationContext(config)
@@ -41,6 +50,7 @@ class RemainingBudgetWidgetProvider : HomeWidgetProvider() {
                 val spentAndTotalText = localizedContext.getString(R.string.widget_budget_spent_total, spent, total)
                 val defaultCategoryText = localizedContext.getString(R.string.widget_default_category)
 
+                setTextViewText(R.id.tv_remaining_budget_label, localizedContext.getString(R.string.widget_remaining_budget))
                 setTextViewText(R.id.tv_budget_remaining, remaining)
                 setTextViewText(R.id.tv_spent_and_total, spentAndTotalText)
                 setTextViewText(R.id.tv_budget_percent, percent)

@@ -21,19 +21,53 @@ class LanguageService extends ChangeNotifier {
 
   Locale get locale => _locale;
 
+  static Locale parseLocale(String code) {
+    if (code.contains('_') || code.contains('-')) {
+      final parts = code.split(RegExp(r'[-_]'));
+      if (parts.length >= 2) {
+        if (parts[1].length == 4) {
+          return Locale.fromSubtags(languageCode: parts[0], scriptCode: parts[1]);
+        } else {
+          return Locale(parts[0], parts[1]);
+        }
+      }
+    }
+    return Locale(code);
+  }
+
   String get currentLanguageCode {
+    if (_locale.scriptCode != null && _locale.scriptCode!.isNotEmpty) {
+      return '${_locale.languageCode}_${_locale.scriptCode}';
+    }
+    if (_locale.countryCode != null && _locale.countryCode!.isNotEmpty) {
+      return '${_locale.languageCode}_${_locale.countryCode}';
+    }
     return _locale.languageCode;
   }
 
   Future<void> _loadLanguage() async {
     final savedLang = await _storageService.getString(_langKey);
-     if (savedLang != null) {
-      _locale = Locale(savedLang);
+    if (savedLang != null) {
+      _locale = parseLocale(savedLang);
     } else {
       final systemLocale = WidgetsBinding.instance.platformDispatcher.locale;
-      
-      if (systemLocale.languageCode == 'vi') {
+      final code = systemLocale.languageCode;
+      if (code == 'vi') {
         _locale = const Locale('vi');
+      } else if (code == 'zh') {
+        if (systemLocale.scriptCode == 'Hant' ||
+            systemLocale.countryCode == 'TW' ||
+            systemLocale.countryCode == 'HK') {
+          _locale = const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant');
+        } else {
+          _locale = const Locale('zh');
+        }
+      } else if (code == 'ja') {
+        _locale = const Locale('ja');
+      } else if (code == 'ko') {
+        _locale = const Locale('ko');
+      } else if (code == 'es') {
+        _locale = const Locale('es');
       } else {
         _locale = const Locale('en');
       }
@@ -42,9 +76,9 @@ class LanguageService extends ChangeNotifier {
   }
 
   Future<void> changeLanguage(String languageCode) async {
-    if (_locale.languageCode == languageCode) return;
+    if (currentLanguageCode == languageCode) return;
 
-    _locale = Locale(languageCode);
+    _locale = parseLocale(languageCode);
     await _storageService.saveString(_langKey, languageCode);
     notifyListeners();
 

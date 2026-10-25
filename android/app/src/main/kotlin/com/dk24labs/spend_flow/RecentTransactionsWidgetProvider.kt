@@ -32,10 +32,21 @@ class RecentTransactionsWidgetProvider : HomeWidgetProvider() {
 
                 // Recent Transactions JSON
                 val lang = widgetData.getString("app_language", null)
-                val locale = if (lang != null && lang.startsWith("en", ignoreCase = true)) java.util.Locale.ENGLISH else java.util.Locale("vi")
+                val locale = when {
+                    lang == null -> java.util.Locale("vi")
+                    lang.startsWith("en", ignoreCase = true) -> java.util.Locale.ENGLISH
+                    lang.contains("hant", ignoreCase = true) || lang.contains("tw", ignoreCase = true) || lang.contains("hk", ignoreCase = true) -> java.util.Locale.TRADITIONAL_CHINESE
+                    lang.startsWith("zh", ignoreCase = true) -> java.util.Locale.SIMPLIFIED_CHINESE
+                    lang.startsWith("ja", ignoreCase = true) -> java.util.Locale.JAPANESE
+                    lang.startsWith("ko", ignoreCase = true) -> java.util.Locale.KOREAN
+                    lang.startsWith("es", ignoreCase = true) -> java.util.Locale("es")
+                    else -> java.util.Locale("vi")
+                }
                 val config = android.content.res.Configuration(context.resources.configuration)
                 config.setLocale(locale)
                 val localizedContext = context.createConfigurationContext(config)
+                setTextViewText(R.id.tv_balance_label, localizedContext.getString(R.string.widget_remaining_balance))
+                setTextViewText(R.id.tv_empty_tx, localizedContext.getString(R.string.widget_empty_tx))
                 val defaultTxTitle = localizedContext.getString(R.string.widget_default_transaction)
 
                 val txJson = widgetData.getString("recent_transactions", null)

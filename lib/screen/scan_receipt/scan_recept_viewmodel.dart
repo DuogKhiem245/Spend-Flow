@@ -360,7 +360,7 @@ class ScanReceiptViewModel extends ChangeNotifier {
       controller = null;
     } else if (state == AppLifecycleState.resumed) {
       Permission.camera.status.then((status) {
-        if (status.isGranted) {
+        if (status.isGranted && context.mounted) {
           initCamera(context);
         }
       });

@@ -148,7 +148,7 @@ class VoiceInputViewModel extends ChangeNotifier {
     final hasPermission = await _checkPermission(context);
     if (!hasPermission) return;
 
-    if (!_isSpeechEnabled) {
+    if (!_isSpeechEnabled && context.mounted) {
       await initSpeech(context: context, isFromWidget: isFromWidget);
     }
 

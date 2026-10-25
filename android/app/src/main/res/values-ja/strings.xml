@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_remaining_balance">残高</string>
+    <string name="widget_empty_tx">最近の取引はありません</string>
+    <string name="widget_monthly_chart">月間チャート</string>
+    <string name="widget_overview_income_expense">収支概要</string>
+    <string name="widget_total_income">総収入</string>
+    <string name="widget_total_expense">総支出</string>
+    <string name="widget_daily_spending">日別支出</string>
+    <string name="widget_remaining_budget">残りの予算</string>
+    <string name="widget_budget_spent_total">支出: %1$s / %2$s</string>
+    <string name="widget_cat_remaining">残り %1$s</string>
+    <string name="widget_default_category">カテゴリー</string>
+    <string name="widget_default_transaction">取引</string>
+</resources>
