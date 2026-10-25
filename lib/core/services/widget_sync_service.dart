@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
+import 'package:spend_flow/core/services/general_service/language_service.dart';
 
 class WidgetSyncService {
   static final WidgetSyncService _instance = WidgetSyncService._internal();
@@ -22,8 +23,16 @@ class WidgetSyncService {
 
   Future<void> updateAllWidgets() async {
     try {
+      final langCode = LanguageService().currentLanguageCode;
+      await HomeWidget.saveWidgetData<String>('app_language', langCode);
+
       final walletId = await _storage.getCurrentWalletId();
-      if (walletId.isEmpty) return;
+      if (walletId.isEmpty) {
+        await HomeWidget.updateWidget(iOSName: 'RecentTransactionsWidget', androidName: 'RecentTransactionsWidgetProvider');
+        await HomeWidget.updateWidget(iOSName: 'MonthlyChartWidget', androidName: 'MonthlyChartWidgetProvider');
+        await HomeWidget.updateWidget(iOSName: 'RemainingBudgetWidget', androidName: 'RemainingBudgetWidgetProvider');
+        return;
+      }
       final currencyData = await _storage.getCurrency();
       final symbol = currencyData['symbol'] ?? '\$';
 
@@ -53,7 +62,7 @@ class WidgetSyncService {
           'categoryColor': '#${tx.category.color.toARGB32().toRadixString(16).padLeft(8, '0')}',
           'iconKey': tx.category.iconKey,
           'isIncome': tx.isIncome,
-          'date': DateFormat('dd/MM HH:mm').format(tx.date),
+          'date': DateFormat('dd/MM HH:mm', langCode).format(tx.date),
         };
       }).toList();
 

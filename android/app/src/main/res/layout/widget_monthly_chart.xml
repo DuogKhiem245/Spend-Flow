@@ -23,14 +23,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Biểu đồ tháng này"
+                android:text="@string/widget_monthly_chart"
                 android:textColor="#9E9EA7"
                 android:textSize="12sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tổng quan thu chi"
+                android:text="@string/widget_overview_income_expense"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -57,7 +57,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tổng thu"
+                android:text="@string/widget_total_income"
                 android:textColor="#9E9EA7"
                 android:textSize="10sp" />
 
@@ -86,7 +86,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tổng chi"
+                android:text="@string/widget_total_expense"
                 android:textColor="#9E9EA7"
                 android:textSize="10sp" />
 
@@ -108,7 +108,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:layout_marginBottom="6dp"
-        android:text="Chi tiêu các ngày gần nhất"
+        android:text="@string/widget_daily_spending"
         android:textColor="#9E9EA7"
         android:textSize="11sp"
         android:textStyle="bold" />

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_remaining_balance">Số dư còn lại</string>
+    <string name="widget_empty_tx">Chưa có giao dịch gần đây</string>
+    <string name="widget_monthly_chart">Biểu đồ tháng này</string>
+    <string name="widget_overview_income_expense">Tổng quan thu chi</string>
+    <string name="widget_total_income">Tổng thu</string>
+    <string name="widget_total_expense">Tổng chi</string>
+    <string name="widget_daily_spending">Chi tiêu theo ngày</string>
+    <string name="widget_remaining_budget">Ngân sách còn lại</string>
+    <string name="widget_budget_spent_total">Đã tiêu: %1$s / %2$s</string>
+    <string name="widget_cat_remaining">Còn %1$s</string>
+    <string name="widget_default_category">Danh mục</string>
+    <string name="widget_default_transaction">Giao dịch</string>
+</resources>

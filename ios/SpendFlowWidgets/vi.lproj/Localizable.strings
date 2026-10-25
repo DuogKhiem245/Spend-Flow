@@ -1,0 +1,22 @@
+/* SpendFlowWidgets Vietnamese Localization */
+"remaining_balance" = "Số dư còn lại";
+"no_transactions" = "Chưa có giao dịch";
+"no_recent_transactions" = "Chưa có giao dịch nào gần đây";
+"monthly_chart" = "Biểu đồ tháng này";
+"overview_income_expense" = "Tổng quan thu chi";
+"total_income" = "Tổng thu";
+"total_expense" = "Tổng chi";
+"remaining_budget" = "Ngân sách còn lại";
+"budget_remaining_short" = "Ngân sách còn";
+"spent_label" = "Đã dùng";
+"spent_format" = "Đã tiêu: %@";
+"total_format" = "Tổng: %@";
+"used_percent_format" = "Đã sử dụng %@";
+"no_budget_title" = "Chưa có ngân sách";
+"no_budget_desc" = "Chưa thiết lập ngân sách tháng này";
+"category" = "Danh mục";
+"remaining_prefix" = "Còn";
+"daily_spending" = "Chi tiêu theo ngày";
+"by_category" = "Theo danh mục";
+"no_category_budget" = "Chưa có ngân sách theo danh mục";
+

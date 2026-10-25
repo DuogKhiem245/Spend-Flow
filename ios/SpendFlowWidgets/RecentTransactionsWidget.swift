@@ -18,6 +18,7 @@ struct RecentTransactionsEntry: TimelineEntry {
     let date: Date
     let totalBalance: String
     let transactions: [WidgetTransaction]
+    let language: String
 }
 
 // MARK: - Timeline Provider
@@ -31,7 +32,8 @@ struct RecentTransactionsProvider: TimelineProvider {
             transactions: [
                 WidgetTransaction(id: "1", title: "Cà phê sáng", amount: 35000, formattedAmount: "-35,000 ₫", categoryName: "Ăn uống", categoryColor: "#FF5722", iconKey: "food", isIncome: false, date: "Hôm nay"),
                 WidgetTransaction(id: "2", title: "Lương tháng", amount: 20000000, formattedAmount: "+20,000,000 ₫", categoryName: "Lương", categoryColor: "#4CAF50", iconKey: "salary", isIncome: true, date: "Hôm qua")
-            ]
+            ],
+            language: "vi"
         )
     }
 
@@ -49,6 +51,7 @@ struct RecentTransactionsProvider: TimelineProvider {
     private func loadData() -> RecentTransactionsEntry {
         let prefs = UserDefaults(suiteName: appGroupId)
         let totalBalance = prefs?.string(forKey: "total_balance") ?? "0 ₫"
+        let language = prefs?.string(forKey: "app_language") ?? "vi"
         var transactions: [WidgetTransaction] = []
 
         if let jsonStr = prefs?.string(forKey: "recent_transactions"),
@@ -63,7 +66,8 @@ struct RecentTransactionsProvider: TimelineProvider {
         return RecentTransactionsEntry(
             date: Date(),
             totalBalance: totalBalance,
-            transactions: transactions
+            transactions: transactions,
+            language: language
         )
     }
 }
@@ -97,7 +101,7 @@ struct SmallRecentView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
-                Text("Số dư còn lại")
+                Text(WidgetStrings.get("remaining_balance", lang: entry.language))
                     .font(.system(size: 11, weight: .medium))
                     .foregroundColor(.secondary)
                 Spacer()
@@ -124,7 +128,7 @@ struct SmallRecentView: View {
                         .foregroundColor(.secondary)
                 }
             } else {
-                Text("Chưa có giao dịch")
+                Text(WidgetStrings.get("no_transactions", lang: entry.language))
                     .font(.system(size: 11))
                     .foregroundColor(.secondary)
             }
@@ -142,7 +146,7 @@ struct MediumRecentView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Số dư còn lại")
+                    Text(WidgetStrings.get("remaining_balance", lang: entry.language))
                         .font(.system(size: 11, weight: .medium))
                         .foregroundColor(.secondary)
                     Text(entry.totalBalance)
@@ -155,7 +159,7 @@ struct MediumRecentView: View {
 
             if entry.transactions.isEmpty {
                 Spacer()
-                Text("Chưa có giao dịch nào gần đây")
+                Text(WidgetStrings.get("no_recent_transactions", lang: entry.language))
                     .font(.system(size: 12))
                     .foregroundColor(.secondary)
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -202,7 +206,7 @@ struct LargeRecentView: View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Số dư còn lại")
+                    Text(WidgetStrings.get("remaining_balance", lang: entry.language))
                         .font(.system(size: 12, weight: .medium))
                         .foregroundColor(.secondary)
                     Text(entry.totalBalance)
@@ -215,7 +219,7 @@ struct LargeRecentView: View {
 
             if entry.transactions.isEmpty {
                 Spacer()
-                Text("Chưa có giao dịch nào được ghi nhận")
+                Text(WidgetStrings.get("no_recent_transactions", lang: entry.language))
                     .font(.system(size: 13))
                     .foregroundColor(.secondary)
                     .frame(maxWidth: .infinity, alignment: .center)

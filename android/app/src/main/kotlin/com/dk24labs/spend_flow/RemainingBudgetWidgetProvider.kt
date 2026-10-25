@@ -26,14 +26,23 @@ class RemainingBudgetWidgetProvider : HomeWidgetProvider() {
                 setOnClickPendingIntent(R.id.widget_container, appIntent)
 
 
+                val lang = widgetData.getString("app_language", null)
+                val locale = if (lang != null && lang.startsWith("en", ignoreCase = true)) java.util.Locale.ENGLISH else java.util.Locale("vi")
+                val config = android.content.res.Configuration(context.resources.configuration)
+                config.setLocale(locale)
+                val localizedContext = context.createConfigurationContext(config)
+
                 val remaining = widgetData.getString("budget_remaining", "0 ₫") ?: "0 ₫"
                 val spent = widgetData.getString("budget_spent", "0 ₫") ?: "0 ₫"
                 val total = widgetData.getString("budget_total", "0 ₫") ?: "0 ₫"
                 val percent = widgetData.getString("budget_percent", "0%") ?: "0%"
                 val progressDouble = widgetData.getFloat("budget_progress", 0.0f)
 
+                val spentAndTotalText = localizedContext.getString(R.string.widget_budget_spent_total, spent, total)
+                val defaultCategoryText = localizedContext.getString(R.string.widget_default_category)
+
                 setTextViewText(R.id.tv_budget_remaining, remaining)
-                setTextViewText(R.id.tv_spent_and_total, "Đã tiêu: $spent / $total")
+                setTextViewText(R.id.tv_spent_and_total, spentAndTotalText)
                 setTextViewText(R.id.tv_budget_percent, percent)
 
                 val progressInt = (progressDouble * 100).toInt().coerceIn(0, 100)
@@ -56,8 +65,9 @@ class RemainingBudgetWidgetProvider : HomeWidgetProvider() {
                         if (array.length() > 0) {
                             val cat1 = array.getJSONObject(0)
                             setViewVisibility(R.id.row_cat_1, View.VISIBLE)
-                            setTextViewText(R.id.tv_cat1_name, cat1.optString("name", "Danh mục"))
-                            setTextViewText(R.id.tv_cat1_remaining, "Còn " + cat1.optString("formattedRemaining", "0 ₫"))
+                            setTextViewText(R.id.tv_cat1_name, cat1.optString("name", defaultCategoryText))
+                            val cat1Remaining = localizedContext.getString(R.string.widget_cat_remaining, cat1.optString("formattedRemaining", "0 ₫"))
+                            setTextViewText(R.id.tv_cat1_remaining, cat1Remaining)
                         } else {
                             setViewVisibility(R.id.row_cat_1, View.GONE)
                         }
@@ -65,8 +75,9 @@ class RemainingBudgetWidgetProvider : HomeWidgetProvider() {
                         if (array.length() > 1) {
                             val cat2 = array.getJSONObject(1)
                             setViewVisibility(R.id.row_cat_2, View.VISIBLE)
-                            setTextViewText(R.id.tv_cat2_name, cat2.optString("name", "Danh mục"))
-                            setTextViewText(R.id.tv_cat2_remaining, "Còn " + cat2.optString("formattedRemaining", "0 ₫"))
+                            setTextViewText(R.id.tv_cat2_name, cat2.optString("name", defaultCategoryText))
+                            val cat2Remaining = localizedContext.getString(R.string.widget_cat_remaining, cat2.optString("formattedRemaining", "0 ₫"))
+                            setTextViewText(R.id.tv_cat2_remaining, cat2Remaining)
                         } else {
                             setViewVisibility(R.id.row_cat_2, View.GONE)
                         }

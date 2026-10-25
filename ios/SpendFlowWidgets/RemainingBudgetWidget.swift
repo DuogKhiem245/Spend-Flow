@@ -22,6 +22,7 @@ struct RemainingBudgetEntry: TimelineEntry {
     let budgetProgress: Double
     let budgetPercent: String
     let categories: [WidgetCategoryBudget]
+    let language: String
 }
 
 // MARK: - Timeline Provider
@@ -39,7 +40,8 @@ struct RemainingBudgetProvider: TimelineProvider {
             categories: [
                 WidgetCategoryBudget(name: "Ăn uống", total: 4000000, spent: 2500000, remaining: 1500000, formattedRemaining: "1,500,000 ₫", progress: 0.625, color: "#FF5722", iconKey: "food"),
                 WidgetCategoryBudget(name: "Di chuyển", total: 1500000, spent: 1000000, remaining: 500000, formattedRemaining: "500,000 ₫", progress: 0.67, color: "#2196F3", iconKey: "transport")
-            ]
+            ],
+            language: "vi"
         )
     }
 
@@ -61,6 +63,7 @@ struct RemainingBudgetProvider: TimelineProvider {
         let remaining = prefs?.string(forKey: "budget_remaining") ?? "0 ₫"
         let progress = prefs?.double(forKey: "budget_progress") ?? 0.0
         let percent = prefs?.string(forKey: "budget_percent") ?? "0%"
+        let language = prefs?.string(forKey: "app_language") ?? "vi"
         var categories: [WidgetCategoryBudget] = []
 
         if let jsonStr = prefs?.string(forKey: "category_budgets"),
@@ -79,7 +82,8 @@ struct RemainingBudgetProvider: TimelineProvider {
             budgetRemaining: remaining,
             budgetProgress: progress,
             budgetPercent: percent,
-            categories: categories
+            categories: categories,
+            language: language
         )
     }
 }
@@ -113,7 +117,7 @@ struct SmallBudgetView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
-                Text("Ngân sách còn")
+                Text(WidgetStrings.get("budget_remaining_short", lang: entry.language))
                     .font(.system(size: 11, weight: .medium))
                     .foregroundColor(.secondary)
                 Spacer()
@@ -131,7 +135,7 @@ struct SmallBudgetView: View {
             // Progress bar
             VStack(alignment: .leading, spacing: 3) {
                 HStack {
-                    Text("Đã dùng")
+                    Text(WidgetStrings.get("spent_label", lang: entry.language))
                         .font(.system(size: 9))
                         .foregroundColor(.secondary)
                     Spacer()
@@ -168,7 +172,7 @@ struct MediumBudgetView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Ngân sách còn lại")
+                    Text(WidgetStrings.get("remaining_budget", lang: entry.language))
                         .font(.system(size: 11, weight: .medium))
                         .foregroundColor(.secondary)
                     Text(entry.budgetRemaining)
@@ -181,11 +185,11 @@ struct MediumBudgetView: View {
             Divider()
 
             HStack {
-                Text("Đã tiêu: \(entry.budgetSpent)")
+                Text(WidgetStrings.format("spent_format", lang: entry.language, entry.budgetSpent))
                     .font(.system(size: 11))
                     .foregroundColor(.secondary)
                 Spacer()
-                Text("Tổng: \(entry.budgetTotal)")
+                Text(WidgetStrings.format("total_format", lang: entry.language, entry.budgetTotal))
                     .font(.system(size: 11))
                     .foregroundColor(.secondary)
             }
@@ -207,7 +211,7 @@ struct MediumBudgetView: View {
 
             HStack {
                 Spacer()
-                Text("Đã sử dụng \(entry.budgetPercent)")
+                Text(WidgetStrings.format("used_percent_format", lang: entry.language, entry.budgetPercent))
                     .font(.system(size: 10, weight: .semibold))
                     .foregroundColor(entry.budgetProgress >= 0.8 ? .red : .secondary)
             }
@@ -224,7 +228,7 @@ struct LargeBudgetView: View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Ngân sách còn lại")
+                    Text(WidgetStrings.get("remaining_budget", lang: entry.language))
                         .font(.system(size: 12, weight: .medium))
                         .foregroundColor(.secondary)
                     Text(entry.budgetRemaining)
@@ -237,7 +241,7 @@ struct LargeBudgetView: View {
             // Overall progress
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
-                    Text("Đã tiêu \(entry.budgetSpent) / \(entry.budgetTotal)")
+                    Text("\(WidgetStrings.get("spent_label", lang: entry.language)) \(entry.budgetSpent) / \(entry.budgetTotal)")
                         .font(.system(size: 11))
                         .foregroundColor(.secondary)
                     Spacer()
@@ -263,13 +267,13 @@ struct LargeBudgetView: View {
 
             Divider()
 
-            Text("Theo danh mục")
+            Text(WidgetStrings.get("by_category", lang: entry.language))
                 .font(.system(size: 12, weight: .semibold))
                 .foregroundColor(.secondary)
 
             if entry.categories.isEmpty {
                 Spacer()
-                Text("Chưa có ngân sách theo danh mục")
+                Text(WidgetStrings.get("no_category_budget", lang: entry.language))
                     .font(.system(size: 12))
                     .foregroundColor(.secondary)
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -285,7 +289,7 @@ struct LargeBudgetView: View {
                                 Text(cat.name)
                                     .font(.system(size: 12, weight: .medium))
                                 Spacer()
-                                Text("Còn \(cat.formattedRemaining)")
+                                Text("\(WidgetStrings.get("remaining_prefix", lang: entry.language)) \(cat.formattedRemaining)")
                                     .font(.system(size: 11, weight: .semibold))
                                     .foregroundColor(cat.progress >= 1.0 ? .red : .primary)
                             }

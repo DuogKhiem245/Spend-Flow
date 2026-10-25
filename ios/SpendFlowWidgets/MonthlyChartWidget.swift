@@ -15,6 +15,7 @@ struct MonthlyChartEntry: TimelineEntry {
     let monthlyExpense: String
     let monthlyIncome: String
     let chartData: [DailySpendPoint]
+    let language: String
 }
 
 // MARK: - Timeline Provider
@@ -28,7 +29,8 @@ struct MonthlyChartProvider: TimelineProvider {
             monthlyIncome: "20,000,000 ₫",
             chartData: (1...15).map { d in
                 DailySpendPoint(day: d, date: "\(d)/10", expense: Double(d * 100000 % 600000), income: d == 5 ? 20000000 : 0)
-            }
+            },
+            language: "vi"
         )
     }
 
@@ -47,6 +49,7 @@ struct MonthlyChartProvider: TimelineProvider {
         let prefs = UserDefaults(suiteName: appGroupId)
         let monthlyExpense = prefs?.string(forKey: "monthly_expense") ?? "0 ₫"
         let monthlyIncome = prefs?.string(forKey: "monthly_income") ?? "0 ₫"
+        let language = prefs?.string(forKey: "app_language") ?? "vi"
         var chartData: [DailySpendPoint] = []
 
         if let jsonStr = prefs?.string(forKey: "monthly_daily_chart"),
@@ -62,7 +65,8 @@ struct MonthlyChartProvider: TimelineProvider {
             date: Date(),
             monthlyExpense: monthlyExpense,
             monthlyIncome: monthlyIncome,
-            chartData: chartData
+            chartData: chartData,
+            language: language
         )
     }
 }
@@ -76,10 +80,10 @@ struct MonthlyChartWidgetEntryView: View {
             // Header
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Biểu đồ tháng này")
+                    Text(WidgetStrings.get("monthly_chart", lang: entry.language))
                         .font(.system(size: 13, weight: .semibold))
                         .foregroundColor(.secondary)
-                    Text("Tổng quan thu chi")
+                    Text(WidgetStrings.get("overview_income_expense", lang: entry.language))
                         .font(.system(size: 18, weight: .bold))
                 }
                 Spacer()
@@ -98,7 +102,7 @@ struct MonthlyChartWidgetEntryView: View {
                                 .foregroundColor(.green)
                         )
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Tổng thu")
+                        Text(WidgetStrings.get("total_income", lang: entry.language))
                             .font(.system(size: 10, weight: .medium))
                             .foregroundColor(.secondary)
                         Text(entry.monthlyIncome)
@@ -122,7 +126,7 @@ struct MonthlyChartWidgetEntryView: View {
                                 .foregroundColor(.red)
                         )
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Tổng chi")
+                        Text(WidgetStrings.get("total_expense", lang: entry.language))
                             .font(.system(size: 10, weight: .medium))
                             .foregroundColor(.secondary)
                         Text(entry.monthlyExpense)
@@ -139,7 +143,7 @@ struct MonthlyChartWidgetEntryView: View {
 
             // Chart bars
             VStack(alignment: .leading, spacing: 6) {
-                Text("Chi tiêu theo ngày")
+                Text(WidgetStrings.get("daily_spending", lang: entry.language))
                     .font(.system(size: 11, weight: .semibold))
                     .foregroundColor(.secondary)
 

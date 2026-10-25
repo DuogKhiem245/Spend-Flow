@@ -14,6 +14,7 @@ import 'package:spend_flow/screen/setting/widget/setting_data_widget.dart';
 import 'package:spend_flow/screen/setting/widget/setting_general_widget.dart';
 import 'package:spend_flow/screen/setting/widget/setting_info_widget.dart';
 import 'package:spend_flow/screen/setting/widget/setting_security_widget.dart';
+import 'package:spend_flow/screen/setting/widget/upgrade_premium_widget.dart';
 import 'package:spend_flow/core/services/data_service/local_storage_service.dart';
 import 'package:spend_flow/screen/wallet/wallet_view.dart';
 import 'package:spend_flow/main.dart';
@@ -401,19 +402,6 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
       icon: 'rectangle.portrait.and.arrow.right.fill',
       actions: [
         AlertAction(
-          title: l10n.cancel,
-          style: AlertActionStyle.cancel,
-          onPressed: () => {},
-        ),
-        AlertAction(
-          title: l10n.keep_local_data,
-          style: AlertActionStyle.primary,
-          onPressed: () async {
-            await authService.signOut();
-            await premiumViewModel.handleLogout();
-          },
-        ),
-        AlertAction(
           title: l10n.delete_local_data,
           style: AlertActionStyle.destructive,
           onPressed: () async {
@@ -429,6 +417,19 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
               );
             }
           },
+        ),
+        AlertAction(
+          title: l10n.keep_local_data,
+          style: AlertActionStyle.primary,
+          onPressed: () async {
+            await authService.signOut();
+            await premiumViewModel.handleLogout();
+          },
+        ),
+        AlertAction(
+          title: l10n.cancel,
+          style: AlertActionStyle.cancel,
+          onPressed: () => {},
         ),
       ],
     );

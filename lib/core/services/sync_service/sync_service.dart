@@ -32,7 +32,9 @@ class SyncService {
 
   bool _isSyncing = false;
   DateTime? _lastRunTime;
-  static const Duration _syncCooldown = Duration(minutes: 10);
+  static const Duration _windowDuration = Duration(minutes: 10);
+  static const Duration _lockDuration = Duration(minutes: 15);
+  static const int _maxClicks = 3;
 
   DocumentReference get _userRef {
     final uid = _auth.currentUser?.uid;
@@ -45,27 +47,61 @@ class SyncService {
       return "sync_in_progress";
     }
 
-    final isPremium = _premiumViewModel.isPremium;
+    final prefs = await SharedPreferences.getInstance();
     final now = DateTime.now();
-    if (!isPremium && isAds == false) {
-      if (_lastRunTime != null) {
-        final isSameDay =
-            _lastRunTime!.year == now.year &&
-            _lastRunTime!.month == now.month &&
-            _lastRunTime!.day == now.day;
+    final nowMs = now.millisecondsSinceEpoch;
 
+    // 1. Kiểm tra trạng thái bị khoá 15 phút
+    final lockedUntilMs = prefs.getInt('sync_locked_until') ?? 0;
+    if (nowMs < lockedUntilMs) {
+      final remainingSeconds = ((lockedUntilMs - nowMs) / 1000).ceil();
+      return "cooldown:$remainingSeconds";
+    }
+
+    // Đã hết 15 phút khoá: tự động reset lượt
+    if (lockedUntilMs > 0 && nowMs >= lockedUntilMs) {
+      await prefs.remove('sync_locked_until');
+      await prefs.setInt('sync_click_count', 0);
+      await prefs.remove('sync_window_start_time');
+    }
+
+    // 2. Kiểm tra nếu là tài khoản Free chưa xem quảng cáo (giới hạn 1 lần/ngày)
+    final isPremium = _premiumViewModel.isPremium;
+    if (!isPremium && isAds == false) {
+      final lastGlobalSync = await _localStorage.getGlobalSyncTime();
+      if (lastGlobalSync > 0) {
+        final lastDate = DateTime.fromMillisecondsSinceEpoch(lastGlobalSync);
+        final isSameDay = lastDate.year == now.year &&
+            lastDate.month == now.month &&
+            lastDate.day == now.day;
         if (isSameDay) {
           return "premium_required";
         }
       }
     }
 
-    if (_lastRunTime != null) {
-      final difference = DateTime.now().difference(_lastRunTime!);
-      if (difference < _syncCooldown) {
-        final remaining = _syncCooldown.inSeconds - difference.inSeconds;
-        return "cooldown:$remaining";
-      }
+    // 3. Quản lý cửa sổ trượt 10 phút và số lượt bấm (tối đa 3 lượt)
+    int clickCount = prefs.getInt('sync_click_count') ?? 0;
+    final windowStartMs = prefs.getInt('sync_window_start_time') ?? 0;
+
+    // Nếu đã quá 10 phút kể từ lần bấm trước mà chưa đủ 3 lượt -> reset lại chu kỳ mới
+    if (windowStartMs > 0 && (nowMs - windowStartMs) > _windowDuration.inMilliseconds) {
+      clickCount = 0;
+    }
+
+    // Tăng số lượt bấm
+    clickCount += 1;
+
+    // Nếu đạt lượt thứ 3 -> Cho phép thực hiện và khoá 15 phút
+    if (clickCount >= _maxClicks) {
+      final lockEndTimeMs = nowMs + _lockDuration.inMilliseconds;
+      await prefs.setInt('sync_locked_until', lockEndTimeMs);
+      await prefs.setInt('sync_click_count', 0);
+      await prefs.remove('sync_window_start_time');
+    } else {
+      // Chưa đạt 3 lượt -> Ghi nhận lượt bấm và reset thời gian đếm 10 phút từ mốc bấm này
+      await prefs.setInt('sync_click_count', clickCount);
+      await prefs.setInt('sync_window_start_time', nowMs);
     }
 
     _isSyncing = true;

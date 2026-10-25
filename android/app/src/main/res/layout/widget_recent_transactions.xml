@@ -23,7 +23,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Số dư còn lại"
+                android:text="@string/widget_remaining_balance"
                 android:textColor="#9E9EA7"
                 android:textSize="11sp" />
 
@@ -52,7 +52,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="Chưa có giao dịch gần đây"
+        android:text="@string/widget_empty_tx"
         android:textColor="#7A7A85"
         android:textSize="12sp"
         android:visibility="gone" />
@@ -86,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="Giao dịch"
+                    android:text="@string/widget_default_transaction"
                     android:textColor="#F3F3F6"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -95,7 +95,7 @@
                     android:id="@+id/tv_tx1_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Danh mục"
+                    android:text="@string/widget_default_category"
                     android:textColor="#8E8E9A"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -131,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="Giao dịch"
+                    android:text="@string/widget_default_transaction"
                     android:textColor="#F3F3F6"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -140,7 +140,7 @@
                     android:id="@+id/tv_tx2_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Danh mục"
+                    android:text="@string/widget_default_category"
                     android:textColor="#8E8E9A"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -175,7 +175,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="Giao dịch"
+                    android:text="@string/widget_default_transaction"
                     android:textColor="#F3F3F6"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -184,7 +184,7 @@
                     android:id="@+id/tv_tx3_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Danh mục"
+                    android:text="@string/widget_default_category"
                     android:textColor="#8E8E9A"
                     android:textSize="10sp" />
             </LinearLayout>

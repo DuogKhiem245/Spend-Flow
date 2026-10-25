@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_remaining_balance">Remaining Balance</string>
+    <string name="widget_empty_tx">No recent transactions</string>
+    <string name="widget_monthly_chart">Monthly Chart</string>
+    <string name="widget_overview_income_expense">Income &amp; Expense</string>
+    <string name="widget_total_income">Total Income</string>
+    <string name="widget_total_expense">Total Expense</string>
+    <string name="widget_daily_spending">Daily Spending</string>
+    <string name="widget_remaining_budget">Remaining Budget</string>
+    <string name="widget_budget_spent_total">Spent: %1$s / %2$s</string>
+    <string name="widget_cat_remaining">Left %1$s</string>
+    <string name="widget_default_category">Category</string>
+    <string name="widget_default_transaction">Transaction</string>
+</resources>

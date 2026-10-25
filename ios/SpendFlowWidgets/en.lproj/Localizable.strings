@@ -1,0 +1,22 @@
+/* SpendFlowWidgets English Localization */
+"remaining_balance" = "Remaining Balance";
+"no_transactions" = "No transactions";
+"no_recent_transactions" = "No recent transactions";
+"monthly_chart" = "Monthly Chart";
+"overview_income_expense" = "Income & Expense";
+"total_income" = "Total Income";
+"total_expense" = "Total Expense";
+"remaining_budget" = "Remaining Budget";
+"budget_remaining_short" = "Remaining";
+"spent_label" = "Used";
+"spent_format" = "Spent: %@";
+"total_format" = "Total: %@";
+"used_percent_format" = "Used %@";
+"no_budget_title" = "No budget";
+"no_budget_desc" = "No budget set this month";
+"category" = "Category";
+"remaining_prefix" = "Left";
+"daily_spending" = "Daily Spending";
+"by_category" = "By Category";
+"no_category_budget" = "No category budgets";
+

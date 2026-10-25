@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spend_flow/core/services/widget_sync_service.dart';
 import '../data_service/local_storage_service.dart';
 
 class LanguageService extends ChangeNotifier {
@@ -46,5 +47,12 @@ class LanguageService extends ChangeNotifier {
     _locale = Locale(languageCode);
     await _storageService.saveString(_langKey, languageCode);
     notifyListeners();
+
+    try {
+      await WidgetSyncService().updateAllWidgets();
+    } catch (e) {
+      debugPrint('Error updating widgets after language change: $e');
+    }
   }
 }
+

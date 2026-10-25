@@ -31,6 +31,13 @@ class RecentTransactionsWidgetProvider : HomeWidgetProvider() {
                 setTextViewText(R.id.tv_total_balance, totalBalance)
 
                 // Recent Transactions JSON
+                val lang = widgetData.getString("app_language", null)
+                val locale = if (lang != null && lang.startsWith("en", ignoreCase = true)) java.util.Locale.ENGLISH else java.util.Locale("vi")
+                val config = android.content.res.Configuration(context.resources.configuration)
+                config.setLocale(locale)
+                val localizedContext = context.createConfigurationContext(config)
+                val defaultTxTitle = localizedContext.getString(R.string.widget_default_transaction)
+
                 val txJson = widgetData.getString("recent_transactions", null)
                 if (txJson != null) {
                     try {
@@ -46,7 +53,7 @@ class RecentTransactionsWidgetProvider : HomeWidgetProvider() {
                             if (array.length() > 0) {
                                 val item = array.getJSONObject(0)
                                 setViewVisibility(R.id.row_tx_1, View.VISIBLE)
-                                setTextViewText(R.id.tv_tx1_title, item.optString("title", "Giao dịch"))
+                                setTextViewText(R.id.tv_tx1_title, item.optString("title", defaultTxTitle))
                                 setTextViewText(R.id.tv_tx1_category, item.optString("categoryName", ""))
                                 val amountStr = item.optString("formattedAmount", "0 ₫")
                                 setTextViewText(R.id.tv_tx1_amount, amountStr)
@@ -60,7 +67,7 @@ class RecentTransactionsWidgetProvider : HomeWidgetProvider() {
                             if (array.length() > 1) {
                                 val item = array.getJSONObject(1)
                                 setViewVisibility(R.id.row_tx_2, View.VISIBLE)
-                                setTextViewText(R.id.tv_tx2_title, item.optString("title", "Giao dịch"))
+                                setTextViewText(R.id.tv_tx2_title, item.optString("title", defaultTxTitle))
                                 setTextViewText(R.id.tv_tx2_category, item.optString("categoryName", ""))
                                 val amountStr = item.optString("formattedAmount", "0 ₫")
                                 setTextViewText(R.id.tv_tx2_amount, amountStr)
@@ -74,7 +81,7 @@ class RecentTransactionsWidgetProvider : HomeWidgetProvider() {
                             if (array.length() > 2) {
                                 val item = array.getJSONObject(2)
                                 setViewVisibility(R.id.row_tx_3, View.VISIBLE)
-                                setTextViewText(R.id.tv_tx3_title, item.optString("title", "Giao dịch"))
+                                setTextViewText(R.id.tv_tx3_title, item.optString("title", defaultTxTitle))
                                 setTextViewText(R.id.tv_tx3_category, item.optString("categoryName", ""))
                                 val amountStr = item.optString("formattedAmount", "0 ₫")
                                 setTextViewText(R.id.tv_tx3_amount, amountStr)
