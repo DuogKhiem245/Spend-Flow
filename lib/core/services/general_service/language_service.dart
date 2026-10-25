@@ -68,6 +68,12 @@ class LanguageService extends ChangeNotifier {
         _locale = const Locale('ko');
       } else if (code == 'es') {
         _locale = const Locale('es');
+      } else if (code == 'fr') {
+        _locale = const Locale('fr');
+      } else if (code == 'de') {
+        _locale = const Locale('de');
+      } else if (code == 'pt') {
+        _locale = const Locale('pt');
       } else {
         _locale = const Locale('en');
       }

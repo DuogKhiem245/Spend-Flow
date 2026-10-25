@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:focus_detector/focus_detector.dart';
-import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/assets/languages/app_localizations.dart';
 import 'package:spend_flow/core/services/ads_service.dart';
 import 'package:spend_flow/core/services/data_service/daily_limit_service.dart';
 import 'package:spend_flow/core/widgets/custom_option/custom_option_widget.dart';

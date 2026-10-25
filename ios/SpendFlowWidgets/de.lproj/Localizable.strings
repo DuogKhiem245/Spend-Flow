@@ -1,0 +1,21 @@
+/* SpendFlowWidgets German Localization */
+"remaining_balance" = "Restguthaben";
+"no_transactions" = "Keine Transaktionen";
+"no_recent_transactions" = "Keine aktuellen Transaktionen";
+"monthly_chart" = "Monatsdiagramm";
+"overview_income_expense" = "Einnahmen & Ausgaben";
+"total_income" = "Gesamteinnahmen";
+"total_expense" = "Gesamtausgaben";
+"remaining_budget" = "Restbudget";
+"budget_remaining_short" = "Verbleibend";
+"spent_label" = "Verbraucht";
+"spent_format" = "Ausgegeben: %@";
+"total_format" = "Gesamt: %@";
+"used_percent_format" = "Verbraucht %@";
+"no_budget_title" = "Kein Budget";
+"no_budget_desc" = "Diesen Monat kein Budget festgelegt";
+"category" = "Kategorie";
+"remaining_prefix" = "Übrig";
+"daily_spending" = "Tägliche Ausgaben";
+"by_category" = "Nach Kategorie";
+"no_category_budget" = "Keine Kategoriebudgets";

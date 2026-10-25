@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/assets/languages/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_icons.dart';
 import 'package:spend_flow/core/data/category_data.dart';

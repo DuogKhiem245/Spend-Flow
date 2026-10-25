@@ -7,7 +7,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/assets/languages/app_localizations.dart';
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 
 enum ContactSubject { feedback, bugReport, accountDeletion }

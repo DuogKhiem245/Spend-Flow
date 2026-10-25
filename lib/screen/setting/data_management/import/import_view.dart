@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/assets/languages/app_localizations.dart';
 import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/screen/setting/data_management/import/animated_dashed_painter.dart';
 import 'package:spend_flow/screen/setting/data_management/import/import_viewmodel.dart';

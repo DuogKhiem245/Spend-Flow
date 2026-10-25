@@ -8,7 +8,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/assets/languages/app_localizations.dart';
 import 'package:spend_flow/core/data/category_data.dart';
 import 'package:spend_flow/core/model/budget_model.dart';
 import 'package:spend_flow/core/model/category_model.dart';

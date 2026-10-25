@@ -1,7 +1,7 @@
 import 'package:cupertino_native_better/cupertino_native.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/assets/languages/app_localizations.dart';
 import 'package:spend_flow/screen/setting/security/security_view.dart';
 import 'package:spend_flow/screen/setting/setting_viewmodel.dart';
 import 'package:spend_flow/screen/setting/widget/setting_item_widget.dart';

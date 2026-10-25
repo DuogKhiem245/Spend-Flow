@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speech_to_text/speech_to_text.dart';
-import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/assets/languages/app_localizations.dart';
 import 'package:spend_flow/core/services/ai_service.dart';
 import 'package:spend_flow/core/data/category_data.dart';
 import 'package:spend_flow/core/model/transaction_model.dart';

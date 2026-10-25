@@ -10,7 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
-import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/assets/languages/app_localizations.dart';
 import 'package:spend_flow/core/services/general_service/language_service.dart';
 import 'package:spend_flow/screen/transaction/add_transaction/add_transaction_viewmodel.dart';
 import 'package:spend_flow/screen/transaction/add_transaction/widgets/modal/search_location_modal.dart';

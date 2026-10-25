@@ -1,16 +1,16 @@
 class LanguageData {
   static final List<Map<String, String>> allLanguages = [
     {
-      'code': 'vi',
-      'name': 'Vietnamese',
-      'nativeName': 'Tiếng Việt',
-      'flag': '🇻🇳',
-    },
-    {
       'code': 'en',
       'name': 'English',
       'nativeName': 'English',
       'flag': '🇺🇸',
+    },
+    {
+      'code': 'vi',
+      'name': 'Vietnamese',
+      'nativeName': 'Tiếng Việt',
+      'flag': '🇻🇳',
     },
     {
       'code': 'zh',
@@ -19,10 +19,28 @@ class LanguageData {
       'flag': '🇨🇳',
     },
     {
-      'code': 'zh_Hant',
-      'name': 'Chinese Traditional',
-      'nativeName': '繁體中文',
-      'flag': '🇹🇼',
+      'code': 'es',
+      'name': 'Spanish',
+      'nativeName': 'Español',
+      'flag': '🇪🇸',
+    },
+    {
+      'code': 'fr',
+      'name': 'French',
+      'nativeName': 'Français',
+      'flag': '🇫🇷',
+    },
+    {
+      'code': 'pt',
+      'name': 'Portuguese',
+      'nativeName': 'Português',
+      'flag': '🇧🇷',
+    },
+    {
+      'code': 'de',
+      'name': 'German',
+      'nativeName': 'Deutsch',
+      'flag': '🇩🇪',
     },
     {
       'code': 'ja',
@@ -37,10 +55,10 @@ class LanguageData {
       'flag': '🇰🇷',
     },
     {
-      'code': 'es',
-      'name': 'Spanish',
-      'nativeName': 'Español',
-      'flag': '🇪🇸',
+      'code': 'zh_Hant',
+      'name': 'Chinese Traditional',
+      'nativeName': '繁體中文',
+      'flag': '🇹🇼',
     },
   ];
 }

@@ -11,7 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart' hide Size;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/assets/languages/app_localizations.dart';
 import 'package:spend_flow/config/app_theme.dart';
 import 'package:spend_flow/core/services/ads_service.dart';
 import 'package:spend_flow/core/services/general_service/language_service.dart';

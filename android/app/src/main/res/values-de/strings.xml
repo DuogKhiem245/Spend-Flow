@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_remaining_balance">Restguthaben</string>
+    <string name="widget_empty_tx">Keine aktuellen Transaktionen</string>
+    <string name="widget_monthly_chart">Monatsdiagramm</string>
+    <string name="widget_overview_income_expense">Einnahmen &amp; Ausgaben</string>
+    <string name="widget_total_income">Gesamteinnahmen</string>
+    <string name="widget_total_expense">Gesamtausgaben</string>
+    <string name="widget_daily_spending">Tägliche Ausgaben</string>
+    <string name="widget_remaining_budget">Restbudget</string>
+    <string name="widget_budget_spent_total">Ausgegeben: %1$s / %2$s</string>
+    <string name="widget_cat_remaining">Übrig %1$s</string>
+    <string name="widget_default_category">Kategorie</string>
+    <string name="widget_default_transaction">Transaktion</string>
+</resources>

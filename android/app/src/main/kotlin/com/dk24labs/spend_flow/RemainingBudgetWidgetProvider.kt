@@ -35,6 +35,9 @@ class RemainingBudgetWidgetProvider : HomeWidgetProvider() {
                     lang.startsWith("ja", ignoreCase = true) -> java.util.Locale.JAPANESE
                     lang.startsWith("ko", ignoreCase = true) -> java.util.Locale.KOREAN
                     lang.startsWith("es", ignoreCase = true) -> java.util.Locale("es")
+                    lang.startsWith("fr", ignoreCase = true) -> java.util.Locale.FRENCH
+                    lang.startsWith("de", ignoreCase = true) -> java.util.Locale.GERMAN
+                    lang.startsWith("pt", ignoreCase = true) -> java.util.Locale("pt")
                     else -> java.util.Locale("vi")
                 }
                 val config = android.content.res.Configuration(context.resources.configuration)

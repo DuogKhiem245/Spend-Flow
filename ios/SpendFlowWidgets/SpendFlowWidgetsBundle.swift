@@ -164,6 +164,75 @@ struct WidgetStrings {
         "no_category_budget": "Sin presupuesto por categoría"
     ]
 
+    static let fr: [String: String] = [
+        "remaining_balance": "Solde restant",
+        "no_transactions": "Aucune transaction",
+        "no_recent_transactions": "Aucune transaction récente",
+        "monthly_chart": "Graphique mensuel",
+        "overview_income_expense": "Revenus & Dépenses",
+        "total_income": "Revenu total",
+        "total_expense": "Dépense totale",
+        "remaining_budget": "Budget restant",
+        "budget_remaining_short": "Restant",
+        "spent_label": "Utilisé",
+        "spent_format": "Dépensé : %@",
+        "total_format": "Total : %@",
+        "used_percent_format": "Utilisé %@",
+        "no_budget_title": "Aucun budget",
+        "no_budget_desc": "Aucun budget défini ce mois-ci",
+        "category": "Catégorie",
+        "remaining_prefix": "Reste",
+        "daily_spending": "Dépenses quotidiennes",
+        "by_category": "Par catégorie",
+        "no_category_budget": "Aucun budget par catégorie"
+    ]
+
+    static let de: [String: String] = [
+        "remaining_balance": "Restguthaben",
+        "no_transactions": "Keine Transaktionen",
+        "no_recent_transactions": "Keine aktuellen Transaktionen",
+        "monthly_chart": "Monatsdiagramm",
+        "overview_income_expense": "Einnahmen & Ausgaben",
+        "total_income": "Gesamteinnahmen",
+        "total_expense": "Gesamtausgaben",
+        "remaining_budget": "Restbudget",
+        "budget_remaining_short": "Verbleibend",
+        "spent_label": "Verbraucht",
+        "spent_format": "Ausgegeben: %@",
+        "total_format": "Gesamt: %@",
+        "used_percent_format": "Verbraucht %@",
+        "no_budget_title": "Kein Budget",
+        "no_budget_desc": "Diesen Monat kein Budget festgelegt",
+        "category": "Kategorie",
+        "remaining_prefix": "Übrig",
+        "daily_spending": "Tägliche Ausgaben",
+        "by_category": "Nach Kategorie",
+        "no_category_budget": "Keine Kategoriebudgets"
+    ]
+
+    static let pt: [String: String] = [
+        "remaining_balance": "Saldo restante",
+        "no_transactions": "Sem transações",
+        "no_recent_transactions": "Nenhuma transação recente",
+        "monthly_chart": "Gráfico mensal",
+        "overview_income_expense": "Receitas e Despesas",
+        "total_income": "Receita total",
+        "total_expense": "Despesa total",
+        "remaining_budget": "Orçamento restante",
+        "budget_remaining_short": "Restante",
+        "spent_label": "Gasto",
+        "spent_format": "Gasto: %@",
+        "total_format": "Total: %@",
+        "used_percent_format": "Usado %@",
+        "no_budget_title": "Sem orçamento",
+        "no_budget_desc": "Nenhum orçamento definido este mês",
+        "category": "Categoria",
+        "remaining_prefix": "Resta",
+        "daily_spending": "Gasto diário",
+        "by_category": "Por categoria",
+        "no_category_budget": "Nenhum orçamento por categoria"
+    ]
+
     static func get(_ key: String, lang: String? = nil) -> String {
         let currentLang: String
         if let lang = lang, !lang.isEmpty {
@@ -184,6 +253,12 @@ struct WidgetStrings {
             dict = ko
         } else if lower.starts(with: "es") {
             dict = es
+        } else if lower.starts(with: "fr") {
+            dict = fr
+        } else if lower.starts(with: "de") {
+            dict = de
+        } else if lower.starts(with: "pt") {
+            dict = pt
         } else if lower.starts(with: "en") {
             dict = en
         } else {

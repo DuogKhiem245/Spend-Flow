@@ -1,0 +1,21 @@
+/* SpendFlowWidgets Portuguese Localization */
+"remaining_balance" = "Saldo restante";
+"no_transactions" = "Sem transações";
+"no_recent_transactions" = "Nenhuma transação recente";
+"monthly_chart" = "Gráfico mensal";
+"overview_income_expense" = "Receitas e Despesas";
+"total_income" = "Receita total";
+"total_expense" = "Despesa total";
+"remaining_budget" = "Orçamento restante";
+"budget_remaining_short" = "Restante";
+"spent_label" = "Gasto";
+"spent_format" = "Gasto: %@";
+"total_format" = "Total: %@";
+"used_percent_format" = "Usado %@";
+"no_budget_title" = "Sem orçamento";
+"no_budget_desc" = "Nenhum orçamento definido este mês";
+"category" = "Categoria";
+"remaining_prefix" = "Resta";
+"daily_spending" = "Gasto diário";
+"by_category" = "Por categoria";
+"no_category_budget" = "Nenhum orçamento por categoria";

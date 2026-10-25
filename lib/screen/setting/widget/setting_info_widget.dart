@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:spend_flow/assets/l10n/app_localizations.dart';
+import 'package:spend_flow/assets/languages/app_localizations.dart';
 import 'package:spend_flow/screen/setting/contact/contact_view.dart';
 import 'package:spend_flow/screen/setting/markdown/markdown_doc_screen.dart';
 import 'package:spend_flow/screen/setting/widget/setting_item_widget.dart';
