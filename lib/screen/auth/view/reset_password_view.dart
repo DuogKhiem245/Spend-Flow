@@ -193,6 +193,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
         );
       },
       child: SafeArea(
+        bottom: false,
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Align(

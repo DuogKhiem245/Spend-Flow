@@ -26,15 +26,15 @@ class _VoiceInputViewState extends State<VoiceInputView> {
       _viewModel
           .initSpeech(context: context, isFromWidget: widget.isFromWidget)
           .then((_) {
-        if (!mounted) return;
-        final currentLocale = Localizations.localeOf(context);
-        final localeId = currentLocale.toString();
-        _viewModel.startListening(
-          context,
-          localeId,
-          isFromWidget: widget.isFromWidget,
-        );
-      });
+            if (!mounted) return;
+            final currentLocale = Localizations.localeOf(context);
+            final localeId = currentLocale.toString();
+            _viewModel.startListening(
+              context,
+              localeId,
+              isFromWidget: widget.isFromWidget,
+            );
+          });
     });
   }
 
@@ -76,6 +76,7 @@ class _VoiceInputViewState extends State<VoiceInputView> {
           child: Stack(
             children: [
               SafeArea(
+                bottom: false,
                 child: Column(
                   children: [
                     const Spacer(flex: 2),

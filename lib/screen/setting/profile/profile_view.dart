@@ -234,6 +234,7 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
               ),
               child: SafeArea(
+                bottom: false,
                 child: GestureDetector(
                   onTap: () => FocusScope.of(context).unfocus(),
                   child: LayoutBuilder(
@@ -255,16 +256,16 @@ class _ProfileViewState extends State<ProfileView> {
                                   photoUrl: _viewModel.userModel?.photoUrl,
                                   onEditTap: _handleAvatarEdit,
                                 ),
-                  
+
                                 SizedBox(height: 30.h),
-                  
+
                                 ProfileInfoItem(
                                   label: l10n.full_name,
                                   controller: _nameController,
                                 ),
-                  
+
                                 SizedBox(height: 20.h),
-                  
+
                                 ProfileInfoItem(
                                   label: l10n.email_address,
                                   controller: _emailController,
@@ -272,14 +273,14 @@ class _ProfileViewState extends State<ProfileView> {
                                   keyboardType: TextInputType.emailAddress,
                                 ),
                                 SizedBox(height: 20.h),
-                  
+
                                 ProfileInfoItem(
                                   label: l10n.phone_number,
                                   controller: _phoneController,
                                   keyboardType: TextInputType.phone,
                                 ),
                                 SizedBox(height: 20.h),
-                  
+
                                 ProfileInfoItem(
                                   label: l10n.day_of_birth,
                                   textValue: DateFormat(
@@ -296,11 +297,11 @@ class _ProfileViewState extends State<ProfileView> {
                                     );
                                   },
                                 ),
-                  
+
                                 const Spacer(),
-                  
+
                                 SizedBox(height: 40.h),
-                  
+
                                 CupertinoButton(
                                   onPressed: _handleSave,
                                   minimumSize: Size(double.infinity, 50.h),

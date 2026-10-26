@@ -166,6 +166,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
       child: LoadingOverlay(
         isLoading: _isLoading,
         child: SafeArea(
+          bottom: false,
           child: Padding(
             padding: EdgeInsets.all(10.w),
             child: Stack(
@@ -181,14 +182,16 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                           selectedIndex: _index,
                           height: 50.h,
                           color: CupertinoTheme.of(context).primaryColor,
-                          textColor: CupertinoTheme.of(context).textTheme.textStyle.color,
+                          textColor: CupertinoTheme.of(
+                            context,
+                          ).textTheme.textStyle.color,
                           onValueChanged: (_isLoading || widget.isEditing)
                               ? (i) {}
                               : (i) => setState(() => _onTabChanged(i)),
                         ),
                       ),
                     ),
-          
+
                     Expanded(
                       child: GestureDetector(
                         onTap: () => FocusScope.of(context).unfocus(),
@@ -221,11 +224,12 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                                     selectedCategory: _selectedCategory,
                                     baseColor: baseColor,
                                     transactionDate: _transactionDate,
-                                    onCategoryChanged: (CategoryModel category) {
-                                      setState(() {
-                                        _selectedCategory = category;
-                                      });
-                                    },
+                                    onCategoryChanged:
+                                        (CategoryModel category) {
+                                          setState(() {
+                                            _selectedCategory = category;
+                                          });
+                                        },
                                     onDateChanged: (DateTime newDate) {
                                       setState(() {
                                         _transactionDate = newDate;
@@ -258,6 +262,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                       color: CupertinoTheme.of(context).scaffoldBackgroundColor,
                     ),
                     child: SafeArea(
+                      bottom: false,
                       child: Padding(
                         padding: EdgeInsets.only(top: 10.h),
                         child: CupertinoButton.filled(
@@ -265,7 +270,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                               ? null
                               : () async {
                                   List<String> missingFields = [];
-          
+
                                   if (_amountController.text.trim().isEmpty ||
                                       _amountController.text == "0") {
                                     missingFields.add(l10n.amount);
@@ -287,7 +292,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                                     );
                                     return;
                                   }
-          
+
                                   if (widget.isFromAI) {
                                     double finalAmount =
                                         double.tryParse(
@@ -297,7 +302,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                                           ),
                                         ) ??
                                         0;
-          
+
                                     final updatedTransaction = widget
                                         .transactionData
                                         ?.copyWith(
@@ -310,14 +315,14 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                                           location: _viewModel
                                               .getLocationFromState(),
                                         );
-          
+
                                     if (!context.mounted) return;
                                     Navigator.pop(context, updatedTransaction);
                                     return;
                                   }
-          
+
                                   setState(() => _isLoading = true);
-          
+
                                   _hasWallet = await WalletViewModel()
                                       .checkUserHasWallet();
                                   if (!_hasWallet) {
@@ -326,19 +331,23 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                                     _showNoWalletAlert(context);
                                     return;
                                   }
-          
+
                                   try {
-                                    if (widget.isEditing && widget.transactionData != null) {
-                                      final updated = await _viewModel.updateTransaction(
-                                        originalTransaction: widget.transactionData!,
-                                        amount: _amountController.text,
-                                        name: _nameController.text,
-                                        selectedCategory: _selectedCategory,
-                                        transactionDate: _transactionDate,
-                                        note: _noteController.text,
-                                        isIncome: _index == 1,
-                                        location: _viewModel.getLocationFromState(),
-                                      );
+                                    if (widget.isEditing &&
+                                        widget.transactionData != null) {
+                                      final updated = await _viewModel
+                                          .updateTransaction(
+                                            originalTransaction:
+                                                widget.transactionData!,
+                                            amount: _amountController.text,
+                                            name: _nameController.text,
+                                            selectedCategory: _selectedCategory,
+                                            transactionDate: _transactionDate,
+                                            note: _noteController.text,
+                                            isIncome: _index == 1,
+                                            location: _viewModel
+                                                .getLocationFromState(),
+                                          );
 
                                       if (!context.mounted) return;
 
@@ -351,7 +360,10 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                                               isPremium:
                                                   _premiumViewModel.isPremium,
                                               onAdClosed: () {
-                                                Navigator.pop(context, updated ?? true);
+                                                Navigator.pop(
+                                                  context,
+                                                  updated ?? true,
+                                                );
                                               },
                                             );
                                       }
@@ -377,9 +389,9 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                                         _viewModel.getLocationFromState(),
                                       );
                                     }
-          
+
                                     if (!context.mounted) return;
-          
+
                                     if (_premiumViewModel.isPremium) {
                                       Navigator.pop(context, true);
                                       return;
@@ -406,16 +418,20 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                           child: Text(
                             widget.isEditing
                                 ? (_index == 0
-                                    ? l10n.save_expense_change
-                                    : l10n.save_income_change)
+                                      ? l10n.save_expense_change
+                                      : l10n.save_income_change)
                                 : (_index == 0
-                                    ? l10n.add_expense
-                                    : l10n.add_income),
-                            style: CupertinoTheme.of(context).textTheme.textStyle
+                                      ? l10n.add_expense
+                                      : l10n.add_income),
+                            style: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
                                 .copyWith(
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.w600,
-                                  color: CupertinoTheme.of(context).primaryContrastingColor,
+                                  color: CupertinoTheme.of(
+                                    context,
+                                  ).primaryContrastingColor,
                                 ),
                           ),
                         ),

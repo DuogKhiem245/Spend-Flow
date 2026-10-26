@@ -256,6 +256,7 @@ class _LoginPageState extends State<LoginPage> {
         );
       },
       child: SafeArea(
+        bottom: false,
         top: true,
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),

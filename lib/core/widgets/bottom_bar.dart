@@ -1,7 +1,6 @@
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/languages/app_localizations.dart';
 import 'package:spend_flow/core/services/ads_service.dart';
 import 'package:spend_flow/core/widgets/banner_ads_widget.dart';
@@ -34,9 +33,37 @@ class _BottomNavbarState extends State<BottomNavbar> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      resizeToAvoidBottomInset: false,
-      child: Stack(
+    final l10n = AppLocalizations.of(context)!;
+
+    return AdaptiveScaffold(
+      minimizeBehavior: TabBarMinimizeBehavior.never,
+      bottomNavigationBar: AdaptiveBottomNavigationBar(
+        useNativeBottomBar: true,
+        selectedIndex: _currentIndex,
+        onTap: (i) => setState(() {
+          _currentIndex = i;
+          HapticFeedback.heavyImpact();
+        }),
+        items: [
+          AdaptiveNavigationDestination(
+            label: l10n.home,
+            icon: 'square.grid.2x2',
+          ),
+          AdaptiveNavigationDestination(
+            label: l10n.transaction,
+            icon: 'chart.bar',
+          ),
+          AdaptiveNavigationDestination(
+            label: l10n.budgets,
+            icon: 'creditcard',
+          ),
+          AdaptiveNavigationDestination(
+            label: l10n.settings,
+            icon: 'gearshape.fill',
+          ),
+        ],
+      ),
+      body: Stack(
         children: [
           _pages[_currentIndex],
           Positioned(
@@ -52,25 +79,105 @@ class _BottomNavbarState extends State<BottomNavbar> {
                     if (viewModel.isPremium) {
                       return const SizedBox.shrink();
                     }
-
                     return BannerAdWidget(
                       adUnitId: AdsService().bannerAdUnitId,
                     );
                   },
                 ),
-
-                _buildAndroidTabBar(context),
-
-                // Platform.isIOS
-                //     ? _buildIOSTabBar(context)
-                //     : _buildAndroidTabBar(context),
               ],
             ),
           ),
         ],
       ),
     );
+    // return CupertinoPageScaffold(
+    //   resizeToAvoidBottomInset: false,
+    //   child: Stack(
+    //     children: [
+    //       _pages[_currentIndex],
+    //       Positioned(
+    //         left: 0,
+    //         right: 0,
+    //         bottom: 0,
+    //         child: Column(
+    //           mainAxisSize: MainAxisSize.min,
+    //           children: [
+    //             ListenableBuilder(
+    //               listenable: viewModel,
+    //               builder: (context, child) {
+    //                 if (viewModel.isPremium) {
+    //                   return const SizedBox.shrink();
+    //                 }
+
+    //                 return BannerAdWidget(
+    //                   adUnitId: AdsService().bannerAdUnitId,
+    //                 );
+    //               },
+    //             ),
+
+    //             _buildAndroidTabBar(context),
+
+    //             // Platform.isIOS
+    //             //     ? _buildIOSTabBar(context)
+    //             //     : _buildAndroidTabBar(context),
+    //           ],
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
+
+  // Widget _buildTabBar(BuildContext context) {
+  //   final l10n = AppLocalizations.of(context)!;
+
+  //   return Container(
+  //     color: CupertinoTheme.of(
+  //       context,
+  //     ).barBackgroundColor.withValues(alpha: .9),
+  //     child: SafeArea(
+  //       top: false,
+  //       child: CupertinoTabBar(
+  //         backgroundColor: Colors.transparent,
+  //         currentIndex: _currentIndex,
+  //         onTap: (i) => setState(() {
+  //           _currentIndex = i;
+  //           HapticFeedback.heavyImpact();
+  //         }),
+  //         activeColor: CupertinoColors.activeBlue,
+  //         inactiveColor: CupertinoColors.systemGrey,
+  //         border: const Border(
+  //           top: BorderSide(color: Colors.black12, width: 0.5),
+  //         ),
+  //         items: [
+  //           BottomNavigationBarItem(
+  //             label: l10n.home,
+  //             icon: Icon(CupertinoIcons.square_grid_2x2, size: 24.sp),
+  //             activeIcon: Icon(
+  //               CupertinoIcons.square_grid_2x2_fill,
+  //               size: 24.sp,
+  //             ),
+  //           ),
+  //           BottomNavigationBarItem(
+  //             label: l10n.transaction,
+  //             icon: Icon(CupertinoIcons.chart_bar, size: 24.sp),
+  //             activeIcon: Icon(CupertinoIcons.chart_bar_fill, size: 24.sp),
+  //           ),
+  //           BottomNavigationBarItem(
+  //             label: l10n.budgets,
+  //             icon: Icon(CupertinoIcons.creditcard, size: 24.sp),
+  //             activeIcon: Icon(CupertinoIcons.creditcard_fill, size: 24.sp),
+  //           ),
+  //           BottomNavigationBarItem(
+  //             label: l10n.settings,
+  //             icon: Icon(CupertinoIcons.gear_alt, size: 24.sp),
+  //             activeIcon: Icon(CupertinoIcons.gear_alt_fill, size: 24.sp),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   // Widget _buildIOSTabBar(BuildContext context) {
   //   final l10n = AppLocalizations.of(context)!;
@@ -100,54 +207,54 @@ class _BottomNavbarState extends State<BottomNavbar> {
   //   );
   // }
 
-  Widget _buildAndroidTabBar(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+  // Widget _buildAndroidTabBar(BuildContext context) {
+  //   final l10n = AppLocalizations.of(context)!;
 
-    return Container(
-      color: CupertinoTheme.of(
-        context,
-      ).barBackgroundColor.withValues(alpha: .9),
-      child: SafeArea(
-        top: false,
-        child: CupertinoTabBar(
-          backgroundColor: Colors.transparent,
-          currentIndex: _currentIndex,
-          onTap: (i) => setState(() {
-            _currentIndex = i;
-            HapticFeedback.heavyImpact();
-          }),
-          activeColor: CupertinoColors.activeBlue,
-          inactiveColor: CupertinoColors.systemGrey,
-          border: const Border(
-            top: BorderSide(color: Colors.black12, width: 0.5),
-          ),
-          items: [
-            BottomNavigationBarItem(
-              label: l10n.home,
-              icon: Icon(CupertinoIcons.square_grid_2x2, size: 24.sp),
-              activeIcon: Icon(
-                CupertinoIcons.square_grid_2x2_fill,
-                size: 24.sp,
-              ),
-            ),
-            BottomNavigationBarItem(
-              label: l10n.transaction,
-              icon: Icon(CupertinoIcons.chart_bar, size: 24.sp),
-              activeIcon: Icon(CupertinoIcons.chart_bar_fill, size: 24.sp),
-            ),
-            BottomNavigationBarItem(
-              label: l10n.budgets,
-              icon: Icon(CupertinoIcons.creditcard, size: 24.sp),
-              activeIcon: Icon(CupertinoIcons.creditcard_fill, size: 24.sp),
-            ),
-            BottomNavigationBarItem(
-              label: l10n.settings,
-              icon: Icon(CupertinoIcons.gear_alt, size: 24.sp),
-              activeIcon: Icon(CupertinoIcons.gear_alt_fill, size: 24.sp),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  //   return Container(
+  //     color: CupertinoTheme.of(
+  //       context,
+  //     ).barBackgroundColor.withValues(alpha: .9),
+  //     child: SafeArea(
+  //       top: false,
+  //       child: CupertinoTabBar(
+  //         backgroundColor: Colors.transparent,
+  //         currentIndex: _currentIndex,
+  //         onTap: (i) => setState(() {
+  //           _currentIndex = i;
+  //           HapticFeedback.heavyImpact();
+  //         }),
+  //         activeColor: CupertinoColors.activeBlue,
+  //         inactiveColor: CupertinoColors.systemGrey,
+  //         border: const Border(
+  //           top: BorderSide(color: Colors.black12, width: 0.5),
+  //         ),
+  //         items: [
+  //           BottomNavigationBarItem(
+  //             label: l10n.home,
+  //             icon: Icon(CupertinoIcons.square_grid_2x2, size: 24.sp),
+  //             activeIcon: Icon(
+  //               CupertinoIcons.square_grid_2x2_fill,
+  //               size: 24.sp,
+  //             ),
+  //           ),
+  //           BottomNavigationBarItem(
+  //             label: l10n.transaction,
+  //             icon: Icon(CupertinoIcons.chart_bar, size: 24.sp),
+  //             activeIcon: Icon(CupertinoIcons.chart_bar_fill, size: 24.sp),
+  //           ),
+  //           BottomNavigationBarItem(
+  //             label: l10n.budgets,
+  //             icon: Icon(CupertinoIcons.creditcard, size: 24.sp),
+  //             activeIcon: Icon(CupertinoIcons.creditcard_fill, size: 24.sp),
+  //           ),
+  //           BottomNavigationBarItem(
+  //             label: l10n.settings,
+  //             icon: Icon(CupertinoIcons.gear_alt, size: 24.sp),
+  //             activeIcon: Icon(CupertinoIcons.gear_alt_fill, size: 24.sp),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 }

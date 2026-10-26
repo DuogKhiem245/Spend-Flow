@@ -126,6 +126,7 @@ class _CreateOrUpdateViewState extends State<CreateOrUpdateView> {
           backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
         ),
         child: SafeArea(
+          bottom: false,
           child: Column(
             children: [
               Expanded(

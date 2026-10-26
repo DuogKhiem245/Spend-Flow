@@ -175,6 +175,7 @@ class HomeHeader extends StatelessWidget {
       transitionDuration: const Duration(milliseconds: 200),
       pageBuilder: (context, animation, secondaryAnimation) {
         return SafeArea(
+          bottom: false,
           child: Align(
             alignment: Alignment.topRight,
             child: Padding(
@@ -342,6 +343,7 @@ class HomeHeader extends StatelessWidget {
           borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
         ),
         child: SafeArea(
+          bottom: false,
           child: Column(
             children: [
               Container(

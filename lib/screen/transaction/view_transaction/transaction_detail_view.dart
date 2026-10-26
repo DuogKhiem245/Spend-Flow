@@ -70,7 +70,9 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
           return CupertinoPageScaffold(
             navigationBar: CupertinoNavigationBar(
               padding: EdgeInsetsDirectional.zero,
-              backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
+              backgroundColor: CupertinoTheme.of(
+                context,
+              ).scaffoldBackgroundColor,
               border: null,
               middle: Text(
                 l10n.transaction_details,
@@ -97,35 +99,36 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
               ),
             ),
             child: SafeArea(
+              bottom: false,
               child: SingleChildScrollView(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-              child: Column(
-                children: [
-                  _buildMainCard(context, _viewModel),
-                  SizedBox(height: 20.h),
-                  _buildSpendingTrendSection(context, _viewModel),
-                  if (_viewModel.hasLocation) ...[
+                child: Column(
+                  children: [
+                    _buildMainCard(context, _viewModel),
                     SizedBox(height: 20.h),
-                    ViewOnlyMapWidget(
-                      latitude: _viewModel.latitude,
-                      longitude: _viewModel.longitude,
-                      address: _viewModel.locationAddress,
-                    ),
-                  ],
+                    _buildSpendingTrendSection(context, _viewModel),
+                    if (_viewModel.hasLocation) ...[
+                      SizedBox(height: 20.h),
+                      ViewOnlyMapWidget(
+                        latitude: _viewModel.latitude,
+                        longitude: _viewModel.longitude,
+                        address: _viewModel.locationAddress,
+                      ),
+                    ],
 
-                  if (_viewModel.hasNote) ...[
-                    SizedBox(height: 20.h),
-                    _buildNoteSection(context, _viewModel),
+                    if (_viewModel.hasNote) ...[
+                      SizedBox(height: 20.h),
+                      _buildNoteSection(context, _viewModel),
+                    ],
                   ],
-                ],
+                ),
               ),
             ),
-          ),
-        );
-      },
-    ),
-  );
-}
+          );
+        },
+      ),
+    );
+  }
 
   Widget _buildMainCard(BuildContext context, TransactionDetailViewModel vm) {
     final l10n = AppLocalizations.of(context)!;

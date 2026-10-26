@@ -112,6 +112,7 @@ class _SpendingDetailViewState extends State<SpendingDetailView>
           ),
         ),
         child: SafeArea(
+          bottom: false,
           child: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.all(20.w),

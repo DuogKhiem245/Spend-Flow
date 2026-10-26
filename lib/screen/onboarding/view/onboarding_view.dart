@@ -44,6 +44,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     return CupertinoPageScaffold(
       backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
       child: SafeArea(
+        bottom: false,
         child: Column(
           children: [
             Expanded(
@@ -64,7 +65,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         ClipRRect(
                           child: Image.asset(
                             item.image,
-                            height: 480.h, 
+                            height: 480.h,
                             width: double.infinity,
                             fit: BoxFit.contain,
                           ),

@@ -84,6 +84,7 @@ class _SettingPageState extends State<SettingPage> with WidgetsBindingObserver {
       child: LoadingOverlay(
         isLoading: _isDeleting,
         child: SafeArea(
+          bottom: false,
           child: StreamBuilder<User?>(
             stream: authService.userChanges,
             builder: (context, snapshot) {

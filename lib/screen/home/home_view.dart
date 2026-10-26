@@ -80,6 +80,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         builder: (context, child) {
           return CupertinoPageScaffold(
             child: SafeArea(
+              bottom: false,
               child: _viewModel.isLoading
                   ? const SkeletonHomeView()
                   : Stack(
@@ -145,10 +146,14 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                               (_premiumViewModel.isPremium ||
                                   !_viewModel.hasBanner)
                               ? Platform.isIOS
-                                    ? isTablet ? 80.h : 100.h
+                                    ? isTablet
+                                          ? 80.h
+                                          : 100.h
                                     : 95.h
                               : Platform.isIOS
-                              ? isTablet ? 120.h : 150.h
+                              ? isTablet
+                                    ? 120.h
+                                    : 150.h
                               : 150.h,
                           child: _buildFloatingButton(l10n, isTablet),
                         ),

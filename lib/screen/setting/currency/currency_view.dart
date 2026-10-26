@@ -51,6 +51,7 @@ class _CurrencyViewState extends State<CurrencyView> {
         ),
       ),
       child: SafeArea(
+        bottom: false,
         child: Column(
           children: [
             Padding(
@@ -63,7 +64,10 @@ class _CurrencyViewState extends State<CurrencyView> {
                 borderRadius: BorderRadius.circular(30.r),
                 controller: _searchController,
                 placeholderStyle: CupertinoTheme.of(context).textTheme.textStyle
-                    .copyWith(color: CupertinoColors.systemGrey, fontSize: 16.sp),
+                    .copyWith(
+                      color: CupertinoColors.systemGrey,
+                      fontSize: 16.sp,
+                    ),
                 style: CupertinoTheme.of(
                   context,
                 ).textTheme.textStyle.copyWith(fontSize: 16.sp),
@@ -76,9 +80,9 @@ class _CurrencyViewState extends State<CurrencyView> {
                 },
               ),
             ),
-        
+
             _buildWarningNote(context, l10n),
-        
+
             Expanded(
               child: ListView(
                 children: [

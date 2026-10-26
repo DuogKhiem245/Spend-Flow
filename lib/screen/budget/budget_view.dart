@@ -82,6 +82,7 @@ class _BudgetPageState extends State<BudgetPage>
       builder: (context, child) {
         return CupertinoPageScaffold(
           child: SafeArea(
+            bottom: false,
             child: _viewModel.isLoading
                 ? const SkeletonBudgetView()
                 : _viewModel.isLocked

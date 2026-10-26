@@ -13,6 +13,7 @@ class CheckMailPage extends StatelessWidget {
 
     return CupertinoPageScaffold(
       child: SafeArea(
+        bottom: false,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: Column(

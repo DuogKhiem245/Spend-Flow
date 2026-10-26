@@ -61,6 +61,7 @@ class _ReportPageState extends State<ReportPage>
 
     return CupertinoPageScaffold(
       child: SafeArea(
+        bottom: false,
         child: ListenableBuilder(
           listenable: _viewModel,
           builder: (context, child) {

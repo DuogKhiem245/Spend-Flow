@@ -1,3 +1,4 @@
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,6 +13,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart' hide Size;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spend_flow/assets/languages/app_localizations.dart';
+import 'package:spend_flow/config/app_colors.dart';
 import 'package:spend_flow/config/app_theme.dart';
 import 'package:spend_flow/core/services/ads_service.dart';
 import 'package:spend_flow/core/services/general_service/language_service.dart';
@@ -170,53 +172,74 @@ class _MyAppState extends State<MyApp> {
               fontViewModel.currentFont,
             );
 
-            return CupertinoApp(
+            final cupertinoLightTheme = AppCupertinoTheme.light.copyWith(
+              textTheme: CupertinoTextThemeData(
+                textStyle: AppCupertinoTheme.light.textTheme.textStyle.copyWith(
+                  fontFamily: dynamicFont.fontFamily,
+                ),
+                navTitleTextStyle: AppCupertinoTheme
+                    .light
+                    .textTheme
+                    .navTitleTextStyle
+                    .copyWith(fontFamily: dynamicFont.fontFamily),
+                navActionTextStyle: AppCupertinoTheme
+                    .light
+                    .textTheme
+                    .navActionTextStyle
+                    .copyWith(fontFamily: dynamicFont.fontFamily),
+              ),
+            );
+
+            final cupertinoDarkTheme = AppCupertinoTheme.dark.copyWith(
+              textTheme: CupertinoTextThemeData(
+                textStyle: AppCupertinoTheme.dark.textTheme.textStyle.copyWith(
+                  fontFamily: dynamicFont.fontFamily,
+                ),
+                navTitleTextStyle: AppCupertinoTheme
+                    .dark
+                    .textTheme
+                    .navTitleTextStyle
+                    .copyWith(fontFamily: dynamicFont.fontFamily),
+                navActionTextStyle: AppCupertinoTheme
+                    .dark
+                    .textTheme
+                    .navActionTextStyle
+                    .copyWith(fontFamily: dynamicFont.fontFamily),
+              ),
+            );
+
+            final materialLightTheme = ThemeData(
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: AppColors.primaryColor,
+                brightness: Brightness.light,
+              ),
+              useMaterial3: true,
+              brightness: Brightness.light,
+              fontFamily: dynamicFont.fontFamily,
+            );
+
+            final materialDarkTheme = ThemeData(
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: AppColors.primaryColor,
+                brightness: Brightness.dark,
+              ),
+              useMaterial3: true,
+              brightness: Brightness.dark,
+              fontFamily: dynamicFont.fontFamily,
+            );
+
+            return AdaptiveApp(
               navigatorKey: navigatorKey,
               title: 'Spend Flow',
-              debugShowCheckedModeBanner: false,
-              theme: AppCupertinoTheme.light,
-              builder: (context, child) {
-                bool isDark;
-                switch (themeService.themeMode) {
-                  case ThemeMode.dark:
-                    isDark = true;
-                    break;
-                  case ThemeMode.light:
-                    isDark = false;
-                    break;
-                  case ThemeMode.system:
-                    isDark =
-                        MediaQuery.of(context).platformBrightness ==
-                        Brightness.dark;
-                    break;
-                }
-
-                return TweenAnimationBuilder<double>(
-                  tween: Tween<double>(end: isDark ? 1.0 : 0.0),
-                  duration: const Duration(milliseconds: 300),
-                  builder: (context, t, _) {
-                    final baseTheme = t < 0.5
-                        ? AppCupertinoTheme.light
-                        : AppCupertinoTheme.dark;
-
-                    final finalTheme = baseTheme.copyWith(
-                      textTheme: CupertinoTextThemeData(
-                        textStyle: baseTheme.textTheme.textStyle.copyWith(
-                          fontFamily: dynamicFont.fontFamily,
-                        ),
-                        navTitleTextStyle: baseTheme.textTheme.navTitleTextStyle
-                            .copyWith(fontFamily: dynamicFont.fontFamily),
-                        navActionTextStyle: baseTheme
-                            .textTheme
-                            .navActionTextStyle
-                            .copyWith(fontFamily: dynamicFont.fontFamily),
-                      ),
-                    );
-
-                    return CupertinoTheme(data: finalTheme, child: child!);
-                  },
-                );
-              },
+              themeMode: themeService.themeMode,
+              cupertinoLightTheme: cupertinoLightTheme,
+              cupertinoDarkTheme: cupertinoDarkTheme,
+              materialLightTheme: materialLightTheme,
+              materialDarkTheme: materialDarkTheme,
+              cupertino: (context, platform) =>
+                  const CupertinoAppData(debugShowCheckedModeBanner: false),
+              material: (context, platform) =>
+                  const MaterialAppData(debugShowCheckedModeBanner: false),
               locale: languageService.locale,
               localizationsDelegates: const [
                 AppLocalizations.delegate,

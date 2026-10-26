@@ -139,6 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
         );
       },
       child: SafeArea(
+        bottom: false,
         top: true,
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),

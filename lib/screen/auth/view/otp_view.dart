@@ -105,6 +105,7 @@ class _OTPPageState extends State<OTPPage> {
         );
       },
       child: SafeArea(
+        bottom: false,
         top: true,
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -119,7 +120,7 @@ class _OTPPageState extends State<OTPPage> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(30.r),
                     child: SizedBox(
-                       width: 125.w,
+                      width: 125.w,
                       height: 125.w,
                       child: Image.asset(
                         CupertinoTheme.of(context).brightness == Brightness.dark

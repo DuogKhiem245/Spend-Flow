@@ -111,6 +111,7 @@ class _ImportViewState extends State<ImportView>
             ),
           ),
           child: SafeArea(
+            bottom: false,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Column(

@@ -185,6 +185,7 @@ class _AddCategoryViewState extends State<AddCategoryView> {
         ),
       ),
       child: SafeArea(
+        bottom: false,
         child: SingleChildScrollView(
           padding: EdgeInsets.all(16.w),
           child: Column(

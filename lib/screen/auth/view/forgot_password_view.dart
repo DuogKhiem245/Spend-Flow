@@ -49,7 +49,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           buttonText: "OK",
         );
       }
-    } 
+    }
   }
 
   @override
@@ -93,6 +93,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         );
       },
       child: SafeArea(
+        bottom: false,
         top: true,
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),

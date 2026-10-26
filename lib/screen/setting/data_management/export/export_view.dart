@@ -43,6 +43,7 @@ class _ExportViewState extends State<ExportView> {
         ),
       ),
       child: SafeArea(
+        bottom: false,
         child: Column(
           children: [
             Expanded(

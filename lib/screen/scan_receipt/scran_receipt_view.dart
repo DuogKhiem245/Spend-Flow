@@ -65,18 +65,19 @@ class _ScanReceiptViewState extends State<ScanReceiptView>
             ),
           ),
           child: SafeArea(
+            bottom: false,
             child: Stack(
               children: [
                 Positioned.fill(child: _buildCameraPreview()),
-            
+
                 Column(
                   children: [
                     const Spacer(),
-            
+
                     _buildScanFrame(_viewModel.isCameraPermissionDenied, l10n),
-            
+
                     SizedBox(height: 20.h),
-            
+
                     Container(
                       padding: EdgeInsets.symmetric(
                         horizontal: 16.w,
@@ -96,13 +97,13 @@ class _ScanReceiptViewState extends State<ScanReceiptView>
                             ),
                       ),
                     ),
-            
+
                     const Spacer(),
-            
+
                     _buildBottomBar(),
                   ],
                 ),
-            
+
                 if (_viewModel.isScanning)
                   Container(
                     color: Colors.black.withValues(alpha: 0.7),
@@ -117,7 +118,9 @@ class _ScanReceiptViewState extends State<ScanReceiptView>
                           SizedBox(height: 16.h),
                           Text(
                             l10n.invoice_analysis,
-                            style: CupertinoTheme.of(context).textTheme.textStyle
+                            style: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
                                 .copyWith(
                                   color: Colors.white,
                                   fontSize: 16.sp,

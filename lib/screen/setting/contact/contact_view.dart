@@ -491,6 +491,7 @@ class _ContactViewState extends State<ContactView> {
               ),
             ),
             child: SafeArea(
+              bottom: false,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
                 child: Column(

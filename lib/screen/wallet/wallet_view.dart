@@ -106,6 +106,7 @@ class _WalletViewState extends State<WalletView> {
             behavior: HitTestBehavior.translucent,
             onTap: () => FocusScope.of(context).unfocus(),
             child: SafeArea(
+              bottom: false,
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   return SingleChildScrollView(

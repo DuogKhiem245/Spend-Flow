@@ -66,6 +66,7 @@ class _SecurityViewState extends State<SecurityView> {
             ),
           ),
           child: SafeArea(
+            bottom: false,
             child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
               child: Column(
@@ -468,10 +469,10 @@ class _SecurityViewState extends State<SecurityView> {
 
     if (isRemoveMode) {
       message = l10n.passcode_turn_off_success;
-      iconName = 'lock.slash.fill'; 
+      iconName = 'lock.slash.fill';
     } else if (isChangeMode) {
       message = l10n.passcode_update_success;
-      iconName = 'lock.rotation'; 
+      iconName = 'lock.rotation';
     } else {
       message = l10n.passcode_create_success;
       iconName = 'lock.fill';
@@ -481,7 +482,7 @@ class _SecurityViewState extends State<SecurityView> {
       context: context,
       title: l10n.notifications,
       message: message,
-      icon: iconName, 
+      icon: iconName,
       actions: [
         AlertAction(
           title: l10n.ok,

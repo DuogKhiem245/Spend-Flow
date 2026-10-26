@@ -51,6 +51,7 @@ class _LanguageViewState extends State<LanguageView> {
         ),
       ),
       child: SafeArea(
+        bottom: false,
         child: Column(
           children: [
             Expanded(
@@ -78,7 +79,6 @@ class _LanguageViewState extends State<LanguageView> {
                     // ),
 
                     // SizedBox(height: 24.h),
-
                     _buildSectionHeader(l10n.all_languages.toUpperCase()),
                     SizedBox(height: 8.h),
                     Container(
