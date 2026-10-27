@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:focus_detector/focus_detector.dart';
@@ -136,23 +137,23 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                           ],
                         ),
 
-                        if (Platform.isAndroid ||
-                            status != HingeStatus.unknown &&
-                            status != HingeStatus.closed) ...[
+                        if (Platform.isAndroid)
                           Positioned(
                             right: isTablet ? 30.w : 20.w,
                             bottom:
                                 (_premiumViewModel.isPremium ||
                                     !_viewModel.hasBanner)
-                                ? Platform.isIOS
-                                      ? isTablet
-                                            ? 80.h
-                                            : 100.h
-                                      : 95.h
-                                : Platform.isIOS
-                                ? isTablet
-                                      ? 120.h
-                                      : 150.h
+                                ? 40.h
+                                : 100.h,
+                            child: _buildFloatingButton(l10n, isTablet),
+                          )
+                        else if (status != HingeStatus.closed) ...[
+                          Positioned(
+                            right: isTablet ? 30.w : 20.w,
+                            bottom:
+                                (_premiumViewModel.isPremium ||
+                                    !_viewModel.hasBanner)
+                                ? 100.h
                                 : 150.h,
                             child: _buildFloatingButton(l10n, isTablet),
                           ),

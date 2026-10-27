@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foldable/foldable.dart';
@@ -75,28 +76,28 @@ class _BottomNavbarState extends State<BottomNavbar> {
         items: [
           AdaptiveNavigationDestination(
             label: l10n.home,
-            icon: 'square.grid.2x2',
+            icon: Platform.isAndroid ? Icons.home : 'square.grid.2x2',
           ),
           AdaptiveNavigationDestination(
             label: l10n.transaction,
-            icon: 'chart.bar',
+            icon: Platform.isAndroid ? Icons.bar_chart_rounded : 'chart.bar',
           ),
           AdaptiveNavigationDestination(
             label: l10n.budgets,
-            icon: 'creditcard',
+            icon: Platform.isAndroid ? Icons.credit_card : 'creditcard',
           ),
           AdaptiveNavigationDestination(
             label: l10n.settings,
-            icon: 'gearshape.fill',
+            icon: Platform.isAndroid ? Icons.settings : 'gearshape.fill',
           ),
         ],
       ),
       body: Stack(
         children: [
           _pages[_currentIndex],
-          if (Platform.isAndroid ||
-              status != HingeStatus.unknown ||
-              status != HingeStatus.closed) ...[
+          if (Platform.isIOS &&
+              (status != HingeStatus.unknown ||
+                  status != HingeStatus.closed)) ...[
             Positioned(
               left: 0,
               right: 0,
