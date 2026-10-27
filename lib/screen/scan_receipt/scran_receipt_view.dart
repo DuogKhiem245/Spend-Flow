@@ -69,7 +69,6 @@ class _ScanReceiptViewState extends State<ScanReceiptView>
             child: Stack(
               children: [
                 Positioned.fill(child: _buildCameraPreview()),
-
                 Column(
                   children: [
                     const Spacer(),

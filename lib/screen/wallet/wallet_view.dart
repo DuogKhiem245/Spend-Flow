@@ -299,7 +299,6 @@ class _WalletViewState extends State<WalletView> {
                             ],
 
                             const Spacer(),
-                            SizedBox(height: 20.h),
 
                             SizedBox(
                               width: double.infinity,
@@ -382,7 +381,7 @@ class _WalletViewState extends State<WalletView> {
                                 ),
                               ),
                             ] else ...[
-                              SizedBox(height: 15.h),
+                              SizedBox(height: 45.h),
                             ],
                           ],
                         ),

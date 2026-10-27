@@ -565,40 +565,43 @@ class _ReportPageState extends State<ReportPage>
         return Container(
           height: 300.h,
           color: CupertinoTheme.of(context).scaffoldBackgroundColor,
-          child: Column(
-            children: [
-              Container(
-                height: 50.h,
-                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onTap: () {
-                    _viewModel.setMonth(tempDate);
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(
-                    l10n.done,
-                    style: CupertinoTheme.of(context).textTheme.textStyle
-                        .copyWith(
-                          color: CupertinoTheme.of(context).primaryColor,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
+          child: SafeArea(
+            top: false,
+            child: Column(
+              children: [
+                Container(
+                  height: 50.h,
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    onTap: () {
+                      _viewModel.setMonth(tempDate);
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      l10n.done,
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            color: CupertinoTheme.of(context).primaryColor,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: CupertinoDatePicker(
-                  mode: CupertinoDatePickerMode.monthYear,
-                  initialDateTime: _viewModel.selectedMonth,
-                  minimumDate: DateTime(1900),
-                  maximumDate: DateTime.now(),
-                  onDateTimeChanged: (newDate) {
-                    tempDate = newDate;
-                  },
+                Expanded(
+                  child: CupertinoDatePicker(
+                    mode: CupertinoDatePickerMode.monthYear,
+                    initialDateTime: _viewModel.selectedMonth,
+                    minimumDate: DateTime(1900),
+                    maximumDate: DateTime.now(),
+                    onDateTimeChanged: (newDate) {
+                      tempDate = newDate;
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },

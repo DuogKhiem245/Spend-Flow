@@ -137,8 +137,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                         ),
 
                         if (Platform.isAndroid ||
-                            status != HingeStatus.unknown ||
-                            status != HingeStatus.closed)
+                            status != HingeStatus.unknown &&
+                            status != HingeStatus.closed) ...[
                           Positioned(
                             right: isTablet ? 30.w : 20.w,
                             bottom:
@@ -156,6 +156,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                 : 150.h,
                             child: _buildFloatingButton(l10n, isTablet),
                           ),
+                        ],
                       ],
                     ),
             ),

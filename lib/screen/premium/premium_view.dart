@@ -93,33 +93,35 @@ class PremiumView extends StatelessWidget {
               color: CupertinoTheme.of(context).scaffoldBackgroundColor,
               borderRadius: BorderRadius.vertical(top: Radius.circular(30.r)),
             ),
-            child: Column(
-              children: [
-                _buildStickyHeader(context, viewModel, l10n),
-
-                Expanded(
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 20.h),
-                        _buildMainContent(l10n, context, viewModel),
-                        SizedBox(height: 12.h),
-                        Text(
-                          l10n.premium_sync_account,
-                          textAlign: TextAlign.center,
-                          style: CupertinoTheme.of(
-                            context,
-                          ).textTheme.textStyle.copyWith(fontSize: 11.sp),
-                        ),
-                      ],
+            child: SafeArea(
+              child: Column(
+                children: [
+                  _buildStickyHeader(context, viewModel, l10n),
+              
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      padding: EdgeInsets.symmetric(horizontal: 20.w),
+                      child: Column(
+                        children: [
+                          SizedBox(height: 20.h),
+                          _buildMainContent(l10n, context, viewModel),
+                          SizedBox(height: 12.h),
+                          Text(
+                            l10n.premium_sync_account,
+                            textAlign: TextAlign.center,
+                            style: CupertinoTheme.of(
+                              context,
+                            ).textTheme.textStyle.copyWith(fontSize: 11.sp),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-
-                _buildBottomAction(viewModel, context, l10n),
-              ],
+              
+                  _buildBottomAction(viewModel, context, l10n),
+                ],
+              ),
             ),
           ),
         );
