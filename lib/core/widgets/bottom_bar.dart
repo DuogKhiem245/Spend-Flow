@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:foldable/foldable.dart';
 import 'package:spend_flow/assets/languages/app_localizations.dart';
 import 'package:spend_flow/core/services/ads_service.dart';
 import 'package:spend_flow/core/widgets/banner_ads_widget.dart';
+import 'package:spend_flow/core/helpers/transaction_action_helper.dart';
 import 'package:spend_flow/screen/budget/budget_view.dart';
 import 'package:spend_flow/screen/home/home_view.dart';
 import 'package:spend_flow/screen/report/report_view.dart';
@@ -34,8 +39,31 @@ class _BottomNavbarState extends State<BottomNavbar> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final HingeStatus status = DuoMediaQuery.statusOf(context);
 
     return AdaptiveScaffold(
+      appBar: _currentIndex == 0 && status == HingeStatus.closed
+          ? AdaptiveAppBar(
+              useNativeToolbar: true,
+              actions: [
+                AdaptiveAppBarAction(
+                  icon: CupertinoIcons.doc_text_viewfinder,
+                  onPressed: () =>
+                      TransactionActionHelper.handleMenuSelection(context, 0),
+                ),
+                AdaptiveAppBarAction(
+                  icon: CupertinoIcons.mic,
+                  onPressed: () =>
+                      TransactionActionHelper.handleMenuSelection(context, 1),
+                ),
+                AdaptiveAppBarAction(
+                  icon: CupertinoIcons.pencil_outline,
+                  onPressed: () =>
+                      TransactionActionHelper.handleMenuSelection(context, 2),
+                ),
+              ],
+            )
+          : null,
       minimizeBehavior: TabBarMinimizeBehavior.never,
       bottomNavigationBar: AdaptiveBottomNavigationBar(
         useNativeBottomBar: true,
@@ -66,195 +94,55 @@ class _BottomNavbarState extends State<BottomNavbar> {
       body: Stack(
         children: [
           _pages[_currentIndex],
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ListenableBuilder(
-                  listenable: viewModel,
-                  builder: (context, child) {
-                    if (viewModel.isPremium) {
-                      return const SizedBox.shrink();
-                    }
-                    return BannerAdWidget(
-                      adUnitId: AdsService().bannerAdUnitId,
-                    );
-                  },
-                ),
-              ],
+          if (Platform.isAndroid ||
+              status != HingeStatus.unknown ||
+              status != HingeStatus.closed) ...[
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 90,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ListenableBuilder(
+                    listenable: viewModel,
+                    builder: (context, child) {
+                      if (viewModel.isPremium) {
+                        return const SizedBox.shrink();
+                      }
+                      return BannerAdWidget(
+                        adUnitId: AdsService().bannerAdUnitId,
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
+          ] else ...[
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 10.h,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ListenableBuilder(
+                    listenable: viewModel,
+                    builder: (context, child) {
+                      if (viewModel.isPremium) {
+                        return const SizedBox.shrink();
+                      }
+                      return BannerAdWidget(
+                        adUnitId: AdsService().bannerAdUnitId,
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
         ],
       ),
     );
-    // return CupertinoPageScaffold(
-    //   resizeToAvoidBottomInset: false,
-    //   child: Stack(
-    //     children: [
-    //       _pages[_currentIndex],
-    //       Positioned(
-    //         left: 0,
-    //         right: 0,
-    //         bottom: 0,
-    //         child: Column(
-    //           mainAxisSize: MainAxisSize.min,
-    //           children: [
-    //             ListenableBuilder(
-    //               listenable: viewModel,
-    //               builder: (context, child) {
-    //                 if (viewModel.isPremium) {
-    //                   return const SizedBox.shrink();
-    //                 }
-
-    //                 return BannerAdWidget(
-    //                   adUnitId: AdsService().bannerAdUnitId,
-    //                 );
-    //               },
-    //             ),
-
-    //             _buildAndroidTabBar(context),
-
-    //             // Platform.isIOS
-    //             //     ? _buildIOSTabBar(context)
-    //             //     : _buildAndroidTabBar(context),
-    //           ],
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // );
   }
-
-  // Widget _buildTabBar(BuildContext context) {
-  //   final l10n = AppLocalizations.of(context)!;
-
-  //   return Container(
-  //     color: CupertinoTheme.of(
-  //       context,
-  //     ).barBackgroundColor.withValues(alpha: .9),
-  //     child: SafeArea(
-  //       top: false,
-  //       child: CupertinoTabBar(
-  //         backgroundColor: Colors.transparent,
-  //         currentIndex: _currentIndex,
-  //         onTap: (i) => setState(() {
-  //           _currentIndex = i;
-  //           HapticFeedback.heavyImpact();
-  //         }),
-  //         activeColor: CupertinoColors.activeBlue,
-  //         inactiveColor: CupertinoColors.systemGrey,
-  //         border: const Border(
-  //           top: BorderSide(color: Colors.black12, width: 0.5),
-  //         ),
-  //         items: [
-  //           BottomNavigationBarItem(
-  //             label: l10n.home,
-  //             icon: Icon(CupertinoIcons.square_grid_2x2, size: 24.sp),
-  //             activeIcon: Icon(
-  //               CupertinoIcons.square_grid_2x2_fill,
-  //               size: 24.sp,
-  //             ),
-  //           ),
-  //           BottomNavigationBarItem(
-  //             label: l10n.transaction,
-  //             icon: Icon(CupertinoIcons.chart_bar, size: 24.sp),
-  //             activeIcon: Icon(CupertinoIcons.chart_bar_fill, size: 24.sp),
-  //           ),
-  //           BottomNavigationBarItem(
-  //             label: l10n.budgets,
-  //             icon: Icon(CupertinoIcons.creditcard, size: 24.sp),
-  //             activeIcon: Icon(CupertinoIcons.creditcard_fill, size: 24.sp),
-  //           ),
-  //           BottomNavigationBarItem(
-  //             label: l10n.settings,
-  //             icon: Icon(CupertinoIcons.gear_alt, size: 24.sp),
-  //             activeIcon: Icon(CupertinoIcons.gear_alt_fill, size: 24.sp),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // Widget _buildIOSTabBar(BuildContext context) {
-  //   final l10n = AppLocalizations.of(context)!;
-  //   final textStyle = CupertinoTheme.of(context).textTheme.textStyle;
-
-  //   return CupertinoTheme(
-  //     data: CupertinoTheme.of(context).copyWith(
-  //       textTheme: CupertinoTextThemeData(
-  //         tabLabelTextStyle: textStyle.copyWith(fontSize: 10.sp),
-  //         textStyle: textStyle,
-  //       ),
-  //     ),
-  //     child: CNTabBar(
-  //       currentIndex: _currentIndex,
-  //       onTap: (i) => setState(() {
-  //         _currentIndex = i;
-  //         HapticFeedback.heavyImpact();
-  //       }),
-  //       backgroundColor: CupertinoTheme.of(context).barBackgroundColor,
-  //       items: [
-  //         CNTabBarItem(label: l10n.home, icon: CNSymbol('square.grid.2x2')),
-  //         CNTabBarItem(label: l10n.transaction, icon: CNSymbol('chart.bar')),
-  //         CNTabBarItem(label: l10n.budgets, icon: CNSymbol('creditcard')),
-  //         CNTabBarItem(label: l10n.settings, icon: CNSymbol('gearshape.fill')),
-  //       ],
-  //     ),
-  //   );
-  // }
-
-  // Widget _buildAndroidTabBar(BuildContext context) {
-  //   final l10n = AppLocalizations.of(context)!;
-
-  //   return Container(
-  //     color: CupertinoTheme.of(
-  //       context,
-  //     ).barBackgroundColor.withValues(alpha: .9),
-  //     child: SafeArea(
-  //       top: false,
-  //       child: CupertinoTabBar(
-  //         backgroundColor: Colors.transparent,
-  //         currentIndex: _currentIndex,
-  //         onTap: (i) => setState(() {
-  //           _currentIndex = i;
-  //           HapticFeedback.heavyImpact();
-  //         }),
-  //         activeColor: CupertinoColors.activeBlue,
-  //         inactiveColor: CupertinoColors.systemGrey,
-  //         border: const Border(
-  //           top: BorderSide(color: Colors.black12, width: 0.5),
-  //         ),
-  //         items: [
-  //           BottomNavigationBarItem(
-  //             label: l10n.home,
-  //             icon: Icon(CupertinoIcons.square_grid_2x2, size: 24.sp),
-  //             activeIcon: Icon(
-  //               CupertinoIcons.square_grid_2x2_fill,
-  //               size: 24.sp,
-  //             ),
-  //           ),
-  //           BottomNavigationBarItem(
-  //             label: l10n.transaction,
-  //             icon: Icon(CupertinoIcons.chart_bar, size: 24.sp),
-  //             activeIcon: Icon(CupertinoIcons.chart_bar_fill, size: 24.sp),
-  //           ),
-  //           BottomNavigationBarItem(
-  //             label: l10n.budgets,
-  //             icon: Icon(CupertinoIcons.creditcard, size: 24.sp),
-  //             activeIcon: Icon(CupertinoIcons.creditcard_fill, size: 24.sp),
-  //           ),
-  //           BottomNavigationBarItem(
-  //             label: l10n.settings,
-  //             icon: Icon(CupertinoIcons.gear_alt, size: 24.sp),
-  //             activeIcon: Icon(CupertinoIcons.gear_alt_fill, size: 24.sp),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 }

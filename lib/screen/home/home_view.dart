@@ -1,25 +1,19 @@
 import 'dart:io';
 
-import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:focus_detector/focus_detector.dart';
+import 'package:foldable/foldable.dart';
 import 'package:spend_flow/assets/languages/app_localizations.dart';
+import 'package:spend_flow/core/helpers/transaction_action_helper.dart';
 import 'package:spend_flow/core/services/ads_service.dart';
-import 'package:spend_flow/core/services/data_service/daily_limit_service.dart';
-import 'package:spend_flow/core/widgets/custom_option/custom_option_widget.dart';
-import 'package:spend_flow/screen/premium/premium_view.dart';
-import 'package:spend_flow/screen/scan_receipt/scran_receipt_view.dart';
-import 'package:spend_flow/screen/transaction/add_transaction/add_transaction_view.dart';
 import 'package:spend_flow/screen/home/home_viewmodel.dart';
 import 'package:spend_flow/screen/home/widgets/balance_card.dart';
 import 'package:spend_flow/screen/home/widgets/home_header.dart';
 import 'package:spend_flow/screen/home/widgets/recent_transaction.dart';
 import 'package:spend_flow/core/widgets/skeleton/skeleton_home_view.dart';
 import 'package:spend_flow/screen/home/widgets/spending_chart.dart';
-import 'package:spend_flow/screen/voice_input/voice_input_view.dart';
 import 'package:spend_flow/main.dart';
 
 class HomePage extends StatefulWidget {
@@ -31,7 +25,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   final HomeViewModel _viewModel = HomeViewModel();
-  final DailyLimitService _limitService = DailyLimitService();
   final AdsService _adsService = AdsService();
   final _premiumViewModel = premiumViewModel;
 
@@ -68,6 +61,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     final double width = mediaQuery.size.width;
 
     final bool isTablet = width >= 600;
+
+    final HingeStatus status = DuoMediaQuery.statusOf(context);
 
     return FocusDetector(
       onFocusGained: () async {
@@ -140,23 +135,27 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                             ),
                           ],
                         ),
-                        Positioned(
-                          right: 20.w,
-                          bottom:
-                              (_premiumViewModel.isPremium ||
-                                  !_viewModel.hasBanner)
-                              ? Platform.isIOS
-                                    ? isTablet
-                                          ? 80.h
-                                          : 100.h
-                                    : 95.h
-                              : Platform.isIOS
-                              ? isTablet
-                                    ? 120.h
-                                    : 150.h
-                              : 150.h,
-                          child: _buildFloatingButton(l10n, isTablet),
-                        ),
+
+                        if (Platform.isAndroid ||
+                            status != HingeStatus.unknown ||
+                            status != HingeStatus.closed)
+                          Positioned(
+                            right: isTablet ? 30.w : 20.w,
+                            bottom:
+                                (_premiumViewModel.isPremium ||
+                                    !_viewModel.hasBanner)
+                                ? Platform.isIOS
+                                      ? isTablet
+                                            ? 80.h
+                                            : 100.h
+                                      : 95.h
+                                : Platform.isIOS
+                                ? isTablet
+                                      ? 120.h
+                                      : 150.h
+                                : 150.h,
+                            child: _buildFloatingButton(l10n, isTablet),
+                          ),
                       ],
                     ),
             ),
@@ -166,186 +165,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     );
   }
 
-  Future<void> _handleMenuSelection(int index) async {
-    HapticFeedback.heavyImpact();
-
-    switch (index) {
-      case 0:
-        final canUse = await _limitService.canUseScan();
-        if (canUse) {
-          if (!mounted) return;
-          await Navigator.push(
-            context,
-            CupertinoPageRoute(builder: (context) => const ScanReceiptView()),
-          );
-        } else {
-          if (!mounted) return;
-          await _showLimitOptions(context, isVoice: false);
-        }
-        break;
-
-      case 1:
-        final canUse = await _limitService.canUseVoice();
-        if (canUse) {
-          if (!mounted) return;
-          await Navigator.push(
-            context,
-            CupertinoPageRoute(builder: (context) => const VoiceInputView()),
-          );
-        } else {
-          if (!mounted) return;
-          await _showLimitOptions(context, isVoice: true);
-        }
-        break;
-
-      case 2:
-        await Navigator.push(
-          context,
-          CupertinoPageRoute(builder: (context) => const AddTransactionPage()),
-        );
-        break;
-    }
-  }
-
-  void _handleRewardAdFlow({required bool isVoice}) {
-    _adsService.showRewardedAd(
-      type: isVoice ? RewardedAdType.voiceInput : RewardedAdType.scanReceipt,
-      onRewardEarned: () async {
-        await _limitService.grantAdReward(isVoice);
-
-        if (!mounted) return;
-
-        bool? result = false;
-        if (isVoice) {
-          result = await Navigator.push<bool>(
-            context,
-            CupertinoPageRoute(builder: (context) => const VoiceInputView()),
-          );
-        } else {
-          result = await Navigator.push<bool>(
-            context,
-            CupertinoPageRoute(builder: (context) => const ScanReceiptView()),
-          );
-        }
-
-        if (mounted) {
-          Navigator.pop(context, result);
-        }
-      },
-      onAdFailed: () {
-        if (mounted) {
-          _showAdErrorDialog(context);
-        }
-      },
-    );
-  }
-
-  Future<bool?> _showLimitOptions(
-    BuildContext context, {
-    required bool isVoice,
-  }) {
-    final l10n = AppLocalizations.of(context)!;
-
-    return showModalBottomSheet<bool>(
-      context: context,
-      backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
-      builder: (context) => Container(
-        padding: EdgeInsets.fromLTRB(24.w, 4.h, 24.w, 24.h),
-        decoration: BoxDecoration(
-          color: CupertinoTheme.of(context).scaffoldBackgroundColor,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(30.r)),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                width: 40.w,
-                height: 5.h,
-                decoration: BoxDecoration(
-                  color: CupertinoTheme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-            SizedBox(height: 10.h),
-            Icon(
-              isVoice
-                  ? CupertinoIcons.mic_circle
-                  : CupertinoIcons.doc_text_viewfinder,
-              size: 50.sp,
-              color: CupertinoTheme.of(context).primaryColor,
-            ),
-            SizedBox(height: 12.h),
-            Text(
-              isVoice ? l10n.limit_reached : l10n.scan_receipt,
-              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 8.h),
-            Text(
-              isVoice ? l10n.used_up_daily_limit("5") : l10n.requires_premium,
-              textAlign: TextAlign.center,
-              style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                fontSize: 14.sp,
-                color: CupertinoColors.systemGrey,
-              ),
-            ),
-            SizedBox(height: 24.h),
-            CustomOptionWidget(
-              context: context,
-              icon: CupertinoIcons.play_circle_fill,
-              label: isVoice ? l10n.see_ads("5") : l10n.watch_ad_continue,
-              color: CupertinoTheme.of(context).primaryColor,
-              onTap: () => _handleRewardAdFlow(isVoice: isVoice),
-            ),
-            SizedBox(height: 12.h),
-            CustomOptionWidget(
-              context: context,
-              icon: CupertinoIcons.star_fill,
-              label: l10n.upgrade_premium,
-              color: const Color(0xFF9C2CF3),
-              isGradient: true,
-              onTap: () {
-                Navigator.pop(context, false);
-                _showPremiumModal(context, isVoice);
-              },
-            ),
-            SizedBox(height: 20.h),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _showPremiumModal(BuildContext context, bool isMaximized) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
-      builder: (context) => PremiumView(isMaximized: isMaximized),
-    );
-  }
-
-  void _showAdErrorDialog(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-
-    AdaptiveAlertDialog.show(
-      context: context,
-      title: l10n.error,
-      message: l10n.ads_loading,
-      icon: 'antennas.bubble.left.fill',
-      actions: [
-        AlertAction(
-          title: "OK",
-          style: AlertActionStyle.primary,
-          onPressed: () {},
-        ),
-      ],
-    );
+  Future<void> handleMenuSelection(int index) async {
+    await TransactionActionHelper.handleMenuSelection(context, index);
   }
 
   Widget _buildFloatingButton(AppLocalizations? l10n, bool isTablet) {
@@ -374,7 +195,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                   label: l10n!.add_manually,
                   textColor: textColor,
                   backgroundColor: barColor,
-                  onTap: () => _handleMenuSelection(2),
+                  onTap: () => handleMenuSelection(2),
                 ),
                 SizedBox(height: 12.h),
                 _buildSubMenuButton(
@@ -382,7 +203,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                   label: l10n.add_via_voice,
                   textColor: textColor,
                   backgroundColor: barColor,
-                  onTap: () => _handleMenuSelection(1),
+                  onTap: () => handleMenuSelection(1),
                 ),
                 SizedBox(height: 12.h),
                 _buildSubMenuButton(
@@ -390,7 +211,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                   label: l10n.scan_receipt,
                   textColor: textColor,
                   backgroundColor: barColor,
-                  onTap: () => _handleMenuSelection(0),
+                  onTap: () => handleMenuSelection(0),
                 ),
                 SizedBox(height: 15.h),
               ],

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -99,16 +98,11 @@ class _BannerAdWidgetState extends State<BannerAdWidget>
     if (_bannerAd != null && _isLoaded) {
       return Container(
         margin: EdgeInsets.symmetric(vertical: 5.h),
-        child: ClipRRect(
-          borderRadius: Platform.isIOS
-              ? BorderRadius.circular(30.r)
-              : BorderRadius.zero,
-          child: Container(
-            width: _bannerAd!.size.width.toDouble(),
-            height: _bannerAd!.size.height.toDouble(),
-            alignment: Alignment.center,
-            child: AdWidget(ad: _bannerAd!),
-          ),
+        child: Container(
+          width: _bannerAd!.size.width.toDouble(),
+          height: _bannerAd!.size.height.toDouble(),
+          alignment: Alignment.center,
+          child: AdWidget(ad: _bannerAd!),
         ),
       );
     }
