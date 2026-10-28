@@ -506,5 +506,15 @@
   "feature_under_development": "¡Esta característica está actualmente en desarrollo y estará disponible en próximas actualizaciones!",
   "remaining_budget": "Presupuesto restante",
   "monthly_spending": "Cuadro de gastos mensuales",
-  "quick_add_voice": "Toca para hablar"
+  "quick_add_voice": "Toca para hablar",
+  "ad_no_fill_title": "No hay anuncios disponibles",
+  "ad_no_fill_message": "Actualmente no hay anuncios disponibles. Inténtalo de nuevo más tarde o actualiza a Premium.",
+  "ad_network_error_title": "Error de conexión",
+  "ad_network_error_message": "No se pudo conectar para cargar anuncios. Verifica tu conexión de red e intenta nuevamente.",
+  "ad_load_failed_title": "Error al cargar anuncio",
+  "ad_load_failed_message": "Ocurrió un error al cargar el anuncio. Inténtalo de nuevo más tarde.",
+  "ad_show_failed_title": "Error de visualización",
+  "ad_show_failed_message": "No se pudo mostrar el anuncio. Inténtalo de nuevo más tarde.",
+  "ad_loading_timeout_message": "El anuncio tardó demasiado en cargarse. Inténtalo de nuevo más tarde.",
+  "ad_preparing": "Preparando anuncio..."
 }

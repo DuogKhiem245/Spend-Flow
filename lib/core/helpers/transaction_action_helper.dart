@@ -1,9 +1,9 @@
-import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/languages/app_localizations.dart';
+import 'package:spend_flow/core/helpers/ad_dialog_helper.dart';
 import 'package:spend_flow/core/services/ads_service.dart';
 import 'package:spend_flow/core/services/data_service/daily_limit_service.dart';
 import 'package:spend_flow/core/widgets/custom_option/custom_option_widget.dart';
@@ -14,7 +14,6 @@ import 'package:spend_flow/screen/voice_input/voice_input_view.dart';
 
 class TransactionActionHelper {
   static final DailyLimitService _limitService = DailyLimitService();
-  static final AdsService _adsService = AdsService();
 
   static Future<void> handleMenuSelection(BuildContext context, int index) async {
     HapticFeedback.heavyImpact();
@@ -148,7 +147,8 @@ class TransactionActionHelper {
   }
 
   static void _handleRewardAdFlow(BuildContext context, {required bool isVoice}) {
-    _adsService.showRewardedAd(
+    AdDialogHelper.showRewardedAdWithWaiting(
+      context: context,
       type: isVoice ? RewardedAdType.voiceInput : RewardedAdType.scanReceipt,
       onRewardEarned: () async {
         await _limitService.grantAdReward(isVoice);
@@ -172,29 +172,10 @@ class TransactionActionHelper {
           Navigator.pop(context, result);
         }
       },
-      onAdFailed: () {
-        if (context.mounted) {
-          _showAdErrorDialog(context);
-        }
+      onUpgradePremium: () {
+        Navigator.pop(context, false);
+        _showPremiumModal(context, isVoice);
       },
-    );
-  }
-
-  static void _showAdErrorDialog(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-
-    AdaptiveAlertDialog.show(
-      context: context,
-      title: l10n.error,
-      message: l10n.ads_loading,
-      icon: 'antennas.bubble.left.fill',
-      actions: [
-        AlertAction(
-          title: "OK",
-          style: AlertActionStyle.primary,
-          onPressed: () {},
-        ),
-      ],
     );
   }
 }

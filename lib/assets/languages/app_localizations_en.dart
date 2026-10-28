@@ -1649,4 +1649,39 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get quick_add_voice => 'Tap to speak';
+
+  @override
+  String get ad_no_fill_title => 'No Ads Available';
+
+  @override
+  String get ad_no_fill_message =>
+      'No ads are currently available. Please try again later or upgrade to Premium.';
+
+  @override
+  String get ad_network_error_title => 'Connection Error';
+
+  @override
+  String get ad_network_error_message =>
+      'Unable to connect to load ads. Please check your network and try again.';
+
+  @override
+  String get ad_load_failed_title => 'Ad Load Failed';
+
+  @override
+  String get ad_load_failed_message =>
+      'An error occurred while loading the ad. Please try again later.';
+
+  @override
+  String get ad_show_failed_title => 'Display Error';
+
+  @override
+  String get ad_show_failed_message =>
+      'Unable to display the ad. Please try again later.';
+
+  @override
+  String get ad_loading_timeout_message =>
+      'Ad loading timed out. Please try again later.';
+
+  @override
+  String get ad_preparing => 'Preparing ad...';
 }

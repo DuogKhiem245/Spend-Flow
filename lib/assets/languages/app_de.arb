@@ -506,5 +506,15 @@
   "feature_under_development": "Diese Funktion befindet sich in Entwicklung und wird bald verfügbar sein!",
   "remaining_budget": "Restbudget",
   "monthly_spending": "Monatliche Ausgabenübersicht",
-  "quick_add_voice": "Tippen zum Sprechen"
+  "quick_add_voice": "Tippen zum Sprechen",
+  "ad_no_fill_title": "Keine Werbung verfügbar",
+  "ad_no_fill_message": "Derzeit ist keine Werbung verfügbar. Bitte versuchen Sie es später erneut oder upgraden Sie auf Premium.",
+  "ad_network_error_title": "Verbindungsfehler",
+  "ad_network_error_message": "Verbindung zum Laden der Werbung fehlgeschlagen. Bitte überprüfen Sie Ihre Internetverbindung.",
+  "ad_load_failed_title": "Ladefehler",
+  "ad_load_failed_message": "Beim Laden der Werbung ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.",
+  "ad_show_failed_title": "Anzeigefehler",
+  "ad_show_failed_message": "Die Werbung konnte nicht angezeigt werden. Bitte versuchen Sie es später erneut.",
+  "ad_loading_timeout_message": "Das Laden der Werbung dauert zu lange. Bitte versuchen Sie es später erneut.",
+  "ad_preparing": "Werbung wird vorbereitet..."
 }

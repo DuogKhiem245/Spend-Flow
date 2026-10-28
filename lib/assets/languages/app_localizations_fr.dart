@@ -1671,4 +1671,39 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get quick_add_voice => 'Appuyez pour parler';
+
+  @override
+  String get ad_no_fill_title => 'Aucune publicité disponible';
+
+  @override
+  String get ad_no_fill_message =>
+      'Aucune publicité n\'est disponible pour le moment. Veuillez réessayer plus tard ou passer à Premium.';
+
+  @override
+  String get ad_network_error_title => 'Erreur de connexion';
+
+  @override
+  String get ad_network_error_message =>
+      'Impossible de charger la publicité. Veuillez vérifier votre connexion réseau et réessayer.';
+
+  @override
+  String get ad_load_failed_title => 'Échec du chargement';
+
+  @override
+  String get ad_load_failed_message =>
+      'Une erreur s\'est produite lors du chargement de la publicité. Veuillez réessayer plus tard.';
+
+  @override
+  String get ad_show_failed_title => 'Erreur d\'affichage';
+
+  @override
+  String get ad_show_failed_message =>
+      'Impossible d\'afficher la publicité. Veuillez réessayer plus tard.';
+
+  @override
+  String get ad_loading_timeout_message =>
+      'Le chargement de la publicité a expiré. Veuillez réessayer plus tard.';
+
+  @override
+  String get ad_preparing => 'Préparation de la publicité...';
 }

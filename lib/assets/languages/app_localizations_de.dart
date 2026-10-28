@@ -1667,4 +1667,39 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get quick_add_voice => 'Tippen zum Sprechen';
+
+  @override
+  String get ad_no_fill_title => 'Keine Werbung verfügbar';
+
+  @override
+  String get ad_no_fill_message =>
+      'Derzeit ist keine Werbung verfügbar. Bitte versuchen Sie es später erneut oder upgraden Sie auf Premium.';
+
+  @override
+  String get ad_network_error_title => 'Verbindungsfehler';
+
+  @override
+  String get ad_network_error_message =>
+      'Verbindung zum Laden der Werbung fehlgeschlagen. Bitte überprüfen Sie Ihre Internetverbindung.';
+
+  @override
+  String get ad_load_failed_title => 'Ladefehler';
+
+  @override
+  String get ad_load_failed_message =>
+      'Beim Laden der Werbung ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.';
+
+  @override
+  String get ad_show_failed_title => 'Anzeigefehler';
+
+  @override
+  String get ad_show_failed_message =>
+      'Die Werbung konnte nicht angezeigt werden. Bitte versuchen Sie es später erneut.';
+
+  @override
+  String get ad_loading_timeout_message =>
+      'Das Laden der Werbung dauert zu lange. Bitte versuchen Sie es später erneut.';
+
+  @override
+  String get ad_preparing => 'Werbung wird vorbereitet...';
 }

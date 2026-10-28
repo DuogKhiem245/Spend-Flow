@@ -2113,5 +2113,45 @@
   "quick_add_voice": "Nói để thêm",
   "@quick_add_voice": {
     "description": "Tap to speak"
+  },
+  "ad_no_fill_title": "Không có quảng cáo",
+  "@ad_no_fill_title": {
+    "description": "Ad no fill title"
+  },
+  "ad_no_fill_message": "Hiện tại không có quảng cáo khả dụng. Vui lòng thử lại sau hoặc nâng cấp Premium.",
+  "@ad_no_fill_message": {
+    "description": "Ad no fill message"
+  },
+  "ad_network_error_title": "Lỗi kết nối",
+  "@ad_network_error_title": {
+    "description": "Ad network error title"
+  },
+  "ad_network_error_message": "Không thể kết nối để tải quảng cáo. Vui lòng kiểm tra mạng và thử lại.",
+  "@ad_network_error_message": {
+    "description": "Ad network error message"
+  },
+  "ad_load_failed_title": "Lỗi tải quảng cáo",
+  "@ad_load_failed_title": {
+    "description": "Ad load failed title"
+  },
+  "ad_load_failed_message": "Đã xảy ra lỗi khi tải quảng cáo. Vui lòng thử lại sau.",
+  "@ad_load_failed_message": {
+    "description": "Ad load failed message"
+  },
+  "ad_show_failed_title": "Lỗi hiển thị",
+  "@ad_show_failed_title": {
+    "description": "Ad show failed title"
+  },
+  "ad_show_failed_message": "Không thể hiển thị quảng cáo. Vui lòng thử lại sau.",
+  "@ad_show_failed_message": {
+    "description": "Ad show failed message"
+  },
+  "ad_loading_timeout_message": "Thời gian chờ tải quảng cáo quá lâu. Vui lòng thử lại sau.",
+  "@ad_loading_timeout_message": {
+    "description": "Ad loading timeout message"
+  },
+  "ad_preparing": "Đang chuẩn bị quảng cáo...",
+  "@ad_preparing": {
+    "description": "Ad preparing"
   }
 }

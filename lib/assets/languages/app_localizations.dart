@@ -3154,6 +3154,66 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Nói để thêm'**
   String get quick_add_voice;
+
+  /// Ad no fill title
+  ///
+  /// In vi, this message translates to:
+  /// **'Không có quảng cáo'**
+  String get ad_no_fill_title;
+
+  /// Ad no fill message
+  ///
+  /// In vi, this message translates to:
+  /// **'Hiện tại không có quảng cáo khả dụng. Vui lòng thử lại sau hoặc nâng cấp Premium.'**
+  String get ad_no_fill_message;
+
+  /// Ad network error title
+  ///
+  /// In vi, this message translates to:
+  /// **'Lỗi kết nối'**
+  String get ad_network_error_title;
+
+  /// Ad network error message
+  ///
+  /// In vi, this message translates to:
+  /// **'Không thể kết nối để tải quảng cáo. Vui lòng kiểm tra mạng và thử lại.'**
+  String get ad_network_error_message;
+
+  /// Ad load failed title
+  ///
+  /// In vi, this message translates to:
+  /// **'Lỗi tải quảng cáo'**
+  String get ad_load_failed_title;
+
+  /// Ad load failed message
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã xảy ra lỗi khi tải quảng cáo. Vui lòng thử lại sau.'**
+  String get ad_load_failed_message;
+
+  /// Ad show failed title
+  ///
+  /// In vi, this message translates to:
+  /// **'Lỗi hiển thị'**
+  String get ad_show_failed_title;
+
+  /// Ad show failed message
+  ///
+  /// In vi, this message translates to:
+  /// **'Không thể hiển thị quảng cáo. Vui lòng thử lại sau.'**
+  String get ad_show_failed_message;
+
+  /// Ad loading timeout message
+  ///
+  /// In vi, this message translates to:
+  /// **'Thời gian chờ tải quảng cáo quá lâu. Vui lòng thử lại sau.'**
+  String get ad_loading_timeout_message;
+
+  /// Ad preparing
+  ///
+  /// In vi, this message translates to:
+  /// **'Đang chuẩn bị quảng cáo...'**
+  String get ad_preparing;
 }
 
 class _AppLocalizationsDelegate

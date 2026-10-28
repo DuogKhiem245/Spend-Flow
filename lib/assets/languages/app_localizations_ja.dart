@@ -1599,4 +1599,36 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get quick_add_voice => 'タップして話す';
+
+  @override
+  String get ad_no_fill_title => '利用可能な広告がありません';
+
+  @override
+  String get ad_no_fill_message =>
+      '現在表示できる広告がありません。しばらくしてからもう一度お試しいただくか、Premiumにアップグレードしてください。';
+
+  @override
+  String get ad_network_error_title => '接続エラー';
+
+  @override
+  String get ad_network_error_message =>
+      '広告の読み込みに失敗しました。ネットワーク接続を確認して再試行してください。';
+
+  @override
+  String get ad_load_failed_title => '広告読み込みエラー';
+
+  @override
+  String get ad_load_failed_message => '広告の読み込み中にエラーが発生しました。後でもう一度お試しください。';
+
+  @override
+  String get ad_show_failed_title => '表示エラー';
+
+  @override
+  String get ad_show_failed_message => '広告を表示できませんでした。後でもう一度お試しください。';
+
+  @override
+  String get ad_loading_timeout_message => '広告の読み込みがタイムアウトしました。後でもう一度お試しください。';
+
+  @override
+  String get ad_preparing => '広告を準備中...';
 }

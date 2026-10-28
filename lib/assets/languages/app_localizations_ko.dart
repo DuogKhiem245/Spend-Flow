@@ -1599,4 +1599,36 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get quick_add_voice => '탭하여 말하세요';
+
+  @override
+  String get ad_no_fill_title => '표시할 광고 없음';
+
+  @override
+  String get ad_no_fill_message =>
+      '현재 표시할 수 있는 광고가 없습니다. 잠시 후 다시 시도하거나 Premium으로 업그레이드하세요.';
+
+  @override
+  String get ad_network_error_title => '네트워크 오류';
+
+  @override
+  String get ad_network_error_message =>
+      '광고를 로드할 수 없습니다. 네트워크 연결을 확인하고 다시 시도하세요.';
+
+  @override
+  String get ad_load_failed_title => '광고 로드 실패';
+
+  @override
+  String get ad_load_failed_message => '광고를 로드하는 동안 오류가 발생했습니다. 나중에 다시 시도하세요.';
+
+  @override
+  String get ad_show_failed_title => '표시 오류';
+
+  @override
+  String get ad_show_failed_message => '광고를 표시할 수 없습니다. 나중에 다시 시도하세요.';
+
+  @override
+  String get ad_loading_timeout_message => '광고 로드 시간이 초과되었습니다. 나중에 다시 시도하세요.';
+
+  @override
+  String get ad_preparing => '광고 준비 중...';
 }

@@ -506,5 +506,15 @@
   "feature_under_development": "Cette fonctionnalité est en cours de développement et sera disponible dans les prochaines mises à jour !",
   "remaining_budget": "Budget restant",
   "monthly_spending": "Graphique des dépenses mensuelles",
-  "quick_add_voice": "Appuyez pour parler"
+  "quick_add_voice": "Appuyez pour parler",
+  "ad_no_fill_title": "Aucune publicité disponible",
+  "ad_no_fill_message": "Aucune publicité n'est disponible pour le moment. Veuillez réessayer plus tard ou passer à Premium.",
+  "ad_network_error_title": "Erreur de connexion",
+  "ad_network_error_message": "Impossible de charger la publicité. Veuillez vérifier votre connexion réseau et réessayer.",
+  "ad_load_failed_title": "Échec du chargement",
+  "ad_load_failed_message": "Une erreur s'est produite lors du chargement de la publicité. Veuillez réessayer plus tard.",
+  "ad_show_failed_title": "Erreur d'affichage",
+  "ad_show_failed_message": "Impossible d'afficher la publicité. Veuillez réessayer plus tard.",
+  "ad_loading_timeout_message": "Le chargement de la publicité a expiré. Veuillez réessayer plus tard.",
+  "ad_preparing": "Préparation de la publicité..."
 }

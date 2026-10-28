@@ -1572,6 +1572,36 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get quick_add_voice => '点击即可说话';
+
+  @override
+  String get ad_no_fill_title => '暂无广告';
+
+  @override
+  String get ad_no_fill_message => '当前暂无可用广告。请稍后再试或升级为高级版。';
+
+  @override
+  String get ad_network_error_title => '网络连接错误';
+
+  @override
+  String get ad_network_error_message => '无法连接以加载广告。请检查网络后重试。';
+
+  @override
+  String get ad_load_failed_title => '广告加载失败';
+
+  @override
+  String get ad_load_failed_message => '加载广告时发生错误。请稍后再试。';
+
+  @override
+  String get ad_show_failed_title => '显示错误';
+
+  @override
+  String get ad_show_failed_message => '无法显示广告。请稍后再试。';
+
+  @override
+  String get ad_loading_timeout_message => '广告加载超时。请稍后再试。';
+
+  @override
+  String get ad_preparing => '正在准备广告...';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -3142,4 +3172,34 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get quick_add_voice => '點擊即可說話';
+
+  @override
+  String get ad_no_fill_title => '暫無廣告';
+
+  @override
+  String get ad_no_fill_message => '目前暫無可用廣告。請稍後再試或升級為高級版。';
+
+  @override
+  String get ad_network_error_title => '連線錯誤';
+
+  @override
+  String get ad_network_error_message => '無法連線以載入廣告。請檢查網絡後重試。';
+
+  @override
+  String get ad_load_failed_title => '廣告載入失敗';
+
+  @override
+  String get ad_load_failed_message => '載入廣告時發生錯誤。請稍後再試。';
+
+  @override
+  String get ad_show_failed_title => '顯示錯誤';
+
+  @override
+  String get ad_show_failed_message => '無法顯示廣告。請稍後再試。';
+
+  @override
+  String get ad_loading_timeout_message => '廣告載入超時。請稍後再試。';
+
+  @override
+  String get ad_preparing => '正在準備廣告...';
 }

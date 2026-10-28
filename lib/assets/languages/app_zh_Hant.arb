@@ -506,5 +506,15 @@
   "feature_under_development": "此功能目前正在開發中，將在即將推出的更新中提供！",
   "remaining_budget": "剩餘預算",
   "monthly_spending": "每月支出圖表",
-  "quick_add_voice": "點擊即可說話"
+  "quick_add_voice": "點擊即可說話",
+  "ad_no_fill_title": "暫無廣告",
+  "ad_no_fill_message": "目前暫無可用廣告。請稍後再試或升級為高級版。",
+  "ad_network_error_title": "連線錯誤",
+  "ad_network_error_message": "無法連線以載入廣告。請檢查網絡後重試。",
+  "ad_load_failed_title": "廣告載入失敗",
+  "ad_load_failed_message": "載入廣告時發生錯誤。請稍後再試。",
+  "ad_show_failed_title": "顯示錯誤",
+  "ad_show_failed_message": "無法顯示廣告。請稍後再試。",
+  "ad_loading_timeout_message": "廣告載入超時。請稍後再試。",
+  "ad_preparing": "正在準備廣告..."
 }

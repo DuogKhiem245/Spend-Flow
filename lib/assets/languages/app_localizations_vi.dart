@@ -1646,4 +1646,39 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get quick_add_voice => 'Nói để thêm';
+
+  @override
+  String get ad_no_fill_title => 'Không có quảng cáo';
+
+  @override
+  String get ad_no_fill_message =>
+      'Hiện tại không có quảng cáo khả dụng. Vui lòng thử lại sau hoặc nâng cấp Premium.';
+
+  @override
+  String get ad_network_error_title => 'Lỗi kết nối';
+
+  @override
+  String get ad_network_error_message =>
+      'Không thể kết nối để tải quảng cáo. Vui lòng kiểm tra mạng và thử lại.';
+
+  @override
+  String get ad_load_failed_title => 'Lỗi tải quảng cáo';
+
+  @override
+  String get ad_load_failed_message =>
+      'Đã xảy ra lỗi khi tải quảng cáo. Vui lòng thử lại sau.';
+
+  @override
+  String get ad_show_failed_title => 'Lỗi hiển thị';
+
+  @override
+  String get ad_show_failed_message =>
+      'Không thể hiển thị quảng cáo. Vui lòng thử lại sau.';
+
+  @override
+  String get ad_loading_timeout_message =>
+      'Thời gian chờ tải quảng cáo quá lâu. Vui lòng thử lại sau.';
+
+  @override
+  String get ad_preparing => 'Đang chuẩn bị quảng cáo...';
 }

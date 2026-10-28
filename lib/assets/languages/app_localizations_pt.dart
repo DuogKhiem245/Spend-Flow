@@ -1657,4 +1657,39 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get quick_add_voice => 'Toque para falar';
+
+  @override
+  String get ad_no_fill_title => 'Nenhum anúncio disponível';
+
+  @override
+  String get ad_no_fill_message =>
+      'No momento não há anúncios disponíveis. Tente novamente mais tarde ou faça upgrade para o Premium.';
+
+  @override
+  String get ad_network_error_title => 'Erro de conexão';
+
+  @override
+  String get ad_network_error_message =>
+      'Não foi possível conectar para carregar anúncios. Verifique sua rede e tente novamente.';
+
+  @override
+  String get ad_load_failed_title => 'Falha ao carregar anúncio';
+
+  @override
+  String get ad_load_failed_message =>
+      'Ocorreu um erro ao carregar o anúncio. Tente novamente mais tarde.';
+
+  @override
+  String get ad_show_failed_title => 'Erro de exibição';
+
+  @override
+  String get ad_show_failed_message =>
+      'Não foi possível exibir o anúncio. Tente novamente mais tarde.';
+
+  @override
+  String get ad_loading_timeout_message =>
+      'O anúncio demorou muito para carregar. Tente novamente mais tarde.';
+
+  @override
+  String get ad_preparing => 'Preparando anúncio...';
 }

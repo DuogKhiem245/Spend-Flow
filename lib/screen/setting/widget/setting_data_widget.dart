@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spend_flow/assets/languages/app_localizations.dart';
+import 'package:spend_flow/core/helpers/ad_dialog_helper.dart';
 import 'package:spend_flow/core/services/ads_service.dart';
 import 'package:spend_flow/core/services/sync_service/sync_service.dart';
 import 'package:spend_flow/core/widgets/check_valid/check_valid_widget.dart';
@@ -46,24 +47,6 @@ class _SettingDataWidgetState extends State<SettingDataWidget> {
       isScrollControlled: true,
       backgroundColor: CupertinoTheme.of(context).scaffoldBackgroundColor,
       builder: (context) => const PremiumView(),
-    );
-  }
-
-  void _showAdErrorDialog(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-
-    AdaptiveAlertDialog.show(
-      context: context,
-      title: l10n.error,
-      message: l10n.ads_loading,
-      icon: 'antennas.bubble.left.fill',
-      actions: [
-        AlertAction(
-          title: "OK",
-          style: AlertActionStyle.primary,
-          onPressed: () {},
-        ),
-      ],
     );
   }
 
@@ -239,15 +222,14 @@ class _SettingDataWidgetState extends State<SettingDataWidget> {
 
   void _handleRewardAdFlow() {
     Navigator.pop(context, false);
-    _adsService.showRewardedAd(
+    AdDialogHelper.showRewardedAdWithWaiting(
+      context: context,
       type: RewardedAdType.syncData,
       onRewardEarned: () async {
         await _startSyncFlow(isAds: true);
       },
-      onAdFailed: () {
-        if (mounted) {
-          _showAdErrorDialog(context);
-        }
+      onUpgradePremium: () {
+        _showPremiumModal(context);
       },
     );
   }
